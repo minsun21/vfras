@@ -21,7 +21,6 @@
 
 .logo {
   font-weight: bold;
-  color: #003399;
   margin-bottom: 20px;
 }
 
@@ -44,7 +43,6 @@
 
 .layout-header {
   height: 48px;
-  background-color: #f0f0f0;
   border-bottom: 1px solid #ccc;
   padding: 0 16px;
   display: flex;
@@ -69,8 +67,10 @@
   color: #666;
 }
 
+/* side bar */
 .menu-group {
   margin-bottom: 20px;
+  list-style: none;
 }
 
 .menu-title {

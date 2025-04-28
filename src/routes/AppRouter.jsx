@@ -1,8 +1,8 @@
-import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
 
 import Home from '../pages/Home';
+import Profile from '../pages/Profile';
 import Login from '../pages/Login';
 import NotFound from '../pages/NotFound';
 
@@ -24,7 +24,6 @@ const AppRouter = () => {
           }
         />
 
-        {/* ✅ 중첩 라우트 구조 */}
         <Route
           element={
             <PrivateRoute>
@@ -33,11 +32,9 @@ const AppRouter = () => {
           }
         >
           <Route path="/home" element={<Home />} />
-          <Route path="/profile" element={<Home />} />
-          {/* 여기에 더 추가 가능 */}
+          <Route path="/profile" element={<Profile />} />
         </Route>
 
-        {/* 로그인 경로 */}
         <Route
           path="/login"
           element={
