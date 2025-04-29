@@ -1,14 +1,31 @@
 import React from "react";
-import { useNavigate, Outlet } from "react-router-dom";
+import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../features/authSlice";
-import Breadcrumb from './Breadcrumb';
+import Breadcrumb from "./Breadcrumb";
 import "./Layout.css";
 import SideBar from "./SideBar";
+import { menuConfig } from "../config/menus";
+
+const getCurrentSubMenuTitle = (menusConfig, currentPath) => {
+  const normalized = currentPath.replace(/^\/+/, "");
+
+  for (const group of menusConfig) {
+    for (const item of group.items || []) {
+      if (item.path === normalized) {
+        return item.title;
+      }
+    }
+  }
+  return null;
+};
 
 const Layout = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const title = getCurrentSubMenuTitle(menuConfig, location.pathname);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -16,9 +33,9 @@ const Layout = ({ children }) => {
     navigate("/login", { replace: true });
   };
 
-  const goProfile = ()=>{
-    navigate('/profile');
-  }
+  const goProfile = () => {
+    navigate("/profile");
+  };
 
   return (
     <div className="layout">
@@ -33,11 +50,10 @@ const Layout = ({ children }) => {
         </header>
 
         <main className="layout-content">
-          <div className="content-title">{'내정보'}</div>
+          <div className="content-title">{title}</div>
           <Outlet />
         </main>
 
-        <footer className="layout-footer">copyright</footer>
       </div>
     </div>
   );
