@@ -1,20 +1,44 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useLocation, Link } from 'react-router-dom';
+import { menuConfig } from '../config/menus';
 
-const Breadcrumb = () => {
-  const items = useSelector((state) => state.breadcrumb);
+const buildBreadcrumbMap = (menus) => {
+  const map = { '/': '홈' };
+  menus.forEach((group) => {
+    group.items.forEach((item) => {
+      const fullPath = '/' + item.path; 
+      map[fullPath] = {
+        label: item.title,
+        parent: group.title,
+      };
+    });
+  });
+  return map;
+};
+
+const Breadcrumbs = () => {
+  const location = useLocation();
+  const currentPath = location.pathname; 
+  const breadcrumbMap = buildBreadcrumbMap(menuConfig);
+
+  const entry = breadcrumbMap[currentPath];
 
   return (
-    <nav>
-      {items.map((item, index) => (
-        <span key={index}>
-          {item.name}
-          {index < items.length - 1 && " > "}
-        </span>
-      ))}
+    <nav style={{ fontSize: '14px' }}>
+      <Link to="/">홈</Link>
+      {entry?.parent && (
+        <>
+          {' > '}
+          <span>{entry.parent}</span>
+        </>
+      )}
+      {entry?.label && (
+        <>
+          {' > '}
+          <span>{entry.label}</span>
+        </>
+      )}
     </nav>
   );
 };
 
-export default Breadcrumb;
+export default Breadcrumbs;
