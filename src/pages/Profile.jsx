@@ -1,56 +1,46 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Pages.css";
 import Button from "../components/Button";
+import { profileFields } from "../config/Fields";
 
 const Profile = () => {
-  const user = {
-    classification: "Admin",
-    department: "운영팀",
-    id: "vFRAS",
-    password: "******",
-    name: "홍길동",
-    phone: "010-1234-5678",
-    email: "test@lguplus.co.kr",
-  };
+
+  const navigate = useNavigate();
+
+  const [data, setData] = useState(() =>
+    profileFields.reduce((acc, field) => {
+      acc[field.key] = field.value || "";
+      return acc;
+    }, {})
+  );
+
+  useEffect(() => {
+    // axios.get("/api/user/profile").then(res => {
+      // res.data ==> { key1: value1, key2: value2 } 형태여야 함
+    //   setData(prev => ({ ...prev, ...res.data }));
+    // });
+  }, []);
 
   return (
     <div>
+      <div>
+        <Button
+          type="confirm"
+          label="수정"
+          onClick={() => navigate("/profile/edit")}
+        />
+      </div>
       <table className="user-info-table">
         <tbody>
-          <tr>
-            <td className="label">사용자 구분</td>
-            <td className="value">{user.classification}</td>
-          </tr>
-          <tr>
-            <td className="label">부서</td>
-            <td className="value">{user.department}</td>
-          </tr>
-          <tr>
-            <td className="label">아이디</td>
-            <td className="value">{user.id}</td>
-          </tr>
-          <tr>
-            <td className="label">비밀번호</td>
-            <td className="value">{user.password} <button>비밀번호 변경</button></td>
-          </tr>
-          <tr>
-            <td className="label">이름</td>
-            <td className="value">{user.name}</td>
-          </tr>
-          <tr>
-            <td className="label">휴대폰</td>
-            <td className="value">{user.phone}</td>
-          </tr>
-          <tr>
-            <td className="label">이메일</td>
-            <td className="value">{user.email}</td>
-          </tr>
+          {profileFields.map((field) => (
+            <tr key={field.key}>
+              <td className="label">{field.label}</td>
+              <td>{data[field.key]}</td>            </tr>
+          ))}
         </tbody>
       </table>
-      <div style={{display:'flex'}}>
-        <Button type='confirm' />
-        <Button type='cancel' />
-      </div>
+      
     </div>
   );
 };

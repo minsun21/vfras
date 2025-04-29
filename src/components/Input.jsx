@@ -1,9 +1,22 @@
-import React from 'react'
+import React from "react";
 
-const Input = () => {
+const Input = ({
+  type = "text",
+  value,
+  readOnly = false,
+  onChange,
+  initValue = "",
+}) => {
   return (
-    <div>Input</div>
-  )
-}
+    <input
+      className="input-field"
+      type={type}
+      value={value}
+      readOnly={readOnly}
+      onChange={onChange}
+      placeholder={initValue}
+    />
+  );
+};
 
-export default Input
+export default Input;

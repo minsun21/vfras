@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from "react";
 
-const Button = ({ type, title, handleClick }) => {
+const Button = ({ type, label, onClick }) => {
    
-  const [content, setContent] = useState("");
+  const [btnLabel, setBtnLabel] = useState("");
 
   useEffect(() => {
-    if (title) {
-      setContent(content);
+    if (label) {
+      setBtnLabel(label);
       return;
     }
 
     if (type === "confirm") {
-      setContent("확인");
+      setBtnLabel("확인");
     } else if (type === "cancel") {
-      setContent("취소");
+      setBtnLabel("취소");
     }
-  }, [title, type]);
+  }, [label, type]);
 
   return (
-    <button className={`${type}`} onClick={handleClick}>
-      {content}
+    <button className={`btn-${type}`} onClick={onClick}>
+      {btnLabel}
     </button>
   );
 };

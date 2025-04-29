@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 import Home from '../pages/Home';
 import Profile from '../pages/Profile';
+import EditProfile from '../pages/EditProfile';
 import Login from '../pages/Login';
 import NotFound from '../pages/NotFound';
 
@@ -16,7 +17,6 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* 루트 경로 리디렉션 */}
         <Route
           path="/"
           element={
@@ -33,6 +33,7 @@ const AppRouter = () => {
         >
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/edit" element={<EditProfile />} />
         </Route>
 
         <Route
@@ -44,7 +45,6 @@ const AppRouter = () => {
           }
         />
 
-        {/* 404 */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
