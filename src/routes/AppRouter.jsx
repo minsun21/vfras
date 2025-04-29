@@ -10,7 +10,7 @@ import NotFound from "../pages/NotFound";
 import Layout from "../components/Layout";
 import PrivateRoute from "../components/routes/PrivateRoute";
 import PublicRoute from "../components/routes/PublicRoute";
-import { menuConfig } from "../config/menus";
+import { menusConfig } from "../config/menus";
 
 const AppRouter = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -41,7 +41,7 @@ const AppRouter = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/edit" element={<ProfileEdit />} />
 
-          {menuConfig.map((menu) =>
+          {menusConfig.map((menu) =>
             menu.items.map((item) => (
               <Route
                 key={item.path}

@@ -1,7 +1,6 @@
-// menuConfig.js
 import { lazy } from 'react';
 
-export const menuConfig = [
+export const menusConfig = [
   {
     title: '가입자',
     items: [

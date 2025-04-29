@@ -1,5 +1,5 @@
 import { useLocation, Link } from 'react-router-dom';
-import { menuConfig } from '../config/menus';
+import { menusConfig } from '../config/menus';
 
 const buildBreadcrumbMap = (menus) => {
   const map = { '/': '홈' };
@@ -18,7 +18,7 @@ const buildBreadcrumbMap = (menus) => {
 const Breadcrumbs = () => {
   const location = useLocation();
   const currentPath = location.pathname; 
-  const breadcrumbMap = buildBreadcrumbMap(menuConfig);
+  const breadcrumbMap = buildBreadcrumbMap(menusConfig);
 
   const entry = breadcrumbMap[currentPath];
 

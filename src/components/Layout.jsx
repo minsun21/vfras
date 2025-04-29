@@ -5,7 +5,7 @@ import { logout } from "../features/authSlice";
 import Breadcrumb from "./Breadcrumb";
 import "./Layout.css";
 import SideBar from "./SideBar";
-import { menuConfig } from "../config/menus";
+import { menusConfig } from "../config/menus";
 
 const getCurrentSubMenuTitle = (menusConfig, currentPath) => {
   const normalized = currentPath.replace(/^\/+/, "");
@@ -30,7 +30,7 @@ const Layout = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const title = getCurrentSubMenuTitle(menuConfig, location.pathname);
+  const title = getCurrentSubMenuTitle(menusConfig, location.pathname);
 
   const handleLogout = () => {
     dispatch(logout());

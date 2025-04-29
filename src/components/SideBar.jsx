@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { menuConfig } from "../config/menus";
+import { menusConfig } from "../config/menus";
 
 const SideBar = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const SideBar = () => {
         <span>vFRAS 가입자 관리</span>
       </div>
       <nav>
-        {menuConfig.map((group) => (
+        {menusConfig.map((group) => (
           <div key={group.classification}>
             <ul className="menu-group">
               <div className="menu-title">{group.title}</div>
