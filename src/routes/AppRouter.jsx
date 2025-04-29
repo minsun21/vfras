@@ -1,15 +1,14 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import Home from '../pages/Home';
-import Profile from '../pages/Profile';
-import EditProfile from '../pages/EditProfile';
-import Login from '../pages/Login';
-import NotFound from '../pages/NotFound';
+import Home from "../pages/Home";
+import Login from "../pages/Login";
+import NotFound from "../pages/NotFound";
 
-import Layout from '../components/Layout';
-import PrivateRoute from '../components/routes/PrivateRoute';
-import PublicRoute from '../components/routes/PublicRoute';
+import Layout from "../components/Layout";
+import PrivateRoute from "../components/routes/PrivateRoute";
+import PublicRoute from "../components/routes/PublicRoute";
+import { menuConfig } from "../config/menus";
 
 const AppRouter = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -20,7 +19,11 @@ const AppRouter = () => {
         <Route
           path="/"
           element={
-            isAuthenticated ? <Navigate to="/home" replace /> : <Navigate to="/login" replace />
+            isAuthenticated ? (
+              <Navigate to="/home" replace />
+            ) : (
+              <Navigate to="/login" replace />
+            )
           }
         />
 
@@ -32,8 +35,16 @@ const AppRouter = () => {
           }
         >
           <Route path="/home" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/profile/edit" element={<EditProfile />} />
+
+          {menuConfig.map((menu) =>
+            menu.items.map((item) => (
+              <Route
+                key={item.path}
+                path={`/${item.path}`}
+                element={<item.component />}
+              />
+            ))
+          )}
         </Route>
 
         <Route
