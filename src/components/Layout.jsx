@@ -17,6 +17,11 @@ const getCurrentSubMenuTitle = (menusConfig, currentPath) => {
       }
     }
   }
+
+  if(normalized === 'profile'){
+    return '내 정보';
+  }
+  
   return null;
 };
 

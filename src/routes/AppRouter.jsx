@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import Home from "../pages/Home";
+import Profile from "../pages/Profile";
+import ProfileEdit from "../pages/ProfileEdit";
 import Login from "../pages/Login";
 import NotFound from "../pages/NotFound";
 
@@ -35,6 +37,9 @@ const AppRouter = () => {
           }
         >
           <Route path="/home" element={<Home />} />
+
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/edit" element={<ProfileEdit />} />
 
           {menuConfig.map((menu) =>
             menu.items.map((item) => (

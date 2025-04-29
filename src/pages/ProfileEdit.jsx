@@ -4,7 +4,7 @@ import { profileFields } from "../config/Fields";
 import Button from "../components/Button";
 import Input from "../components/Input";
 
-const EditProfile = () => {
+const ProfileEdit = () => {
   const navigate = useNavigate();
 
   const [initData, setInitData] = useState(() =>
@@ -103,4 +103,4 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;
+export default ProfileEdit;
