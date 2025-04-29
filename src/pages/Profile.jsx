@@ -31,7 +31,7 @@ const Profile = () => {
           onClick={() => navigate("/profile/edit")}
         />
       </div>
-      <table className="user-info-table">
+      <table className="info-table">
         <tbody>
           {profileFields.map((field) => (
             <tr key={field.key}>

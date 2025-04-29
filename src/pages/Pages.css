@@ -1,5 +1,5 @@
 
-.user-info-table {
+.info-table {
     width: 300px;
     border-collapse: collapse;
     font-size: 16px;
@@ -7,12 +7,12 @@
     border-bottom: 2px solid #666; 
   }
 
-  .user-info-table td {
+  .info-table td {
     padding: 8px;
     border-bottom: 1px solid #ddd; 
   }
   
-.user-info-table .label {
+.info-table .label {
     width: "120px";
     color:'red';
     padding: "8px";
