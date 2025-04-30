@@ -5,12 +5,13 @@ import { logout } from "../features/authSlice";
 import Breadcrumb from "./Breadcrumb";
 import "./Layout.css";
 import SideBar from "./SideBar";
-import { menusConfig } from "../config/menus";
+import { MenusConfigConfig } from "../config/MenusConfig";
+import Button, { BUTTON_CANCEL } from "./Button";
 
-const getCurrentSubMenuTitle = (menusConfig, currentPath) => {
+const getCurrentSubMenuTitle = (MenusConfigConfig, currentPath) => {
   const normalized = currentPath.replace(/^\/+/, "");
 
-  for (const group of menusConfig) {
+  for (const group of MenusConfigConfig) {
     for (const item of group.items || []) {
       if (item.path === normalized) {
         return item.title;
@@ -30,7 +31,7 @@ const Layout = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const title = getCurrentSubMenuTitle(menusConfig, location.pathname);
+  const title = getCurrentSubMenuTitle(MenusConfigConfig, location.pathname);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -49,8 +50,8 @@ const Layout = ({ children }) => {
         <header className="layout-header">
           <Breadcrumb />
           <div className="user-actions">
-            <button onClick={goProfile}>내정보</button>
-            <button onClick={handleLogout}>로그아웃</button>
+            <Button onClick={goProfile}>내정보</Button>
+            <Button type={BUTTON_CANCEL} onClick={handleLogout}>로그아웃</Button>
           </div>
         </header>
 

@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Pages.css";
 import Button from "../components/Button";
-import { profileFields } from "../config/Fields";
+import { profileFieldsConfig } from "../config/FieldsConfig";
 
 const Profile = () => {
-
   const navigate = useNavigate();
 
   const [data, setData] = useState(() =>
-    profileFields.reduce((acc, field) => {
+    profileFieldsConfig.reduce((acc, field) => {
       acc[field.key] = field.value || "";
       return acc;
     }, {})
@@ -17,7 +16,7 @@ const Profile = () => {
 
   useEffect(() => {
     // axios.get("/api/user/profile").then(res => {
-      // res.data ==> { key1: value1, key2: value2 } 형태여야 함
+    // res.data ==> { key1: value1, key2: value2 } 형태여야 함
     //   setData(prev => ({ ...prev, ...res.data }));
     // });
   }, []);
@@ -25,22 +24,18 @@ const Profile = () => {
   return (
     <div>
       <div>
-        <Button
-          type="confirm"
-          label="수정"
-          onClick={() => navigate("/profile/edit")}
-        />
+        <Button label="수정" onClick={() => navigate("/profile/edit")} />
       </div>
       <table className="info-table">
         <tbody>
-          {profileFields.map((field) => (
+          {profileFieldsConfig.map((field) => (
             <tr key={field.key}>
               <td className="label">{field.label}</td>
-              <td>{data[field.key]}</td>            </tr>
+              <td>{data[field.key]}</td>{" "}
+            </tr>
           ))}
         </tbody>
       </table>
-      
     </div>
   );
 };

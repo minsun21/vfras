@@ -1,4 +1,4 @@
-export const profileFields = [
+export const profileFieldsConfig = [
   {
     key: "classification",
     label: "사용자 구분",

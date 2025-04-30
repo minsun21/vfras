@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { profileFields } from "../config/Fields";
-import Button from "../components/Button";
+import { profileFieldsConfig } from "../config/FieldsConfig";
+import Button, { BUTTON_CANCEL } from "../components/Button";
 import Input from "../components/Input";
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
 
   const [initData, setInitData] = useState(() =>
-    profileFields.reduce((acc, field) => {
+    profileFieldsConfig.reduce((acc, field) => {
       acc[field.key] = field.value || "";
       return acc;
     }, {})
@@ -35,7 +35,7 @@ const ProfileEdit = () => {
 
   const validate = () => {
     const newErrors = {};
-    profileFields.forEach((field) => {
+    profileFieldsConfig.forEach((field) => {
       if (field.required && !formData[field.key]) {
         newErrors[field.key] = `${field.label}을(를) 입력해주세요.`;
       }
@@ -59,7 +59,7 @@ const ProfileEdit = () => {
     <div>
       <table className="user-info-table">
         <tbody>
-          {profileFields.map((field) => (
+          {profileFieldsConfig.map((field) => (
             <tr key={field.key}>
               <td className="label">{field.label}</td>
               <td className="value">
@@ -68,18 +68,18 @@ const ProfileEdit = () => {
                     <Input
                       value={formData[field.key] || ""}
                       type={field.type}
-                      initValue={initData[field.key]}
+                      placeholder={initData[field.key]}
                       onChange={handleChange(field.key)}
                       readOnly={field.readonly}
                     />
-                    <Button type="cancel" label="비밀번호 변경" />
+                    <Button type={BUTTON_CANCEL} label="비밀번호 변경" />
                   </>
                 ) : (
                   <>
                     <Input
                       value={formData[field.key] || ""}
                       type={field.type}
-                      initValue={initData[field.key]}
+                      placeholder={initData[field.key]}
                       onChange={handleChange(field.key)}
                       readOnly={field.readonly}
                     />
@@ -96,8 +96,8 @@ const ProfileEdit = () => {
         </tbody>
       </table>
       <div style={{ display: "flex" }}>
-        <Button type="cancel" onClick={() => navigate("/profile")} />
-        <Button type="confirm" label="저장" onClick={handleSave} />
+        <Button type={BUTTON_CANCEL} onClick={() => navigate("/profile")} />
+        <Button label="저장" onClick={handleSave} />
       </div>
     </div>
   );

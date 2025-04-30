@@ -1,9 +1,9 @@
 import { useLocation, Link } from 'react-router-dom';
-import { menusConfig } from '../config/menus';
+import { MenusConfigConfig } from '../config/MenusConfig';
 
-const buildBreadcrumbMap = (menus) => {
+const buildBreadcrumbMap = (MenusConfig) => {
   const map = { '/': '홈' };
-  menus.forEach((group) => {
+  MenusConfig.forEach((group) => {
     group.items.forEach((item) => {
       const fullPath = '/' + item.path; 
       map[fullPath] = {
@@ -18,7 +18,7 @@ const buildBreadcrumbMap = (menus) => {
 const Breadcrumbs = () => {
   const location = useLocation();
   const currentPath = location.pathname; 
-  const breadcrumbMap = buildBreadcrumbMap(menusConfig);
+  const breadcrumbMap = buildBreadcrumbMap(MenusConfigConfig);
 
   const entry = breadcrumbMap[currentPath];
 

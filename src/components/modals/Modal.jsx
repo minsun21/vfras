@@ -1,6 +1,6 @@
 import React from "react";
 import Modal from "react-modal";
-import Button from "../Button";
+import Button, { BUTTON_CANCEL } from "../Button";
 
 Modal.setAppElement("#root");
 
@@ -40,8 +40,8 @@ const Dialog = ({ isOpen, onConfirm, onCancel, message }) => {
           gap: "10px",
         }}
       >
-        <Button type="cancel" onClick={onCancel} />
-        <Button type="confirm" onClick={onCancel} />
+        <Button type={BUTTON_CANCEL} onClick={onCancel} />
+        <Button onClick={onCancel} />
       </div>
     </Modal>
   );

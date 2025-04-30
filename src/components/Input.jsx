@@ -1,21 +1,28 @@
 import React from "react";
 
+export const INPUT_SIZE_LG = "lg";
+export const INPUT_SIZE_SM = "sm";
+
 const Input = ({
   type = "text",
   value,
   readOnly = false,
   onChange,
-  initValue = "",
+  placeholder = "",
+  name,
+  size = "md",
 }) => {
   return (
-    <input
-      className="input-field"
-      type={type}
-      value={value}
-      readOnly={readOnly}
-      onChange={onChange}
-      placeholder={initValue}
-    />
+    <div class={`common-input-${size}`}>
+      {name && <span>{name}</span>}
+      <input
+        type={type}
+        value={value}
+        disabled={readOnly}
+        onChange={onChange}
+        placeholder={placeholder}
+      />
+    </div>
   );
 };
 
