@@ -1,4 +1,3 @@
-// components/Table.jsx
 import React, {
   useEffect,
   useState,
@@ -47,8 +46,13 @@ const Table = forwardRef(
     };
 
     const processedColumns = useMemo(() => {
-      const injectRadioHandler = (cols) =>
+      const enhanceColumns = (cols) =>
         cols.map((col) => {
+          console.log()
+          if (col.columns) {
+            return { ...col, columns: enhanceColumns(col.columns) };
+          }
+
           if (col.id?.startsWith("radio")) {
             const columnId = col.id;
             return {
@@ -63,12 +67,36 @@ const Table = forwardRef(
               ),
             };
           }
+          if (typeof col.clickable === "function") {
+            return {
+              ...col,
+              cell: ({ row, getValue }) => (
+                <span
+                  style={{
+                    textDecoration: "underline",
+                    color: "blue",
+                    cursor: "pointer",
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    col.clickable({
+                      row,
+                      value: getValue(),
+                      columnId: col.accessorKey,
+                    });
+                  }}
+                >
+                  {getValue()}
+                </span>
+              ),
+            };
+          }
           if (col.columns) {
-            return { ...col, columns: injectRadioHandler(col.columns) };
+            return { ...col, columns: enhanceColumns(col.columns) };
           }
           return col;
         });
-      return injectRadioHandler(columns);
+      return enhanceColumns(columns);
     }, [columns, tableData]);
 
     const selectionColumn = {
@@ -90,8 +118,8 @@ const Table = forwardRef(
     };
 
     const indexColumn = {
-      accessorKey: 'rowIndex',
-      header: '순번',
+      accessorKey: "rowIndex",
+      header: "순번",
       cell: ({ row }) => row.index + 1,
     };
 
@@ -99,7 +127,7 @@ const Table = forwardRef(
       () => [
         ...(rowSelectionEnabled ? [selectionColumn] : []),
         ...(showIndex ? [indexColumn] : []),
-        ...processedColumns
+        ...processedColumns,
       ],
       [rowSelectionEnabled, showIndex, processedColumns]
     );

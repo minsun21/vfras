@@ -13,7 +13,7 @@ const Input = ({
   size = "md",
 }) => {
   return (
-    <div class={`common-input-${size}`}>
+    <div className={`common-input-${size}`}>
       {name && <span>{name}</span>}
       <input
         type={type}
