@@ -12,9 +12,9 @@ const AccountLogs = () => {
 
   useEffect(() => {}, []);
 
-  const detail_access_log =() =>{
-console.log('detail_access_log')
-  }
+  const detail_access_log = () => {
+    console.log("detail_access_log");
+  };
 
   return (
     <div>
@@ -23,7 +23,7 @@ console.log('detail_access_log')
           <Input
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            placeholder="아이디, 이름, 부서를 입력해주세요."
+            placeholder="아이디, 이름, 부서를 입력해주세요"
             size={INPUT_SIZE_LG}
           />
           <Button type={BUTTON_SEARCH} />
@@ -40,6 +40,6 @@ console.log('detail_access_log')
       />
     </div>
   );
-}
+};
 
-export default AccountLogs
+export default AccountLogs;

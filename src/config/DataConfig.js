@@ -123,3 +123,73 @@ export const account_logs_data = [
     lastAccessTime: "2024.04.30 05:13:09",
   },
 ];
+
+export const account_manage_columns = [
+  {
+    accessorKey: "id",
+    header: "아이디",
+  },
+  {
+    accessorKey: "name",
+    header: "이름",
+  },
+  {
+    accessorKey: "department",
+    header: "부서",
+  },
+  {
+    accessorKey: "userType",
+    header: "사용자 구분",
+  },
+  {
+    accessorKey: "createdAt",
+    header: "가입일",
+  },
+  {
+    accessorKey: "lastAccessTime",
+    header: "마지막 접속",
+  },
+];
+
+export const account_manage_data =[
+  {
+    id: "admin",
+    name: "관리자",
+    department: "-",
+    userType: "Admin",
+    createdAt: "2024.02.04 11:23:37",
+    lastAccessTime: "2024.02.04 11:23:27",
+  },
+  {
+    id: "cwback",
+    name: "백창우",
+    department: "고객만족팀",
+    userType: "User",
+    createdAt: "2024.02.04 11:23:37",
+    lastAccessTime: "2024.02.01 09:12:35",
+  },
+  {
+    id: "wooseok",
+    name: "주우석",
+    department: "고객만족팀",
+    userType: "User",
+    createdAt: "2024.02.04 11:23:37",
+    lastAccessTime: "2024.02.02 12:03:04",
+  },
+  {
+    id: "hong",
+    name: "홍길동",
+    department: "고객만족팀",
+    userType: "User",
+    createdAt: "2024.04.23 10:55:45",
+    lastAccessTime: "2024.04.23 11:55:01",
+  },
+  {
+    id: "kim",
+    name: "김철수",
+    department: "고객만족팀",
+    userType: "User",
+    createdAt: "2024.04.29 01:24:35",
+    lastAccessTime: "2024.04.30 05:13:09",
+  },
+]
