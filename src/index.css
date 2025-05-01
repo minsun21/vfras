@@ -109,3 +109,17 @@ code {
 .menu-item:hover {
   background-color: #bbb;
 }
+
+.common-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.common-select {
+  display: flex;
+  flex-direction: column;
+}
+
+.col-status {
+  border: 1px solid black;
+}

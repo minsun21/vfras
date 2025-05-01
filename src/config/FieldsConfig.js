@@ -295,3 +295,8 @@ export const accountEditFields = [
     required: true,
   },
 ];
+
+export const option_subsriberType = ['전체', '1', '2'];
+export const option_allType = ['전체', '1', '2'];
+export const option_serviceType = ['전체', '1', '2'];
+export const option_userState = ['전체', '1', '2'];

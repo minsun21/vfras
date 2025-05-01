@@ -36,7 +36,6 @@ const AccountLogs = () => {
         data={data}
         pageSize={10}
         rowSelectionEnabled={false}
-        onSave={(all) => console.log("전체:", all)}
       />
     </div>
   );

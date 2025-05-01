@@ -1,20 +1,10 @@
 import React from "react";
 
-const Select = ({
-  label,
-  value,
-  options,
-  onChange,
-  disabled = false,
-}) => (
+const Select = ({ label, value, options, onChange, nonEmpty = false }) => (
   <div className="common-select">
     {label && <label>{label}</label>}
-    <select
-      value={value}
-      onChange={onChange}
-      disabled={disabled}
-    >
-      <option value=""></option>
+    <select value={value} onChange={onChange}>
+      {!nonEmpty && <option value=""></option>}
       {options.map((opt) => (
         <option key={opt} value={opt}>
           {opt}

@@ -1,3 +1,6 @@
+import Button from "../components/Button";
+import { useNavigate } from "react-router-dom";
+
 export const sounds_source_columns = [
   {
     accessorKey: "code",
@@ -151,7 +154,7 @@ export const account_manage_columns = [
   },
 ];
 
-export const account_manage_data =[
+export const account_manage_data = [
   {
     id: "admin",
     name: "관리자",
@@ -192,35 +195,122 @@ export const account_manage_data =[
     createdAt: "2024.04.29 01:24:35",
     lastAccessTime: "2024.04.30 05:13:09",
   },
-]
+];
 
-export const subscribe_columns = [
+export const subscribe_columns = (navigateManage) => {
+  return [
+    {
+      accessorKey: "mainNumber",
+      header: "대표 번호",
+    },
+    {
+      accessorKey: "userNumber",
+      header: "사용자 번호\\n(시작~끝)",
+    },
+    {
+      accessorKey: "pbxNumber",
+      header: "교환기 번호\\n(시작~끝)",
+    },
+    {
+      accessorKey: "name",
+      header: "가입자명",
+    },
+    {
+      accessorKey: "applyDate",
+      header: "신청일",
+    },
+    {
+      accessorKey: "status",
+      header: "상태",
+      cell: ({ row }) => <div className="col-status">{row.original.state}</div>,
+    },
+    {
+      accessorKey: "manage",
+      header: "",
+      cell: ({ row }) => (
+        <Button
+          label={"가입자 관리"}
+          onClick={() => {
+            const rowData = row.original;
+            navigateManage(row.original);
+          }}
+        />
+      ),
+    },
+  ];
+};
+
+export const subscribe_data = [
   {
-    accessorKey: "mainNumber",
-    header: "대표 번호",
+    mainNumber: "0211112222",
+    userNumber: "02111112222~0211112233",
+    pbxNumber: "02111112222~0211112233",
+    name: "LGU+",
+    applyDate: "2024.02.04",
+    state: "요청중",
   },
   {
-    accessorKey: "userNumber",
-    header: "사용자 번호\\n(시작~끝)",
+    mainNumber: "0211112222",
+    userNumber: "02111112222~0211112233",
+    pbxNumber: "02111112222~0211112233",
+    name: "LGU+",
+    applyDate: "2024.02.04",
+    state: "요청중",
   },
   {
-    accessorKey: "pbxNumber",
-    header: "교환기 번호\\n(시작~끝)",
+    mainNumber: "0211112222",
+    userNumber: "02111112222~0211112233",
+    pbxNumber: "02111112222~0211112233",
+    name: "LGU+",
+    applyDate: "2024.02.04",
+    state: "가입",
   },
   {
-    accessorKey: "name",
-    header: "가입자명",
+    mainNumber: "0211112222",
+    userNumber: "02111112222~0211112233",
+    pbxNumber: "02111112222~0211112233",
+    name: "LGU+",
+    applyDate: "2024.02.04",
+    state: "가입",
   },
   {
-    accessorKey: "대표 번호",
-    header: "신청일",
+    mainNumber: "0211112222",
+    userNumber: "02111112222~0211112233",
+    pbxNumber: "02111112222~0211112233",
+    name: "LGU+",
+    applyDate: "2024.02.04",
+    state: "가입",
   },
   {
-    accessorKey: "status",
-    header: "상태",
+    mainNumber: "0211112222",
+    userNumber: "02111112222~0211112233",
+    pbxNumber: "02111112222~0211112233",
+    name: "LGU+",
+    applyDate: "2024.02.04",
+    state: "가입",
   },
   {
-    accessorKey: "manage",
-    header: "",
+    mainNumber: "0211112222",
+    userNumber: "02111112222~0211112233",
+    pbxNumber: "02111112222~0211112233",
+    name: "LGU+",
+    applyDate: "2024.02.04",
+    state: "가입",
+  },
+  {
+    mainNumber: "0211112222",
+    userNumber: "02111112222~0211112233",
+    pbxNumber: "02111112222~0211112233",
+    name: "LGU+",
+    applyDate: "2024.02.04",
+    state: "가입",
+  },
+  {
+    mainNumber: "0211112222",
+    userNumber: "02111112222~0211112233",
+    pbxNumber: "02111112222~0211112233",
+    name: "LGU+",
+    applyDate: "2024.02.04",
+    state: "가입",
   },
 ];

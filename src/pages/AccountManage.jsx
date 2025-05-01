@@ -74,7 +74,6 @@ const AccountManage = () => {
           pageSize={5}
           rowSelectionEnabled={true}
           onRowSelectionChange={setSelectedRows}
-          onSave={(all) => console.log("전체:", all)}
         />
         <div style={{ marginTop: "1rem" }}>
           <Button
