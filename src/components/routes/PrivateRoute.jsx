@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
+import { ROUTES } from '../../constants/routes';
 
 const PrivateRoute = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -8,7 +9,7 @@ const PrivateRoute = ({ children }) => {
   return isAuthenticated ? (
     children
   ) : (
-    <Navigate to="/login" replace state={{ from: location }} />
+    <Navigate to={ROUTES.LOGIN}replace state={{ from: location }} />
   );
 };
 

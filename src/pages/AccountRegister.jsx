@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { accountRegisterFields } from "../config/FieldsConfig";
-import Button, { BUTTON_CANCEL } from "../components/Button";
+import Button, { BUTTON_CANCEL, BUTTON_SAVE } from "../components/Button";
 import Input from "../components/Input";
 import Select from "../components/Select";
 import { ROUTES } from "../constants/routes";
 import { accountValidate } from "../utils/FormValidation";
+import { LABELS } from "../constants/Label";
 
 const AccountRegister = () => {
   const navigate = useNavigate();
@@ -61,6 +62,7 @@ const AccountRegister = () => {
                       value={value}
                       options={options}
                       onChange={(e) => handleChange(e.target.value)}
+                      nonEmpty={true}
                     />
                   ) : comment ? (
                     <div>
@@ -88,9 +90,9 @@ const AccountRegister = () => {
           })}
         </tbody>
       </table>
-      <div style={{ display: "flex" }}>
+      <div>
         <Button type={BUTTON_CANCEL} onClick={() => navigate(ROUTES.PROFILE)} />
-        <Button label="저장" onClick={handleSave} />
+        <Button type={BUTTON_SAVE} onClick={handleSave} />
       </div>
     </div>
   );

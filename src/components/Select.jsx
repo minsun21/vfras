@@ -6,8 +6,8 @@ const Select = ({ label, value, options, onChange, nonEmpty = false }) => (
     <select value={value} onChange={onChange}>
       {!nonEmpty && <option value=""></option>}
       {options.map((opt) => (
-        <option key={opt} value={opt}>
-          {opt}
+        <option key={opt.key} value={opt.value}>
+          {opt.value}
         </option>
       ))}
     </select>

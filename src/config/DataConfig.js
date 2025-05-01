@@ -231,7 +231,6 @@ export const subscribe_columns = (navigateManage) => {
         <Button
           label={"가입자 관리"}
           onClick={() => {
-            const rowData = row.original;
             navigateManage(row.original);
           }}
         />
@@ -242,6 +241,7 @@ export const subscribe_columns = (navigateManage) => {
 
 export const subscribe_data = [
   {
+    id:1,
     mainNumber: "0211112222",
     userNumber: "02111112222~0211112233",
     pbxNumber: "02111112222~0211112233",
@@ -250,6 +250,7 @@ export const subscribe_data = [
     state: "요청중",
   },
   {
+    id:2,
     mainNumber: "0211112222",
     userNumber: "02111112222~0211112233",
     pbxNumber: "02111112222~0211112233",
@@ -258,6 +259,7 @@ export const subscribe_data = [
     state: "요청중",
   },
   {
+    id:3,
     mainNumber: "0211112222",
     userNumber: "02111112222~0211112233",
     pbxNumber: "02111112222~0211112233",
@@ -266,6 +268,15 @@ export const subscribe_data = [
     state: "가입",
   },
   {
+    id:4,
+    mainNumber: "0211112222",
+    userNumber: "02111112222~0211112233",
+    pbxNumber: "02111112222~0211112233",
+    name: "LGU+",
+    applyDate: "2024.02.04",
+    state: "가입",
+  },
+  { id:5,
     mainNumber: "0211112222",
     userNumber: "02111112222~0211112233",
     pbxNumber: "02111112222~0211112233",
@@ -274,6 +285,7 @@ export const subscribe_data = [
     state: "가입",
   },
   {
+    id:6,
     mainNumber: "0211112222",
     userNumber: "02111112222~0211112233",
     pbxNumber: "02111112222~0211112233",
@@ -282,6 +294,7 @@ export const subscribe_data = [
     state: "가입",
   },
   {
+    id:7,
     mainNumber: "0211112222",
     userNumber: "02111112222~0211112233",
     pbxNumber: "02111112222~0211112233",
@@ -290,6 +303,7 @@ export const subscribe_data = [
     state: "가입",
   },
   {
+    id:8,
     mainNumber: "0211112222",
     userNumber: "02111112222~0211112233",
     pbxNumber: "02111112222~0211112233",
@@ -298,14 +312,7 @@ export const subscribe_data = [
     state: "가입",
   },
   {
-    mainNumber: "0211112222",
-    userNumber: "02111112222~0211112233",
-    pbxNumber: "02111112222~0211112233",
-    name: "LGU+",
-    applyDate: "2024.02.04",
-    state: "가입",
-  },
-  {
+    id:9,
     mainNumber: "0211112222",
     userNumber: "02111112222~0211112233",
     pbxNumber: "02111112222~0211112233",

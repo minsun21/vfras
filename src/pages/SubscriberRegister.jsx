@@ -1,15 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { subsriberResigerFields } from "../config/FieldsConfig";
-import Button, { BUTTON_CANCEL } from "../components/Button";
+import Button, { BUTTON_CANCEL, BUTTON_CONFIRM } from "../components/Button";
 import Input from "../components/Input";
 import Select from "../components/Select";
 import RadioGroup from "../components/RadioGroup";
 import { ROUTES } from "../constants/routes";
-import {
-  isValidEmail,
-  isValidPhone,
-} from "../utils/FormValidation";
+import { isValidEmail, isValidPhone } from "../utils/FormValidation";
 import { errorMessages } from "../constants/Message";
 
 const SubscriberRegister = () => {
@@ -34,12 +31,12 @@ const SubscriberRegister = () => {
 
       // 2. 타입에 따라 validation 체크(email, phone...)
       if (type === "email" && !isValidEmail(formData[key])) {
-        alert(errorMessages.invalidEmail());
+        alert(errorMessages.invalidEmail);
         return;
       }
 
       if (type === "phone" && !isValidPhone(formData[key])) {
-        alert(errorMessages.invalidPhone());
+        alert(errorMessages.invalidPhone);
         return;
       }
 
@@ -78,7 +75,7 @@ const SubscriberRegister = () => {
               placeholder,
               comment,
               disabled,
-              multi
+              multi,
             } = field;
             const value = formData[key] || "";
 
@@ -97,6 +94,7 @@ const SubscriberRegister = () => {
                       value={value}
                       options={options}
                       onChange={(e) => handleChange(e.target.value)}
+                      nonEmpty={true}
                     />
                   ) : type === "radio" ? (
                     <RadioGroup
@@ -113,9 +111,7 @@ const SubscriberRegister = () => {
                         onChange={(e) => handleChange(e.target.value)}
                         disabled={disabled}
                       />
-                      <span className="comment">
-                        {comment}
-                      </span>
+                      <span className="comment">{comment}</span>
                     </div>
                   ) : multi ? (
                     <div>
@@ -150,12 +146,12 @@ const SubscriberRegister = () => {
           })}
         </tbody>
       </table>
-      <div style={{ display: "flex" }}>
+      <div>
         <Button
           type={BUTTON_CANCEL}
           onClick={() => navigate(ROUTES.SUBSCRIBER)}
         />
-        <Button label="확인" onClick={handleSave} />
+        <Button onClick={handleSave} />
       </div>
     </div>
   );

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { LABELS } from "../constants/Label";
 
 export const BUTTON_CONFIRM = "confirm";
 export const BUTTON_CANCEL = "cancel";
 export const BUTTON_SEARCH = "search";
+export const BUTTON_SAVE= "save";
+export const BUTTON_DELETE= "delete";
 
 const Button = ({ type='confirm', label, onClick }) => {
    
@@ -16,12 +19,16 @@ const Button = ({ type='confirm', label, onClick }) => {
     }
 
     if (type === BUTTON_CONFIRM) {
-      setBtnLabel("확인");
+      setBtnLabel(LABELS.CONFIRM);
     } else if (type === BUTTON_CANCEL) {
-      setBtnLabel("취소");
+      setBtnLabel(LABELS.CANCEL);
       setClassType(BUTTON_CANCEL)
     } else if(type === BUTTON_SEARCH){
-      setBtnLabel("검색")
+      setBtnLabel(LABELS.SEARCH)
+    } else if(type === BUTTON_SAVE) {
+      setBtnLabel(LABELS.SAVE)
+    } else if(type === BUTTON_DELETE){
+      setBtnLabel(LABELS.DELETE)
     }
   }, [label, type]);
 

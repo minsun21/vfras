@@ -29,12 +29,12 @@ export const accountValidate = (fields, formData) => {
 
     // 2. 타입에 따라 validation 체크(email, phone...)
     if (type === "email" && !isValidEmail(formData[key])) {
-      alert(errorMessages.invalidEmail());
+      alert(errorMessages.invalidEmail);
       return;
     }
 
     if (type === "phone" && !isValidPhone(formData[key])) {
-      alert(errorMessages.invalidPhone());
+      alert(errorMessages.invalidPhone);
       return;
     }
 

@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { profileEditFields } from "../config/FieldsConfig";
-import Button, { BUTTON_CANCEL } from "../components/Button";
+import Button, { BUTTON_CANCEL, BUTTON_SAVE } from "../components/Button";
 import Input from "../components/Input";
 import { ROUTES } from "../constants/routes";
 import { isValidEmail, isValidPhone } from "../utils/FormValidation";
-import { errorMessages } from "../constants/Message";
+import { errorMessages, infoMessage } from "../constants/Message";
+import { LABELS } from "../constants/Label";
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
@@ -27,12 +28,12 @@ const ProfileEdit = () => {
   const validate = () => {
     const newErrors = {};
     if (!isValidEmail(formData.email)) {
-      alert(errorMessages.invalidEmail());
+      alert(errorMessages.invalidEmail);
       return;
     }
 
     if (!isValidPhone(formData.phone)) {
-      alert(errorMessages.invalidPhone());
+      alert(errorMessages.invalidPhone);
       return;
     }
     return Object.keys(newErrors).length === 0;
@@ -44,8 +45,8 @@ const ProfileEdit = () => {
     }
     console.log("저장할 데이터:", formData);
 
-    alert("프로필이 성공적으로 저장되었습니다.");
-    navigate("/profile");
+    alert(infoMessage.successUserEdit);
+    navigate(ROUTES.PROFILE);
   };
 
   return (
@@ -70,7 +71,7 @@ const ProfileEdit = () => {
                         onChange={(e) => handleChange(e.target.value)}
                         disabled={disabled}
                       />
-                      <Button type={BUTTON_CANCEL} label="비밀번호 변경" />
+                      <Button type={BUTTON_CANCEL} label={LABELS.PASSWORD_CHANGE} />
                     </>
                   ) : (
                     <>
@@ -89,9 +90,9 @@ const ProfileEdit = () => {
           })}
         </tbody>
       </table>
-      <div style={{ display: "flex" }}>
+      <div>
         <Button type={BUTTON_CANCEL} onClick={() => navigate(ROUTES.PROFILE)} />
-        <Button label="저장" onClick={handleSave} />
+        <Button type={BUTTON_SAVE} onClick={handleSave} />
       </div>
     </div>
   );

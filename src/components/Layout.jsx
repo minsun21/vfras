@@ -7,26 +7,25 @@ import SideBar from "./SideBar";
 import { MenusConfig } from "../config/MenusConfig";
 import Button, { BUTTON_CANCEL } from "./Button";
 import { ROUTES } from "../constants/routes";
+import { LABELS } from "../constants/Label";
 
 const getCurrentSubMenuTitle = (MenusConfig, currentPath) => {
-  const normalized = currentPath.replace(/^\/+/, "");
-
   for (const group of MenusConfig) {
     for (const item of group.items || []) {
-      if (item.path === normalized) {
+      if (item.path === currentPath) {
         return item.title;
       }
     }
   }
 
-  if(normalized === 'profile'){
-    return '내 정보';
+  if(currentPath === '/profile'){
+    return LABELS.MY_INFO;
   }
-  else if(normalized === 'accounts/register'){
-    return '사용자 등록';
+  else if(currentPath === '/accounts/register'){
+    return LABELS.USER_REGISTER;
   }
-  else if(normalized === 'accounts/edit'){
-    return '사용자 정보 수정';
+  else if(currentPath === '/accounts/edit'){
+    return LABELS.USER_EDIT;
   }
   
   return null;
@@ -56,8 +55,8 @@ const Layout = ({ children }) => {
         <header className="layout-header">
           <Breadcrumb />
           <div className="user-actions">
-            <Button label={"내 정보"} onClick={goProfile} />
-            <Button label={"로그아웃"} type={BUTTON_CANCEL} onClick={handleLogout} />
+            <Button label={LABELS.MY_INFO} onClick={goProfile} />
+            <Button label={LABELS.LOGOUT} type={BUTTON_CANCEL} onClick={handleLogout} />
           </div>
         </header>
 

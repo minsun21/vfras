@@ -27,14 +27,6 @@ const Table = forwardRef(
     const [rowSelection, setRowSelection] = useState({});
     const [tableData, setTableData] = useState(data);
 
-    useImperativeHandle(
-      ref,
-      () => ({
-        getUpdatedData: () => tableData,
-      }),
-      [tableData]
-    );
-
     const handleRowRadioChange = (rowIndex, columnId) => {
       const updated = tableData.map((row, i) => {
         if (i === rowIndex) {
@@ -48,7 +40,6 @@ const Table = forwardRef(
     const processedColumns = useMemo(() => {
       const enhanceColumns = (cols) =>
         cols.map((col) => {
-          console.log();
           if (col.columns) {
             return { ...col, columns: enhanceColumns(col.columns) };
           }
@@ -72,11 +63,7 @@ const Table = forwardRef(
               ...col,
               cell: ({ row, getValue }) => (
                 <span
-                  style={{
-                    textDecoration: "underline",
-                    color: "blue",
-                    cursor: "pointer",
-                  }}
+                  className="navigate"
                   onClick={(e) => {
                     e.stopPropagation();
                     col.clickable({
@@ -142,6 +129,25 @@ const Table = forwardRef(
       enableRowSelection: rowSelectionEnabled,
     });
 
+    useImperativeHandle(
+      ref,
+      () => ({
+        getUpdatedData: () => tableData,
+
+        getSelectedRowIds: () => {
+          return table.getSelectedRowModel().rows.map((row) => row.original.id);
+        },
+
+        updateRowsById: (ids, updater) => {
+          const updated = tableData.map((row) =>
+            ids.includes(row.id) ? updater(row) : row
+          );
+          setTableData(updated);
+        },
+      }),
+      [tableData, table]
+    );
+
     useEffect(() => {
       table.setPageSize(pageSize);
     }, [pageSize, table]);
@@ -160,8 +166,8 @@ const Table = forwardRef(
     const pageNumbers = Array.from({ length: pageCount }, (_, i) => i);
 
     return (
-      <div>
-        <table border="1" style={{ borderCollapse: "collapse", width: "100%" }}>
+      <div className="common-table-container">
+        <table className="common-table">
           <thead>
             <tr>
               {rowSelectionEnabled && (
@@ -208,10 +214,7 @@ const Table = forwardRef(
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <td
-                    key={cell.id}
-                    style={{ padding: "8px", textAlign: "center" }}
-                  >
+                  <td key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
@@ -219,15 +222,7 @@ const Table = forwardRef(
             ))}
           </tbody>
         </table>
-
-        <div
-          style={{
-            marginTop: "1rem",
-            display: "flex",
-            justifyContent: "center",
-            gap: "8px",
-          }}
-        >
+        <div className="pagination">
           <button
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
@@ -242,12 +237,9 @@ const Table = forwardRef(
           </button>
           {pageNumbers.map((num) => (
             <button
+              className={`pagination-page${num === pageIndex ? "-active" : ""}`}
               key={num}
               onClick={() => table.setPageIndex(num)}
-              style={{
-                fontWeight: num === pageIndex ? "bold" : "normal",
-                textDecoration: num === pageIndex ? "underline" : "none",
-              }}
             >
               {num + 1}
             </button>

@@ -1,11 +1,11 @@
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { MenusConfig } from '../config/MenusConfig';
 
 const buildBreadcrumbMap = (MenusConfig) => {
-  const map = { '/': '홈' };
+  const map = {  };
   MenusConfig.forEach((group) => {
     group.items.forEach((item) => {
-      const fullPath = '/' + item.path; 
+      const fullPath = item.path; 
       map[fullPath] = {
         label: item.title,
         parent: group.title,
@@ -23,8 +23,8 @@ const Breadcrumbs = () => {
   const entry = breadcrumbMap[currentPath];
 
   return (
-    <nav style={{ fontSize: '14px' }}>
-      <Link to="/">홈</Link>
+    <nav>
+      <span to="/">아이콘</span>
       {entry?.parent && (
         <>
           {' > '}

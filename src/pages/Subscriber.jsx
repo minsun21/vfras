@@ -12,6 +12,8 @@ import {
   option_serviceType,
   option_userState,
 } from "../config/FieldsConfig";
+import { LABELS } from "../constants/Label";
+import { errorMessages, subsriberMessage } from "../constants/Message";
 
 const Subscriber = () => {
   const tableRef = useRef();
@@ -57,13 +59,29 @@ const Subscriber = () => {
 
   const approvedSubsriber = () => {
     if (selectedRows.length === 0) {
-      alert("가입자를 선택해주세요");
+      alert(errorMessages.nonSelect);
+      return;
     }
+
+    for (const selectedRow of selectedRows) {
+      if (selectedRow.state === LABELS.SUBSRIBE) {
+        alert(subsriberMessage.approvedError);
+        return;
+      }
+    }
+
+    const selectedIds = tableRef.current.getSelectedRowIds();
+
+    tableRef.current.updateRowsById(selectedIds, (row) => ({
+      ...row,
+      state: LABELS.SUBSRIBE,
+    }));
   };
 
   const deleteSubsriber = () => {
     if (selectedRows.length === 0) {
-      alert("가입자를 선택해주세요");
+      alert(errorMessages.nonSelect);
+      return;
     }
   };
 
@@ -77,32 +95,31 @@ const Subscriber = () => {
               options={allType}
               nonEmpty={true}
             />
-            <Input placeholder="가입자명, 번호를 입력해주세요." />
+            <Input placeholder={subsriberMessage.searchPlaceHolder} />
           </div>
           <div>
             <Select
-              label={"가입자 타입"}
+              label={LABELS.SUBSRIBER_TYPE}
               value={searchInput.subsriberType}
               options={subsriberTypeOptions}
               nonEmpty={true}
             />
             <Select
-              label={"서비스 타입"}
+              label={LABELS.SERVICE_TYPE}
               value={searchInput.serviceType}
               options={serviceTypeOptions}
               nonEmpty={true}
             />
             <Select
-              label={"가입자 상태"}
+              label={LABELS.USER_STATE}
               value={searchInput.userState}
               options={userStateOptions}
               nonEmpty={true}
             />
             <Button type={BUTTON_SEARCH} />
-            <span>{`검색결과 : ${data.length}건`}</span>
+            <span>{LABELS.SEARCH_RESULT(data.length)}</span>
           </div>
         </div>
-        <span>{`검색결과 : ${data.length}건`}</span>
       </div>
       <Table
         ref={tableRef}
@@ -112,9 +129,13 @@ const Subscriber = () => {
         rowSelectionEnabled={true}
         onRowSelectionChange={setSelectedRows}
       />
-      <div style={{ marginTop: "1rem" }}>
-        <Button label={"승인"} onClick={approvedSubsriber} />
-        <Button type={BUTTON_CANCEL} label={"삭제"} onClick={deleteSubsriber} />
+      <div>
+        <Button label={LABELS.APPROVE} onClick={approvedSubsriber} />
+        <Button
+          type={BUTTON_CANCEL}
+          label={LABELS.DELETE}
+          onClick={deleteSubsriber}
+        />
       </div>
     </div>
   );

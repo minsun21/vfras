@@ -3,6 +3,8 @@ import Button, { BUTTON_SEARCH } from "../components/Button";
 import Input, { INPUT_SIZE_LG } from "../components/Input";
 import Table from "../components/Table";
 import { account_logs_columns, account_logs_data } from "../config/DataConfig";
+import { accountMessages } from "../constants/Message";
+import { LABELS } from "../constants/Label";
 
 const AccountLogs = () => {
   const tableRef = useRef();
@@ -23,12 +25,12 @@ const AccountLogs = () => {
           <Input
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            placeholder="아이디, 이름, 부서를 입력해주세요"
+            placeholder={accountMessages.searchPlaceHolder}
             size={INPUT_SIZE_LG}
           />
           <Button type={BUTTON_SEARCH} />
         </div>
-        <span>{`검색결과 : ${data.length}건`}</span>
+        <span>{LABELS.SEARCH_RESULT(data.length)}</span>
       </div>
       <Table
         ref={tableRef}

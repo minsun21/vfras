@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import { profileFields } from "../config/FieldsConfig";
 import { ROUTES } from "../constants/routes";
+import { LABELS } from "../constants/Label";
 
 const Profile = () => {
   
@@ -25,14 +26,14 @@ const Profile = () => {
   return (
     <div>
       <div>
-        <Button label="수정" onClick={() => navigate(ROUTES.PROFILE_EDIT)} />
+        <Button label={LABELS.EDIT} onClick={() => navigate(ROUTES.PROFILE_EDIT)} />
       </div>
       <table className="info-table">
         <tbody>
           {profileFields.map((field) => (
             <tr key={field.key}>
               <td className="label">{field.label}</td>
-              <td>{data[field.key]}</td>{" "}
+              <td>{data[field.key]}</td>
             </tr>
           ))}
         </tbody>

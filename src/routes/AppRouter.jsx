@@ -47,7 +47,7 @@ const AppRouter = () => {
             menu.items.map((item) => (
               <Route
                 key={item.path}
-                path={`/${item.path}`}
+                path={`${item.path}`}
                 element={<item.component />}
               />
             ))
@@ -55,7 +55,7 @@ const AppRouter = () => {
         </Route>
 
         <Route
-          path="/login"
+          path={ROUTES.LOGIN}
           element={
             <PublicRoute>
               <Login />
@@ -63,7 +63,7 @@ const AppRouter = () => {
           }
         />
 
-        <Route path="*" element={<NotFound />} />
+        <Route path={ROUTES.ALL} element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

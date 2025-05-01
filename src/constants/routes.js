@@ -12,5 +12,6 @@ export const ROUTES = {
     PROFILE_EDIT : '/profile/edit',
     LOGIN: '/login',
     ROOT: '/',
+    ALL : "*"
   };
   

@@ -3,6 +3,8 @@ import Button, { BUTTON_SEARCH } from "../components/Button";
 import Input, { INPUT_SIZE_LG } from "../components/Input";
 import Table from "../components/Table";
 import { sounds_source_columns, sounds_source_data } from "../config/DataConfig";
+import { LABELS } from "../constants/Label";
+import {soundSourceMessage} from "../constants/Message";
 
 const SoundSource = () => {
   
@@ -20,12 +22,12 @@ const SoundSource = () => {
           <Input
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            placeholder="음원코드, 제목/설명을 입력해주세요."
+            placeholder={soundSourceMessage.searchPlaceHolder}
             size={INPUT_SIZE_LG}
           />
           <Button type={BUTTON_SEARCH} />
         </div>
-        <span>{`검색결과 : ${data.length}건`}</span>
+        <span>{LABELS.SEARCH_RESULT(data.length)}</span>
       </div>
       <Table
         ref={tableRef}

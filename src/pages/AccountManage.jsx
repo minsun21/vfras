@@ -1,13 +1,15 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Table from "../components/Table";
-import Button, { BUTTON_CANCEL, BUTTON_SEARCH } from "../components/Button";
+import Button, { BUTTON_CANCEL, BUTTON_DELETE, BUTTON_SEARCH } from "../components/Button";
 import Input, { INPUT_SIZE_LG } from "../components/Input";
 import {
   account_manage_columns,
   account_manage_data,
 } from "../config/DataConfig";
 import { ROUTES } from "../constants/routes";
+import { accountMessages, errorMessages } from "../constants/Message";
+import { LABELS } from "../constants/Label";
 
 const AccountManage = () => {
   const navigate = useNavigate();
@@ -23,12 +25,12 @@ const AccountManage = () => {
   };
 
   const editAccount = () => {
-    if(selectedRows.length ===0){
-      alert('사용자를 선택해주세요');
+    if (selectedRows.length === 0) {
+      alert(errorMessages.nonSelect);
       return;
     }
-    if(selectedRows.length > 1){
-      alert('사용자 1명 선택해 주세요');
+    if (selectedRows.length > 1) {
+      alert(errorMessages.oneSelect);
       return;
     }
 
@@ -37,16 +39,16 @@ const AccountManage = () => {
         selectedId: selectedRows[0].id,
       },
     });
-  }
+  };
 
-  const deleteAccount = () =>{
-    if(selectedRows.length ===0){
-      alert('삭제할 사용자를 선택해주세요');
+  const deleteAccount = () => {
+    if (selectedRows.length === 0) {
+      alert(errorMessages.nonSelect);
       return;
     }
 
     // {}건 삭제하시겠습니까?
-  }
+  };
 
   return (
     <div>
@@ -55,16 +57,16 @@ const AccountManage = () => {
           <Input
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            placeholder="아이디, 이름, 부서를 입력해주세요"
+            placeholder={accountMessages.searchPlaceHolder}
             size={INPUT_SIZE_LG}
           />
           <Button type={BUTTON_SEARCH} />
           <Button
-            label={"사용자 등록"}
+            label={LABELS.USER_REGISTER}
             onClick={() => navigate(ROUTES.ACCOUNT_REGISTER)}
           />
         </div>
-        <span>{`검색결과 : ${data.length}건`}</span>
+        <span>{LABELS.SEARCH_RESULT(data.length)}</span>
       </div>
       <div>
         <Table
@@ -75,13 +77,16 @@ const AccountManage = () => {
           rowSelectionEnabled={true}
           onRowSelectionChange={setSelectedRows}
         />
-        <div style={{ marginTop: "1rem" }}>
+        <div>
           <Button
             type={BUTTON_CANCEL}
-            label={"사용자 정보 수정"}
+            label={LABELS.USER_EDIT}
             onClick={editAccount}
           />
-          <Button type={BUTTON_CANCEL} label={"삭제"} onClick={deleteAccount} />
+          <Button
+            type={BUTTON_DELETE}
+            onClick={deleteAccount}
+          />
         </div>
       </div>
     </div>

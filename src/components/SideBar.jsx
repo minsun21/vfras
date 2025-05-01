@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { MenusConfig } from "../config/MenusConfig";
+import { LABELS } from "../constants/Label";
 
 const SideBar = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const SideBar = () => {
     <aside className="layout-sidebar">
       <div className="logo">
         <div>이미지</div>
-        <span>vFRAS 가입자 관리</span>
+        <span>{LABELS.HOME_TITLE}</span>
       </div>
       <nav>
         {MenusConfig.map((group, index) => (

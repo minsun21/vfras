@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { accountEditFields } from "../config/FieldsConfig";
-import Button, { BUTTON_CANCEL } from "../components/Button";
+import Button, { BUTTON_CANCEL, BUTTON_SAVE } from "../components/Button";
 import Input from "../components/Input";
 import Select from "../components/Select";
 import { ROUTES } from "../constants/routes";
 import { accountValidate } from "../utils/FormValidation";
+import { LABELS } from "../constants/Label";
+import { accountMessages, infoMessage } from "../constants/Message";
 
 const AccountEdit = () => {
+
   const navigate = useNavigate();
   const { state } = useLocation();
 
@@ -34,7 +36,7 @@ const AccountEdit = () => {
 
     console.log("저장할 데이터:", formData);
 
-    alert("프로필이 성공적으로 저장되었습니다.");
+    alert(infoMessage.successUserEdit);
     navigate("/profile");
   };
 
@@ -96,9 +98,9 @@ const AccountEdit = () => {
           })}
         </tbody>
       </table>
-      <div style={{ display: "flex" }}>
+      <div>
         <Button type={BUTTON_CANCEL} onClick={() => navigate(ROUTES.PROFILE)} />
-        <Button label="저장" onClick={handleSave} />
+        <Button type={BUTTON_SAVE} onClick={handleSave} />
       </div>
     </div>
   );

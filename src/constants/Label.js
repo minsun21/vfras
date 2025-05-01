@@ -1,6 +1,25 @@
-export const SAVE = "저장";
-export const CANCEL = "취소";
-export const CONFIRM = "확인";
-export const LOGIN = "로그인";
-export const LOGOUT = "로그아웃";
-export const DELETE = "삭제";
+export const LABELS = {
+  CONFIRM: "확인",
+  SAVE: "저장",
+  CANCEL: "취소",
+  DELETE: "삭제",
+  LOGIN: "로그인",
+  LOGOUT: "로그아웃",
+  ID: "아이디",
+  PASSWORD: "비밀번호",
+  HOME_TITLE: "vFRAS 가입자 관리",
+  SEARCH: "검색",
+  MY_INFO: "내 정보",
+  USER_REGISTER: "사용자 등록",
+  USER_EDIT: "사용자 정보 수정",
+  SEARCH_RESULT : (result) =>  `검색결과 : ${result}건`,
+  EDIT : "수정",
+  PASSWORD_CHANGE : "비밀번호 변경",
+  APPROVE : "승인",
+  SUBSRIBER_TYPE  : "가입자 타입",
+  SERVICE_TYPE : "서비스 타입",
+  USER_STATE : "가입자 상태",
+  SUBSRIBE : "가입",
+  SUBSRIBE_EDIT: "가입자 정보 수정",
+  MAIN_NUMBER : "대표번호"
+};
