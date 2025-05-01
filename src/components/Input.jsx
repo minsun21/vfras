@@ -6,19 +6,19 @@ export const INPUT_SIZE_SM = "sm";
 const Input = ({
   type = "text",
   value,
-  readOnly = false,
+  disabled = false,
   onChange,
   placeholder = "",
-  name,
+  label = "",
   size = "md",
 }) => {
   return (
     <div className={`common-input-${size}`}>
-      {name && <span>{name}</span>}
+      {label && <span>{label}</span>}
       <input
         type={type}
         value={value}
-        disabled={readOnly}
+        disabled={disabled}
         onChange={onChange}
         placeholder={placeholder}
       />

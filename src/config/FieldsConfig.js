@@ -1,29 +1,174 @@
-export const profileFieldsConfig = [
+export const profileFieldsFields = [
   {
     key: "classification",
     label: "사용자 구분",
     value: "Admin",
     type: "text",
-    readonly: true,
+    required: true,
   },
   {
     key: "department",
     label: "부서",
     value: "운영팀",
     type: "text",
-    readonly: true,
+    required: true,
   },
-  { key: "id", label: "아이디", value: "vFRAS", type: "text", readonly: true },
+  { key: "id", label: "아이디", value: "vFRAS", type: "text", required: true },
   {
     key: "password",
     label: "비밀번호",
     value: "******",
     type: "text",
-    readonly: true,
+    required: true,
   },
-  { key: "name", label: "이름", value: "홍길동", type: "text", readonly: true },
-  { key: "phone", label: "휴대폰", value: "010-1234-5678", type: "text" , required : true },
-  { key: "email", label: "이메일", value: "test@lguplus.co.kr", type: "email" , required : true},
+  { key: "name", label: "이름", value: "홍길동", type: "text", required: true },
+  {
+    key: "phone",
+    label: "휴대폰",
+    value: "010-1234-5678",
+    type: "text",
+    required: true,
+  },
+  {
+    key: "email",
+    label: "이메일",
+    value: "test@lguplus.co.kr",
+    type: "email",
+    required: true,
+  },
 ];
 
-// { key: 'department', label: '부서', type: 'select', options: ['운영팀', '개발팀', '인사팀'] }
+export const profileEditFieldsFields = [
+  {
+    key: "classification",
+    label: "사용자 구분",
+    placeholder: "Admin",
+    type: "text",
+    required: true,
+    disabled: true,
+  },
+  {
+    key: "department",
+    label: "부서",
+    placeholder: "운영팀",
+    type: "text",
+    required: true,
+    disabled: true,
+  },
+  {
+    key: "id",
+    label: "아이디",
+    placeholder: "vFRAS",
+    type: "text",
+    required: true,
+    disabled: true,
+  },
+  {
+    key: "password",
+    label: "비밀번호",
+    placeholder: "******",
+    type: "text",
+    required: true,
+    disabled: true,
+  },
+  {
+    key: "name",
+    label: "이름",
+    placeholder: "홍길동",
+    type: "text",
+    required: true,
+    disabled: true,
+  },
+  {
+    key: "phone",
+    label: "휴대폰",
+    placeholder: "010-1234-5678",
+    type: "text",
+    required: true,
+  },
+  {
+    key: "email",
+    label: "이메일",
+    placeholder: "test@lguplus.co.kr",
+    type: "email",
+    required: true,
+  },
+];
+
+export const subsriberResigerFields = [
+  {
+    key: "mainNumber",
+    label: "대표번호",
+    type: "text",
+    required: true,
+    requiredLength: 11,
+  },
+  {
+    key: "userState",
+    label: "사용자 상태",
+    type: "radio",
+    options: ["요청중", "가입"],
+  },
+  {
+    key: "subsriberType",
+    label: "가입자 유형",
+    type: "radio",
+    options: ["개인", "법인"],
+  },
+  {
+    key: "serviceType",
+    label: "서비스 유형",
+    type: "radio",
+    options: ["개인", "개인 DJ", "기업"],
+  },
+  {
+    key: "name",
+    label: "이름",
+    type: "text",
+    required: true,
+  },
+  {
+    key: "password",
+    label: "비밀번호",
+    type: "text",
+    required: true,
+    requiredLength: 4,
+  },
+  {
+    key: "address1",
+    label: "주소1",
+    type: "text",
+    required: true,
+  },
+  {
+    key: "address2",
+    label: "주소2 (Option)",
+    type: "text",
+    placeholder: "OPTION",
+  },
+  {
+    key: "pbxNumber",
+    label: "교환기 번호 (시작~끝)",
+    multi: true,
+    fields: [
+      { key: "startPbxNumber", type: "number" },
+      { key: "endPbxNumber", type: "number" },
+    ],
+  },
+  {
+    key: "userNumber",
+    label: "사용자 번호(시작~끝)",
+    multi: true,
+    fields: [
+      { key: "starUsertNumber", type: "number" },
+      { key: "endUserNumber", type: "number" },
+    ],
+  },
+  {
+    key: "defaultCallRing",
+    label: "기본통화연결음 ID",
+    type: "number",
+    required: true,
+    requiredLength: 6,
+  },
+];
