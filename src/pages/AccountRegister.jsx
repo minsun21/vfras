@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { subsriberResigerFields } from "../config/FieldsConfig";
+import { accountRegisterFields } from "../config/FieldsConfig";
 import Button, { BUTTON_CANCEL } from "../components/Button";
 import Input from "../components/Input";
 import Select from "../components/Select";
@@ -12,77 +12,46 @@ import {
 } from "../utils/FormValidation";
 import { errorMessages } from "../constants/Message";
 
-const SubscriberRegister = () => {
+const AccountRegister = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
     // axios.get("/api/user/profile").then(res => {
-    //   setData(prev => ({ ...prev, ...res.data }));
+    //   setFormData(prev => ({ ...prev, ...res.data }));
     // });
   }, []);
 
-  const isFilledDigits = () => {
-    for (const field of subsriberResigerFields) {
-      const digits = formData[field.key].replace(/\D/g, "");
-      if (field.requiredLength && digits.length === field.requiredLength) {
-        alert(
-          `${field.label}는(은) 최소 ${field.requiredLength} 이상이어야 합니다.`
-        );
-        return false;
-      }
-    }
-
-    return true;
-  };
-
   const validate = () => {
-    for (const field of subsriberResigerFields) {
-      const { key, label, required, type, requiredLength } = field;
-      // 1. 필수값인지 확인
-      if (required && !formData[key]) {
-        alert(errorMessages.required(label));
-        return false;
-      }
-
-      // 2. 타입에 따라 validation 체크(email, phone...)
-      if (type === "email" && !isValidEmail(formData[key])) {
+    const newErrors = {};
+    if (!isValidEmail(formData.email)) {
         alert(errorMessages.invalidEmail());
-        return;
-      }
-
-      if (type === "phone" && !isValidPhone(formData[key])) {
-        alert(errorMessages.invalidPhone());
-        return;
-      }
-
-      // 3. 최소 길이 체크
-      if (requiredLength && formData[key].length !== requiredLength) {
-        alert(errorMessages.lengthMismatch(label, requiredLength));
-        return;
-      }
+      return;
     }
-
-    return true;
+    
+    if (!isValidPhone(formData.phone)) {
+        alert(errorMessages.invalidPhone());
+      return;
+    }
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSave = () => {
     if (!validate()) {
       return;
     }
-
     console.log("저장할 데이터:", formData);
 
-    // alert("가입자 등록이 완료되었습니다.");
-    // navigate(ROUTES.SUBSCRIBER);
+    alert("프로필이 성공적으로 저장되었습니다.");
+    navigate("/profile");
   };
 
   return (
     <div>
-      <table className="info-table">
+      <table className="user-info-table">
         <tbody>
-          {subsriberResigerFields.map((field) => {
+        {accountRegisterFields.map((field) => {
             const {
               key,
               label,
@@ -162,14 +131,11 @@ const SubscriberRegister = () => {
         </tbody>
       </table>
       <div style={{ display: "flex" }}>
-        <Button
-          type={BUTTON_CANCEL}
-          onClick={() => navigate(ROUTES.SUBSCRIBER)}
-        />
-        <Button label="확인" onClick={handleSave} />
+        <Button type={BUTTON_CANCEL} onClick={() => navigate(ROUTES.PROFILE)} />
+        <Button label="저장" onClick={handleSave} />
       </div>
     </div>
   );
 };
 
-export default SubscriberRegister;
+export default AccountRegister;

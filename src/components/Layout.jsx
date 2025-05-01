@@ -3,16 +3,15 @@ import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../features/authSlice";
 import Breadcrumb from "./Breadcrumb";
-import "./Layout.css";
 import SideBar from "./SideBar";
-import { MenusConfigConfig } from "../config/MenusConfig";
+import { MenusConfig } from "../config/MenusConfig";
 import Button, { BUTTON_CANCEL } from "./Button";
 import { ROUTES } from "../constants/routes";
 
-const getCurrentSubMenuTitle = (MenusConfigConfig, currentPath) => {
+const getCurrentSubMenuTitle = (MenusConfig, currentPath) => {
   const normalized = currentPath.replace(/^\/+/, "");
 
-  for (const group of MenusConfigConfig) {
+  for (const group of MenusConfig) {
     for (const item of group.items || []) {
       if (item.path === normalized) {
         return item.title;
@@ -23,6 +22,12 @@ const getCurrentSubMenuTitle = (MenusConfigConfig, currentPath) => {
   if(normalized === 'profile'){
     return '내 정보';
   }
+  else if(normalized === 'accounts/register'){
+    return '사용자 등록';
+  }
+  else if(normalized === 'accounts/edit'){
+    return '사용자 정보 수정';
+  }
   
   return null;
 };
@@ -32,7 +37,7 @@ const Layout = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const title = getCurrentSubMenuTitle(MenusConfigConfig, location.pathname);
+  const title = getCurrentSubMenuTitle(MenusConfig, location.pathname);
 
   const handleLogout = () => {
     dispatch(logout());

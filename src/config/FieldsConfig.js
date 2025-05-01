@@ -1,4 +1,4 @@
-export const profileFieldsFields = [
+export const profileFields = [
   {
     key: "classification",
     label: "사용자 구분",
@@ -38,7 +38,7 @@ export const profileFieldsFields = [
   },
 ];
 
-export const profileEditFieldsFields = [
+export const profileEditFields = [
   {
     key: "classification",
     label: "사용자 구분",
@@ -170,5 +170,65 @@ export const subsriberResigerFields = [
     type: "number",
     required: true,
     requiredLength: 6,
+  },
+];
+
+export const accountRegisterFields = [
+  {
+    key: "id",
+    label: "아이디",
+    type: "text",
+    required: true,
+  },
+  {
+    key: "classification",
+    label: "사용자 구분",
+    type: "select",
+    options: ["Admin", "User"],
+    required: true,
+  },
+  {
+    key: "department",
+    label: "부서",
+    type: "text",
+    required: true,
+  },
+  {
+    key: "name",
+    label: "이름",
+    placeholder: "홍길동",
+    type: "text",
+    required: true,
+    disabled: true,
+  },
+  {
+    key: "phone",
+    label: "휴대폰",
+    placeholder: "010-1234-5678",
+    type: "text",
+  },
+  {
+    key: "email",
+    label: "이메일",
+    placeholder: "test@lguplus.co.kr",
+    type: "email",
+  },
+  {
+    key: "remarks",
+    label: "비고",
+    type: "text",
+  },
+  {
+    key: "password",
+    label: "비밀번호",
+    type: "text",
+    required: true,
+    comment: "(8~20 영문/숫자/특수문자 혼합)",
+  },
+  {
+    key: "passwordConfirm",
+    label: "비밀번호 확인",
+    type: "text",
+    required: true,
   },
 ];

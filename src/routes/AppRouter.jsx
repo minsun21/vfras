@@ -1,15 +1,14 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import Profile from "../pages/Profile";
-import ProfileEdit from "../pages/ProfileEdit";
+import '../index.css';
 import Login from "../pages/Login";
 import NotFound from "../pages/NotFound";
 
 import Layout from "../components/Layout";
 import PrivateRoute from "../components/routes/PrivateRoute";
 import PublicRoute from "../components/routes/PublicRoute";
-import { MenusConfigConfig } from "../config/MenusConfig";
+import { MenusConfig, NonMenuConfig } from "../config/MenusConfig";
 import { ROUTES } from "../constants/routes";
 
 const AppRouter = () => {
@@ -36,10 +35,15 @@ const AppRouter = () => {
             </PrivateRoute>
           }
         >
-          <Route path={ROUTES.PROFILE} element={<Profile />} />
-          <Route path={ROUTES.PROFILE_EDIT} element={<ProfileEdit />} />
-
-          {MenusConfigConfig.map((menu) =>
+       
+          {NonMenuConfig.map((item) =>
+             <Route
+             key={item.path}
+             path={`/${item.path}`}
+             element={<item.component />}
+           />
+          )}
+          {MenusConfig.map((menu) =>
             menu.items.map((item) => (
               <Route
                 key={item.path}

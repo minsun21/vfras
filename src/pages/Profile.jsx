@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
-import { profileFieldsFields } from "../config/FieldsConfig";
+import { profileFields } from "../config/FieldsConfig";
 import { ROUTES } from "../constants/routes";
 
 const Profile = () => {
+  
   const navigate = useNavigate();
 
   const [data, setData] = useState(() =>
-    profileFieldsFields.reduce((acc, field) => {
+    profileFields.reduce((acc, field) => {
       acc[field.key] = field.value || "";
       return acc;
     }, {})
@@ -28,7 +29,7 @@ const Profile = () => {
       </div>
       <table className="info-table">
         <tbody>
-          {profileFieldsFields.map((field) => (
+          {profileFields.map((field) => (
             <tr key={field.key}>
               <td className="label">{field.label}</td>
               <td>{data[field.key]}</td>{" "}

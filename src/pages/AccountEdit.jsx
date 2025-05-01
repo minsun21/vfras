@@ -7,7 +7,7 @@ import { ROUTES } from "../constants/routes";
 import { isValidEmail, isValidPhone } from "../utils/FormValidation";
 import { errorMessages } from "../constants/Message";
 
-const ProfileEdit = () => {
+const AccountEdit = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({});
@@ -91,4 +91,4 @@ const ProfileEdit = () => {
   );
 };
 
-export default ProfileEdit;
+export default AccountEdit;

@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 import { ROUTES } from '../constants/routes';
 
-export const MenusConfigConfig = [
+export const MenusConfig = [
   {
     title: '가입자',
     items: [
@@ -59,3 +59,21 @@ export const MenusConfigConfig = [
   }
 ];
 
+export const NonMenuConfig = [
+  {
+    path: ROUTES.PROFILE,
+    component: lazy(() => import('../pages/Profile'))
+  },
+  {
+    path: ROUTES.PROFILE_EDIT,
+    component: lazy(() => import('../pages/ProfileEdit'))
+  },
+  {
+    path: ROUTES.ACCOUNT_REGISTER,
+    component: lazy(() => import('../pages/AccountRegister'))
+  },
+  {
+    path: ROUTES.ACCOUNT_EDIT,
+    component: lazy(() => import('../pages/AccountEdit'))
+  },
+];
