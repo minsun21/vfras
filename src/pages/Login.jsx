@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../features/authSlice";
 import { useNavigate, useLocation } from "react-router-dom";
+import { ROUTES } from "../constants/routes";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -10,7 +11,7 @@ const Login = () => {
 
   const [errMsg, setErrMsg] = useState("아이디를 입력해주세요");
 
-  const from = location.state?.from?.pathname || "/home";
+  const from = location.state?.from?.pathname || ROUTES.SUBSCRIBER;
 
   const handleLogin = () => {
     const success = true;

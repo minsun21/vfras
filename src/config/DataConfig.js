@@ -193,3 +193,34 @@ export const account_manage_data =[
     lastAccessTime: "2024.04.30 05:13:09",
   },
 ]
+
+export const subscribe_columns = [
+  {
+    accessorKey: "mainNumber",
+    header: "대표 번호",
+  },
+  {
+    accessorKey: "userNumber",
+    header: "사용자 번호\\n(시작~끝)",
+  },
+  {
+    accessorKey: "pbxNumber",
+    header: "교환기 번호\\n(시작~끝)",
+  },
+  {
+    accessorKey: "name",
+    header: "가입자명",
+  },
+  {
+    accessorKey: "대표 번호",
+    header: "신청일",
+  },
+  {
+    accessorKey: "status",
+    header: "상태",
+  },
+  {
+    accessorKey: "manage",
+    header: "",
+  },
+];

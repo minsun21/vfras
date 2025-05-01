@@ -1,4 +1,5 @@
 import { lazy } from 'react';
+import { ROUTES } from '../constants/routes';
 
 export const MenusConfigConfig = [
   {
@@ -6,17 +7,17 @@ export const MenusConfigConfig = [
     items: [
       {
         title: '가입자 조회',
-        path: 'subscriber',
+        path: ROUTES.SUBSCRIBER,
         component: lazy(() => import('../pages/Subscriber'))
       },
       {
         title: '가입자 관리',
-        path: 'subscriber/manage',
+        path: ROUTES.SUBSCRIBER_MANAGE,
         component: lazy(() => import('../pages/SubscriberManage'))
       },
       {
         title: '가입자 등록',
-        path: 'subscriber/register',
+        path: ROUTES.SUBSCRIBER_REGISTER,
         component: lazy(() => import('../pages/SubscriberRegister'))
       }
     ]
@@ -26,7 +27,7 @@ export const MenusConfigConfig = [
     items: [
       {
         title: 'LV 국번 관리',
-        path: 'countrycode',
+        path: ROUTES.COUNTRY_CODE,
         component: lazy(() => import('../pages/CountryCode'))
       }
     ]
@@ -36,7 +37,7 @@ export const MenusConfigConfig = [
     items: [
       {
         title: '음원 조회',
-        path: 'soundsource',
+        path: ROUTES.SOUND_SOURCE,
         component: lazy(() => import('../pages/SoundSource'))
       }
     ]
@@ -46,12 +47,12 @@ export const MenusConfigConfig = [
     items: [
       {
         title: '계정 관리',
-        path: 'accounts/manage',
+        path: ROUTES.ACCOUNT_MANAGE,
         component: lazy(() => import('../pages/AccountManage'))
       },
       {
         title: '접속 이력',
-        path: 'accounts/logs',
+        path: ROUTES.ACCOUNT_LOGS,
         component: lazy(() => import('../pages/AccountLogs'))
       }
     ]

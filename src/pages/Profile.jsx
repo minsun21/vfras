@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Pages.css";
 import Button from "../components/Button";
 import { profileFieldsConfig } from "../config/FieldsConfig";
+import { ROUTES } from "../constants/routes";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Profile = () => {
   return (
     <div>
       <div>
-        <Button label="수정" onClick={() => navigate("/profile/edit")} />
+        <Button label="수정" onClick={() => navigate(ROUTES.PROFILE_EDIT)} />
       </div>
       <table className="info-table">
         <tbody>

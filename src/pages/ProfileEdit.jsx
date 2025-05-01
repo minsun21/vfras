@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { profileFieldsConfig } from "../config/FieldsConfig";
 import Button, { BUTTON_CANCEL } from "../components/Button";
 import Input from "../components/Input";
+import { ROUTES } from "../constants/routes";
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
@@ -96,7 +97,7 @@ const ProfileEdit = () => {
         </tbody>
       </table>
       <div style={{ display: "flex" }}>
-        <Button type={BUTTON_CANCEL} onClick={() => navigate("/profile")} />
+        <Button type={BUTTON_CANCEL} onClick={() => navigate(ROUTES.PROFILE)} />
         <Button label="저장" onClick={handleSave} />
       </div>
     </div>

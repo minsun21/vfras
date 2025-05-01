@@ -6,7 +6,7 @@ const SideBar = () => {
   const navigate = useNavigate();
 
   const goPage = (path) => {
-    navigate(`/${path}`);
+    navigate(`${path}`);
   };
 
   return (

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { ROUTES } from '../constants/routes';
 
 const NotFound = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const homePath = isAuthenticated ? '/home' : '/login';
+  const homePath = isAuthenticated ? ROUTES.SUBSCRIBER : ROUTES.LOGIN;
 
   return (
     <div style={{ textAlign: 'center', marginTop: '100px' }}>

@@ -7,6 +7,7 @@ import "./Layout.css";
 import SideBar from "./SideBar";
 import { MenusConfigConfig } from "../config/MenusConfig";
 import Button, { BUTTON_CANCEL } from "./Button";
+import { ROUTES } from "../constants/routes";
 
 const getCurrentSubMenuTitle = (MenusConfigConfig, currentPath) => {
   const normalized = currentPath.replace(/^\/+/, "");
@@ -36,11 +37,11 @@ const Layout = ({ children }) => {
   const handleLogout = () => {
     dispatch(logout());
     localStorage.setItem("logout", Date.now()); // ✅ 트리거 역할
-    navigate("/login", { replace: true });
+    navigate(ROUTES.LOGIN, { replace: true });
   };
 
   const goProfile = () => {
-    navigate("/profile");
+    navigate(ROUTES.PROFILE);
   };
 
   return (
@@ -50,8 +51,8 @@ const Layout = ({ children }) => {
         <header className="layout-header">
           <Breadcrumb />
           <div className="user-actions">
-            <Button onClick={goProfile}>내정보</Button>
-            <Button type={BUTTON_CANCEL} onClick={handleLogout}>로그아웃</Button>
+            <Button label={"내 정보"} onClick={goProfile} />
+            <Button label={"로그아웃"} type={BUTTON_CANCEL} onClick={handleLogout} />
           </div>
         </header>
 

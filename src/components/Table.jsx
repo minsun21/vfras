@@ -48,7 +48,7 @@ const Table = forwardRef(
     const processedColumns = useMemo(() => {
       const enhanceColumns = (cols) =>
         cols.map((col) => {
-          console.log()
+          console.log();
           if (col.columns) {
             return { ...col, columns: enhanceColumns(col.columns) };
           }
@@ -159,9 +159,6 @@ const Table = forwardRef(
     const pageIndex = table.getState().pagination.pageIndex;
     const pageNumbers = Array.from({ length: pageCount }, (_, i) => i);
 
-    const headerGroups = table.getHeaderGroups();
-    const maxDepth = headerGroups.length;
-
     return (
       <div>
         <table border="1" style={{ borderCollapse: "collapse", width: "100%" }}>
@@ -172,11 +169,19 @@ const Table = forwardRef(
               {columns.map((col, idx) =>
                 col.columns ? (
                   <th key={idx} colSpan={col.columns.length}>
-                    {col.header}
+                    {String(col.header)
+                      .split("\\n")
+                      .map((line, i) => (
+                        <div key={i}>{line}</div>
+                      ))}
                   </th>
                 ) : (
                   <th key={idx} rowSpan={2}>
-                    {col.header}
+                    {String(col.header)
+                      .split("\\n")
+                      .map((line, i) => (
+                        <div key={i}>{line}</div>
+                      ))}
                   </th>
                 )
               )}
