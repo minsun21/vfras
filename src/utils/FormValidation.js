@@ -9,6 +9,8 @@ export const isValidPhone = (phone) => {
   return regex.test(phone);
 };
 
-export const isRequiredData = (value) =>{
-  return value;
-}
+export const isValidPassword = (password) => {
+  const regex =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};':"\\|,.<>/?]).{8,20}$/;
+  return regex.test(password);
+};

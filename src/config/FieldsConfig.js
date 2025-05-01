@@ -196,21 +196,17 @@ export const accountRegisterFields = [
   {
     key: "name",
     label: "이름",
-    placeholder: "홍길동",
     type: "text",
     required: true,
-    disabled: true,
   },
   {
     key: "phone",
     label: "휴대폰",
-    placeholder: "010-1234-5678",
     type: "text",
   },
   {
     key: "email",
     label: "이메일",
-    placeholder: "test@lguplus.co.kr",
     type: "email",
   },
   {

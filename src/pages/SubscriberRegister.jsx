@@ -23,20 +23,6 @@ const SubscriberRegister = () => {
     // });
   }, []);
 
-  const isFilledDigits = () => {
-    for (const field of subsriberResigerFields) {
-      const digits = formData[field.key].replace(/\D/g, "");
-      if (field.requiredLength && digits.length === field.requiredLength) {
-        alert(
-          `${field.label}는(은) 최소 ${field.requiredLength} 이상이어야 합니다.`
-        );
-        return false;
-      }
-    }
-
-    return true;
-  };
-
   const validate = () => {
     for (const field of subsriberResigerFields) {
       const { key, label, required, type, requiredLength } = field;
@@ -90,7 +76,9 @@ const SubscriberRegister = () => {
               options = [],
               required,
               placeholder,
-              comment
+              comment,
+              disabled,
+              multi
             } = field;
             const value = formData[key] || "";
 
@@ -116,20 +104,20 @@ const SubscriberRegister = () => {
                       options={options}
                       onChange={(e) => handleChange(e.target.value)}
                     />
-                  ) : key === "password" ? (
+                  ) : comment ? (
                     <div>
                       <Input
                         value={value}
-                        type={field.type}
+                        type={type}
                         placeholder={placeholder}
                         onChange={(e) => handleChange(e.target.value)}
-                        disabled={field.readonly}
+                        disabled={disabled}
                       />
                       <span className="comment">
                         {comment}
                       </span>
                     </div>
-                  ) : field.multi ? (
+                  ) : multi ? (
                     <div>
                       {field.fields.map((subField, idx) => (
                         <div key={subField.key}>
@@ -142,6 +130,7 @@ const SubscriberRegister = () => {
                                 [subField.key]: e.target.value,
                               }))
                             }
+                            disabled={disabled}
                           />
                           {idx === 0 && <span>{"-"}</span>}
                         </div>

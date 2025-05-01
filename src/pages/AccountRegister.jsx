@@ -4,11 +4,11 @@ import { accountRegisterFields } from "../config/FieldsConfig";
 import Button, { BUTTON_CANCEL } from "../components/Button";
 import Input from "../components/Input";
 import Select from "../components/Select";
-import RadioGroup from "../components/RadioGroup";
 import { ROUTES } from "../constants/routes";
 import {
   isValidEmail,
   isValidPhone,
+  isValidPassword,
 } from "../utils/FormValidation";
 import { errorMessages } from "../constants/Message";
 
@@ -24,34 +24,63 @@ const AccountRegister = () => {
   }, []);
 
   const validate = () => {
-    const newErrors = {};
-    if (!isValidEmail(formData.email)) {
+    for (const field of accountRegisterFields) {
+      const { key, label, required, type, requiredLength } = field;
+      // 1. 필수값인지 확인
+      if (required && !formData[key]) {
+        alert(errorMessages.required(label));
+        return false;
+      }
+
+      // 2. 타입에 따라 validation 체크(email, phone...)
+      if (type === "email" && !isValidEmail(formData[key])) {
         alert(errorMessages.invalidEmail());
-      return;
-    }
-    
-    if (!isValidPhone(formData.phone)) {
+        return;
+      }
+
+      if (type === "phone" && !isValidPhone(formData[key])) {
         alert(errorMessages.invalidPhone());
-      return;
+        return;
+      }
+
+      // 3. 최소 길이 체크
+      if (requiredLength && formData[key].length !== requiredLength) {
+        alert(errorMessages.lengthMismatch(label, requiredLength));
+        return;
+      }
+
+      // 4. 비밀번호 체크
+      if (type === "password") {
+        if(!isValidPassword(key)){
+          alert(errorMessages.invalidPassword());
+          return;
+        }
+        if(formData[key] === formData['passwordConfirm']){
+          alert(errorMessages.confirmPassword());
+          return;
+        }
+      }
     }
-    return Object.keys(newErrors).length === 0;
+
+    return true;
   };
 
   const handleSave = () => {
     if (!validate()) {
       return;
     }
+
     console.log("저장할 데이터:", formData);
 
-    alert("프로필이 성공적으로 저장되었습니다.");
-    navigate("/profile");
+    // alert("가입자 등록이 완료되었습니다.");
+    // navigate(ROUTES.SUBSCRIBER);
   };
 
   return (
     <div>
       <table className="user-info-table">
         <tbody>
-        {accountRegisterFields.map((field) => {
+          {accountRegisterFields.map((field) => {
             const {
               key,
               label,
@@ -59,7 +88,8 @@ const AccountRegister = () => {
               options = [],
               required,
               placeholder,
-              comment
+              comment,
+              disabled,
             } = field;
             const value = formData[key] || "";
 
@@ -79,42 +109,16 @@ const AccountRegister = () => {
                       options={options}
                       onChange={(e) => handleChange(e.target.value)}
                     />
-                  ) : type === "radio" ? (
-                    <RadioGroup
-                      value={value}
-                      options={options}
-                      onChange={(e) => handleChange(e.target.value)}
-                    />
-                  ) : key === "password" ? (
+                  ) : comment ? (
                     <div>
                       <Input
                         value={value}
-                        type={field.type}
+                        type={type}
                         placeholder={placeholder}
                         onChange={(e) => handleChange(e.target.value)}
-                        disabled={field.readonly}
+                        disabled={disabled}
                       />
-                      <span className="comment">
-                        {comment}
-                      </span>
-                    </div>
-                  ) : field.multi ? (
-                    <div>
-                      {field.fields.map((subField, idx) => (
-                        <div key={subField.key}>
-                          <Input
-                            type={subField.type}
-                            value={formData[subField.key] || ""}
-                            onChange={(e) =>
-                              setFormData((prev) => ({
-                                ...prev,
-                                [subField.key]: e.target.value,
-                              }))
-                            }
-                          />
-                          {idx === 0 && <span>{"-"}</span>}
-                        </div>
-                      ))}
+                      <span className="comment">{comment}</span>
                     </div>
                   ) : (
                     <Input
@@ -122,6 +126,7 @@ const AccountRegister = () => {
                       type={type}
                       placeholder={placeholder}
                       onChange={(e) => handleChange(e.target.value)}
+                      disabled={disabled}
                     />
                   )}
                 </td>
