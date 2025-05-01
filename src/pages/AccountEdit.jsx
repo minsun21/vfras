@@ -1,41 +1,37 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { profileEditFields } from "../config/FieldsConfig";
+import { useLocation } from "react-router-dom";
+import { accountEditFields } from "../config/FieldsConfig";
 import Button, { BUTTON_CANCEL } from "../components/Button";
 import Input from "../components/Input";
+import Select from "../components/Select";
 import { ROUTES } from "../constants/routes";
-import { isValidEmail, isValidPhone } from "../utils/FormValidation";
-import { errorMessages } from "../constants/Message";
+import { accountValidate } from "../utils/FormValidation";
 
 const AccountEdit = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
 
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
-    // axios.get("/api/user/profile").then(res => {
-    //   setFormData(prev => ({ ...prev, ...res.data }));
-    // });
-  }, []);
+    // userid로 정보 검색
 
-  const validate = () => {
-    const newErrors = {};
-    if (!isValidEmail(formData.email)) {
-        alert(errorMessages.invalidEmail());
-      return;
-    }
-    
-    if (!isValidPhone(formData.phone)) {
-        alert(errorMessages.invalidPhone());
-      return;
-    }
-    return Object.keys(newErrors).length === 0;
-  };
+    const selectedId = state?.selectedId || [];
+    // setInitData();
+    setFormData(() =>
+      accountEditFields.reduce((acc, field) => {
+        acc[field.key] = field.placeholder || "";
+        return acc;
+      }, {})
+    );
+  }, [state]);
 
   const handleSave = () => {
-    if (!validate()) {
+    if (!accountValidate(accountEditFields, formData)) {
       return;
     }
+
     console.log("저장할 데이터:", formData);
 
     alert("프로필이 성공적으로 저장되었습니다.");
@@ -46,36 +42,53 @@ const AccountEdit = () => {
     <div>
       <table className="user-info-table">
         <tbody>
-          {profileEditFields.map((field) => {
-            const { key, placeholder, disabled } = field;
+          {accountEditFields.map((field) => {
+            const {
+              key,
+              label,
+              type = "text",
+              options = [],
+              required,
+              comment,
+              disabled,
+            } = field;
+            const value = formData[key] || "";
+
             const handleChange = (val) => {
               setFormData((prev) => ({ ...prev, [key]: val }));
             };
+
             return (
               <tr key={key}>
-                <td className="label">{field.label}</td>
+                <td className="label" required={required}>
+                  {label}
+                </td>
                 <td className="value">
-                  {key === "password" ? (
-                    <>
+                  {type === "select" ? (
+                    <Select
+                      value={value}
+                      options={options}
+                      onChange={(e) => handleChange(e.target.value)}
+                    />
+                  ) : comment ? (
+                    <div>
                       <Input
-                        value={formData[key] || ""}
-                        type={field.type}
-                        placeholder={placeholder}
+                        value={value}
+                        type={type}
+                        placeholder={formData[key]}
                         onChange={(e) => handleChange(e.target.value)}
                         disabled={disabled}
                       />
-                      <Button type={BUTTON_CANCEL} label="비밀번호 변경" />
-                    </>
+                      <span className="comment">{comment}</span>
+                    </div>
                   ) : (
-                    <>
-                      <Input
-                        value={formData[key] || ""}
-                        type={field.type}
-                        placeholder={placeholder}
-                        onChange={(e) => handleChange(e.target.value)}
-                        disabled={disabled}
-                      />
-                    </>
+                    <Input
+                      value={value}
+                      type={type}
+                      placeholder={formData[key]}
+                      onChange={(e) => handleChange(e.target.value)}
+                      disabled={disabled}
+                    />
                   )}
                 </td>
               </tr>

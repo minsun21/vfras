@@ -228,3 +228,70 @@ export const accountRegisterFields = [
     required: true,
   },
 ];
+
+export const accountEditFields = [
+  {
+    key: "id",
+    label: "아이디",
+    placeholder: "vFRAS",
+    type: "text",
+    required: true,
+    disabled: true,
+  },
+  {
+    key: "classification",
+    label: "사용자 구분",
+    placeholder: "Admin",
+    type: "text",
+    required: true,
+  },
+  {
+    key: "department",
+    label: "부서",
+    placeholder: "운영팀",
+    type: "text",
+    required: true,
+  },
+  {
+    key: "name",
+    label: "이름",
+    placeholder: "홍길동",
+    type: "text",
+    required: true,
+  },
+  {
+    key: "phone",
+    label: "휴대폰",
+    placeholder: "010-1234-5678",
+    type: "text",
+    required: true,
+  },
+  {
+    key: "email",
+    label: "이메일",
+    placeholder: "test@lguplus.co.kr",
+    type: "email",
+    required: true,
+  },
+  {
+    key: "remarks",
+    label: "비고",
+    placeholder: "협력사 요청",
+    type: "text",
+  },
+  {
+    key: "password",
+    label: "비밀번호",
+    placeholder: "******",
+    type: "text",
+    comment: "(8~20 영문/숫자/특수문자 혼합)",
+    required: true,
+  },
+  {
+    key: "passwordConfirm",
+    label: "비밀번호 확인",
+    type: "text",
+    placeholder: "******",
+    required: true,
+  },
+];

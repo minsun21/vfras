@@ -164,7 +164,15 @@ const Table = forwardRef(
         <table border="1" style={{ borderCollapse: "collapse", width: "100%" }}>
           <thead>
             <tr>
-              {rowSelectionEnabled && <th rowSpan={2}>선택</th>}
+              {rowSelectionEnabled && (
+                <th rowSpan={2}>
+                  <input
+                    type="checkbox"
+                    checked={table.getIsAllPageRowsSelected()}
+                    onChange={table.getToggleAllPageRowsSelectedHandler()}
+                  />
+                </th>
+              )}
               {showIndex && <th rowSpan={2}>순번</th>}
               {columns.map((col, idx) =>
                 col.columns ? (

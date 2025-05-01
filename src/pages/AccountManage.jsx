@@ -22,6 +22,32 @@ const AccountManage = () => {
     console.log("최신 데이터:", updatedData);
   };
 
+  const editAccount = () => {
+    if(selectedRows.length ===0){
+      alert('사용자를 선택해주세요');
+      return;
+    }
+    if(selectedRows.length > 1){
+      alert('사용자 1명 선택해 주세요');
+      return;
+    }
+
+    navigate(ROUTES.ACCOUNT_EDIT, {
+      state: {
+        selectedId: selectedRows[0].id,
+      },
+    });
+  }
+
+  const deleteAccount = () =>{
+    if(selectedRows.length ===0){
+      alert('삭제할 사용자를 선택해주세요');
+      return;
+    }
+
+    // {}건 삭제하시겠습니까?
+  }
+
   return (
     <div>
       <div className="search-area">
@@ -54,9 +80,9 @@ const AccountManage = () => {
           <Button
             type={BUTTON_CANCEL}
             label={"사용자 정보 수정"}
-            onClick={() => navigate(ROUTES.ACCOUNT_EDIT)}
+            onClick={editAccount}
           />
-          <Button type={BUTTON_CANCEL} label={"삭제"} onClick={handleSave} />
+          <Button type={BUTTON_CANCEL} label={"삭제"} onClick={deleteAccount} />
         </div>
       </div>
     </div>

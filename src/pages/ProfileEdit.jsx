@@ -13,6 +13,12 @@ const ProfileEdit = () => {
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
+    setFormData(() =>
+      profileEditFields.reduce((acc, field) => {
+        acc[field.key] = field.placeholder || "";
+        return acc;
+      }, {})
+    );
     // axios.get("/api/user/profile").then(res => {
     //   setFormData(prev => ({ ...prev, ...res.data }));
     // });
@@ -21,12 +27,12 @@ const ProfileEdit = () => {
   const validate = () => {
     const newErrors = {};
     if (!isValidEmail(formData.email)) {
-        alert(errorMessages.invalidEmail());
+      alert(errorMessages.invalidEmail());
       return;
     }
-    
+
     if (!isValidPhone(formData.phone)) {
-        alert(errorMessages.invalidPhone());
+      alert(errorMessages.invalidPhone());
       return;
     }
     return Object.keys(newErrors).length === 0;
@@ -47,7 +53,7 @@ const ProfileEdit = () => {
       <table className="user-info-table">
         <tbody>
           {profileEditFields.map((field) => {
-            const { key, placeholder, disabled } = field;
+            const { key, disabled } = field;
             const handleChange = (val) => {
               setFormData((prev) => ({ ...prev, [key]: val }));
             };
@@ -60,7 +66,7 @@ const ProfileEdit = () => {
                       <Input
                         value={formData[key] || ""}
                         type={field.type}
-                        placeholder={placeholder}
+                        placeholder={formData[key]}
                         onChange={(e) => handleChange(e.target.value)}
                         disabled={disabled}
                       />
@@ -71,7 +77,7 @@ const ProfileEdit = () => {
                       <Input
                         value={formData[key] || ""}
                         type={field.type}
-                        placeholder={placeholder}
+                        placeholder={formData[key]}
                         onChange={(e) => handleChange(e.target.value)}
                         disabled={disabled}
                       />
