@@ -1,79 +1,89 @@
-import { lazy } from 'react';
-import { ROUTES } from '../constants/routes';
+import { lazy } from "react";
+import { ROUTES } from "../constants/routes";
+import { LABELS } from "../constants/Label";
 
 export const MenusConfig = [
   {
-    title: '가입자',
+    title: LABELS.SUBSCRIBER,
     items: [
       {
-        title: '가입자 조회',
+        title: LABELS.SUBSCRIBER_VIEW,
         path: ROUTES.SUBSCRIBER,
-        component: lazy(() => import('../pages/Subscriber'))
+        component: lazy(() => import("../pages/Subscriber")),
       },
       {
-        title: '가입자 관리',
+        title: LABELS.SUBSCRIBER_MANAGE,
         path: ROUTES.SUBSCRIBER_MANAGE,
-        component: lazy(() => import('../pages/SubscriberManage'))
+        component: lazy(() => import("../pages/SubscriberManage")),
       },
       {
-        title: '가입자 등록',
+        title: LABELS.SUBSCRIBER_REGISTER,
         path: ROUTES.SUBSCRIBER_REGISTER,
-        component: lazy(() => import('../pages/SubscriberRegister'))
-      }
-    ]
+        component: lazy(() => import("../pages/SubscriberRegister")),
+      },
+    ],
   },
   {
-    title: '국번호',
+    title: LABELS.COUNTRY_NUMBER,
     items: [
       {
-        title: 'LV 국번 관리',
+        title: LABELS.COUNTRY_NUMBER_MANAGE,
         path: ROUTES.COUNTRY_CODE,
-        component: lazy(() => import('../pages/CountryCode'))
-      }
-    ]
+        component: lazy(() => import("../pages/CountryCode")),
+      },
+    ],
   },
   {
-    title: '컨텐츠',
+    title: LABELS.CONTENTS,
     items: [
       {
-        title: '음원 조회',
+        title: LABELS.SOUNDS_VIEW,
         path: ROUTES.SOUND_SOURCE,
-        component: lazy(() => import('../pages/SoundSource'))
-      }
-    ]
+        component: lazy(() => import("../pages/SoundSource")),
+      },
+    ],
   },
   {
-    title: '계정',
+    title: LABELS.ACCOUNT,
     items: [
       {
-        title: '계정 관리',
+        title: LABELS.ACCOUNT_MANAGE,
         path: ROUTES.ACCOUNT_MANAGE,
-        component: lazy(() => import('../pages/AccountManage'))
+        component: lazy(() => import("../pages/AccountManage")),
       },
       {
-        title: '접속 이력',
+        title: LABELS.ACCOUNT_LOGS,
         path: ROUTES.ACCOUNT_LOGS,
-        component: lazy(() => import('../pages/AccountLogs'))
-      }
-    ]
-  }
+        component: lazy(() => import("../pages/AccountLogs")),
+      },
+    ],
+  },
 ];
 
 export const NonMenuConfig = [
   {
+    title: LABELS.MY_INFO,
     path: ROUTES.PROFILE,
-    component: lazy(() => import('../pages/Profile'))
+    component: lazy(() => import("../pages/Profile")),
   },
   {
+    title: LABELS.USER_EDIT,
     path: ROUTES.PROFILE_EDIT,
-    component: lazy(() => import('../pages/ProfileEdit'))
+    component: lazy(() => import("../pages/ProfileEdit")),
   },
   {
+    title: LABELS.USER_EDIT,
     path: ROUTES.ACCOUNT_REGISTER,
-    component: lazy(() => import('../pages/AccountRegister'))
+    component: lazy(() => import("../pages/AccountRegister")),
   },
   {
+    title: LABELS.USER_EDIT,
     path: ROUTES.ACCOUNT_EDIT,
-    component: lazy(() => import('../pages/AccountEdit'))
+    component: lazy(() => import("../pages/AccountEdit")),
+  },
+  {
+    title: LABELS.SUBSCRIBER_MANAGE,
+    path: ROUTES.ACCOUNT_MANAGE_EDIT,
+    component: lazy(() => import("../pages/SubscriberManageEdit")),
   },
 ];

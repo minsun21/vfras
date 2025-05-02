@@ -36,7 +36,7 @@ export const soundSourceMessage = {
   searchPlaceHolder: `음원코드, 제목/설명을 입력해주세요`,
 };
 
-export const subsriberMessage = {
+export const SUBSCRIBERMessage = {
   searchPlaceHolder: `가입자명, 번호를 입력해주세요`,
   approvedError: `이미 가입된 행은 선택할 수 없습니다`,
 };

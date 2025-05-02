@@ -4,12 +4,12 @@ import { useDispatch } from "react-redux";
 import { logout } from "../features/authSlice";
 import Breadcrumb from "./Breadcrumb";
 import SideBar from "./SideBar";
-import { MenusConfig } from "../config/MenusConfig";
+import { MenusConfig, NonMenuConfig } from "../config/MenusConfig";
 import Button, { BUTTON_CANCEL } from "./Button";
 import { ROUTES } from "../constants/routes";
 import { LABELS } from "../constants/Label";
 
-const getCurrentSubMenuTitle = (MenusConfig, currentPath) => {
+const getCurrentSubMenuTitle = (currentPath) => {
   for (const group of MenusConfig) {
     for (const item of group.items || []) {
       if (item.path === currentPath) {
@@ -18,14 +18,10 @@ const getCurrentSubMenuTitle = (MenusConfig, currentPath) => {
     }
   }
 
-  if(currentPath === '/profile'){
-    return LABELS.MY_INFO;
-  }
-  else if(currentPath === '/accounts/register'){
-    return LABELS.USER_REGISTER;
-  }
-  else if(currentPath === '/accounts/edit'){
-    return LABELS.USER_EDIT;
+  for (const item of NonMenuConfig) {
+    if (item.path === currentPath) {
+      return item.title;
+    }
   }
   
   return null;
@@ -36,7 +32,7 @@ const Layout = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const title = getCurrentSubMenuTitle(MenusConfig, location.pathname);
+  const title = getCurrentSubMenuTitle(location.pathname);
 
   const handleLogout = () => {
     dispatch(logout());

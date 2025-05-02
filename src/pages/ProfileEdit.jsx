@@ -51,7 +51,7 @@ const ProfileEdit = () => {
 
   return (
     <div>
-      <table className="user-info-table">
+      <table className="info-table">
         <tbody>
           {profileEditFields.map((field) => {
             const { key, disabled } = field;

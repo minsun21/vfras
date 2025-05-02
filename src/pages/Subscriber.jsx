@@ -7,13 +7,13 @@ import Table from "../components/Table";
 import { ROUTES } from "../constants/routes";
 import { subscribe_columns, subscribe_data } from "../config/DataConfig";
 import {
-  option_subsriberType,
+  option_SUBSCRIBERType,
   option_allType,
   option_serviceType,
   option_userState,
 } from "../config/FieldsConfig";
 import { LABELS } from "../constants/Label";
-import { errorMessages, subsriberMessage } from "../constants/Message";
+import { errorMessages, SUBSCRIBERMessage } from "../constants/Message";
 
 const Subscriber = () => {
   const tableRef = useRef();
@@ -22,7 +22,7 @@ const Subscriber = () => {
   const [searchInput, setSearchInput] = useState({});
   const [data, setData] = useState(subscribe_data);
   const [allType, setAllType] = useState([]);
-  const [subsriberTypeOptions, setSubsriberTypeOptions] = useState([]);
+  const [SUBSCRIBERTypeOptions, setSUBSCRIBERTypeOptions] = useState([]);
   const [serviceTypeOptions, setServiceTypeOptions] = useState([]);
   const [userStateOptions, setUserStateOptions] = useState([]);
 
@@ -30,13 +30,13 @@ const Subscriber = () => {
 
   useEffect(() => {
     setAllType(option_allType);
-    setSubsriberTypeOptions(option_subsriberType);
+    setSUBSCRIBERTypeOptions(option_SUBSCRIBERType);
     setServiceTypeOptions(option_serviceType);
     setUserStateOptions(option_userState);
 
     setSearchInput({
       allType: option_allType[0],
-      subsriberType: option_subsriberType[0],
+      SUBSCRIBERType: option_SUBSCRIBERType[0],
       serviceType: option_serviceType[0],
       userState: option_userState[0],
     });
@@ -57,15 +57,15 @@ const Subscriber = () => {
     });
   };
 
-  const approvedSubsriber = () => {
+  const approvedSUBSCRIBER = () => {
     if (selectedRows.length === 0) {
       alert(errorMessages.nonSelect);
       return;
     }
 
     for (const selectedRow of selectedRows) {
-      if (selectedRow.state === LABELS.SUBSRIBE) {
-        alert(subsriberMessage.approvedError);
+      if (selectedRow.state === LABELS.SUBSCRIBE) {
+        alert(SUBSCRIBERMessage.approvedError);
         return;
       }
     }
@@ -74,11 +74,11 @@ const Subscriber = () => {
 
     tableRef.current.updateRowsById(selectedIds, (row) => ({
       ...row,
-      state: LABELS.SUBSRIBE,
+      state: LABELS.SUBSCRIBE,
     }));
   };
 
-  const deleteSubsriber = () => {
+  const deleteSUBSCRIBER = () => {
     if (selectedRows.length === 0) {
       alert(errorMessages.nonSelect);
       return;
@@ -95,13 +95,13 @@ const Subscriber = () => {
               options={allType}
               nonEmpty={true}
             />
-            <Input placeholder={subsriberMessage.searchPlaceHolder} />
+            <Input placeholder={SUBSCRIBERMessage.searchPlaceHolder} />
           </div>
           <div>
             <Select
-              label={LABELS.SUBSRIBER_TYPE}
-              value={searchInput.subsriberType}
-              options={subsriberTypeOptions}
+              label={LABELS.SUBSCRIBER_TYPE}
+              value={searchInput.SUBSCRIBERType}
+              options={SUBSCRIBERTypeOptions}
               nonEmpty={true}
             />
             <Select
@@ -111,7 +111,7 @@ const Subscriber = () => {
               nonEmpty={true}
             />
             <Select
-              label={LABELS.USER_STATE}
+              label={LABELS.SUBSCRIBER_STATE}
               value={searchInput.userState}
               options={userStateOptions}
               nonEmpty={true}
@@ -130,11 +130,11 @@ const Subscriber = () => {
         onRowSelectionChange={setSelectedRows}
       />
       <div>
-        <Button label={LABELS.APPROVE} onClick={approvedSubsriber} />
+        <Button label={LABELS.APPROVE} onClick={approvedSUBSCRIBER} />
         <Button
           type={BUTTON_CANCEL}
           label={LABELS.DELETE}
-          onClick={deleteSubsriber}
+          onClick={deleteSUBSCRIBER}
         />
       </div>
     </div>

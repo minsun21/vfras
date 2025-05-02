@@ -42,7 +42,7 @@ const AccountEdit = () => {
 
   return (
     <div>
-      <table className="user-info-table">
+      <table className="info-table">
         <tbody>
           {accountEditFields.map((field) => {
             const {

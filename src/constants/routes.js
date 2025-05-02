@@ -5,6 +5,7 @@ export const ROUTES = {
     COUNTRY_CODE : '/countrycode',
     SOUND_SOURCE :'/soundsource',
     ACCOUNT_MANAGE : '/accounts/manage',
+    ACCOUNT_MANAGE_EDIT : '/accounts/manage/edit',
     ACCOUNT_LOGS : '/accounts/logs',
     ACCOUNT_REGISTER : '/accounts/register',
     ACCOUNT_EDIT : '/accounts/edit',

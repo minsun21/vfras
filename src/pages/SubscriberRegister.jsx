@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { subsriberResigerFields } from "../config/FieldsConfig";
+import { SUBSCRIBERResigerFields } from "../config/FieldsConfig";
 import Button, { BUTTON_CANCEL, BUTTON_CONFIRM } from "../components/Button";
 import Input from "../components/Input";
 import Select from "../components/Select";
@@ -19,7 +19,7 @@ const SubscriberRegister = () => {
     //   setData(prev => ({ ...prev, ...res.data }));
     // });
     let data = {};
-    for (const field of subsriberResigerFields) {
+    for (const field of SUBSCRIBERResigerFields) {
       if (field.type === "radio") {
         data[field.key] = field.options[0].value;
       }
@@ -32,7 +32,7 @@ const SubscriberRegister = () => {
   }, [formData]);
 
   const validate = () => {
-    for (const field of subsriberResigerFields) {
+    for (const field of SUBSCRIBERResigerFields) {
       const { key, label, required, type, requiredLength } = field;
       // 1. 필수값인지 확인
       if (required && !formData[key]) {
@@ -76,7 +76,7 @@ const SubscriberRegister = () => {
     <div>
       <table className="info-table">
         <tbody>
-          {subsriberResigerFields.map((field) => {
+          {SUBSCRIBERResigerFields.map((field) => {
             const {
               key,
               label,

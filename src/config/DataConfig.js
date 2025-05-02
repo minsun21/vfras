@@ -1,14 +1,14 @@
 import Button from "../components/Button";
-import { useNavigate } from "react-router-dom";
+import { LABELS } from "../constants/Label";
 
 export const sounds_source_columns = [
   {
     accessorKey: "code",
-    header: "음원코드",
+    header: LABELS.SOUNDS_CODE,
   },
   {
     accessorKey: "title",
-    header: "제목/설명",
+    header: LABELS.TITLE_DESC,
   },
 ];
 export const sounds_source_data = [
@@ -58,28 +58,28 @@ export const account_logs_columns = (openModal) => {
   return [
     {
       accessorKey: "id",
-      header: "아이디",
+      header: LABELS.ID,
     },
     {
       accessorKey: "name",
-      header: "이름",
+      header: LABELS.NAME,
       clickable: ({ row }) => openModal(row.original),
     },
     {
       accessorKey: "department",
-      header: "부서",
+      header: LABELS.DEPARTMENT,
     },
     {
       accessorKey: "userType",
-      header: "사용자 구분",
+      header: LABELS.CLASSIFICATION,
     },
     {
       accessorKey: "accessTime",
-      header: "접속 시간",
+      header: LABELS.ACCESS_TIME,
     },
     {
       accessorKey: "lastAccessTime",
-      header: "마지막 접속",
+      header: LABELS.LAST_ACCESS_TIME,
     },
   ];
 };
@@ -130,27 +130,27 @@ export const account_logs_data = [
 export const account_manage_columns = [
   {
     accessorKey: "id",
-    header: "아이디",
+    header: LABELS.ID,
   },
   {
     accessorKey: "name",
-    header: "이름",
+    header: LABELS.NAME,
   },
   {
     accessorKey: "department",
-    header: "부서",
+    header: LABELS.DEPARTMENT,
   },
   {
     accessorKey: "userType",
-    header: "사용자 구분",
+    header: LABELS.CLASSIFICATION,
   },
   {
     accessorKey: "createdAt",
-    header: "가입일",
+    header: LABELS.CREATED_AT,
   },
   {
     accessorKey: "lastAccessTime",
-    header: "마지막 접속",
+    header: LABELS.LAST_ACCESS_TIME,
   },
 ];
 
@@ -201,27 +201,27 @@ export const subscribe_columns = (navigateManage) => {
   return [
     {
       accessorKey: "mainNumber",
-      header: "대표 번호",
+      header: LABELS.MAIN_NUMBER,
     },
     {
       accessorKey: "userNumber",
-      header: "사용자 번호\\n(시작~끝)",
+      header: LABELS.USER_NUMBER_MULTI,
     },
     {
       accessorKey: "pbxNumber",
-      header: "교환기 번호\\n(시작~끝)",
+      header: LABELS.PBX_NUMBER_COL_MULTI,
     },
     {
       accessorKey: "name",
-      header: "가입자명",
+      header: LABELS.SUBSCRIBER_NAME,
     },
     {
       accessorKey: "applyDate",
-      header: "신청일",
+      header: LABELS.APPLY_DATE,
     },
     {
       accessorKey: "status",
-      header: "상태",
+      header: LABELS.STATE,
       cell: ({ row }) => <div className="col-status">{row.original.state}</div>,
     },
     {
@@ -229,7 +229,7 @@ export const subscribe_columns = (navigateManage) => {
       header: "",
       cell: ({ row }) => (
         <Button
-          label={"가입자 관리"}
+          label={LABELS.SUBSCRIBER_MANAGE}
           onClick={() => {
             navigateManage(row.original);
           }}
@@ -241,7 +241,7 @@ export const subscribe_columns = (navigateManage) => {
 
 export const subscribe_data = [
   {
-    id:1,
+    id: 1,
     mainNumber: "0211112222",
     userNumber: "02111112222~0211112233",
     pbxNumber: "02111112222~0211112233",
@@ -250,7 +250,7 @@ export const subscribe_data = [
     state: "요청중",
   },
   {
-    id:2,
+    id: 2,
     mainNumber: "0211112222",
     userNumber: "02111112222~0211112233",
     pbxNumber: "02111112222~0211112233",
@@ -259,7 +259,7 @@ export const subscribe_data = [
     state: "요청중",
   },
   {
-    id:3,
+    id: 3,
     mainNumber: "0211112222",
     userNumber: "02111112222~0211112233",
     pbxNumber: "02111112222~0211112233",
@@ -268,15 +268,7 @@ export const subscribe_data = [
     state: "가입",
   },
   {
-    id:4,
-    mainNumber: "0211112222",
-    userNumber: "02111112222~0211112233",
-    pbxNumber: "02111112222~0211112233",
-    name: "LGU+",
-    applyDate: "2024.02.04",
-    state: "가입",
-  },
-  { id:5,
+    id: 4,
     mainNumber: "0211112222",
     userNumber: "02111112222~0211112233",
     pbxNumber: "02111112222~0211112233",
@@ -285,7 +277,7 @@ export const subscribe_data = [
     state: "가입",
   },
   {
-    id:6,
+    id: 5,
     mainNumber: "0211112222",
     userNumber: "02111112222~0211112233",
     pbxNumber: "02111112222~0211112233",
@@ -294,7 +286,7 @@ export const subscribe_data = [
     state: "가입",
   },
   {
-    id:7,
+    id: 6,
     mainNumber: "0211112222",
     userNumber: "02111112222~0211112233",
     pbxNumber: "02111112222~0211112233",
@@ -303,7 +295,7 @@ export const subscribe_data = [
     state: "가입",
   },
   {
-    id:8,
+    id: 7,
     mainNumber: "0211112222",
     userNumber: "02111112222~0211112233",
     pbxNumber: "02111112222~0211112233",
@@ -312,7 +304,16 @@ export const subscribe_data = [
     state: "가입",
   },
   {
-    id:9,
+    id: 8,
+    mainNumber: "0211112222",
+    userNumber: "02111112222~0211112233",
+    pbxNumber: "02111112222~0211112233",
+    name: "LGU+",
+    applyDate: "2024.02.04",
+    state: "가입",
+  },
+  {
+    id: 9,
     mainNumber: "0211112222",
     userNumber: "02111112222~0211112233",
     pbxNumber: "02111112222~0211112233",

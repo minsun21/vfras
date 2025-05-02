@@ -31,7 +31,7 @@ const AccountRegister = () => {
 
   return (
     <div>
-      <table className="user-info-table">
+      <table className="info-table">
         <tbody>
           {accountRegisterFields.map((field) => {
             const {
