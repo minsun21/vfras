@@ -6,7 +6,6 @@ import Input from "../components/Input";
 import Select from "../components/Select";
 import { ROUTES } from "../constants/routes";
 import { accountValidate } from "../utils/FormValidation";
-import { LABELS } from "../constants/Label";
 
 const AccountRegister = () => {
   const navigate = useNavigate();

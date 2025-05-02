@@ -123,3 +123,8 @@ code {
 .col-status {
   border: 1px solid black;
 }
+
+textarea {
+  width: 150px;
+  height: 500px;
+}

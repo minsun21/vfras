@@ -21,5 +21,10 @@ export const LABELS = {
   USER_STATE : "가입자 상태",
   SUBSRIBE : "가입",
   SUBSRIBE_EDIT: "가입자 정보 수정",
-  MAIN_NUMBER : "대표번호"
+  MAIN_NUMBER : "대표번호",
+  ALL_CHANGE : "전체 변경",
+  COUNT_RESULT : (result) => `개수 ${result}개`,
+  STATION_CHANGE_NUMBER : "변경할 국번 설정",
+  STATION_CURRENT_NUMBER : "현재 설정된 국번",
+  VIEW : "조회",
 };

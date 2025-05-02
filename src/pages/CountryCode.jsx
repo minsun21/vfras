@@ -1,9 +1,92 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import Button, { BUTTON_CANCEL } from "../components/Button";
+import { LABELS } from "../constants/Label";
+import { countryNumbers } from "../config/FieldsConfig";
+import { countryNumberMessage } from "../constants/Message";
 
 const CountryCode = () => {
-  return (
-    <div>CountryCode</div>
-  )
-}
+  const [changeValue, setChangeValue] = useState("");
+  const [currentValue, setCurrentValue] = useState("");
+  const [changeLineCount, setChangeLineCount] = useState(0);
+  const [currentLineCount, setCurrentLineCount] = useState(0);
 
-export default CountryCode
+  useEffect(() => {
+    const initData = countryNumbers.join("\n");
+    setChangeValue(initData);
+    setCurrentValue(initData);
+    setChangeLineCount(countryNumbers.length);
+    setCurrentLineCount(countryNumbers.length);
+  }, []);
+
+  const handleChange = (e) => {
+    const input = e.target.value;
+
+    const lines = input
+      .split("\n")
+      .map((line) => line.replace(/[^0-9]/g, "").slice(0, 4));
+
+    setChangeValue(lines.join("\n"));
+
+    // 빈 줄 제거한 기준으로 줄 수 계산
+    const nonEmptyLineCount = lines.filter((line) => line !== "").length;
+    setChangeLineCount(nonEmptyLineCount);
+  };
+
+  const allChange = () => {
+    const cleanedLines = changeValue
+      .split("\n")
+      .map((line) => line.trim()) // 공백 제거
+      .filter((line) => line !== ""); // 빈 줄 제거
+
+    const result = cleanedLines.join("\n");
+
+    setChangeValue(result);
+    setCurrentValue(result);
+    setChangeLineCount(cleanedLines.length);
+    setCurrentLineCount(cleanedLines.length);
+  };
+
+  return (
+    <div>
+      <div>
+        <h5>{LABELS.STATION_CHANGE_NUMBER}</h5>
+        <div>
+          <span>{LABELS.COUNT_RESULT(changeLineCount)}</span>
+          <Button
+            type={BUTTON_CANCEL}
+            label={LABELS.ALL_CHANGE}
+            onClick={allChange}
+          />
+        </div>
+        <textarea
+          value={changeValue}
+          onChange={handleChange}
+          type="number"
+          rows={5}
+          cols={5}
+        />
+        <div>
+          <span>{countryNumberMessage.info1}</span>
+          <span>{countryNumberMessage.info2}</span>
+          <span>{countryNumberMessage.info3}</span>
+        </div>
+      </div>
+      <div>
+        <h5>{LABELS.STATION_CURRENT_NUMBER}</h5>
+        <div>
+          <span>{LABELS.COUNT_RESULT(currentLineCount)}</span>
+          <Button type={BUTTON_CANCEL} label={LABELS.VIEW} />
+        </div>
+        <textarea
+          value={currentValue}
+          onChange={handleChange}
+          type="number"
+          rows={5}
+          cols={5}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default CountryCode;

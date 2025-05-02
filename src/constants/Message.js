@@ -1,7 +1,6 @@
-
 export const infoMessage = {
-  successUserEdit : `프로필이 성공적으로 저장되었습니다`,
-}
+  successUserEdit: `프로필이 성공적으로 저장되었습니다`,
+};
 
 export const errorMessages = {
   required: (label) => `${label}을(를) 입력해주세요.`,
@@ -30,14 +29,20 @@ export const loginMessages = {
 
 export const accountMessages = {
   searchPlaceHolder: `아이디, 이름, 부서를 입력해주세요`,
-  successAccountSave : `가입자 등록이 완료되었습니다`
+  successAccountSave: `가입자 등록이 완료되었습니다`,
 };
 
 export const soundSourceMessage = {
-  searchPlaceHolder :  `음원코드, 제목/설명을 입력해주세요`
-}
+  searchPlaceHolder: `음원코드, 제목/설명을 입력해주세요`,
+};
 
 export const subsriberMessage = {
-  searchPlaceHolder : `가입자명, 번호를 입력해주세요`,
-  approvedError : `이미 가입된 행은 선택할 수 없습니다`
-}
+  searchPlaceHolder: `가입자명, 번호를 입력해주세요`,
+  approvedError: `이미 가입된 행은 선택할 수 없습니다`,
+};
+
+export const countryNumberMessage = {
+  info1: `국번을 라인단위로 입력해주세요.`,
+  info2: `라인간에는 반드시 엔터를 쳐주시기 바랍니다.`,
+  info3: `변경할 국번을 준비하여 복사 후 붙여주세요.`,
+};

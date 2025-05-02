@@ -1,3 +1,31 @@
+export const option_subsriberType = [
+  { key: "all", value: "전체" },
+  { key: "individual", value: "개인" },
+  { key: "corporation", value: "법인" },
+];
+export const option_allType = [
+  { key: "all", value: "전체" },
+  { key: "corporation", value: "기업" },
+  { key: "individual", value: "개인" },
+];
+export const option_serviceType = [
+  { key: "all", value: "전체" },
+  { key: "corporation", value: "기업" },
+  { key: "individual", value: "개인" },
+  { key: "individualdj", value: "개인DJ" },
+];
+
+export const option_userState = [
+  { key: "all", value: "전체" },
+  { key: "subsribe", value: "가입" },
+  { key: "request", value: "요청중" },
+];
+
+export const user_classification = [
+  { key: "admin", value: "Admin" },
+  { key: "user", value: "User" },
+];
+
 export const profileFields = [
   {
     key: "classification",
@@ -107,30 +135,19 @@ export const subsriberResigerFields = [
     key: "userState",
     label: "사용자 상태",
     type: "radio",
-    options: [
-      { key: "subsribe", value: "가입" },
-      { key: "request", value: "요청중" },
-    ],
+    options: option_userState,
   },
   {
     key: "subsriberType",
     label: "가입자 유형",
     type: "radio",
-    options: [
-      { key: "individual", value: "개인" },
-      { key: "corporation", value: "법인" },
-    ],
+    options: option_subsriberType,
   },
   {
     key: "serviceType",
     label: "서비스 유형",
     type: "radio",
-    options: [
-      { key: "all", value: "전체" },
-      { key: "corporation", value: "기업" },
-      { key: "individual", value: "개인" },
-      { key: "individualdj", value: "개인DJ" },
-    ],
+    options: option_serviceType,
   },
   {
     key: "name",
@@ -195,10 +212,7 @@ export const accountRegisterFields = [
     key: "classification",
     label: "사용자 구분",
     type: "select",
-    options: [
-      { key: "admin", value: "Admin" },
-      { key: "user", value: "User" },
-    ],
+    options: user_classification,
     required: true,
   },
   {
@@ -310,25 +324,8 @@ export const accountEditFields = [
   },
 ];
 
-export const option_subsriberType = [
-  { key: "all", value: "전체" },
-  { key: "individual", value: "개인" },
-  { key: "corporation", value: "법인" },
-];
-export const option_allType = [
-  { key: "all", value: "전체" },
-  { key: "corporation", value: "기업" },
-  { key: "individual", value: "개인" },
-];
-export const option_serviceType = [
-  { key: "all", value: "전체" },
-  { key: "corporation", value: "기업" },
-  { key: "individual", value: "개인" },
-  { key: "individualdj", value: "개인DJ" },
-];
-
-export const option_userState = [
-  { key: "all", value: "전체" },
-  { key: "subsribe", value: "가입" },
-  { key: "request", value: "요청중" },
+export const countryNumbers = [
+  7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
+  7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
+  7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
 ];

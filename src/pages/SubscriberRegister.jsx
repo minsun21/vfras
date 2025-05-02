@@ -18,7 +18,18 @@ const SubscriberRegister = () => {
     // axios.get("/api/user/profile").then(res => {
     //   setData(prev => ({ ...prev, ...res.data }));
     // });
+    let data = {};
+    for (const field of subsriberResigerFields) {
+      if (field.type === "radio") {
+        data[field.key] = field.options[0].value;
+      }
+    }
+    setFormData({ ...formData, ...data });
   }, []);
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
 
   const validate = () => {
     for (const field of subsriberResigerFields) {
