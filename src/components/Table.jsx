@@ -25,7 +25,11 @@ const Table = forwardRef(
     ref
   ) => {
     const [rowSelection, setRowSelection] = useState({});
-    const [tableData, setTableData] = useState(data);
+    const [tableData, setTableData] = useState([]);
+
+    useEffect(() => {
+      setTableData(data);
+    }, [data]);
 
     const handleRowRadioChange = (rowIndex, columnId) => {
       const updated = tableData.map((row, i) => {
@@ -63,7 +67,7 @@ const Table = forwardRef(
               ...col,
               cell: ({ row, getValue }) => (
                 <span
-                  className="navigate"
+                  className="col-navigate"
                   onClick={(e) => {
                     e.stopPropagation();
                     col.clickable({

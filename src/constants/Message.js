@@ -1,5 +1,8 @@
 export const infoMessage = {
   successUserEdit: `프로필이 성공적으로 저장되었습니다`,
+  noSearchResult: `검색 결과가 없습니다`,
+  successDelete: "",
+  confirmDelete: (size) => `${size}건 삭제하시겠습니까?`,
 };
 
 export const errorMessages = {
@@ -11,7 +14,7 @@ export const errorMessages = {
   confirmPassword: `비밀번호 확인이 맞지 않습니다.`,
   nonSelect: `선택된 항목이 없습니다. 행을 선택한 후 버튼을 클릭해주세요`,
   oneSelect: `단일 행만 선택할 수 있습니다`,
-  confirmDelete: (size) => `${size}건 삭제하시겠습니까?`,
+  network : `서버 에러입니다\n관리자에게 문의해주세요`
 };
 
 export const loginMessages = {
@@ -45,4 +48,7 @@ export const countryNumberMessage = {
   info1: `국번을 라인단위로 입력해주세요.`,
   info2: `라인간에는 반드시 엔터를 쳐주시기 바랍니다.`,
   info3: `변경할 국번을 준비하여 복사 후 붙여주세요.`,
+  allChange: `전체 변경하시겠습니까?`,
+  errorChange: `변경할 국번을 다시 확인해주세요`,
+  successChange : `전체 변경되었습니다`
 };

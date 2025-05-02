@@ -54,16 +54,16 @@ export const sounds_source_data = [
   },
 ];
 
-export const account_logs_columns = (openModal) => {
+export const account_logs_columns = (func) => {
   return [
     {
       accessorKey: "id",
       header: LABELS.ID,
+      clickable: ({ row }) => func(row.original),
     },
     {
       accessorKey: "name",
       header: LABELS.NAME,
-      clickable: ({ row }) => openModal(row.original),
     },
     {
       accessorKey: "department",

@@ -62,12 +62,12 @@ const Home = () => {
         message="정말 삭제하시겠습니까?"
       />
 
-      <Alert
+      {/* <Alert
         isOpen={isOpenAlert}
         onConfirm={closeAlert}
         onCancel={closeAlert}
         message="정말 삭제하시겠습니까?"
-      />
+      /> */}
 
       <Modal
         isOpen={isModalOpen}

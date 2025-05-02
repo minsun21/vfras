@@ -3,8 +3,10 @@ import Button, { BUTTON_CANCEL } from "../components/Button";
 import { LABELS } from "../constants/Label";
 import { countryNumbers } from "../config/FieldsConfig";
 import { countryNumberMessage } from "../constants/Message";
+import { useModal } from "../contexts/ModalContext";
 
 const CountryCode = () => {
+  const { showDialog, showAlert, closeModal } = useModal();
   const [changeValue, setChangeValue] = useState("");
   const [currentValue, setCurrentValue] = useState("");
   const [changeLineCount, setChangeLineCount] = useState(0);
@@ -32,6 +34,29 @@ const CountryCode = () => {
     setChangeLineCount(nonEmptyLineCount);
   };
 
+  const validation = () => {
+    const lines = changeValue
+      .split("\n")
+      .map((line) => line.replace(/[^0-9]/g, "").trim())
+      .filter((line) => line !== ""); // 빈 줄 제거
+
+    return !lines.some((line) => line.length < 4);
+  };
+
+  const clickAllChange = () => {
+    if (!validation()) {
+      showAlert({
+        message: countryNumberMessage.errorChange,
+      });
+      return;
+    }
+
+    showDialog({
+      message: countryNumberMessage.allChange,
+      onConfirm: allChange,
+    });
+  };
+
   const allChange = () => {
     const cleanedLines = changeValue
       .split("\n")
@@ -44,6 +69,14 @@ const CountryCode = () => {
     setCurrentValue(result);
     setChangeLineCount(cleanedLines.length);
     setCurrentLineCount(cleanedLines.length);
+
+    // 안되면 닫고 alert날려
+    closeModal();
+
+    // 성공
+    showAlert({
+      message: countryNumberMessage.successChange,
+    });
   };
 
   return (
@@ -55,7 +88,7 @@ const CountryCode = () => {
           <Button
             type={BUTTON_CANCEL}
             label={LABELS.ALL_CHANGE}
-            onClick={allChange}
+            onClick={clickAllChange}
           />
         </div>
         <textarea

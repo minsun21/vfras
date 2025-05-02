@@ -38,6 +38,8 @@ export const LABELS = {
   ACCOUNT: "계정",
   ACCOUNT_MANAGE: "계정 관리",
   ACCOUNT_LOGS: "접속 이력",
+  ACCOUNT_DETAIL_LOGS: "접속 상세 이력",
+  FINAL_ACCESS_TIME: "최종 접속 시간 : ",
   ACCESS_TIME: "접속 시간",
   LAST_ACCESS_TIME: "마지막 접속",
   COUNTRY_NUMBER: "국번호",
@@ -67,5 +69,5 @@ export const LABELS = {
   SUBSCRIBER_NUMBER: "가입자 번호(대표번호)",
   USER_NUMBER: "사용자 번호 (시작~끝)",
   PBX_NUMBER_COL: "교환기 번호 (시작~끝)",
-  DEFAULT_CALLRING : "기본통화연결음 ID",
+  DEFAULT_CALLRING: "기본통화연결음 ID",
 };

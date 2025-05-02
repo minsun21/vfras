@@ -135,3 +135,8 @@ textarea {
   justify-content: center;
   gap: 10px;
 }
+
+.col-navigate {
+  color: blue;
+  cursor: pointer;
+}
