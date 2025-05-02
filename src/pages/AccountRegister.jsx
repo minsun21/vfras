@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Modal from "../components/modals/Modal";
 import { accountRegisterFields } from "../config/FieldsConfig";
 import Button, { BUTTON_CANCEL, BUTTON_SAVE } from "../components/Button";
 import Input from "../components/Input";
@@ -9,7 +10,7 @@ import { accountValidate } from "../utils/FormValidation";
 
 const AccountRegister = () => {
   const navigate = useNavigate();
-
+ const [isOpenAlert, setIsOpenAlert] = useState(false);
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
@@ -29,8 +30,27 @@ const AccountRegister = () => {
     // navigate(ROUTES.SUBSCRIBER);
   };
 
+  const openAlert = () => {
+    setIsOpenAlert(true);
+  };
+
+  const closeAlert = () => {
+    setIsOpenAlert(false);
+  };
+
   return (
     <div>
+      <button onClick={openAlert}>Alert2</button>
+
+      <Modal
+        isOpen={isOpenAlert}
+        onConfirm={closeAlert}
+        onCancel={closeAlert}
+      >
+        <div>야호</div>
+      </Modal>
+
+    
       <table className="info-table">
         <tbody>
           {accountRegisterFields.map((field) => {

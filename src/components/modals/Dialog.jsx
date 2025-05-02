@@ -31,15 +31,8 @@ const Dialog = ({ isOpen, onConfirm, onCancel, message }) => {
         },
       }}
     >
-      {message}
-      <div
-        style={{
-          marginTop: "20px",
-          display: "flex",
-          justifyContent: "center",
-          gap: "10px",
-        }}
-      >
+      <div>{message}</div>
+      <div className="modal-footer">
         <Button type={BUTTON_CANCEL} onClick={onCancel} />
         <Button onClick={onCancel} />
       </div>

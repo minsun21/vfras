@@ -128,3 +128,10 @@ textarea {
   width: 150px;
   height: 500px;
 }
+
+.modal-footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}

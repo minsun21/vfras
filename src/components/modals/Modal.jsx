@@ -4,7 +4,7 @@ import Button, { BUTTON_CANCEL } from "../Button";
 
 Modal.setAppElement("#root");
 
-const Dialog = ({ isOpen, onConfirm, onCancel, message }) => {
+const Dialog = ({ isOpen, children, onCancel, message }) => {
   return (
     <Modal
       isOpen={isOpen}
@@ -31,15 +31,8 @@ const Dialog = ({ isOpen, onConfirm, onCancel, message }) => {
         },
       }}
     >
-      {message}
-      <div
-        style={{
-          marginTop: "20px",
-          display: "flex",
-          justifyContent: "center",
-          gap: "10px",
-        }}
-      >
+      {children}
+      <div className="modal-footer">
         <Button type={BUTTON_CANCEL} onClick={onCancel} />
         <Button onClick={onCancel} />
       </div>
