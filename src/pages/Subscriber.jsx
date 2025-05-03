@@ -13,7 +13,7 @@ import {
   option_userState,
 } from "../config/FieldsConfig";
 import { LABELS } from "../constants/Label";
-import { errorMessages, SUBSCRIBERMessage } from "../constants/Message";
+import { errorMessages, subsriberMessage } from "../constants/Message";
 
 const Subscriber = () => {
   const tableRef = useRef();
@@ -65,7 +65,7 @@ const Subscriber = () => {
 
     for (const selectedRow of selectedRows) {
       if (selectedRow.state === LABELS.SUBSCRIBE) {
-        alert(SUBSCRIBERMessage.approvedError);
+        alert(subsriberMessage.approvedError);
         return;
       }
     }
@@ -95,7 +95,7 @@ const Subscriber = () => {
               options={allType}
               nonEmpty={true}
             />
-            <Input placeholder={SUBSCRIBERMessage.searchPlaceHolder} />
+            <Input placeholder={subsriberMessage.searchPlaceHolder} />
           </div>
           <div>
             <Select

@@ -38,7 +38,12 @@ const ModalRenderer = () => {
         <div className="modal-content">
           <div>{props.message}</div>
           <div className="modal-footer">
-            <Button onClick={closeModal} />
+            <Button
+              onClick={() => {
+                props.onConfirm?.();
+                closeModal();
+              }}
+            />
           </div>
         </div>
       ) : type === DIALOG ? (
@@ -49,6 +54,7 @@ const ModalRenderer = () => {
             <Button
               onClick={() => {
                 props.onConfirm?.();
+                closeModal();
               }}
             />
           </div>

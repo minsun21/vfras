@@ -322,3 +322,29 @@ export const subscribe_data = [
     state: "가입",
   },
 ];
+
+export const access_detail_columns =[
+  {
+    accessorKey: "accessTime",
+    header: LABELS.ACCESS_TIME,
+  },
+  {
+    accessorKey: "content",
+    header: LABELS.CONTENT,
+  },
+]
+
+export const access_detail_data = [
+  {
+    accessTime: "2024.02.04\n11:23:37",
+    content: "로그인",
+  },
+  {
+    accessTime: "2024.02.04\n11:23:37",
+    content: "가입자 조회",
+  },
+  {
+    accessTime: "2024.02.04\n11:23:37",
+    content: "음원 조회",
+  },
+];

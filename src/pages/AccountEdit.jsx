@@ -6,14 +6,13 @@ import Input from "../components/Input";
 import Select from "../components/Select";
 import { ROUTES } from "../constants/routes";
 import { accountValidate } from "../utils/FormValidation";
-import { LABELS } from "../constants/Label";
-import { accountMessages, infoMessage } from "../constants/Message";
+import { infoMessage } from "../constants/Message";
+import { useModal } from "../contexts/ModalContext";
 
 const AccountEdit = () => {
-
   const navigate = useNavigate();
   const { state } = useLocation();
-
+  const { showDialog, showAlert } = useModal();
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
@@ -36,8 +35,17 @@ const AccountEdit = () => {
 
     console.log("저장할 데이터:", formData);
 
-    alert(infoMessage.successUserEdit);
-    navigate("/profile");
+    showAlert({
+      message: infoMessage.successEdit,
+      onConfirm: () => navigate(ROUTES.ACCOUNT_MANAGE),
+    });
+  };
+
+  const cancelEdit = () => {
+    showDialog({
+      message: infoMessage.confirmCancel,
+      onConfirm: () => navigate(ROUTES.ACCOUNT_MANAGE),
+    });
   };
 
   return (
@@ -99,7 +107,7 @@ const AccountEdit = () => {
         </tbody>
       </table>
       <div>
-        <Button type={BUTTON_CANCEL} onClick={() => navigate(ROUTES.PROFILE)} />
+        <Button type={BUTTON_CANCEL} onClick={cancelEdit} />
         <Button type={BUTTON_SAVE} onClick={handleSave} />
       </div>
     </div>

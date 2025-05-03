@@ -1,14 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Button, { BUTTON_CANCEL } from "../components/Button";
 import { useModal } from "../contexts/ModalContext";
 import { LABELS } from "../constants/Label";
 import Table from "../components/Table";
+import {
+  access_detail_columns,
+  access_detail_data,
+} from "../config/DataConfig";
 
 const AccountDetailLog = ({ selectRow }) => {
   const { closeModal } = useModal();
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     // console.log("id", selectRow);
+    setData(access_detail_data);
   }, []);
 
   return (
@@ -22,7 +28,7 @@ const AccountDetailLog = ({ selectRow }) => {
       </header>
       <div>
         <span>{LABELS.FINAL_ACCESS_TIME}</span>
-        {/* <Table /> */}
+        <Table columns={access_detail_columns} data={data} pageSize={5} />
       </div>
     </div>
   );

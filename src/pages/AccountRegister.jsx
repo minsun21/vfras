@@ -6,9 +6,12 @@ import Input from "../components/Input";
 import Select from "../components/Select";
 import { ROUTES } from "../constants/routes";
 import { accountValidate } from "../utils/FormValidation";
+import { useModal } from "../contexts/ModalContext";
+import { accountMessages } from "../constants/Message";
 
 const AccountRegister = () => {
   const navigate = useNavigate();
+  const { showAlert, showModal } = useModal();
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
@@ -24,8 +27,10 @@ const AccountRegister = () => {
 
     console.log("저장할 데이터:", formData);
 
-    // alert("가입자 등록이 완료되었습니다.");
-    // navigate(ROUTES.SUBSCRIBER);
+    showAlert({
+      message: accountMessages.successAccountSave,
+      onConfirm: () => navigate(ROUTES.SUBSCRIBER),
+    });
   };
 
   return (

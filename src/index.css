@@ -140,3 +140,8 @@ textarea {
   color: blue;
   cursor: pointer;
 }
+.common-table td {
+  white-space: normal !important;  /* 또는 pre-line */
+  overflow: visible !important;
+  text-overflow: unset !important;
+}

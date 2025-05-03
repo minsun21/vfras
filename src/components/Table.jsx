@@ -169,6 +169,27 @@ const Table = forwardRef(
     const pageIndex = table.getState().pagination.pageIndex;
     const pageNumbers = Array.from({ length: pageCount }, (_, i) => i);
 
+    const renderMultiLine = (value) => {
+      if (typeof value !== "string") return value;
+
+      return value.split("\n").map((line, i) => <div key={i}>{line}</div>);
+    };
+    
+    const renderCell = (cell) => {
+      const rendered = flexRender(
+        cell.column.columnDef.cell,
+        cell.getContext()
+      );
+
+      // 문자열: 직접 처리
+      if (typeof rendered === "string") {
+        return rendered.split("\n").map((line, i) => <div key={i}>{line}</div>);
+      }
+
+      // JSX + 내부 문자열에 \n이 있을 수 있음 → wrapper에 스타일 적용
+      return <div style={{ whiteSpace: "pre-line" }}>{rendered}</div>;
+    };
+
     return (
       <div className="common-table-container">
         <table className="common-table">
@@ -187,19 +208,11 @@ const Table = forwardRef(
               {columns.map((col, idx) =>
                 col.columns ? (
                   <th key={idx} colSpan={col.columns.length}>
-                    {String(col.header)
-                      .split("\\n")
-                      .map((line, i) => (
-                        <div key={i}>{line}</div>
-                      ))}
+                    {renderMultiLine(col.header)}
                   </th>
                 ) : (
                   <th key={idx} rowSpan={2}>
-                    {String(col.header)
-                      .split("\\n")
-                      .map((line, i) => (
-                        <div key={i}>{line}</div>
-                      ))}
+                    {renderMultiLine(col.header)}
                   </th>
                 )
               )}
@@ -219,7 +232,8 @@ const Table = forwardRef(
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {renderCell(cell)}
+                    {/* {flexRender(cell.column.columnDef.cell, cell.getContext())} */}
                   </td>
                 ))}
               </tr>

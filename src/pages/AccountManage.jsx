@@ -1,20 +1,29 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Table from "../components/Table";
-import Button, { BUTTON_CANCEL, BUTTON_DELETE, BUTTON_SEARCH } from "../components/Button";
+import Button, {
+  BUTTON_CANCEL,
+  BUTTON_DELETE,
+  BUTTON_SEARCH,
+} from "../components/Button";
 import Input, { INPUT_SIZE_LG } from "../components/Input";
 import {
   account_manage_columns,
   account_manage_data,
 } from "../config/DataConfig";
 import { ROUTES } from "../constants/routes";
-import { accountMessages, errorMessages } from "../constants/Message";
+import {
+  accountMessages,
+  errorMessages,
+  infoMessage,
+} from "../constants/Message";
 import { LABELS } from "../constants/Label";
+import { useModal } from "../contexts/ModalContext";
 
 const AccountManage = () => {
   const navigate = useNavigate();
   const tableRef = useRef();
-
+  const { showAlert, showDialog } = useModal();
   const [selectedRows, setSelectedRows] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [data, setData] = useState(account_manage_data);
@@ -24,13 +33,17 @@ const AccountManage = () => {
     console.log("최신 데이터:", updatedData);
   };
 
-  const editAccount = () => {
+  const clickEdit = () => {
     if (selectedRows.length === 0) {
-      alert(errorMessages.nonSelect);
+      showAlert({
+        message: errorMessages.nonSelect,
+      });
       return;
     }
     if (selectedRows.length > 1) {
-      alert(errorMessages.oneSelect);
+      showAlert({
+        message: errorMessages.oneSelect,
+      });
       return;
     }
 
@@ -41,13 +54,28 @@ const AccountManage = () => {
     });
   };
 
-  const deleteAccount = () => {
+  const search = () => {
+    showAlert({
+      message: infoMessage.noSearchResult,
+    });
+  };
+
+  const clickDelete = () => {
     if (selectedRows.length === 0) {
-      alert(errorMessages.nonSelect);
+      showAlert({
+        message: errorMessages.nonSelect,
+      });
       return;
     }
 
-    // {}건 삭제하시겠습니까?
+    showDialog({
+      message: infoMessage.confirmDelete(selectedRows.length),
+      onConfirm: deleteAccount,
+    });
+  };
+
+  const deleteAccount = () => {
+    console.log("delete");
   };
 
   return (
@@ -60,7 +88,7 @@ const AccountManage = () => {
             placeholder={accountMessages.searchPlaceHolder}
             size={INPUT_SIZE_LG}
           />
-          <Button type={BUTTON_SEARCH} />
+          <Button type={BUTTON_SEARCH} onClick={search} />
           <Button
             label={LABELS.USER_REGISTER}
             onClick={() => navigate(ROUTES.ACCOUNT_REGISTER)}
@@ -81,12 +109,9 @@ const AccountManage = () => {
           <Button
             type={BUTTON_CANCEL}
             label={LABELS.USER_EDIT}
-            onClick={editAccount}
+            onClick={clickEdit}
           />
-          <Button
-            type={BUTTON_DELETE}
-            onClick={deleteAccount}
-          />
+          <Button type={BUTTON_DELETE} onClick={clickDelete} />
         </div>
       </div>
     </div>

@@ -58,8 +58,8 @@ export const LABELS = {
   SETTING: "설정",
   STATE: "상태",
   APPLY_DATE: "신청일",
-  USER_NUMBER_MULTI: "사용자 번호\\n(시작~끝)",
-  PBX_NUMBER_COL_MULTI: "교환기 번호\\n(시작~끝)",
+  USER_NUMBER_MULTI: "사용자 번호\n(시작~끝)",
+  PBX_NUMBER_COL_MULTI: "교환기 번호\n(시작~끝)",
   EMAIL: "이메일",
   PHONE: "휴대폰",
   REMARKS: "비고",
@@ -70,4 +70,6 @@ export const LABELS = {
   USER_NUMBER: "사용자 번호 (시작~끝)",
   PBX_NUMBER_COL: "교환기 번호 (시작~끝)",
   DEFAULT_CALLRING: "기본통화연결음 ID",
+  CONTENT : "내용",
+  INDEX : "순번"
 };
