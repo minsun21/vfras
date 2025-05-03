@@ -8,27 +8,27 @@ export const DIALOG = "dialog";
 export const MODAL = "modal";
 
 export const ModalProvider = ({ children }) => {
-  const [modal, setModal] = useState({ type: null, props: {} });
+  const [modals, setModals] = useState([]); // ✅ 스택 구조
 
   const showAlert = (props) => {
-    setModal({ type: ALERT, props });
+    setModals((prev) => [...prev, { type: ALERT, props }]);
   };
 
   const showDialog = (props) => {
-    setModal({ type: DIALOG, props });
+    setModals((prev) => [...prev, { type: DIALOG, props }]);
   };
 
   const showModal = (props) => {
-    setModal({ type: MODAL, props });
+    setModals((prev) => [...prev, { type: MODAL, props }]);
   };
 
   const closeModal = () => {
-    setModal({ type: null, props: {} });
+    setModals((prev) => prev.slice(0, -1)); // ✅ 마지막 모달만 제거
   };
 
   return (
     <ModalContext.Provider
-      value={{ showModal, closeModal, showAlert, showDialog, modal }}
+      value={{ showModal, closeModal, showAlert, showDialog, modals }}
     >
       {children}
       <ModalRenderer />

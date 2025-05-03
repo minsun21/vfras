@@ -1,11 +1,15 @@
 export const infoMessage = {
-  successUserEdit: `프로필이 성공적으로 저장되었습니다.`,
   noSearchResult: `해당하는 데이터가 없습니다.`,
   successDelete: "삭제 되었습니다.",
   successEdit : "수정정보가 저장되었습니다.",
   confirmDelete: (size) => `${size}건 삭제하시겠습니까?`,
   confirmCancel : "취소하시겠습니까?"
 };
+
+export const profileMessages = {
+  successUserEdit: `프로필이 성공적으로 저장되었습니다.`,
+  successPasswordChange : `비밀번호가 변경되었습니다.`
+}
 
 export const errorMessages = {
   required: (label) => `${label}을(를) 입력해주세요.`,
@@ -14,6 +18,7 @@ export const errorMessages = {
   lengthMismatch: (label, len) => `${label}은(는) ${len}자리여야 합니다.`,
   invalidPassword: `비밀번호는 8~20자의 영문, 숫자, 특수문자를 모두 포함해야 합니다.`,
   confirmPassword: `비밀번호 확인이 맞지 않습니다.`,
+  confirmCurrentPassword : `현재 비밀번호가 맞지 않습니다.`,
   nonSelect: `항목을 먼저 선택해주세요.`,
   oneSelect: `하나의 항목을 선택해주세요.`,
   network : `서버 에러입니다\n관리자에게 문의해주세요`,

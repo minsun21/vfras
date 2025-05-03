@@ -10,7 +10,7 @@ import {
 } from "../config/FieldsConfig";
 import { ROUTES } from "../constants/routes";
 import { isValidEmail, isValidPhone } from "../utils/FormValidation";
-import { errorMessages, infoMessage } from "../constants/Message";
+import { errorMessages, infoMessage, profileMessages } from "../constants/Message";
 import { LABELS } from "../constants/Label";
 
 const SubscriberManageEdit = () => {
@@ -59,7 +59,7 @@ const SubscriberManageEdit = () => {
     }
     console.log("저장할 데이터:", formData);
 
-    alert(infoMessage.successUserEdit);
+    alert(profileMessages.successUserEdit);
     navigate(ROUTES.PROFILE);
   };
 

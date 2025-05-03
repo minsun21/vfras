@@ -5,7 +5,7 @@ import Button, { BUTTON_CANCEL, BUTTON_SAVE } from "../components/Button";
 import Input from "../components/Input";
 import { ROUTES } from "../constants/routes";
 import { isValidEmail, isValidPhone } from "../utils/FormValidation";
-import { errorMessages, infoMessage } from "../constants/Message";
+import { errorMessages, infoMessage, profileMessages } from "../constants/Message";
 import { LABELS } from "../constants/Label";
 import { useModal } from "../contexts/ModalContext";
 import PasswordChange from "../components/modals/PasswordChange";
@@ -48,7 +48,7 @@ const ProfileEdit = () => {
     console.log("저장할 데이터:", formData);
 
     showAlert({
-      message: infoMessage.successUserEdit,
+      message: profileMessages.successUserEdit,
       onConfirm: () => navigate(ROUTES.PROFILE),
     });
   };
@@ -62,7 +62,7 @@ const ProfileEdit = () => {
 
   const clickChangePassword = () => {
     showModal({
-      content: <PasswordChange info={formData} onConfirm={changePassword} />,
+      content: <PasswordChange info={formData} onOk={changePassword} />,
     });
   };
 

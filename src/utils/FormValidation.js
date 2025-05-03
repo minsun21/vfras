@@ -19,7 +19,7 @@ export const isValidPassword = (password) => {
 
 export const hasEmptyValue = (obj) => {
   if (!obj || Object.keys(obj).length === 0) return true;
-
+  
   return Object.values(obj).some(
     (value) =>
       value == null || // null, undefined
