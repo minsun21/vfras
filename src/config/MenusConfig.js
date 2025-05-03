@@ -67,7 +67,7 @@ export const NonMenuConfig = [
     component: lazy(() => import("../pages/Profile")),
   },
   {
-    title: LABELS.USER_EDIT,
+    title: LABELS.MY_INFO,
     path: ROUTES.PROFILE_EDIT,
     component: lazy(() => import("../pages/ProfileEdit")),
   },

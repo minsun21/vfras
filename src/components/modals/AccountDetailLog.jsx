@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Button, { BUTTON_CANCEL } from "../components/Button";
-import { useModal } from "../contexts/ModalContext";
-import { LABELS } from "../constants/Label";
-import Table from "../components/Table";
+import { useModal } from "../../contexts/ModalContext";
+import { LABELS } from "../../constants/Label";
+import Table from "../Table";
 import {
   access_detail_columns,
   access_detail_data,
-} from "../config/DataConfig";
+} from "../../config/DataConfig";
 
 const AccountDetailLog = ({ selectRow }) => {
   const { closeModal } = useModal();

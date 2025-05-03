@@ -16,7 +16,8 @@ export const errorMessages = {
   confirmPassword: `비밀번호 확인이 맞지 않습니다.`,
   nonSelect: `항목을 먼저 선택해주세요.`,
   oneSelect: `하나의 항목을 선택해주세요.`,
-  network : `서버 에러입니다\n관리자에게 문의해주세요`
+  network : `서버 에러입니다\n관리자에게 문의해주세요`,
+  emptyValue : `빈 항목이 있습니다`,
 };
 
 export const loginMessages = {

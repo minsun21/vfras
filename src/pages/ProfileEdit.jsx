@@ -7,16 +7,18 @@ import { ROUTES } from "../constants/routes";
 import { isValidEmail, isValidPhone } from "../utils/FormValidation";
 import { errorMessages, infoMessage } from "../constants/Message";
 import { LABELS } from "../constants/Label";
+import { useModal } from "../contexts/ModalContext";
+import PasswordChange from "../components/modals/PasswordChange";
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
-
+  const { showDialog, showAlert, showModal } = useModal();
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
     setFormData(() =>
       profileEditFields.reduce((acc, field) => {
-        acc[field.key] = field.placeholder || "";
+        acc[field.key] = field.value || "";
         return acc;
       }, {})
     );
@@ -45,8 +47,27 @@ const ProfileEdit = () => {
     }
     console.log("저장할 데이터:", formData);
 
-    alert(infoMessage.successUserEdit);
-    navigate(ROUTES.PROFILE);
+    showAlert({
+      message: infoMessage.successUserEdit,
+      onConfirm: () => navigate(ROUTES.PROFILE),
+    });
+  };
+
+  const cancelEdit = () => {
+    showDialog({
+      message: infoMessage.confirmCancel,
+      onConfirm: () => navigate(ROUTES.PROFILE),
+    });
+  };
+
+  const clickChangePassword = () => {
+    showModal({
+      content: <PasswordChange info={formData} onConfirm={changePassword} />,
+    });
+  };
+
+  const changePassword = (newPassword) => {
+    console.log('newPassword', newPassword)
   };
 
   return (
@@ -65,13 +86,16 @@ const ProfileEdit = () => {
                   {key === "password" ? (
                     <>
                       <Input
-                        value={formData[key] || ""}
                         type={field.type}
-                        placeholder={formData[key]}
+                        value={LABELS.PASSWORD_PLACEHOLDER}
                         onChange={(e) => handleChange(e.target.value)}
                         disabled={disabled}
                       />
-                      <Button type={BUTTON_CANCEL} label={LABELS.PASSWORD_CHANGE} />
+                      <Button
+                        type={BUTTON_CANCEL}
+                        label={LABELS.PASSWORD_CHANGE}
+                        onClick={clickChangePassword}
+                      />
                     </>
                   ) : (
                     <>
@@ -91,7 +115,7 @@ const ProfileEdit = () => {
         </tbody>
       </table>
       <div>
-        <Button type={BUTTON_CANCEL} onClick={() => navigate(ROUTES.PROFILE)} />
+        <Button type={BUTTON_CANCEL} onClick={cancelEdit} />
         <Button type={BUTTON_SAVE} onClick={handleSave} />
       </div>
     </div>

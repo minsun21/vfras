@@ -59,7 +59,7 @@ export const profileFields = [
   {
     key: "password",
     label: LABELS.PASSWORD,
-    value: "******",
+    value: LABELS.PASSWORD_PLACEHOLDER,
     type: "text",
     required: true,
   },
@@ -90,7 +90,7 @@ export const profileEditFields = [
   {
     key: "classification",
     label: LABELS.CLASSIFICATION,
-    placeholder: "Admin",
+    value: "Admin",
     type: "text",
     required: true,
     disabled: true,
@@ -98,7 +98,7 @@ export const profileEditFields = [
   {
     key: "department",
     label: LABELS.DEPARTMENT,
-    placeholder: "운영팀",
+    value: "운영팀",
     type: "text",
     required: true,
     disabled: true,
@@ -106,7 +106,7 @@ export const profileEditFields = [
   {
     key: "id",
     label: LABELS.ID,
-    placeholder: "vFRAS",
+    value: "vFRAS",
     type: "text",
     required: true,
     disabled: true,
@@ -114,7 +114,7 @@ export const profileEditFields = [
   {
     key: "password",
     label: LABELS.PASSWORD,
-    placeholder: "******",
+    value: "!sdf423",
     type: "text",
     required: true,
     disabled: true,
@@ -122,7 +122,7 @@ export const profileEditFields = [
   {
     key: "name",
     label: LABELS.NAME,
-    placeholder: "홍길동",
+    value: "홍길동",
     type: "text",
     required: true,
     disabled: true,
@@ -130,14 +130,14 @@ export const profileEditFields = [
   {
     key: "phone",
     label: LABELS.PHONE,
-    placeholder: "010-1234-5678",
+    value: "010-1234-5678",
     type: "text",
     required: true,
   },
   {
     key: "email",
     label: LABELS.EMAIL,
-    placeholder: "test@lguplus.co.kr",
+    value: "test@lguplus.co.kr",
     type: "email",
     required: true,
   },
@@ -528,4 +528,22 @@ export const countryNumbers = [
   7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
   7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
   7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
+];
+
+export const passwordChange = [
+  {
+    key: "currentPassword",
+    placeholder: LABELS.CURRENT_PASSWORD,
+    type: "text",
+  },
+  {
+    key: "changePassword",
+    placeholder: LABELS.CHANGE_PASSWORD,
+    type: "text",
+  },
+  {
+    key: "changeConfirmPassword",
+    placeholder: LABELS.CHANGE_PASSWORD_CONFIRM,
+    type: "text",
+  },
 ];
