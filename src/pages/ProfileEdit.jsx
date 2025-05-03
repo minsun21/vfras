@@ -5,7 +5,11 @@ import Button, { BUTTON_CANCEL, BUTTON_SAVE } from "../components/Button";
 import Input from "../components/Input";
 import { ROUTES } from "../constants/routes";
 import { isValidEmail, isValidPhone } from "../utils/FormValidation";
-import { errorMessages, infoMessage, profileMessages } from "../constants/Message";
+import {
+  errorMessages,
+  infoMessages,
+  profileMessages,
+} from "../constants/Message";
 import { LABELS } from "../constants/Label";
 import { useModal } from "../contexts/ModalContext";
 import PasswordChange from "../components/modals/PasswordChange";
@@ -30,12 +34,16 @@ const ProfileEdit = () => {
   const validate = () => {
     const newErrors = {};
     if (!isValidEmail(formData.email)) {
-      alert(errorMessages.invalidEmail);
+      showAlert({
+        message: errorMessages.invalidEmail,
+      });
       return;
     }
 
     if (!isValidPhone(formData.phone)) {
-      alert(errorMessages.invalidPhone);
+      showAlert({
+        message: errorMessages.invalidPhone,
+      });
       return;
     }
     return Object.keys(newErrors).length === 0;
@@ -55,7 +63,7 @@ const ProfileEdit = () => {
 
   const cancelEdit = () => {
     showDialog({
-      message: infoMessage.confirmCancel,
+      message: infoMessages.confirmCancel,
       onConfirm: () => navigate(ROUTES.PROFILE),
     });
   };
@@ -67,7 +75,7 @@ const ProfileEdit = () => {
   };
 
   const changePassword = (newPassword) => {
-    console.log('newPassword', newPassword)
+    console.log("newPassword", newPassword);
   };
 
   return (

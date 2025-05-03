@@ -7,7 +7,7 @@ import {
   sounds_source_data,
 } from "../config/DataConfig";
 import { LABELS } from "../constants/Label";
-import { infoMessage, soundSourceMessage } from "../constants/Message";
+import { infoMessages, soundSourceMessage } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 
 const SoundSource = () => {
@@ -24,7 +24,7 @@ const SoundSource = () => {
   const search = () => {
     // axios
     showAlert({
-      message: infoMessage.noSearchResult,
+      message: infoMessages.noSearchResult,
     });
   };
 

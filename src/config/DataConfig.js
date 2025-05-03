@@ -1,3 +1,4 @@
+import React from "react";
 import Button from "../components/Button";
 import { LABELS } from "../constants/Label";
 
@@ -197,6 +198,13 @@ export const account_manage_data = [
   },
 ];
 
+const ManageButtonCell = React.memo(({ row, onNavigate }) => (
+  <Button
+    label={LABELS.SUBSCRIBER_MANAGE}
+    onClick={() => onNavigate(row.original)}
+  />
+));
+
 export const subscribe_columns = (navigateManage) => {
   return [
     {
@@ -228,12 +236,7 @@ export const subscribe_columns = (navigateManage) => {
       accessorKey: "manage",
       header: "",
       cell: ({ row }) => (
-        <Button
-          label={LABELS.SUBSCRIBER_MANAGE}
-          onClick={() => {
-            navigateManage(row.original);
-          }}
-        />
+        <ManageButtonCell row={row} onNavigate={navigateManage} />
       ),
     },
   ];
@@ -243,8 +246,8 @@ export const subscribe_data = [
   {
     id: 1,
     mainNumber: "0211112222",
-    userNumber: "02111112222~0211112233",
-    pbxNumber: "02111112222~0211112233",
+    userNumber: "02111112222\n~\n0211112233",
+    pbxNumber: "02111112222\n~\n0211112233",
     name: "LGU+",
     applyDate: "2024.02.04",
     state: "요청중",
@@ -252,8 +255,8 @@ export const subscribe_data = [
   {
     id: 2,
     mainNumber: "0211112222",
-    userNumber: "02111112222~0211112233",
-    pbxNumber: "02111112222~0211112233",
+    userNumber: "02111112222\n~\n0211112233",
+    pbxNumber: "02111112222\n~\n0211112233",
     name: "LGU+",
     applyDate: "2024.02.04",
     state: "요청중",
@@ -261,8 +264,8 @@ export const subscribe_data = [
   {
     id: 3,
     mainNumber: "0211112222",
-    userNumber: "02111112222~0211112233",
-    pbxNumber: "02111112222~0211112233",
+    userNumber: "02111112222\n~\n0211112233",
+    pbxNumber: "02111112222\n~\n0211112233",
     name: "LGU+",
     applyDate: "2024.02.04",
     state: "가입",
@@ -270,8 +273,8 @@ export const subscribe_data = [
   {
     id: 4,
     mainNumber: "0211112222",
-    userNumber: "02111112222~0211112233",
-    pbxNumber: "02111112222~0211112233",
+    userNumber: "02111112222\n~\n0211112233",
+    pbxNumber: "02111112222\n~\n0211112233",
     name: "LGU+",
     applyDate: "2024.02.04",
     state: "가입",
@@ -279,8 +282,8 @@ export const subscribe_data = [
   {
     id: 5,
     mainNumber: "0211112222",
-    userNumber: "02111112222~0211112233",
-    pbxNumber: "02111112222~0211112233",
+    userNumber: "02111112222\n~\n0211112233",
+    pbxNumber: "02111112222\n~\n0211112233",
     name: "LGU+",
     applyDate: "2024.02.04",
     state: "가입",
@@ -288,8 +291,8 @@ export const subscribe_data = [
   {
     id: 6,
     mainNumber: "0211112222",
-    userNumber: "02111112222~0211112233",
-    pbxNumber: "02111112222~0211112233",
+    userNumber: "02111112222\n~\n0211112233",
+    pbxNumber: "02111112222\n~\n0211112233",
     name: "LGU+",
     applyDate: "2024.02.04",
     state: "가입",
@@ -297,8 +300,8 @@ export const subscribe_data = [
   {
     id: 7,
     mainNumber: "0211112222",
-    userNumber: "02111112222~0211112233",
-    pbxNumber: "02111112222~0211112233",
+    userNumber: "02111112222\n~\n0211112233",
+    pbxNumber: "02111112222\n~\n0211112233",
     name: "LGU+",
     applyDate: "2024.02.04",
     state: "가입",
@@ -306,8 +309,8 @@ export const subscribe_data = [
   {
     id: 8,
     mainNumber: "0211112222",
-    userNumber: "02111112222~0211112233",
-    pbxNumber: "02111112222~0211112233",
+    userNumber: "02111112222\n~\n0211112233",
+    pbxNumber: "02111112222\n~\n0211112233",
     name: "LGU+",
     applyDate: "2024.02.04",
     state: "가입",
@@ -315,15 +318,15 @@ export const subscribe_data = [
   {
     id: 9,
     mainNumber: "0211112222",
-    userNumber: "02111112222~0211112233",
-    pbxNumber: "02111112222~0211112233",
+    userNumber: "02111112222\n~\n0211112233",
+    pbxNumber: "02111112222\n~\n0211112233",
     name: "LGU+",
     applyDate: "2024.02.04",
     state: "가입",
   },
 ];
 
-export const access_detail_columns =[
+export const access_detail_columns = [
   {
     accessorKey: "accessTime",
     header: LABELS.ACCESS_TIME,
@@ -332,7 +335,7 @@ export const access_detail_columns =[
     accessorKey: "content",
     header: LABELS.CONTENT,
   },
-]
+];
 
 export const access_detail_data = [
   {

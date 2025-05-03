@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Button, { BUTTON_CANCEL, BUTTON_SAVE } from "../components/Button";
 import Input from "../components/Input";
-import Select from "../components/Select";
 import RadioGroup from "../components/RadioGroup";
 import {
   SUBSCRIBEREditFields,
@@ -10,12 +9,18 @@ import {
 } from "../config/FieldsConfig";
 import { ROUTES } from "../constants/routes";
 import { isValidEmail, isValidPhone } from "../utils/FormValidation";
-import { errorMessages, infoMessage, profileMessages } from "../constants/Message";
+import {
+  errorMessages,
+  infoMessages,
+  profileMessages,
+} from "../constants/Message";
 import { LABELS } from "../constants/Label";
+import { useModal } from "../contexts/ModalContext";
 
 const SubscriberManageEdit = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
+  const { showDialog, showAlert } = useModal();
 
   const [formData, setFormData] = useState(() =>
     SUBSCRIBERManageFields.reduce((acc, field) => {
@@ -29,7 +34,7 @@ const SubscriberManageEdit = () => {
     // userid로 정보 검색
     console.log(state);
 
-    const selectedId = state?.selectedId || [];
+    const selectedId = state?.selectedId;
     // setInitData();
     // setFormData(() =>
     //   accountEditFields.reduce((acc, field) => {
@@ -42,12 +47,16 @@ const SubscriberManageEdit = () => {
   const validate = () => {
     const newErrors = {};
     if (!isValidEmail(formData.email)) {
-      alert(errorMessages.invalidEmail);
+      showAlert({
+        message: errorMessages.invalidEmail,
+      });
       return;
     }
 
     if (!isValidPhone(formData.phone)) {
-      alert(errorMessages.invalidPhone);
+      showAlert({
+        message: errorMessages.invalidPhone,
+      });
       return;
     }
     return Object.keys(newErrors).length === 0;
@@ -57,10 +66,28 @@ const SubscriberManageEdit = () => {
     if (!validate()) {
       return;
     }
-    console.log("저장할 데이터:", formData);
 
-    alert(profileMessages.successUserEdit);
-    navigate(ROUTES.PROFILE);
+    showAlert({
+      message: infoMessages.successEdit,
+      onConfirm: () =>
+        navigate(ROUTES.SUBSCRIBER_MANAGE, {
+          state: {
+            selectedId: state?.selectedId,
+          },
+        }),
+    });
+  };
+
+  const cancelEdit = () => {
+    showDialog({
+      message: infoMessages.confirmCancel,
+      onConfirm: () =>
+        navigate(ROUTES.SUBSCRIBER_MANAGE, {
+          state: {
+            selectedId: state?.selectedId,
+          },
+        }),
+    });
   };
 
   return (
@@ -161,7 +188,7 @@ const SubscriberManageEdit = () => {
         </tbody>
       </table>
       <div>
-        <Button type={BUTTON_CANCEL} onClick={() => navigate(ROUTES.PROFILE)} />
+        <Button type={BUTTON_CANCEL} onClick={cancelEdit} />
         <Button type={BUTTON_SAVE} onClick={handleSave} />
       </div>
     </div>

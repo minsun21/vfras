@@ -15,7 +15,7 @@ import { ROUTES } from "../constants/routes";
 import {
   accountMessages,
   errorMessages,
-  infoMessage,
+  infoMessages,
 } from "../constants/Message";
 import { LABELS } from "../constants/Label";
 import { useModal } from "../contexts/ModalContext";
@@ -56,7 +56,7 @@ const AccountManage = () => {
 
   const search = () => {
     showAlert({
-      message: infoMessage.noSearchResult,
+      message: infoMessages.noSearchResult,
     });
   };
 
@@ -69,7 +69,7 @@ const AccountManage = () => {
     }
 
     showDialog({
-      message: infoMessage.confirmDelete(selectedRows.length),
+      message: infoMessages.confirmDelete(selectedRows.length),
       onConfirm: deleteAccount,
     });
   };

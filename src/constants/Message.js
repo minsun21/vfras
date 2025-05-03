@@ -1,9 +1,10 @@
-export const infoMessage = {
+export const infoMessages = {
   noSearchResult: `해당하는 데이터가 없습니다.`,
   successDelete: "삭제 되었습니다.",
   successEdit : "수정정보가 저장되었습니다.",
   confirmDelete: (size) => `${size}건 삭제하시겠습니까?`,
-  confirmCancel : "취소하시겠습니까?"
+  confirmCancel : "취소하시겠습니까?",
+  successAccountSave: `해당 계정이 등록되었습니다.`,
 };
 
 export const profileMessages = {
@@ -40,7 +41,6 @@ export const loginMessages = {
 
 export const accountMessages = {
   searchPlaceHolder: `아이디, 이름, 부서를 입력해주세요`,
-  successAccountSave: `해당 계정이 등록되었습니다.`,
 };
 
 export const soundSourceMessage = {

@@ -13,14 +13,20 @@ import {
   option_userState,
 } from "../config/FieldsConfig";
 import { LABELS } from "../constants/Label";
-import { errorMessages, subsriberMessage } from "../constants/Message";
+import {
+  errorMessages,
+  infoMessages,
+  subsriberMessage,
+} from "../constants/Message";
+import { useModal } from "../contexts/ModalContext";
 
 const Subscriber = () => {
   const tableRef = useRef();
   const navigate = useNavigate();
+  const { showAlert, showDialog } = useModal();
 
   const [searchInput, setSearchInput] = useState({});
-  const [data, setData] = useState(subscribe_data);
+  const [data, setData] = useState([]);
   const [allType, setAllType] = useState([]);
   const [SUBSCRIBERTypeOptions, setSUBSCRIBERTypeOptions] = useState([]);
   const [serviceTypeOptions, setServiceTypeOptions] = useState([]);
@@ -59,13 +65,19 @@ const Subscriber = () => {
 
   const approvedSUBSCRIBER = () => {
     if (selectedRows.length === 0) {
-      alert(errorMessages.nonSelect);
+      showAlert({
+        message: errorMessages.nonSelect,
+      });
       return;
     }
 
+    // axios
+
     for (const selectedRow of selectedRows) {
       if (selectedRow.state === LABELS.SUBSCRIBE) {
-        alert(subsriberMessage.approvedError);
+        showAlert({
+          message: subsriberMessage.approvedError,
+        });
         return;
       }
     }
@@ -76,13 +88,36 @@ const Subscriber = () => {
       ...row,
       state: LABELS.SUBSCRIBE,
     }));
+
+    showAlert({
+      message: infoMessages.successEdit,
+    });
   };
 
-  const deleteSUBSCRIBER = () => {
+  const clickDelete = () => {
     if (selectedRows.length === 0) {
-      alert(errorMessages.nonSelect);
+      showAlert({
+        message: errorMessages.nonSelect,
+      });
       return;
     }
+
+    showDialog({
+      message: infoMessages.confirmDelete(selectedRows.length),
+      onConfirm: deleteAccount,
+    });
+  };
+
+  const deleteAccount = () => {
+    // showAlert({
+    //   message: infoMessages.successDelete,
+    // });
+  };
+
+  const search = () => {
+    showAlert({
+      message: infoMessages.noSearchResult,
+    });
   };
 
   return (
@@ -116,7 +151,7 @@ const Subscriber = () => {
               options={userStateOptions}
               nonEmpty={true}
             />
-            <Button type={BUTTON_SEARCH} />
+            <Button type={BUTTON_SEARCH} onClick={search} />
             <span>{LABELS.SEARCH_RESULT(data.length)}</span>
           </div>
         </div>
@@ -134,7 +169,7 @@ const Subscriber = () => {
         <Button
           type={BUTTON_CANCEL}
           label={LABELS.DELETE}
-          onClick={deleteSUBSCRIBER}
+          onClick={clickDelete}
         />
       </div>
     </div>

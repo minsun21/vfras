@@ -53,7 +53,7 @@ const CountryCode = () => {
 
     showDialog({
       message: countryNumberMessage.allChange,
-      onConfirm: (allChange),
+      onConfirm: allChange,
     });
   };
 

@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { SUBSCRIBERResigerFields } from "../config/FieldsConfig";
-import Button, { BUTTON_CANCEL, BUTTON_CONFIRM } from "../components/Button";
+import Button, { BUTTON_CANCEL } from "../components/Button";
 import Input from "../components/Input";
 import Select from "../components/Select";
 import RadioGroup from "../components/RadioGroup";
 import { ROUTES } from "../constants/routes";
 import { isValidEmail, isValidPhone } from "../utils/FormValidation";
-import { errorMessages } from "../constants/Message";
+import { errorMessages, infoMessages } from "../constants/Message";
+import { useModal } from "../contexts/ModalContext";
 
 const SubscriberRegister = () => {
   const navigate = useNavigate();
+  const { showDialog, showAlert, showModal } = useModal();
 
   const [formData, setFormData] = useState({});
 
@@ -27,33 +29,44 @@ const SubscriberRegister = () => {
     setFormData({ ...formData, ...data });
   }, []);
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
+  const cancelEdit = () => {
+    showDialog({
+      message: infoMessages.confirmCancel,
+      onConfirm: () => navigate(ROUTES.SUBSCRIBER),
+    });
+  };
 
   const validate = () => {
     for (const field of SUBSCRIBERResigerFields) {
       const { key, label, required, type, requiredLength } = field;
       // 1. 필수값인지 확인
       if (required && !formData[key]) {
-        alert(errorMessages.required(label));
+        showAlert({
+          message: errorMessages.required(label),
+        });
         return false;
       }
 
       // 2. 타입에 따라 validation 체크(email, phone...)
       if (type === "email" && !isValidEmail(formData[key])) {
-        alert(errorMessages.invalidEmail);
+        showAlert({
+          message: errorMessages.invalidEmail,
+        });
         return;
       }
 
       if (type === "phone" && !isValidPhone(formData[key])) {
-        alert(errorMessages.invalidPhone);
+        showAlert({
+          message: errorMessages.invalidPhone,
+        });
         return;
       }
 
       // 3. 최소 길이 체크
       if (requiredLength && formData[key].length !== requiredLength) {
-        alert(errorMessages.lengthMismatch(label, requiredLength));
+        showAlert({
+          message: errorMessages.lengthMismatch(label, requiredLength),
+        });
         return;
       }
     }
@@ -68,8 +81,10 @@ const SubscriberRegister = () => {
 
     console.log("저장할 데이터:", formData);
 
-    // alert("가입자 등록이 완료되었습니다.");
-    // navigate(ROUTES.SUBSCRIBER);
+    showAlert({
+      message: infoMessages.successAccountSave,
+      onConfirm: () => navigate(ROUTES.SUBSCRIBER),
+    });
   };
 
   return (
@@ -158,10 +173,7 @@ const SubscriberRegister = () => {
         </tbody>
       </table>
       <div>
-        <Button
-          type={BUTTON_CANCEL}
-          onClick={() => navigate(ROUTES.SUBSCRIBER)}
-        />
+        <Button type={BUTTON_CANCEL} onClick={cancelEdit} />
         <Button onClick={handleSave} />
       </div>
     </div>

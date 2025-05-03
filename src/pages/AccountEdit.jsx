@@ -6,7 +6,7 @@ import Input from "../components/Input";
 import Select from "../components/Select";
 import { ROUTES } from "../constants/routes";
 import { accountValidate } from "../utils/FormValidation";
-import { infoMessage } from "../constants/Message";
+import { infoMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 
 const AccountEdit = () => {
@@ -36,14 +36,14 @@ const AccountEdit = () => {
     console.log("저장할 데이터:", formData);
 
     showAlert({
-      message: infoMessage.successEdit,
+      message: infoMessages.successEdit,
       onConfirm: () => navigate(ROUTES.ACCOUNT_MANAGE),
     });
   };
 
   const cancelEdit = () => {
     showDialog({
-      message: infoMessage.confirmCancel,
+      message: infoMessages.confirmCancel,
       onConfirm: () => navigate(ROUTES.ACCOUNT_MANAGE),
     });
   };

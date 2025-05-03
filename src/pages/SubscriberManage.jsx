@@ -5,9 +5,12 @@ import { LABELS } from "../constants/Label";
 import Input from "../components/Input";
 import { SUBSCRIBERManageFields } from "../config/FieldsConfig";
 import { ROUTES } from "../constants/routes";
+import { useModal } from "../contexts/ModalContext";
+import { infoMessages } from "../constants/Message";
 
 const SubscriberManage = () => {
   const navigate = useNavigate();
+  const { showAlert, showDialog } = useModal();
   const { state } = useLocation();
 
   const [data, setData] = useState(() =>
@@ -20,7 +23,6 @@ const SubscriberManage = () => {
 
   useEffect(() => {
     // userid로 정보 검색
-    console.log(state);
 
     const selectedId = state?.selectedId || [];
     // setInitData();
@@ -32,6 +34,12 @@ const SubscriberManage = () => {
     // );
   }, [state]);
 
+  const search = () => {
+    showAlert({
+      message: infoMessages.noSearchResult,
+    });
+  };
+
   return (
     <div>
       <div className="search-area">
@@ -42,7 +50,7 @@ const SubscriberManage = () => {
             type="number"
             onChange={(e) => setSearchMainNumber(e.target.value)}
           />
-          <Button type={BUTTON_SEARCH} />
+          <Button type={BUTTON_SEARCH} onClick={search} />
         </div>
         <Button
           type={BUTTON_CANCEL}

@@ -7,7 +7,7 @@ import Select from "../components/Select";
 import { ROUTES } from "../constants/routes";
 import { accountValidate } from "../utils/FormValidation";
 import { useModal } from "../contexts/ModalContext";
-import { accountMessages } from "../constants/Message";
+import { infoMessages } from "../constants/Message";
 
 const AccountRegister = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const AccountRegister = () => {
     console.log("저장할 데이터:", formData);
 
     showAlert({
-      message: accountMessages.successAccountSave,
+      message: infoMessages.successAccountSave,
       onConfirm: () => navigate(ROUTES.SUBSCRIBER),
     });
   };
