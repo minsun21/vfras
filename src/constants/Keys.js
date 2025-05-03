@@ -1,4 +1,25 @@
-export const KEYS ={
-    CODE : "code",
-    TITLE : "title"
-}
+export const KEYS = {
+  CODE: "code",
+  TITLE: "title",
+  ID: "id",
+  NAME: "name",
+  DEPARTMENT: "department",
+  USER_TYPE: "userType",
+  ACCESS_TIME: "accessTime",
+  LAST_ACCESS_TIME: "lastAccessTime",
+  CREATED_AT: "createdAt",
+  MAIN_NUMBER: "mainNumber",
+  USER_NUMBER: "userNumber",
+  PBX_NUMBER: "pbxNumber",
+  STATE: "state",
+  MANAGE: "manage",
+  APPLY_DATE: "applyDate",
+  CONTENT: "content",
+  SOUND_CODE: "soundCode",
+  CIRCULATION_RING: "circulationRing",
+  TIME_SLOT: "timeslot",
+  DAY_OF_WEEKEND: "dayOfWeekend",
+  CALLER_AREA: "callerArea",
+  CALLER_NUMBER: "callerNumber",
+  ANNIVERSARY: "anniversary",
+};
