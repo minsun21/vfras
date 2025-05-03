@@ -43,16 +43,17 @@ export const accountMessages = {
   searchPlaceHolder: `아이디, 이름, 부서를 입력해주세요`,
 };
 
-export const soundSourceMessage = {
+export const soundSourceMessages = {
   searchPlaceHolder: `음원코드, 제목/설명을 입력해주세요`,
 };
 
-export const subsriberMessage = {
+export const subsriberMessages = {
   searchPlaceHolder: `가입자명, 번호를 입력해주세요`,
   approvedError: `이미 가입된 행은 선택할 수 없습니다`,
+  resetPasswordConfirm : `패스워드를 초기화 하시겠습니까?`
 };
 
-export const countryNumberMessage = {
+export const countryNumberMessages = {
   info1: `국번을 라인단위로 입력해주세요.`,
   info2: `라인간에는 반드시 엔터를 쳐주시기 바랍니다.`,
   info3: `변경할 국번을 준비하여 복사 후 붙여주세요.`,

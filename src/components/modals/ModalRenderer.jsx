@@ -11,6 +11,7 @@ const ModalRenderer = () => {
     <>
       {modals?.map(({ type, props }, index) => (
         <Modal
+          className={`common-modal ${type}`}
           key={index}
           isOpen={true}
           onRequestClose={closeModal}
@@ -25,7 +26,6 @@ const ModalRenderer = () => {
             content: {
               position: "relative",
               inset: "unset",
-              width: "400px",
               margin: "auto",
               padding: "20px",
               borderRadius: "10px",

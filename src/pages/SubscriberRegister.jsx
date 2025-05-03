@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { SUBSCRIBERResigerFields } from "../config/FieldsConfig";
+import { subsriberResigerFields } from "../config/FieldsConfig";
 import Button, { BUTTON_CANCEL } from "../components/Button";
 import Input from "../components/Input";
 import Select from "../components/Select";
@@ -21,7 +21,7 @@ const SubscriberRegister = () => {
     //   setData(prev => ({ ...prev, ...res.data }));
     // });
     let data = {};
-    for (const field of SUBSCRIBERResigerFields) {
+    for (const field of subsriberResigerFields) {
       if (field.type === "radio") {
         data[field.key] = field.options[0].value;
       }
@@ -37,7 +37,7 @@ const SubscriberRegister = () => {
   };
 
   const validate = () => {
-    for (const field of SUBSCRIBERResigerFields) {
+    for (const field of subsriberResigerFields) {
       const { key, label, required, type, requiredLength } = field;
       // 1. 필수값인지 확인
       if (required && !formData[key]) {
@@ -91,7 +91,7 @@ const SubscriberRegister = () => {
     <div>
       <table className="info-table">
         <tbody>
-          {SUBSCRIBERResigerFields.map((field) => {
+          {subsriberResigerFields.map((field) => {
             const {
               key,
               label,
@@ -111,7 +111,7 @@ const SubscriberRegister = () => {
 
             return (
               <tr key={key}>
-                <td className="label" required={required}>
+                <td className="Labels" required={required}>
                   {label}
                 </td>
                 <td className="value">

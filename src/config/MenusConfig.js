@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import { ROUTES } from "../constants/routes";
-import { LABELS } from "../constants/Label";
+import { LABELS } from "../constants/Labels";
 
 export const MenusConfig = [
   {

@@ -10,7 +10,7 @@ import {
   infoMessages,
   profileMessages,
 } from "../constants/Message";
-import { LABELS } from "../constants/Label";
+import { LABELS } from "../constants/Labels";
 import { useModal } from "../contexts/ModalContext";
 import PasswordChange from "../components/modals/PasswordChange";
 
@@ -89,7 +89,7 @@ const ProfileEdit = () => {
             };
             return (
               <tr key={key}>
-                <td className="label">{field.label}</td>
+                <td className="Labels">{field.label}</td>
                 <td className="value">
                   {key === "password" ? (
                     <>

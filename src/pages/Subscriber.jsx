@@ -7,16 +7,16 @@ import Table from "../components/Table";
 import { ROUTES } from "../constants/routes";
 import { subscribe_columns, subscribe_data } from "../config/DataConfig";
 import {
-  option_SUBSCRIBERType,
+  option_subsriberType,
   option_allType,
   option_serviceType,
   option_userState,
 } from "../config/FieldsConfig";
-import { LABELS } from "../constants/Label";
+import { LABELS } from "../constants/Labels";
 import {
   errorMessages,
   infoMessages,
-  subsriberMessage,
+  subsriberMessages,
 } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 
@@ -28,7 +28,7 @@ const Subscriber = () => {
   const [searchInput, setSearchInput] = useState({});
   const [data, setData] = useState([]);
   const [allType, setAllType] = useState([]);
-  const [SUBSCRIBERTypeOptions, setSUBSCRIBERTypeOptions] = useState([]);
+  const [subsriberTypeOptions, setsubsriberTypeOptions] = useState([]);
   const [serviceTypeOptions, setServiceTypeOptions] = useState([]);
   const [userStateOptions, setUserStateOptions] = useState([]);
 
@@ -36,13 +36,13 @@ const Subscriber = () => {
 
   useEffect(() => {
     setAllType(option_allType);
-    setSUBSCRIBERTypeOptions(option_SUBSCRIBERType);
+    setsubsriberTypeOptions(option_subsriberType);
     setServiceTypeOptions(option_serviceType);
     setUserStateOptions(option_userState);
 
     setSearchInput({
       allType: option_allType[0],
-      SUBSCRIBERType: option_SUBSCRIBERType[0],
+      subsriberType: option_subsriberType[0],
       serviceType: option_serviceType[0],
       userState: option_userState[0],
     });
@@ -76,7 +76,7 @@ const Subscriber = () => {
     for (const selectedRow of selectedRows) {
       if (selectedRow.state === LABELS.SUBSCRIBE) {
         showAlert({
-          message: subsriberMessage.approvedError,
+          message: subsriberMessages.approvedError,
         });
         return;
       }
@@ -130,13 +130,13 @@ const Subscriber = () => {
               options={allType}
               nonEmpty={true}
             />
-            <Input placeholder={subsriberMessage.searchPlaceHolder} />
+            <Input placeholder={subsriberMessages.searchPlaceHolder} />
           </div>
           <div>
             <Select
               label={LABELS.SUBSCRIBER_TYPE}
-              value={searchInput.SUBSCRIBERType}
-              options={SUBSCRIBERTypeOptions}
+              value={searchInput.subsriberType}
+              options={subsriberTypeOptions}
               nonEmpty={true}
             />
             <Select

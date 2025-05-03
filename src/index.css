@@ -145,3 +145,11 @@ textarea {
   overflow: visible !important;
   text-overflow: unset !important;
 }
+
+.common-modal {
+  width: 400px;
+}
+
+.common-modal.modal {
+  width: 1200px;
+}

@@ -7,7 +7,7 @@ import SideBar from "./SideBar";
 import { MenusConfig, NonMenuConfig } from "../config/MenusConfig";
 import Button, { BUTTON_CANCEL } from "./Button";
 import { ROUTES } from "../constants/routes";
-import { LABELS } from "../constants/Label";
+import { LABELS } from "../constants/Labels";
 
 const getCurrentSubMenuTitle = (currentPath) => {
   for (const group of MenusConfig) {

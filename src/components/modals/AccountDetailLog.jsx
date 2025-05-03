@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useModal } from "../../contexts/ModalContext";
-import { LABELS } from "../../constants/Label";
+import { LABELS } from "../../constants/Labels";
 import Table from "../Table";
 import {
   access_detail_columns,
@@ -19,10 +19,7 @@ const AccountDetailLog = ({ selectRow }) => {
   return (
     <div>
       <header>
-        <div>
-          <span>{`${selectRow.id} `}</span>
-          <span>{`${LABELS.ACCOUNT_DETAIL_LOGS}`}</span>
-        </div>
+        <h4>{`${selectRow.id} ${LABELS.ACCOUNT_DETAIL_LOGS}`}</h4>
         <button onClick={closeModal}>x</button>
       </header>
       <div>

@@ -3,7 +3,7 @@ import { useModal } from "../../contexts/ModalContext";
 import Button, { BUTTON_CANCEL } from "../Button";
 import Input from "../Input";
 import { passwordChange } from "../../config/FieldsConfig";
-import { LABELS } from "../../constants/Label";
+import { LABELS } from "../../constants/Labels";
 import { hasEmptyValue, isValidPassword } from "../../utils/FormValidation";
 import {
   errorMessages,

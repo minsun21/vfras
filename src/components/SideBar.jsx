@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { MenusConfig } from "../config/MenusConfig";
-import { LABELS } from "../constants/Label";
+import { LABELS } from "../constants/Labels";
 
 const SideBar = () => {
   const navigate = useNavigate();

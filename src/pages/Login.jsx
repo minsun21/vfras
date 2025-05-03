@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../features/authSlice";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ROUTES } from "../constants/routes";
-import { LABELS } from "../constants/Label";
+import { LABELS } from "../constants/Labels";
 import { loginMessages } from "../constants/Message";
 
 const Login = () => {

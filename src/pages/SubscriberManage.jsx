@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Button, { BUTTON_SEARCH, BUTTON_CANCEL } from "../components/Button";
-import { LABELS } from "../constants/Label";
+import { LABELS } from "../constants/Labels";
 import Input from "../components/Input";
-import { SUBSCRIBERManageFields } from "../config/FieldsConfig";
+import { subsriberManageFields } from "../config/FieldsConfig";
 import { ROUTES } from "../constants/routes";
 import { useModal } from "../contexts/ModalContext";
 import { infoMessages } from "../constants/Message";
@@ -14,7 +14,7 @@ const SubscriberManage = () => {
   const { state } = useLocation();
 
   const [data, setData] = useState(() =>
-    SUBSCRIBERManageFields.reduce((acc, field) => {
+    subsriberManageFields.reduce((acc, field) => {
       acc[field.key] = field.value || "";
       return acc;
     }, {})
@@ -60,12 +60,12 @@ const SubscriberManage = () => {
       </div>
       <table className="info-table">
         <tbody>
-          {SUBSCRIBERManageFields.map((field) => {
+          {subsriberManageFields.map((field) => {
             const { key, multi } = field;
 
             return (
               <tr key={field.key}>
-                <td className="label">{field.label}</td>
+                <td className="Labels">{field.label}</td>
                 <td>
                   {key === "mainNumber" ? (
                     <div>

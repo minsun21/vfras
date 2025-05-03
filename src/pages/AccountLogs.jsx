@@ -4,7 +4,7 @@ import Input, { INPUT_SIZE_LG } from "../components/Input";
 import Table from "../components/Table";
 import { account_logs_columns, account_logs_data } from "../config/DataConfig";
 import { accountMessages, infoMessages } from "../constants/Message";
-import { LABELS } from "../constants/Label";
+import { LABELS } from "../constants/Labels";
 import AccountDetailLog from "../components/modals/AccountDetailLog";
 import { useModal } from "../contexts/ModalContext";
 

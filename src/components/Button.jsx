@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { LABELS } from "../constants/Label";
+import { LABELS } from "../constants/Labels";
 
 export const BUTTON_CONFIRM = "confirm";
 export const BUTTON_CANCEL = "cancel";

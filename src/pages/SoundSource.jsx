@@ -6,8 +6,8 @@ import {
   sounds_source_columns,
   sounds_source_data,
 } from "../config/DataConfig";
-import { LABELS } from "../constants/Label";
-import { infoMessages, soundSourceMessage } from "../constants/Message";
+import { LABELS } from "../constants/Labels";
+import { infoMessages, soundSourceMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 
 const SoundSource = () => {
@@ -35,7 +35,7 @@ const SoundSource = () => {
           <Input
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            placeholder={soundSourceMessage.searchPlaceHolder}
+            placeholder={soundSourceMessages.searchPlaceHolder}
             size={INPUT_SIZE_LG}
           />
           <Button type={BUTTON_SEARCH} onClick={search} />

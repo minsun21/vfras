@@ -56,7 +56,7 @@ const AccountRegister = () => {
 
             return (
               <tr key={key}>
-                <td className="label" required={required}>
+                <td className="Labels" required={required}>
                   {label}
                 </td>
                 <td className="value">

@@ -1,57 +1,58 @@
 import React from "react";
 import Button from "../components/Button";
-import { LABELS } from "../constants/Label";
+import { LABELS } from "../constants/Labels";
+import { KEYS } from "../constants/Keys";
 
 export const sounds_source_columns = [
   {
-    accessorKey: "code",
+    accessorKey: KEYS.CODE,
     header: LABELS.SOUNDS_CODE,
   },
   {
-    accessorKey: "title",
+    accessorKey: KEYS.TITLE,
     header: LABELS.TITLE_DESC,
   },
 ];
 export const sounds_source_data = [
   {
-    code: 3820472,
-    title: "편지",
+    [KEYS.CODE]: 3820472,
+    [KEYS.TITLE]: "편지",
   },
   {
-    code: 1234523,
-    title: "모르시나요",
+    [KEYS.CODE]: 1234523,
+    [KEYS.TITLE]: "모르시나요",
   },
   {
-    code: 3457435,
-    title: "가끔 니가 생각나",
+    [KEYS.CODE]: 3457435,
+    [KEYS.TITLE]: "가끔 니가 생각나",
   },
   {
-    code: 2653455,
-    title: "Period",
+    [KEYS.CODE]: 2653455,
+    [KEYS.TITLE]: "Period",
   },
   {
-    code: 2477854,
-    title: "Again",
+    [KEYS.CODE]: 2477854,
+    [KEYS.TITLE]: "Again",
   },
   {
-    code: 6799556,
-    title: "화",
+    [KEYS.CODE]: 6799556,
+    [KEYS.TITLE]: "화",
   },
   {
-    code: 8576833,
-    title: "슈퍼노바",
+    [KEYS.CODE]: 8576833,
+    [KEYS.TITLE]: "슈퍼노바",
   },
   {
-    code: 5799336,
-    title: "레블하트",
+    [KEYS.CODE]: 5799336,
+    [KEYS.TITLE]: "레블하트",
   },
   {
-    code: 583594,
-    title: "Forever",
+    [KEYS.CODE]: 583594,
+    [KEYS.TITLE]: "Forever",
   },
   {
-    code: 16690345,
-    title: "Like Water",
+    [KEYS.CODE]: 16690345,
+    [KEYS.TITLE]: "Like Water",
   },
 ];
 
@@ -349,5 +350,58 @@ export const access_detail_data = [
   {
     accessTime: "2024.02.04\n11:23:37",
     content: "음원 조회",
+  },
+];
+
+export const did_setting_columns = [
+  {
+    accessorKey: "userNumber",
+    header: LABELS.USER_NUMBER_MULTI,
+  },
+  {
+    accessorKey: "pbxNumber",
+    header: LABELS.PBX_NUMBER_COL_MULTI,
+  },
+  {
+    accessorKey: "soundCode",
+    header: LABELS.SOUND_CODE_COL_MULTI,
+  },
+  {
+    header: LABELS.IS_ADDITIONAL_SERVICE,
+    columns: [
+      {
+        accessorKey: "orderAmount",
+        header: LABELS.CIRCULATION_RING,
+      },
+      {
+        accessorKey: "orderAmount",
+        header: LABELS.TIME_SLOT,
+      },
+      {
+        accessorKey: "orderAmount",
+        header: LABELS.DAY_OF_WEEKEND,
+      },
+      {
+        accessorKey: "orderAmount",
+        header: LABELS.CALLER_AREA,
+      },
+      {
+        accessorKey: "orderAmount",
+        header: LABELS.CALLER_NUMBER,
+      },
+      {
+        accessorKey: "orderAmount",
+        header: LABELS.ANNIVERSARY,
+      },
+    ],
+  },
+];
+
+
+export const did_setting_data = [
+  {
+    userNumber: "02111112222\n~\n0211112233",
+    pbxNumber: "02111112222\n~\n0211112233",
+    soundCode : "599145"
   },
 ];

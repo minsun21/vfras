@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import { profileFields } from "../config/FieldsConfig";
 import { ROUTES } from "../constants/routes";
-import { LABELS } from "../constants/Label";
+import { LABELS } from "../constants/Labels";
 
 const Profile = () => {
   
@@ -32,7 +32,7 @@ const Profile = () => {
         <tbody>
           {profileFields.map((field) => (
             <tr key={field.key}>
-              <td className="label">{field.label}</td>
+              <td className="Labels">{field.label}</td>
               <td>{data[field.key]}</td>
             </tr>
           ))}

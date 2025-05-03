@@ -4,36 +4,31 @@ import Button, { BUTTON_CANCEL, BUTTON_SAVE } from "../components/Button";
 import Input from "../components/Input";
 import RadioGroup from "../components/RadioGroup";
 import {
-  SUBSCRIBEREditFields,
-  SUBSCRIBERManageFields,
+  subscriberEditFields,
+  subsriberManageFields,
 } from "../config/FieldsConfig";
 import { ROUTES } from "../constants/routes";
 import { isValidEmail, isValidPhone } from "../utils/FormValidation";
-import {
-  errorMessages,
-  infoMessages,
-  profileMessages,
-} from "../constants/Message";
-import { LABELS } from "../constants/Label";
+import { errorMessages, infoMessages, subsriberMessages } from "../constants/Message";
+import { LABELS } from "../constants/Labels";
 import { useModal } from "../contexts/ModalContext";
+import DidSetting from "../components/modals/DidSetting";
 
 const SubscriberManageEdit = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { showDialog, showAlert } = useModal();
+  const { showDialog, showAlert, showModal } = useModal();
+  const [searchMainNumber, setSearchMainNumber] = useState("");
 
   const [formData, setFormData] = useState(() =>
-    SUBSCRIBERManageFields.reduce((acc, field) => {
+    subsriberManageFields.reduce((acc, field) => {
       acc[field.key] = field.value || "";
       return acc;
     }, {})
   );
-  const [searchMainNumber, setSearchMainNumber] = useState("");
 
   useEffect(() => {
     // userid로 정보 검색
-    console.log(state);
-
     const selectedId = state?.selectedId;
     // setInitData();
     // setFormData(() =>
@@ -90,11 +85,28 @@ const SubscriberManageEdit = () => {
     });
   };
 
+  const clickDidSetting = () => {
+    showModal({
+      content: <DidSetting />,
+    });
+  };
+
+  const clickResetPassword = () => {
+    showDialog({
+      message: subsriberMessages.resetPasswordConfirm,
+      onConfirm: restPassword,
+    });
+  };
+
+  const restPassword=()=>{
+    console.log('reset')
+  }
+
   return (
     <div>
       <table className="info-table">
         <tbody>
-          {SUBSCRIBEREditFields.map((field) => {
+          {subscriberEditFields.map((field) => {
             const {
               key,
               label,
@@ -108,12 +120,29 @@ const SubscriberManageEdit = () => {
             const value = formData[key] || "";
 
             const handleChange = (val) => {
+              const newData = {
+                [key]: val,
+              };
+
+              if (key === "userUseState") {
+                const itemsOpt = field.options.filter(
+                  (option) => option.items
+                )[0];
+                if (itemsOpt.value !== val) {
+                  itemsOpt.items.map((item) => (newData[item.key] = ""));
+                }
+              }
+
+              setFormData((prev) => ({ ...prev, ...newData }));
+            };
+
+            const dateChange = (key, val) => {
               setFormData((prev) => ({ ...prev, [key]: val }));
             };
 
             return (
               <tr key={key}>
-                <td className="label" required={required}>
+                <td className="Labels" required={required}>
                   {label}
                 </td>
                 <td className="value">
@@ -140,8 +169,39 @@ const SubscriberManageEdit = () => {
                       <Button
                         type={BUTTON_CANCEL}
                         label={LABELS.PASSWORD_RESET}
+                        onClick={clickResetPassword}
                       />
                     </>
+                  ) : key === "userUseState" ? (
+                    <div>
+                      <RadioGroup
+                        value={value}
+                        options={options}
+                        onChange={(e) => handleChange(e.target.value)}
+                      />
+                      {field.options
+                        .filter((option) => option.items)[0]
+                        .items.map((item, idx) => {
+                          return (
+                            <div key={idx}>
+                              <Input
+                                type="date"
+                                value={formData[item.key] || ""}
+                                onChange={(e) =>
+                                  dateChange(item.key, e.target.value)
+                                }
+                                disabled={
+                                  formData[key] !==
+                                  field.options.filter(
+                                    (option) => option.items
+                                  )[0].value
+                                }
+                              />
+                              {idx === 0 && <span>{"~"}</span>}
+                            </div>
+                          );
+                        })}
+                    </div>
                   ) : type === "radio" ? (
                     <RadioGroup
                       value={value}
@@ -151,7 +211,11 @@ const SubscriberManageEdit = () => {
                   ) : key === "did" ? (
                     <div>
                       <span>{value}</span>
-                      <Button type={BUTTON_CANCEL} label={LABELS.SETTING} />
+                      <Button
+                        type={BUTTON_CANCEL}
+                        label={LABELS.SETTING}
+                        onClick={clickDidSetting}
+                      />
                     </div>
                   ) : multi ? (
                     <div>

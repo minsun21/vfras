@@ -1,6 +1,6 @@
-import { LABELS } from "../constants/Label";
+import { LABELS } from "../constants/Labels";
 
-export const option_SUBSCRIBERType = [
+export const option_subsriberType = [
   { key: "all", value: "전체" },
   { key: "individual", value: "개인" },
   { key: "corporation", value: "법인" },
@@ -32,7 +32,14 @@ export const option_substriber_userState = [
 export const option_userUseState = [
   { key: "notUsed", value: "사용안함" },
   { key: "unconditionally", value: "무조건" },
-  { key: "specialPeriod", value: "특정기간" },
+  {
+    key: "period",
+    value: "특정기간",
+    items: [
+      { key: "statusStartDate", value: "" },
+      { key: "statusEndDate", value: "" },
+    ],
+  },
 ];
 
 export const user_classification = [
@@ -143,7 +150,7 @@ export const profileEditFields = [
   },
 ];
 
-export const SUBSCRIBERResigerFields = [
+export const subsriberResigerFields = [
   {
     key: "mainNumber",
     label: LABELS.MAIN_NUMBER,
@@ -158,10 +165,10 @@ export const SUBSCRIBERResigerFields = [
     options: option_userState,
   },
   {
-    key: "SUBSCRIBERType",
+    key: "subsriberType",
     label: LABELS.SUBSCRIBE_TYPE,
     type: "radio",
-    options: option_SUBSCRIBERType,
+    options: option_subsriberType,
   },
   {
     key: "serviceType",
@@ -221,7 +228,7 @@ export const SUBSCRIBERResigerFields = [
   },
 ];
 
-export const SUBSCRIBERManageFields = [
+export const subsriberManageFields = [
   {
     key: "mainNumber",
     label: LABELS.SUBSCRIBER_NUMBER,
@@ -236,7 +243,7 @@ export const SUBSCRIBERManageFields = [
     value: "요청중",
   },
   {
-    key: "SUBSCRIBERType",
+    key: "subsriberType",
     label: LABELS.SUBSCRIBE_TYPE,
     type: "text",
     value: "법인",
@@ -303,13 +310,13 @@ export const SUBSCRIBERManageFields = [
   },
   {
     key: "did",
-    label: LABELS.DID,
+    label: LABELS.DID_TITLE,
     type: "button",
     value: "현재 xxx개 DID",
   },
 ];
 
-export const SUBSCRIBEREditFields = [
+export const subscriberEditFields = [
   {
     key: "mainNumber",
     label: LABELS.SUBSCRIBER_NUMBER,
@@ -324,7 +331,7 @@ export const SUBSCRIBEREditFields = [
     options: option_substriber_userState,
   },
   {
-    key: "SUBSCRIBERType",
+    key: "subsriberType",
     label: LABELS.SUBSCRIBE_TYPE,
     type: "text",
     value: "법인",
@@ -391,11 +398,11 @@ export const SUBSCRIBEREditFields = [
     key: "userUseState",
     label: LABELS.USER_STATE,
     type: "radio",
-    value: "사용안함",
+    options: option_userUseState,
   },
   {
     key: "did",
-    label: LABELS.DID,
+    label: LABELS.DID_TITLE,
     type: "button",
     value: "현재 xxx개 DID",
   },

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Button, { BUTTON_CANCEL } from "../components/Button";
-import { LABELS } from "../constants/Label";
+import { LABELS } from "../constants/Labels";
 import { countryNumbers } from "../config/FieldsConfig";
-import { countryNumberMessage } from "../constants/Message";
+import { countryNumberMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 
 const CountryCode = () => {
@@ -46,13 +46,13 @@ const CountryCode = () => {
   const clickAllChange = () => {
     if (!validation()) {
       showAlert({
-        message: countryNumberMessage.errorChange,
+        message: countryNumberMessages.errorChange,
       });
       return;
     }
 
     showDialog({
-      message: countryNumberMessage.allChange,
+      message: countryNumberMessages.allChange,
       onConfirm: allChange,
     });
   };
@@ -75,7 +75,7 @@ const CountryCode = () => {
 
     // 성공
     showAlert({
-      message: countryNumberMessage.successChange,
+      message: countryNumberMessages.successChange,
     });
   };
 
@@ -99,9 +99,9 @@ const CountryCode = () => {
           cols={5}
         />
         <div>
-          <span>{countryNumberMessage.info1}</span>
-          <span>{countryNumberMessage.info2}</span>
-          <span>{countryNumberMessage.info3}</span>
+          <span>{countryNumberMessages.info1}</span>
+          <span>{countryNumberMessages.info2}</span>
+          <span>{countryNumberMessages.info3}</span>
         </div>
       </div>
       <div>

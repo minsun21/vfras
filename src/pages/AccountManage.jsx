@@ -17,7 +17,7 @@ import {
   errorMessages,
   infoMessages,
 } from "../constants/Message";
-import { LABELS } from "../constants/Label";
+import { LABELS } from "../constants/Labels";
 import { useModal } from "../contexts/ModalContext";
 
 const AccountManage = () => {
