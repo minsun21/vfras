@@ -102,7 +102,6 @@ const AccountManage = () => {
           columns={account_manage_columns}
           data={data}
           pageSize={5}
-          rowSelectionEnabled={true}
           onRowSelectionChange={setSelectedRows}
         />
         <div>

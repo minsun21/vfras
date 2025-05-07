@@ -161,7 +161,6 @@ const Subscriber = () => {
         columns={subscribe_columns(navigateManage)}
         data={data}
         pageSize={10}
-        rowSelectionEnabled={true}
         onRowSelectionChange={setSelectedRows}
       />
       <div>

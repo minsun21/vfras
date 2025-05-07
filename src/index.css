@@ -153,3 +153,7 @@ textarea {
 .common-modal.modal {
   width: 1200px;
 }
+
+.selected {
+  background-color: #e6f7ff;
+}

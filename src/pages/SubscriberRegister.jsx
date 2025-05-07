@@ -102,6 +102,7 @@ const SubscriberRegister = () => {
               comment,
               disabled,
               multi,
+              fields
             } = field;
             const value = formData[key] || "";
 
@@ -141,7 +142,7 @@ const SubscriberRegister = () => {
                     </div>
                   ) : multi ? (
                     <div>
-                      {field.fields.map((subField, idx) => (
+                      {fields.map((subField, idx) => (
                         <div key={subField.key}>
                           <Input
                             type={subField.type}

@@ -399,6 +399,20 @@ export const did_setting_columns = [
 
 export const did_setting_data = [
   {
+    [KEYS.ID]: 1,
+    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112233",
+    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112233",
+    [KEYS.SOUND_CODE]: "599145",
+  },
+
+  {
+    [KEYS.ID]: 11,
+    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112233",
+    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112233",
+    [KEYS.SOUND_CODE]: "599145",
+  },
+  {
+    [KEYS.ID]: 112,
     [KEYS.USER_NUMBER]: "02111112222\n~\n0211112233",
     [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112233",
     [KEYS.SOUND_CODE]: "599145",

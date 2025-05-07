@@ -1,16 +1,16 @@
 export const infoMessages = {
   noSearchResult: `해당하는 데이터가 없습니다.`,
   successDelete: "삭제 되었습니다.",
-  successEdit : "수정정보가 저장되었습니다.",
+  successEdit: "수정정보가 저장되었습니다.",
   confirmDelete: (size) => `${size}건 삭제하시겠습니까?`,
-  confirmCancel : "취소하시겠습니까?",
+  confirmCancel: "취소하시겠습니까?",
   successAccountSave: `해당 계정이 등록되었습니다.`,
 };
 
 export const profileMessages = {
   successUserEdit: `프로필이 성공적으로 저장되었습니다.`,
-  successPasswordChange : `비밀번호가 변경되었습니다.`
-}
+  successPasswordChange: `비밀번호가 변경되었습니다.`,
+};
 
 export const errorMessages = {
   required: (label) => `${label}을(를) 입력해주세요.`,
@@ -19,11 +19,11 @@ export const errorMessages = {
   lengthMismatch: (label, len) => `${label}은(는) ${len}자리여야 합니다.`,
   invalidPassword: `비밀번호는 8~20자의 영문, 숫자, 특수문자를 모두 포함해야 합니다.`,
   confirmPassword: `비밀번호 확인이 맞지 않습니다.`,
-  confirmCurrentPassword : `현재 비밀번호가 맞지 않습니다.`,
+  confirmCurrentPassword: `현재 비밀번호가 맞지 않습니다.`,
   nonSelect: `항목을 먼저 선택해주세요.`,
   oneSelect: `하나의 항목을 선택해주세요.`,
-  network : `서버 에러입니다\n관리자에게 문의해주세요`,
-  emptyValue : `빈 항목이 있습니다`,
+  network: `서버 에러입니다\n관리자에게 문의해주세요`,
+  emptyValue: `빈 항목이 있습니다`,
 };
 
 export const loginMessages = {
@@ -50,7 +50,8 @@ export const soundSourceMessages = {
 export const subsriberMessages = {
   searchPlaceHolder: `가입자명, 번호를 입력해주세요`,
   approvedError: `이미 가입된 행은 선택할 수 없습니다`,
-  resetPasswordConfirm : `패스워드를 초기화 하시겠습니까?`
+  resetPasswordConfirm: `패스워드를 초기화 하시겠습니까?`,
+  didPlaceHolder: `부가서비스 설정을 원하는 행을 선택하세요.`,
 };
 
 export const countryNumberMessages = {
@@ -59,5 +60,5 @@ export const countryNumberMessages = {
   info3: `변경할 국번을 준비하여 복사 후 붙여주세요.`,
   allChange: `전체 변경하시겠습니까?`,
   errorChange: `변경할 국번을 다시 확인해주세요`,
-  successChange : `전체 변경되었습니다`
+  successChange: `전체 변경되었습니다`,
 };

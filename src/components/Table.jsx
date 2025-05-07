@@ -18,7 +18,7 @@ const Table = forwardRef(
       columns,
       data,
       pageSize = 5,
-      rowSelectionEnabled = false,
+      rowSelectionEnabled = true,
       onRowSelectionChange,
       showIndex = true,
     },
@@ -26,6 +26,7 @@ const Table = forwardRef(
   ) => {
     const [rowSelection, setRowSelection] = useState({});
     const [tableData, setTableData] = useState([]);
+    const [highlightedRowIds, setHighlightedRowIds] = useState([]);
 
     useEffect(() => {
       setTableData(data);
@@ -82,9 +83,6 @@ const Table = forwardRef(
               ),
             };
           }
-          if (col.columns) {
-            return { ...col, columns: enhanceColumns(col.columns) };
-          }
           return col;
         });
       return enhanceColumns(columns);
@@ -96,14 +94,27 @@ const Table = forwardRef(
         <input
           type="checkbox"
           checked={table.getIsAllPageRowsSelected()}
-          onChange={table.getToggleAllPageRowsSelectedHandler()}
+          onChange={(e) => {
+            table.getToggleAllPageRowsSelectedHandler()(e);
+            const allIds = table.getRowModel().rows.map((r) => r.id);
+            setHighlightedRowIds(
+              table.getIsAllPageRowsSelected() ? [] : allIds
+            );
+          }}
         />
       ),
       cell: ({ row }) => (
         <input
           type="checkbox"
           checked={row.getIsSelected()}
-          onChange={row.getToggleSelectedHandler()}
+          onChange={(e) => {
+            row.getToggleSelectedHandler()(e);
+            setHighlightedRowIds((prev) =>
+              row.getIsSelected()
+                ? prev.filter((id) => id !== row.id)
+                : [...prev, row.id]
+            );
+          }}
         />
       ),
     };
@@ -130,7 +141,7 @@ const Table = forwardRef(
       onRowSelectionChange: setRowSelection,
       getCoreRowModel: getCoreRowModel(),
       getPaginationRowModel: getPaginationRowModel(),
-      enableRowSelection: rowSelectionEnabled,
+      enableRowSelection: true,
     });
 
     useImperativeHandle(
@@ -174,20 +185,24 @@ const Table = forwardRef(
 
       return value.split("\n").map((line, i) => <div key={i}>{line}</div>);
     };
-    
+
     const renderCell = (cell) => {
       const rendered = flexRender(
         cell.column.columnDef.cell,
         cell.getContext()
       );
 
-      // 문자열: 직접 처리
       if (typeof rendered === "string") {
         return rendered.split("\n").map((line, i) => <div key={i}>{line}</div>);
       }
 
-      // JSX + 내부 문자열에 \n이 있을 수 있음 → wrapper에 스타일 적용
       return <div style={{ whiteSpace: "pre-line" }}>{rendered}</div>;
+    };
+
+    const handleRowClick = (id) => {
+      setHighlightedRowIds((prev) =>
+        prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+      );
     };
 
     return (
@@ -200,7 +215,13 @@ const Table = forwardRef(
                   <input
                     type="checkbox"
                     checked={table.getIsAllPageRowsSelected()}
-                    onChange={table.getToggleAllPageRowsSelectedHandler()}
+                    onChange={(e) => {
+                      table.getToggleAllPageRowsSelectedHandler()(e);
+                      const allIds = table.getRowModel().rows.map((r) => r.id);
+                      setHighlightedRowIds(
+                        table.getIsAllPageRowsSelected() ? [] : allIds
+                      );
+                    }}
                   />
                 </th>
               )}
@@ -229,12 +250,13 @@ const Table = forwardRef(
           </thead>
           <tbody>
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id}>
+              <tr
+                key={row.id}
+                className={highlightedRowIds.includes(row.id) ? "selected" : ""}
+                onClick={() => handleRowClick(row.id)}
+              >
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>
-                    {renderCell(cell)}
-                    {/* {flexRender(cell.column.columnDef.cell, cell.getContext())} */}
-                  </td>
+                  <td key={cell.id}>{renderCell(cell)}</td>
                 ))}
               </tr>
             ))}
