@@ -11,6 +11,7 @@ import {
   getPaginationRowModel,
   flexRender,
 } from "@tanstack/react-table";
+import { LABELS } from "../constants/Labels";
 
 const Table = forwardRef(
   (
@@ -26,7 +27,6 @@ const Table = forwardRef(
   ) => {
     const [rowSelection, setRowSelection] = useState({});
     const [tableData, setTableData] = useState([]);
-    const [highlightedRowIds, setHighlightedRowIds] = useState([]);
 
     useEffect(() => {
       setTableData(data);
@@ -88,55 +88,46 @@ const Table = forwardRef(
       return enhanceColumns(columns);
     }, [columns, tableData]);
 
-    const selectionColumn = {
-      id: "select",
-      header: ({ table }) => (
-        <input
-          type="checkbox"
-          checked={table.getIsAllPageRowsSelected()}
-          onChange={(e) => {
-            table.getToggleAllPageRowsSelectedHandler()(e);
-            const allIds = table.getRowModel().rows.map((r) => r.id);
-            setHighlightedRowIds(
-              table.getIsAllPageRowsSelected() ? [] : allIds
-            );
-          }}
-        />
-      ),
-      cell: ({ row }) => (
-        <input
-          type="checkbox"
-          checked={row.getIsSelected()}
-          onChange={(e) => {
-            row.getToggleSelectedHandler()(e);
-            setHighlightedRowIds((prev) =>
-              row.getIsSelected()
-                ? prev.filter((id) => id !== row.id)
-                : [...prev, row.id]
-            );
-          }}
-        />
-      ),
-    };
-
-    const indexColumn = {
-      accessorKey: "rowIndex",
-      header: "순번",
-      cell: ({ row }) => row.index + 1,
-    };
-
-    const tableColumns = useMemo(
-      () => [
-        ...(rowSelectionEnabled ? [selectionColumn] : []),
-        ...(showIndex ? [indexColumn] : []),
-        ...processedColumns,
-      ],
-      [rowSelectionEnabled, showIndex, processedColumns]
-    );
-
     const table = useReactTable({
       data: tableData,
-      columns: tableColumns,
+      columns: [
+        ...(rowSelectionEnabled
+          ? [
+              {
+                id: "select",
+                header: ({ table }) => (
+                  <input
+                    type="checkbox"
+                    checked={table.getIsAllPageRowsSelected()}
+                    onChange={(e) => {
+                      table.getToggleAllPageRowsSelectedHandler()(e);
+                    }}
+                  />
+                ),
+                cell: ({ row }) => (
+                  <input
+                    type="checkbox"
+                    checked={row.getIsSelected()}
+                    onChange={(e) => {
+                      row.getToggleSelectedHandler()(e);
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                ),
+              },
+            ]
+          : []),
+        ...(showIndex
+          ? [
+              {
+                accessorKey: "rowIndex",
+                header: LABELS.INDEX,
+                cell: ({ row }) => row.index + 1,
+              },
+            ]
+          : []),
+        ...processedColumns,
+      ],
       state: { rowSelection },
       onRowSelectionChange: setRowSelection,
       getCoreRowModel: getCoreRowModel(),
@@ -148,11 +139,9 @@ const Table = forwardRef(
       ref,
       () => ({
         getUpdatedData: () => tableData,
-
         getSelectedRowIds: () => {
           return table.getSelectedRowModel().rows.map((row) => row.original.id);
         },
-
         updateRowsById: (ids, updater) => {
           const updated = tableData.map((row) =>
             ids.includes(row.id) ? updater(row) : row
@@ -182,7 +171,6 @@ const Table = forwardRef(
 
     const renderMultiLine = (value) => {
       if (typeof value !== "string") return value;
-
       return value.split("\n").map((line, i) => <div key={i}>{line}</div>);
     };
 
@@ -191,18 +179,10 @@ const Table = forwardRef(
         cell.column.columnDef.cell,
         cell.getContext()
       );
-
       if (typeof rendered === "string") {
         return rendered.split("\n").map((line, i) => <div key={i}>{line}</div>);
       }
-
       return <div style={{ whiteSpace: "pre-line" }}>{rendered}</div>;
-    };
-
-    const handleRowClick = (id) => {
-      setHighlightedRowIds((prev) =>
-        prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
-      );
     };
 
     return (
@@ -210,50 +190,21 @@ const Table = forwardRef(
         <table className="common-table">
           <thead>
             <tr>
-              {rowSelectionEnabled && (
-                <th rowSpan={2}>
-                  <input
-                    type="checkbox"
-                    checked={table.getIsAllPageRowsSelected()}
-                    onChange={(e) => {
-                      table.getToggleAllPageRowsSelectedHandler()(e);
-                      const allIds = table.getRowModel().rows.map((r) => r.id);
-                      setHighlightedRowIds(
-                        table.getIsAllPageRowsSelected() ? [] : allIds
-                      );
-                    }}
-                  />
+              {table.getHeaderGroups()[0].headers.map((header) => (
+                <th key={header.id} colSpan={header.colSpan}>
+                  {header.isPlaceholder ? null : renderMultiLine(header.column.columnDef.header)}
                 </th>
-              )}
-              {showIndex && <th rowSpan={2}>순번</th>}
-              {columns.map((col, idx) =>
-                col.columns ? (
-                  <th key={idx} colSpan={col.columns.length}>
-                    {renderMultiLine(col.header)}
-                  </th>
-                ) : (
-                  <th key={idx} rowSpan={2}>
-                    {renderMultiLine(col.header)}
-                  </th>
-                )
-              )}
-            </tr>
-            <tr>
-              {columns.flatMap((col, idx) =>
-                col.columns
-                  ? col.columns.map((sub, j) => (
-                      <th key={`sub-${idx}-${j}`}>{sub.header}</th>
-                    ))
-                  : []
-              )}
+              ))}
             </tr>
           </thead>
           <tbody>
             {table.getRowModel().rows.map((row) => (
               <tr
                 key={row.id}
-                className={highlightedRowIds.includes(row.id) ? "selected" : ""}
-                onClick={() => handleRowClick(row.id)}
+                className={row.getIsSelected() ? "selected" : ""}
+                onClick={() => {
+                  if (rowSelectionEnabled) row.toggleSelected();
+                }}
               >
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id}>{renderCell(cell)}</td>
@@ -277,7 +228,7 @@ const Table = forwardRef(
           </button>
           {pageNumbers.map((num) => (
             <button
-              className={`pagination-page${num === pageIndex ? "-active" : ""}`}
+              className={`pagination-page${num === pageIndex ? " active" : ""}`}
               key={num}
               onClick={() => table.setPageIndex(num)}
             >
