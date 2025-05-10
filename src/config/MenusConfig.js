@@ -1,10 +1,14 @@
 import { lazy } from "react";
 import { ROUTES } from "../constants/routes";
 import { LABELS } from "../constants/Labels";
+import { FaRegUser, FaRegListAlt } from "react-icons/fa";
+import { CiSettings } from "react-icons/ci";
+import { MdContentCopy } from "react-icons/md";
 
 export const MenusConfig = [
   {
     title: LABELS.SUBSCRIBER,
+    icon: <FaRegUser />,
     items: [
       {
         title: LABELS.SUBSCRIBER_VIEW,
@@ -25,6 +29,7 @@ export const MenusConfig = [
   },
   {
     title: LABELS.COUNTRY_NUMBER,
+    icon: <FaRegListAlt />,
     items: [
       {
         title: LABELS.COUNTRY_NUMBER_MANAGE,
@@ -35,6 +40,7 @@ export const MenusConfig = [
   },
   {
     title: LABELS.CONTENTS,
+    icon: <MdContentCopy />,
     items: [
       {
         title: LABELS.SOUNDS_VIEW,
@@ -45,6 +51,7 @@ export const MenusConfig = [
   },
   {
     title: LABELS.ACCOUNT,
+    icon: <CiSettings />,
     items: [
       {
         title: LABELS.ACCOUNT_MANAGE,
