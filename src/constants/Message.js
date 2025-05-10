@@ -5,6 +5,7 @@ export const infoMessages = {
   confirmDelete: (size) => `${size}건 삭제하시겠습니까?`,
   confirmCancel: "취소하시겠습니까?",
   successAccountSave: `해당 계정이 등록되었습니다.`,
+  confirmLogout : `로그아웃 하시겠습니까?`,
 };
 
 export const profileMessages = {

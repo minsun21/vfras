@@ -8,6 +8,8 @@ import { MenusConfig, NonMenuConfig } from "../config/MenusConfig";
 import Button, { BUTTON_CANCEL } from "./Button";
 import { ROUTES } from "../constants/routes";
 import { LABELS } from "../constants/Labels";
+import { useModal } from "../contexts/ModalContext";
+import { infoMessages } from "../constants/Message";
 
 const getCurrentSubMenuTitle = (currentPath) => {
   for (const group of MenusConfig) {
@@ -23,21 +25,27 @@ const getCurrentSubMenuTitle = (currentPath) => {
       return item.title;
     }
   }
-  
+
   return null;
 };
 
-const Layout = ({ children }) => {
+const Layout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const { showDialog } = useModal();
 
   const title = getCurrentSubMenuTitle(location.pathname);
 
   const handleLogout = () => {
-    dispatch(logout());
-    localStorage.setItem("logout", Date.now()); // ✅ 트리거 역할
-    navigate(ROUTES.LOGIN, { replace: true });
+    showDialog({
+      message: infoMessages.confirmLogout,
+      onConfirm: () => {
+        dispatch(logout());
+        localStorage.setItem("logout", Date.now()); // ✅ 트리거 역할
+        navigate(ROUTES.LOGIN, { replace: true });
+      },
+    });
   };
 
   const goProfile = () => {
@@ -52,7 +60,11 @@ const Layout = ({ children }) => {
           <Breadcrumb />
           <div className="user-actions">
             <Button label={LABELS.MY_INFO} onClick={goProfile} />
-            <Button label={LABELS.LOGOUT} type={BUTTON_CANCEL} onClick={handleLogout} />
+            <Button
+              label={LABELS.LOGOUT}
+              type={BUTTON_CANCEL}
+              onClick={handleLogout}
+            />
           </div>
         </header>
 
@@ -60,7 +72,6 @@ const Layout = ({ children }) => {
           <div className="content-title">{title}</div>
           <Outlet />
         </main>
-
       </div>
     </div>
   );
