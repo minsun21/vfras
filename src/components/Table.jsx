@@ -168,10 +168,15 @@ const Table = forwardRef(
     const pageCount = table.getPageCount();
     const pageIndex = table.getState().pagination.pageIndex;
     const pageNumbers = Array.from({ length: pageCount }, (_, i) => i);
-
-    const renderMultiLine = (value) => {
-      if (typeof value !== "string") return value;
-      return value.split("\n").map((line, i) => <div key={i}>{line}</div>);
+    
+    const renderHeader = (header) => {
+      const content = flexRender(
+        header.column.columnDef.header,
+        header.getContext()
+      );
+      return typeof content === "string"
+        ? content.split("\n").map((line, i) => <div key={i}>{line}</div>)
+        : content;
     };
 
     const renderCell = (cell) => {
@@ -192,7 +197,7 @@ const Table = forwardRef(
             <tr>
               {table.getHeaderGroups()[0].headers.map((header) => (
                 <th key={header.id} colSpan={header.colSpan}>
-                  {header.isPlaceholder ? null : renderMultiLine(header.column.columnDef.header)}
+                    {header.isPlaceholder ? null : renderHeader(header)}
                 </th>
               ))}
             </tr>

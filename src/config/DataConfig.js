@@ -200,10 +200,7 @@ export const account_manage_data = [
 ];
 
 const ManageButtonCell = React.memo(({ row, onNavigate }) => (
-  <Button
-    label={LABELS.SUBSCRIBER_MANAGE}
-    onClick={() => onNavigate(row.original)}
-  />
+  <div className="col-management" onClick={() => onNavigate(row.original)}>{LABELS.SUBSCRIBER_MANAGE}</div>
 ));
 
 export const subscribe_columns = (navigateManage) => {
