@@ -1,0 +1,86 @@
+@charset "utf-8";
+@import url(./common.css);
+@import url(./layout.css);
+@import url(./button.css);
+@import url(./form.css);
+@import url(./popup.css);
+@import url(./table.css); 
+/* 팝업 레이어 모음 ################################################################################## */
+section.layer { padding-top:8rem; display:flex; justify-content:center; align-items:center; flex-direction:column; } 
+
+/* 로딩 ################################################################################## */
+section.loading { padding-top:8rem; display:flex; justify-content:center; align-items:center; flex-direction:column; } 
+
+/* search-box */
+.search-box {padding: 10px;border-radius: 12px;background-color: #FAFAFA;} 
+
+/* search-box Label */
+.schTxtL1 {font-size: 14px;color: #000;line-height: 1;margin: 10px 3px 4px 10px;display: block;} 
+.schTxtL1 b { color: var(--scolor); margin: 0 0.3rem 0 0.5rem } 
+.schTxtL1 font { color: #757575; margin: 0 0.3rem 0 0.5rem } 
+.schTxtL1.hIcon::before { content: '●'; font-size: 6px; margin: 0 0.5rem; vertical-align: middle; color:var(--scolor); } 
+
+/* inbox */
+section .inbox { padding: 4rem; border-radius: 1rem; background-color: #f9fafb; } 
+
+/* view Title */
+.viewTit { font-weight: 600; font-size: 16px; color: #333; float: left; line-height: 2.1; } 
+.viewTitSub { float: right; line-height: 1.2; vertical-align: middle; } 
+.viewTitSub1 { font-weight: 600; color: #666; text-align: right; float: right; font-size: 14px; } 
+.viewTitSub2 { text-align: right; float: right; font-size: 13px; } 
+
+/* board Title */
+.notiTit { display: flex; } 
+.notiTit .form-input { width: calc(100% - 100px) } 
+
+
+/* 파일 유형 아이콘 */
+i.etc { display:inline-block; vertical-align:middle; font-size:0; width:2rem; height:1.7rem; background:url("../img/icon-etc.png") no-repeat center; background-size:contain; } 
+i.pdf { display:inline-block; vertical-align:middle; font-size:0; width:2.2rem; height:2.2rem; background:url("../img/icon-pdf.png") no-repeat center; background-size:contain; } 
+i.hwp { display:inline-block; vertical-align:middle; font-size:0; width:2.2rem; height:2.2rem; background:url("../img/icon-hwp.png") no-repeat center; background-size:contain; } 
+i.excel { display:inline-block; vertical-align:middle; font-size:0; width:2.2rem; height:2.2rem; background:url("../img/icon-excel.png") no-repeat center; background-size:contain; } 
+i.ppt { display:inline-block; vertical-align:middle; font-size:0; width:2.2rem; height:2.2rem; background:url("../img/icon-ppt.png") no-repeat center; background-size:contain; } 
+
+
+/* gubun-color */
+.gubun-color { display:flex; justify-content: flex-end; gap:2rem; } 
+.gubun-color span { display:flex; align-items:center; gap:0.5rem; font-size: 1.4rem; font-weight: 500; line-height: 1.43; color: #000; } 
+.gubun-color span::before { display:inline-flex; content:""; width:1.2rem; height:1.2rem; border-radius:100vh; } 
+.gubun-color span.energy-voucher::before { background:#194fe2; } 
+.gubun-color span.kerosene-voucher::before { background:#e54259; } 
+.gubun-color span.kerosene-lpg::before { background:#f2904e; } 
+.gubun-color span.education::before { background:#00bfb4; } 
+.gubun-color span.general::before { background:#4c5771; } 
+
+/* sch-top */
+div.sch-top { display:flex; align-items:center; justify-content:space-between; gap:2rem; } 
+div.sch-top .left { display:flex; align-items:center; gap:1rem; } 
+div.sch-top .left { } 
+
+/* 상태표 ################################################################### */
+.stateNormal { font-size: 1.2rem; color: #FFF; border: 1px solid #999; border-radius: 12px; padding: 3px 6px; background-color: #999 } 
+.stateArert { font-size: 1.2rem; color: var(--scolor); border: 1px solid var(--scolor); border-radius: 12px; padding: 3px 6px; } 
+.stateStop { font-size: 1.2rem; color: #FFF; border: 1px solid #999; border-radius: 12px; padding: 3px 6px; background-color: #333 } 
+.stateBlock { font-size: 1.2rem; color: #FFF; border: 1px solid #999; border-radius: 12px; padding: 3px 6px; background-color: #754000 } 
+.stateWait { font-size: 1.2rem; color: #FFF; border: 1px solid #999; border-radius: 12px; padding: 3px 6px; background-color: #999 } 
+
+
+/* new 아이콘 */
+i.new { display:inline-block; width:2.2rem; height:2.2rem; background:url("../img/new.png") no-repeat center; background-size:contain; font-size:0; vertical-align:middle; margin:0 0.2rem; } 
+
+/* hot 아이콘 */
+i.hot { display:inline-block; width:1.4rem; height:1.8rem; background:url("../img/hot.png") no-repeat center; background-size:contain; font-size:0; vertical-align:middle; margin:0 0.2rem; } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
