@@ -22,7 +22,8 @@
 .sidebar.close .logo a span { transition-delay: 0s; opacity: 0; pointer-events: none; } 
 .sidebar.close .logo a span:last-child::after { transition-delay: 0s; opacity: 0; pointer-events: none; } 
 
-/* menu */.menu { height: calc(100% - 120px); overflow: auto; background: #FAFAFA; } 
+/* menu */
+.menu { /*height: calc(100% - 120px);*/ overflow: auto; background: #FAFAFA; } 
 .menu::-webkit-scrollbar { display: none; width: 4px; background: var(--scolor); } 
 .menu::-webkit-scrollbar-thumb, .menu::-webkit-scrollbar-track { border-radius: 100vh; box-shadow: none}
 .menu::-webkit-scrollbar-thumb { background: #6280D3}

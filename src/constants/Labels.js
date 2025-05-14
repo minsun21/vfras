@@ -61,6 +61,7 @@ export const LABELS = {
   VIEW: "조회",
   LV_NUMBER: "(LV번호)",
   SETTING: "설정",
+  MANAGE: "관리",
   STATE: "상태",
   APPLY_DATE: "신청일",
   USER_NUMBER_MULTI: "사용자 번호\n(시작~끝)",
