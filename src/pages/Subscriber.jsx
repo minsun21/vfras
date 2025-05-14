@@ -122,40 +122,99 @@ const Subscriber = () => {
 
   return (
     <div>
-      <div className="search-area">
-        <div>
-          <div>
-            <Select
-              value={searchInput.allType}
-              options={allType}
-              nonEmpty={true}
-            />
-            <Input placeholder={subsriberMessages.searchPlaceHolder} />
-          </div>
-          <div>
-            <Select
-              label={LABELS.SUBSCRIBER_TYPE}
-              value={searchInput.subsriberType}
-              options={subsriberTypeOptions}
-              nonEmpty={true}
-            />
-            <Select
-              label={LABELS.SERVICE_TYPE}
-              value={searchInput.serviceType}
-              options={serviceTypeOptions}
-              nonEmpty={true}
-            />
-            <Select
-              label={LABELS.SUBSCRIBER_STATE}
-              value={searchInput.userState}
-              options={userStateOptions}
-              nonEmpty={true}
-            />
-            <Button type={BUTTON_SEARCH} onClick={search} />
-            <span>{LABELS.SEARCH_RESULT(data.length)}</span>
-          </div>
-        </div>
-      </div>
+      <form class="search-box">
+				<table class="tbl-input">
+						<colgroup>
+						</colgroup>
+						<thead>
+							<tr>
+								<th>
+									<label class="schTxtL1">{LABELS.CLASSIFICATION}</label>
+								</th>
+								<th>
+									<label class="schTxtL1">{LABELS.SUBSCRIBER_TYPE}</label>
+								</th>
+								<th>
+									<label class="schTxtL1">{LABELS.SERVICE_TYPE}</label>
+								</th>
+								<th>
+									<label class="schTxtL1">{LABELS.SUBSCRIBER_STATE}</label>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<div class="form-field dflex wrap gap10">
+                    <div class="select-box">
+                      <Select
+                          value={searchInput.allType}
+                          options={allType}
+                          nonEmpty={true}
+                        />  
+                    </div>
+                    <Input type="text" class="form-input" placeholder={subsriberMessages.searchPlaceHolder} /> 
+                    <span><Button type={BUTTON_SEARCH} onClick={search} /></span>
+										</div>
+								</td>
+								<td>
+									<div class="select-box">
+											<Select
+                       // label={LABELS.SUBSCRIBER_TYPE}
+                        value={searchInput.subsriberType}
+                        options={subsriberTypeOptions}
+                        nonEmpty={true}
+                      />
+										</div>
+								</td>
+								<td>
+									<div class="select-box">
+											 <Select
+                        //  label={LABELS.SERVICE_TYPE}
+                          value={searchInput.serviceType}
+                          options={serviceTypeOptions}
+                          nonEmpty={true}
+                        />
+										</div>
+								</td>
+								<td>
+									<div class="select-box">
+											 <Select
+                        //  label={LABELS.SUBSCRIBER_STATE}
+                          value={searchInput.userState}
+                          options={userStateOptions}
+                          nonEmpty={true}
+                        />
+										</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+			</form>
+      <form class="form">
+				<div class="tbl-list-top mt20">
+					<div class="top-button"> 
+						<span class="total mr0">총<b>99</b>건</span> 
+						<span class="dline"></span>
+						<span>
+							<button type="button" class="sbtn scolor">승인</button>
+							<button type="button" class="sbtn dark">삭제</button>
+               <Button label={LABELS.APPROVE} onClick={approvedSUBSCRIBER} />
+                <Button type={BUTTON_CANCEL} label={LABELS.DELETE} onClick={clickDelete} />
+            </span>
+					</div>
+					<div class="top-button fRight">
+						<div class="select-box">
+							<select name="SelCount" id="SelCount">
+								<option value="all">10개</option>
+								<option value="all">30개</option>
+								<option value="all">50개</option>
+								<option value="all">100개</option>
+							</select>
+						</div>
+					</div>
+				</div>
+      </form>      
       <Table
         ref={tableRef}
         columns={subscribe_columns(navigateManage)}
@@ -163,14 +222,6 @@ const Subscriber = () => {
         pageSize={10}
         onRowSelectionChange={setSelectedRows}
       />
-      <div>
-        <Button label={LABELS.APPROVE} onClick={approvedSUBSCRIBER} />
-        <Button
-          type={BUTTON_CANCEL}
-          label={LABELS.DELETE}
-          onClick={clickDelete}
-        />
-      </div>
     </div>
   );
 };

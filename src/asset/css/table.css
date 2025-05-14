@@ -1,5 +1,5 @@
 /* table list */
-.tbl-list { overflow-x:auto; border-top: solid 1px var(--scolor); margin-top: 5px; } 
+.tbl-list { width: 100%; overflow-x:auto; border-top: solid 1px var(--scolor); margin-top: 5px; } 
 .tbl-list::-webkit-scrollbar { height:0.6rem; } 
 .tbl-list::-webkit-scrollbar-track { background:#fff; border-radius:100vw; } 
 .tbl-list::-webkit-scrollbar-thumb { background:#fff; border-radius:100vw; border:0.3rem solid #757575; } 

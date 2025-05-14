@@ -10,6 +10,7 @@ import { ROUTES } from "../constants/routes";
 import { LABELS } from "../constants/Labels";
 import { useModal } from "../contexts/ModalContext";
 import { infoMessages } from "../constants/Message";
+import '../asset/css/basic.css'; 
 
 const getCurrentSubMenuTitle = (currentPath) => {
   for (const group of MenusConfig) {
@@ -55,23 +56,24 @@ const Layout = () => {
   return (
     <div className="layout">
       <SideBar />
-      <div className="layout-right">
-        <header className="layout-header">
+      <div className="main-content">
+
+        <header className="header">
           <Breadcrumb />
-          <div className="user-actions">
-            <Button label={LABELS.MY_INFO} onClick={goProfile} />
-            <Button
-              label={LABELS.LOGOUT}
-              type={BUTTON_CANCEL}
-              onClick={handleLogout}
-            />
+          <div className="header-right">
+            <div class="log"> 
+              <span class="adminInfo"><label>관리자(admin)</label>님 안녕하세요</span> 
+              <a href="#" onClick={goProfile}><span class="editInfo">{LABELS.MY_INFO}</span></a> 
+              <a href="#" onClick={handleLogout}><span class="headLogout">{LABELS.LOGOUT}</span></a> 
+            </div>
           </div>
         </header>
-
-        <main className="layout-content">
-          <div className="content-title">{title}</div>
+        <main className="content">
+          <h2 class="page-title">{title}</h2>
           <Outlet />
         </main>
+
+
       </div>
     </div>
   );

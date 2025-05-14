@@ -33,7 +33,7 @@ const Button = ({ type='confirm', label, onClick }) => {
   }, [label, type]);
 
   return (
-    <button className={`common-button-${classType}`} onClick={onClick}>
+    <button className={`sbtn ${classType}`} onClick={onClick}>
       {btnLabel}
     </button>
   );

@@ -191,8 +191,8 @@ const Table = forwardRef(
     };
 
     return (
-      <div className="common-table-container">
-        <table className="common-table">
+      <div className="tbl-list">
+        <table>
           <thead>
             <tr>
               {table.getHeaderGroups()[0].headers.map((header) => (

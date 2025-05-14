@@ -23,21 +23,22 @@ const Breadcrumbs = () => {
   const entry = breadcrumbMap[currentPath];
 
   return (
-    <nav>
-      <span to="/">아이콘</span>
-      {entry?.parent && (
-        <>
-          {' > '}
-          <span>{entry.parent}</span>
-        </>
-      )}
-      {entry?.label && (
-        <>
-          {' > '}
-          <span>{entry.label}</span>
-        </>
-      )}
-    </nav>
+    <section class="location">
+			<ul>
+				<li><a to="/">홈</a></li>
+        {entry?.parent && (
+          <>
+            <li><span>{entry.parent}</span></li>
+          </>
+        )}
+        {entry?.label && (
+          <>
+            <li><span>{entry.label}</span></li>
+          </>
+        )}
+			</ul>
+		</section>
+
   );
 };
 

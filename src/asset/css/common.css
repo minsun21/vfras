@@ -1,10 +1,10 @@
 @charset "utf-8";
-@import url(normalize.css);
+@import url(./normalize.css);
 
-@font-face {font-family: 'Pretendard';font-weight: 700;font-display: swap;src: local('Pretendard Bold'), url('../font/Pretendard-Bold.subset.woff2') format('woff2'), url('../../font/Pretendard-Bold.subset.woff') format('woff'); } 
-@font-face {font-family: 'Pretendard';font-weight: 600;font-display: swap;src: local('Pretendard SemiBold'), url('../font/Pretendard-SemiBold.subset.woff2') format('woff2'), url('../../font/Pretendard-SemiBold.subset.woff') format('woff'); } 
-@font-face {font-family: 'Pretendard';font-weight: 500;font-display: swap;src: local('Pretendard Medium'), url('../font/Pretendard-Medium.subset.woff2') format('woff2'), url('../../font/Pretendard-Medium.subset.woff') format('woff'); } 
-@font-face {font-family: 'Pretendard';font-weight: 400;font-display: swap;src: local('Pretendard Regular'), url('../font/Pretendard-Regular.subset.woff2') format('woff2'), url('../../font/Pretendard-Regular.subset.woff') format('woff'); } 
+@font-face {font-family: 'Pretendard';font-weight: 700;font-display: swap;src: local('Pretendard Bold'), url('../font/Pretendard-Bold.subset.woff2') format('woff2') } 
+@font-face {font-family: 'Pretendard';font-weight: 600;font-display: swap;src: local('Pretendard SemiBold'), url('../font/Pretendard-SemiBold.subset.woff2') format('woff2') } 
+@font-face {font-family: 'Pretendard';font-weight: 500;font-display: swap;src: local('Pretendard Medium'), url('../font/Pretendard-Medium.subset.woff2') format('woff2') } 
+@font-face {font-family: 'Pretendard';font-weight: 400;font-display: swap;src: local('Pretendard Regular'), url('../font/Pretendard-Regular.subset.woff2') format('woff2') } 
 
 /* reset */
 * { font-family: 'Pretendard', sans-serif; margin:0; padding:0; box-sizing:border-box; } 

@@ -18,6 +18,12 @@
 .sbtn.ccolor { border:solid 1px var(--ccolor); background:var(--ccolor); color:#fff; } 
 .sbtn.scolor { border:solid 1px var(--scolor); background:var(--scolor); color:#fff; } 
 
+.sbtn.confirm { border:solid 1px var(--scolor); background:var(--scolor); color:#fff; } 
+.sbtn.save { border:solid 1px var(--scolor); background:var(--scolor); color:#fff; } 
+.sbtn.delete { border:solid 1px #3A4A40; background:#3A4A40; color:#fff; } 
+.sbtn.cancel { border:solid 1px #ccc; background:#fff; color:#757575; } 
+.sbtn.search { border:solid 1px #000; background:#000; color:#fff; } 
+
 .miniK {min-width:40px; height:25px; line-height:25px; padding:0 10px; border-radius: 7px;  font-size: 12px; font-weight: 400; border:solid 1px #000; background:#000; color:#fff;}  
 
 /* btn groip */

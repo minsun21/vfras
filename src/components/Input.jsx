@@ -13,7 +13,7 @@ const Input = ({
   size = "md",
 }) => {
   return (
-    <div className={`common-input ${size}`}>
+    <div className={`form-field ${size}`}>
       {label && <span>{label}</span>}
       <input
         type={type}
@@ -21,6 +21,7 @@ const Input = ({
         disabled={disabled}
         onChange={onChange}
         placeholder={placeholder}
+        className="form-input"
       />
     </div>
   );
