@@ -109,7 +109,7 @@ const ToggleTable = ({ title }) => {
                 options = [],
                 placeholder,
                 multi,
-                fields
+                fields,
               } = item;
 
               const value = inputs[key] || "";
@@ -199,11 +199,7 @@ const ToggleTable = ({ title }) => {
                 justifyContent: "center",
               }}
             >
-              <Button
-                type={BUTTON_CANCEL}
-                label={LABELS.MAIN_NUMBER}
-                onClick={handleAdd}
-              />
+              <div>{LABELS.MAIN_NUMBER}</div>
               <Button
                 type={BUTTON_DELETE}
                 onClick={handleDelete}
@@ -219,7 +215,7 @@ const ToggleTable = ({ title }) => {
 
           {/* 테이블 영역 */}
           <div style={{ flex: 1, padding: 10 }}>
-            <Table columns={columns} data={data} rowSelectionEnabled={false} />
+            <Table columns={columns} data={data} />
           </div>
         </div>
       )}

@@ -132,10 +132,6 @@ textarea {
   gap: 10px;
 }
 
-.col-navigate {
-  color: blue;
-  cursor: pointer;
-}
 
 .common-modal {
   width: 400px;
@@ -144,6 +140,8 @@ textarea {
 .common-modal.modal {
   width: 1200px;
 }
+
+/* 테이블 */
 
 .common-table {
   border-collapse: collapse;
@@ -182,5 +180,10 @@ textarea {
 
 .col-management {
   border: 1px solid black;
+  cursor: pointer;
+}
+
+.col-navigate {
+  color: blue;
   cursor: pointer;
 }
