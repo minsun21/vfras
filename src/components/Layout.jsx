@@ -10,7 +10,6 @@ import { ROUTES } from "../constants/routes";
 import { LABELS } from "../constants/Labels";
 import { useModal } from "../contexts/ModalContext";
 import { infoMessages } from "../constants/Message";
-import '../asset/css/basic.css'; 
 
 const getCurrentSubMenuTitle = (currentPath) => {
   for (const group of MenusConfig) {
@@ -57,7 +56,6 @@ const Layout = () => {
     <div className="layout">
       <SideBar />
       <div className="main-content">
-
         <header className="header">
           <Breadcrumb />
           <div className="header-right">
@@ -72,8 +70,6 @@ const Layout = () => {
           <h2 class="page-title">{title}</h2>
           <Outlet />
         </main>
-
-
       </div>
     </div>
   );

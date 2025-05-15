@@ -187,10 +187,11 @@ const Table = forwardRef(
       if (typeof rendered === "string") {
         return rendered.split("\n").map((line, i) => <div key={i}>{line}</div>);
       }
-      return <div style={{ whiteSpace: "pre-line" }}>{rendered}</div>;
+      return <div>{rendered}</div>;
     };
 
     return (
+      <>
       <div className="tbl-list">
         <table>
           <thead>
@@ -218,42 +219,33 @@ const Table = forwardRef(
             ))}
           </tbody>
         </table>
-        <div className="pagination">
-          <button
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
-          >
-            {"<<"}
-          </button>
-          <button
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            {"<"}
-          </button>
-          {pageNumbers.map((num) => (
-            <button
-              className={`pagination-page${num === pageIndex ? " active" : ""}`}
-              key={num}
-              onClick={() => table.setPageIndex(num)}
-            >
-              {num + 1}
-            </button>
-          ))}
-          <button
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            {">"}
-          </button>
-          <button
-            onClick={() => table.setPageIndex(pageCount - 1)}
-            disabled={!table.getCanNextPage()}
-          >
-            {">>"}
-          </button>
-        </div>
       </div>
+
+      <div className="paging">
+          <ul>
+						<li class="first">
+              <button onClick={() => table.setPageIndex(0)} disabled={!table.getCanPreviousPage()}></button>
+            </li>
+						<li class="prev">
+              <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}></button>
+            </li>
+            {pageNumbers.map((num) => (
+              <li class="">
+              <button className={`${num === pageIndex ? "active" : ""}`}
+                key={num} onClick={() => table.setPageIndex(num)} > {num + 1}
+              </button>
+              </li>
+            ))}
+						<li class="next">
+              <button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}></button>
+            </li>
+						<li class="end">
+              <button onClick={() => table.setPageIndex(pageCount - 1)} disabled={!table.getCanNextPage()}></button>
+            </li>
+					</ul>
+        </div>
+
+      </>
     );
   }
 );

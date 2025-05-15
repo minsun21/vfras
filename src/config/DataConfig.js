@@ -200,7 +200,7 @@ export const account_manage_data = [
 ];
 
 const ManageButtonCell = React.memo(({ row, onNavigate }) => (
-  <div className="col-management" onClick={() => onNavigate(row.original)}>{LABELS.SUBSCRIBER_MANAGE}</div>
+  <button className="sbtn miniK" onClick={() => onNavigate(row.original)}>{LABELS.MANAGE}</button>
 ));
 
 export const subscribe_columns = (navigateManage) => {
@@ -211,11 +211,11 @@ export const subscribe_columns = (navigateManage) => {
     },
     {
       accessorKey: KEYS.USER_NUMBER,
-      header: LABELS.USER_NUMBER_MULTI,
+      header: LABELS.USER_NUMBER,
     },
     {
       accessorKey: KEYS.PBX_NUMBER,
-      header: LABELS.PBX_NUMBER_COL_MULTI,
+      header: LABELS.PBX_NUMBER_COL,
     },
     {
       accessorKey: KEYS.NAME,
@@ -228,7 +228,7 @@ export const subscribe_columns = (navigateManage) => {
     {
       accessorKey: KEYS.STATE,
       header: LABELS.STATE,
-      cell: ({ row }) => <div className="col-status">{row.original.state}</div>,
+      cell: ({ row }) => <div className="stateArert">{row.original.state}</div>,
     },
     {
       accessorKey: KEYS.MANAGE,
@@ -244,26 +244,26 @@ export const subscribe_data = [
   {
     [KEYS.ID]: 1,
     [KEYS.MAIN_NUMBER]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112233",
+    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.MANAGE]: "LGU+",
     [KEYS.APPLY_DATE]: "2024.02.04",
-    [KEYS.STATE]: "요청중",
+    [KEYS.STATE]: "요청",
   },
   {
     [KEYS.ID]: 2,
     [KEYS.MAIN_NUMBER]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112233",
+    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.MANAGE]: "LGU+",
     [KEYS.APPLY_DATE]: "2024.02.04",
-    [KEYS.STATE]: "요청중",
+    [KEYS.STATE]: "요청",
   },
   {
     [KEYS.ID]: 3,
     [KEYS.MAIN_NUMBER]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112233",
+    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.MANAGE]: "LGU+",
     [KEYS.APPLY_DATE]: "2024.02.04",
     [KEYS.STATE]: "가입",
@@ -271,8 +271,8 @@ export const subscribe_data = [
   {
     [KEYS.ID]: 4,
     [KEYS.MAIN_NUMBER]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112233",
+    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.MANAGE]: "LGU+",
     [KEYS.APPLY_DATE]: "2024.02.04",
     [KEYS.STATE]: "가입",
@@ -280,8 +280,8 @@ export const subscribe_data = [
   {
     [KEYS.ID]: 5,
     [KEYS.MAIN_NUMBER]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112233",
+    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.MANAGE]: "LGU+",
     [KEYS.APPLY_DATE]: "2024.02.04",
     [KEYS.STATE]: "가입",
@@ -289,8 +289,8 @@ export const subscribe_data = [
   {
     [KEYS.ID]: 6,
     [KEYS.MAIN_NUMBER]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112233",
+    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.MANAGE]: "LGU+",
     [KEYS.APPLY_DATE]: "2024.02.04",
     [KEYS.STATE]: "가입",
@@ -298,8 +298,8 @@ export const subscribe_data = [
   {
     [KEYS.ID]: 7,
     [KEYS.MAIN_NUMBER]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112233",
+    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.MANAGE]: "LGU+",
     [KEYS.APPLY_DATE]: "2024.02.04",
     [KEYS.STATE]: "가입",
@@ -307,8 +307,8 @@ export const subscribe_data = [
   {
     [KEYS.ID]: 8,
     [KEYS.MAIN_NUMBER]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112233",
+    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.MANAGE]: "LGU+",
     [KEYS.APPLY_DATE]: "2024.02.04",
     [KEYS.STATE]: "가입",
@@ -316,8 +316,8 @@ export const subscribe_data = [
   {
     [KEYS.ID]: 9,
     [KEYS.MAIN_NUMBER]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112233",
+    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.MANAGE]: "LGU+",
     [KEYS.APPLY_DATE]: "2024.02.04",
     [KEYS.STATE]: "가입",

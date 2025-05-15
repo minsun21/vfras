@@ -34,41 +34,56 @@ const AccountRegister = () => {
   };
 
   return (
-    <div>
-      <table className="info-table">
-        <tbody>
-          {accountRegisterFields.map((field) => {
-            const {
-              key,
-              label,
-              type = "text",
-              options = [],
-              required,
-              placeholder,
-              comment,
-              disabled,
-            } = field;
-            const value = formData[key] || "";
+    <>
+      <form class="tbl-view">
+        <table>
+          <colgroup>
+              <col className="w250"></col>
+              <col></col>
+          </colgroup>
+          <tbody>
+            {accountRegisterFields.map((field) => {
+              const {
+                key,
+                label,
+                type = "text",
+                options = [],
+                required,
+                placeholder,
+                comment,
+                disabled,
+              } = field;
+              const value = formData[key] || "";
 
-            const handleChange = (val) => {
-              setFormData((prev) => ({ ...prev, [key]: val }));
-            };
+              const handleChange = (val) => {
+                setFormData((prev) => ({ ...prev, [key]: val }));
+              };
 
-            return (
-              <tr key={key}>
-                <td className="Labels" required={required}>
-                  {label}
-                </td>
-                <td className="value">
-                  {type === "select" ? (
-                    <Select
-                      value={value}
-                      options={options}
-                      onChange={(e) => handleChange(e.target.value)}
-                      nonEmpty={true}
-                    />
-                  ) : comment ? (
-                    <div>
+              return (
+                <tr key={key}>
+                  <td className="Labels" required={required}>
+                    {label}
+                  </td>
+                  <td className="value">
+                    {type === "select" ? (
+                      <Select
+                        value={value}
+                        options={options}
+                        onChange={(e) => handleChange(e.target.value)}
+                        nonEmpty={true}
+                      />
+                    ) : comment ? (
+                      <div>
+                        <Input
+                          value={value}
+                          type={type}
+                          placeholder={placeholder}
+                          onChange={(e) => handleChange(e.target.value)}
+                          disabled={disabled}
+                        />
+                        <span className="comment">{comment}</span>
+                      </div>
+                    ) : (
                       <Input
                         value={value}
                         type={type}
@@ -76,28 +91,23 @@ const AccountRegister = () => {
                         onChange={(e) => handleChange(e.target.value)}
                         disabled={disabled}
                       />
-                      <span className="comment">{comment}</span>
-                    </div>
-                  ) : (
-                    <Input
-                      value={value}
-                      type={type}
-                      placeholder={placeholder}
-                      onChange={(e) => handleChange(e.target.value)}
-                      disabled={disabled}
-                    />
-                  )}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <div>
-        <Button type={BUTTON_CANCEL} onClick={() => navigate(ROUTES.PROFILE)} />
-        <Button type={BUTTON_SAVE} onClick={handleSave} />
-      </div>
-    </div>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </form>
+      <div class="btn-wrap">
+				<div>
+					<Button type={BUTTON_CANCEL} onClick={() => navigate(ROUTES.PROFILE)} />
+				</div>
+				<div>
+					<Button type={BUTTON_SAVE} onClick={handleSave} />
+				</div>
+			</div>
+    </>
   );
 };
 

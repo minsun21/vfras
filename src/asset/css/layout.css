@@ -22,7 +22,8 @@
 .sidebar.close .logo a span { transition-delay: 0s; opacity: 0; pointer-events: none; } 
 .sidebar.close .logo a span:last-child::after { transition-delay: 0s; opacity: 0; pointer-events: none; } 
 
-/* menu */.menu { height: calc(100% - 120px); overflow: auto; background: #FAFAFA; } 
+/* menu */
+.menu { /*height: calc(100% - 120px);*/ overflow: auto; background: #FAFAFA; } 
 .menu::-webkit-scrollbar { display: none; width: 4px; background: var(--scolor); } 
 .menu::-webkit-scrollbar-thumb, .menu::-webkit-scrollbar-track { border-radius: 100vh; box-shadow: none}
 .menu::-webkit-scrollbar-thumb { background: #6280D3}
@@ -105,6 +106,37 @@
 .loginBox .loginMsg { text-align: center; font-size: 12px; color: #e54259; line-height: 1.3; width: 440px; /*background: #f7f7f7;*/ border-radius: 9px; padding: 5px; margin-bottom: 0; position: absolute; margin-top: -52px; display: block; } 
 
 /* 페이지 타이틀 */
-h2.page-title { margin: 2rem 1rem 2rem 0rem; font-size: 2.2rem; color: #000; font-weight: 700; /*border-bottom: 1px solid #DDD; padding-bottom: 1rem; */}
+h2.page-title { margin: 2rem 1rem 1rem 0rem; font-size: 2.2rem; color: #000; font-weight: 700; /*border-bottom: 1px solid #DDD; padding-bottom: 1rem; */}
 h3.page-title { margin: 0 0 0.5rem 0; font-size: 1.8rem; color: #000; font-weight: 500; } 
 h3.chart-title { margin: 0; font-size: 2rem; color: #000; font-weight: 600; } 
+
+/* 임시 */
+
+/* side bar */
+.menu-group {
+  margin-bottom: 20px;
+  list-style: none;
+}
+
+.menu-title {
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.menu-item {
+  background-color: #d0d0d0;
+  border: none;
+  padding: 6px 10px;
+  margin: 2px 0;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-size: 13px;
+  border-radius: 4px;
+}
+
+.menu-item:hover {
+  background-color: #bbb;
+}

@@ -103,159 +103,170 @@ const SubscriberManageEdit = () => {
   }
 
   return (
-    <div>
-      <table className="info-table">
-        <tbody>
-          {subscriberEditFields.map((field) => {
-            const {
-              key,
-              label,
-              type = "text",
-              options = [],
-              required,
-              placeholder,
-              disabled,
-              multi,
-            } = field;
-            const value = formData[key] || "";
+    <>
+      <form class="tbl-view">
+        <table>
+          <colgroup>
+              <col className="w250"></col>
+              <col></col>
+          </colgroup>
+          <tbody>
+            {subscriberEditFields.map((field) => {
+              const {
+                key,
+                label,
+                type = "text",
+                options = [],
+                required,
+                placeholder,
+                disabled,
+                multi,
+              } = field;
+              const value = formData[key] || "";
 
-            const handleChange = (val) => {
-              const newData = {
-                [key]: val,
+              const handleChange = (val) => {
+                const newData = {
+                  [key]: val,
+                };
+
+                if (key === "userUseState") {
+                  const itemsOpt = field.options.filter(
+                    (option) => option.items
+                  )[0];
+                  if (itemsOpt.value !== val) {
+                    itemsOpt.items.map((item) => (newData[item.key] = ""));
+                  }
+                }
+
+                setFormData((prev) => ({ ...prev, ...newData }));
               };
 
-              if (key === "userUseState") {
-                const itemsOpt = field.options.filter(
-                  (option) => option.items
-                )[0];
-                if (itemsOpt.value !== val) {
-                  itemsOpt.items.map((item) => (newData[item.key] = ""));
-                }
-              }
+              const dateChange = (key, val) => {
+                setFormData((prev) => ({ ...prev, [key]: val }));
+              };
 
-              setFormData((prev) => ({ ...prev, ...newData }));
-            };
-
-            const dateChange = (key, val) => {
-              setFormData((prev) => ({ ...prev, [key]: val }));
-            };
-
-            return (
-              <tr key={key}>
-                <td className="Labels" required={required}>
-                  {label}
-                </td>
-                <td className="value">
-                  {key === "mainNumber" ? (
-                    <div>
-                      <Input
-                        value={formData[key] || ""}
-                        type={field.type}
-                        placeholder={formData[key]}
-                        onChange={(e) => handleChange(e.target.value)}
-                        disabled={disabled}
-                      />
-                      <span>{LABELS.LV_NUMBER}</span>
-                    </div>
-                  ) : key === "password" ? (
-                    <>
-                      <Input
-                        value={formData[key] || ""}
-                        type={field.type}
-                        placeholder={formData[key]}
-                        onChange={(e) => handleChange(e.target.value)}
-                        disabled={disabled}
-                      />
-                      <Button
-                        type={BUTTON_CANCEL}
-                        label={LABELS.PASSWORD_RESET}
-                        onClick={clickResetPassword}
-                      />
-                    </>
-                  ) : key === "userUseState" ? (
-                    <div>
+              return (
+                <tr key={key}>
+                  <th className="Labels" required={required}>
+                    {label}
+                  </th>
+                  <td className="value">
+                    {key === "mainNumber" ? (
+                      <div>
+                        <Input
+                          value={formData[key] || ""}
+                          type={field.type}
+                          placeholder={formData[key]}
+                          onChange={(e) => handleChange(e.target.value)}
+                          disabled={disabled}
+                          className="w400"
+                        />
+                      {/** <span>{LABELS.LV_NUMBER}</span>  */} 
+                      </div>
+                    ) : key === "password" ? (
+                      <>
+                        <Input
+                          value={formData[key] || ""}
+                          type={field.type}
+                          placeholder={formData[key]}
+                          onChange={(e) => handleChange(e.target.value)}
+                          disabled={disabled}
+                        />
+                        <Button
+                          type={BUTTON_CANCEL}
+                          label={LABELS.PASSWORD_RESET}
+                          onClick={clickResetPassword}
+                        />
+                      </>
+                    ) : key === "userUseState" ? (
+                      <div>
+                        <RadioGroup
+                          value={value}
+                          options={options}
+                          onChange={(e) => handleChange(e.target.value)}
+                        />
+                        {field.options
+                          .filter((option) => option.items)[0]
+                          .items.map((item, idx) => {
+                            return (
+                              <div key={idx}>
+                                <Input
+                                  type="date"
+                                  value={formData[item.key] || ""}
+                                  onChange={(e) =>
+                                    dateChange(item.key, e.target.value)
+                                  }
+                                  disabled={
+                                    formData[key] !==
+                                    field.options.filter(
+                                      (option) => option.items
+                                    )[0].value
+                                  }
+                                />
+                                {idx === 0 && <span>{"~"}</span>}
+                              </div>
+                            );
+                          })}
+                      </div>
+                    ) : type === "radio" ? (
                       <RadioGroup
                         value={value}
                         options={options}
                         onChange={(e) => handleChange(e.target.value)}
                       />
-                      {field.options
-                        .filter((option) => option.items)[0]
-                        .items.map((item, idx) => {
-                          return (
-                            <div key={idx}>
-                              <Input
-                                type="date"
-                                value={formData[item.key] || ""}
-                                onChange={(e) =>
-                                  dateChange(item.key, e.target.value)
-                                }
-                                disabled={
-                                  formData[key] !==
-                                  field.options.filter(
-                                    (option) => option.items
-                                  )[0].value
-                                }
-                              />
-                              {idx === 0 && <span>{"~"}</span>}
-                            </div>
-                          );
-                        })}
-                    </div>
-                  ) : type === "radio" ? (
-                    <RadioGroup
-                      value={value}
-                      options={options}
-                      onChange={(e) => handleChange(e.target.value)}
-                    />
-                  ) : key === "did" ? (
-                    <div>
-                      <span>{value}</span>
-                      <Button
-                        type={BUTTON_CANCEL}
-                        label={LABELS.SETTING}
-                        onClick={clickDidSetting}
+                    ) : key === "did" ? (
+                      <div>
+                        <span>{value}</span>
+                        <Button
+                          type={BUTTON_CANCEL}
+                          label={LABELS.SETTING}
+                          onClick={clickDidSetting}
+                        />
+                      </div>
+                    ) : multi ? (
+                      <div>
+                        {field.fields.map((subField, idx) => (
+                          <div key={subField.key}>
+                            <Input
+                              type={subField.type}
+                              value={formData[subField.key] || ""}
+                              onChange={(e) =>
+                                setFormData((prev) => ({
+                                  ...prev,
+                                  [subField.key]: e.target.value,
+                                }))
+                              }
+                              disabled={disabled}
+                            />
+                            {idx === 0 && <span>{"-"}</span>}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <Input
+                        value={value}
+                        type={type}
+                        placeholder={placeholder}
+                        disabled={disabled}
+                        onChange={(e) => handleChange(e.target.value)}
                       />
-                    </div>
-                  ) : multi ? (
-                    <div>
-                      {field.fields.map((subField, idx) => (
-                        <div key={subField.key}>
-                          <Input
-                            type={subField.type}
-                            value={formData[subField.key] || ""}
-                            onChange={(e) =>
-                              setFormData((prev) => ({
-                                ...prev,
-                                [subField.key]: e.target.value,
-                              }))
-                            }
-                            disabled={disabled}
-                          />
-                          {idx === 0 && <span>{"-"}</span>}
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <Input
-                      value={value}
-                      type={type}
-                      placeholder={placeholder}
-                      disabled={disabled}
-                      onChange={(e) => handleChange(e.target.value)}
-                    />
-                  )}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <div>
-        <Button type={BUTTON_CANCEL} onClick={cancelEdit} />
-        <Button type={BUTTON_SAVE} onClick={handleSave} />
-      </div>
-    </div>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </form>
+      <div class="btn-wrap">
+				<div>
+					<Button type={BUTTON_CANCEL} onClick={cancelEdit} />
+				</div>
+				<div>
+					<Button type={BUTTON_SAVE} onClick={handleSave} />
+				</div>
+			</div>
+    </>
   );
 };
 

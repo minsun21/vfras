@@ -58,11 +58,13 @@ div.sch-top .left { display:flex; align-items:center; gap:1rem; }
 div.sch-top .left { } 
 
 /* 상태표 ################################################################### */
-.stateNormal { font-size: 1.2rem; color: #FFF; border: 1px solid #999; border-radius: 12px; padding: 3px 6px; background-color: #999 } 
-.stateArert { font-size: 1.2rem; color: var(--scolor); border: 1px solid var(--scolor); border-radius: 12px; padding: 3px 6px; } 
-.stateStop { font-size: 1.2rem; color: #FFF; border: 1px solid #999; border-radius: 12px; padding: 3px 6px; background-color: #333 } 
-.stateBlock { font-size: 1.2rem; color: #FFF; border: 1px solid #999; border-radius: 12px; padding: 3px 6px; background-color: #754000 } 
-.stateWait { font-size: 1.2rem; color: #FFF; border: 1px solid #999; border-radius: 12px; padding: 3px 6px; background-color: #999 } 
+.stateNormal { font-size: 1.2rem; color: #FFF; border: 1px solid #999; border-radius: 12px; padding: 3px 10px; display: inline; background-color: #999 } 
+.stateArert { font-size: 1.2rem; color: var(--scolor); border: 1px solid var(--scolor); border-radius: 12px; padding: 3px 10px; display: inline; } 
+.stateStop { font-size: 1.2rem; color: #FFF; border: 1px solid #999; border-radius: 12px; padding: 3px 10px; display: inline; background-color: #333 } 
+.stateBlock { font-size: 1.2rem; color: #FFF; border: 1px solid #999; border-radius: 12px; padding: 3px 10px; display: inline; background-color: #754000 } 
+.stateWait { font-size: 1.2rem; color: #FFF; border: 1px solid #999; border-radius: 12px; padding: 3px 10px; display: inline; background-color: #999 } 
+
+
 
 
 /* new 아이콘 */
