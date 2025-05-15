@@ -41,56 +41,80 @@ const SubscriberManage = () => {
   };
 
   return (
-    <div>
-      <div className="search-area">
-        <div>
-          <Input
-            label={LABELS.MAIN_NUMBER}
-            value={searchMainNumber}
-            type="number"
-            onChange={(e) => setSearchMainNumber(e.target.value)}
-          />
-          <Button type={BUTTON_SEARCH} onClick={search} />
-        </div>
-        <Button
-          type={BUTTON_CANCEL}
-          label={LABELS.SUBSCRIBE_EDIT}
-          onClick={() => navigate(ROUTES.ACCOUNT_MANAGE_EDIT)}
-        />
-      </div>
-      <table className="info-table">
-        <tbody>
-          {subsriberManageFields.map((field) => {
-            const { key, multi } = field;
+    <>
+      <form class="search-box">
+				<table class="tbl-input">
+						<colgroup>
+						</colgroup>
+						<thead>
+							<tr>
+								<th>
+									<label class="schTxtL1">{LABELS.MAIN_NUMBER}</label>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<div class="form-field dflex wrap gap10">
+                     <Input
+                      //  label={LABELS.MAIN_NUMBER}
+                        class="form-input"
+                        value={searchMainNumber}
+                        type="number"
+                        onChange={(e) => setSearchMainNumber(e.target.value)}
+                      />
+                      <Button type={BUTTON_SEARCH} onClick={search} />
+                      <Button
+                        type={BUTTON_CANCEL}
+                        label={LABELS.SUBSCRIBE_EDIT}
+                        onClick={() => navigate(ROUTES.ACCOUNT_MANAGE_EDIT)}
+                      />
+										</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+			</form>
+      <form class="tbl-view">
+				<table>
+          <colgroup>
+							<col className="w250"></col>
+              <col></col>
+					</colgroup>
+          <tbody>
+            {subsriberManageFields.map((field) => {
+              const { key, multi } = field;
 
-            return (
-              <tr key={field.key}>
-                <td className="Labels">{field.label}</td>
-                <td>
-                  {key === "mainNumber" ? (
-                    <div>
-                      <span>{data[field.key]}</span>
-                      <span>{LABELS.LV_NUMBER}</span>
-                    </div>
-                  ) : multi ? (
-                    <div>
-                      {field.fields.map((subField, idx) => (
-                        <div key={subField.key}>
-                          <span>{subField.value}</span>
-                          {idx === 0 && <span>{"-"}</span>}
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    data[field.key]
-                  )}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+              return (
+                <tr key={field.key}>
+                  <th className="Labels">{field.label}</th>
+                  <td>
+                    {key === "mainNumber" ? (
+                      <div>
+                        <span>{data[field.key]}</span>
+                        <span>{LABELS.LV_NUMBER}</span>
+                      </div>
+                    ) : multi ? (
+                      <div>
+                        {field.fields.map((subField, idx) => (
+                          <div key={subField.key}>
+                            <span>{subField.value}</span>
+                            {idx === 0 && <span>{"-"}</span>}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      data[field.key]
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </form>
+    </>
   );
 };
 

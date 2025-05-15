@@ -200,7 +200,7 @@ export const account_manage_data = [
 ];
 
 const ManageButtonCell = React.memo(({ row, onNavigate }) => (
-  <div className="sbtn miniK" onClick={() => onNavigate(row.original)}>{LABELS.MANAGE}</div>
+  <button className="sbtn miniK" onClick={() => onNavigate(row.original)}>{LABELS.MANAGE}</button>
 ));
 
 export const subscribe_columns = (navigateManage) => {

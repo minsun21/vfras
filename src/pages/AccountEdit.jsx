@@ -49,39 +49,54 @@ const AccountEdit = () => {
   };
 
   return (
-    <div>
-      <table className="info-table">
-        <tbody>
-          {accountEditFields.map((field) => {
-            const {
-              key,
-              label,
-              type = "text",
-              options = [],
-              required,
-              comment,
-              disabled,
-            } = field;
-            const value = formData[key] || "";
+    <>
+      <form class="tbl-view">
+        <table>
+          <colgroup>
+              <col className="w250"></col>
+              <col></col>
+          </colgroup>
+          <tbody>
+            {accountEditFields.map((field) => {
+              const {
+                key,
+                label,
+                type = "text",
+                options = [],
+                required,
+                comment,
+                disabled,
+              } = field;
+              const value = formData[key] || "";
 
-            const handleChange = (val) => {
-              setFormData((prev) => ({ ...prev, [key]: val }));
-            };
+              const handleChange = (val) => {
+                setFormData((prev) => ({ ...prev, [key]: val }));
+              };
 
-            return (
-              <tr key={key}>
-                <td className="Labels" required={required}>
-                  {label}
-                </td>
-                <td className="value">
-                  {type === "select" ? (
-                    <Select
-                      value={value}
-                      options={options}
-                      onChange={(e) => handleChange(e.target.value)}
-                    />
-                  ) : comment ? (
-                    <div>
+              return (
+                <tr key={key}>
+                  <th className="Labels" required={required}>
+                    {label}
+                  </th>
+                  <td className="value">
+                    {type === "select" ? (
+                      <Select
+                        value={value}
+                        options={options}
+                        onChange={(e) => handleChange(e.target.value)}
+                      />
+                    ) : comment ? (
+                      <div>
+                        <Input
+                          value={value}
+                          type={type}
+                          placeholder={formData[key]}
+                          onChange={(e) => handleChange(e.target.value)}
+                          disabled={disabled}
+                        />
+                        <span className="comment">{comment}</span>
+                      </div>
+                    ) : (
                       <Input
                         value={value}
                         type={type}
@@ -89,28 +104,23 @@ const AccountEdit = () => {
                         onChange={(e) => handleChange(e.target.value)}
                         disabled={disabled}
                       />
-                      <span className="comment">{comment}</span>
-                    </div>
-                  ) : (
-                    <Input
-                      value={value}
-                      type={type}
-                      placeholder={formData[key]}
-                      onChange={(e) => handleChange(e.target.value)}
-                      disabled={disabled}
-                    />
-                  )}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <div>
-        <Button type={BUTTON_CANCEL} onClick={cancelEdit} />
-        <Button type={BUTTON_SAVE} onClick={handleSave} />
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </form>
+      <div class="btn-wrap">
+        <div>
+          <Button type={BUTTON_CANCEL} onClick={cancelEdit} />
+        </div>
+        <div>
+          <Button type={BUTTON_SAVE} onClick={handleSave} />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

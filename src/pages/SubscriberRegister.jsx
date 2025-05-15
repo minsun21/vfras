@@ -88,96 +88,106 @@ const SubscriberRegister = () => {
   };
 
   return (
-    <div>
-      <table className="info-table">
-        <tbody>
-          {subsriberResigerFields.map((field) => {
-            const {
-              key,
-              label,
-              type = "text",
-              options = [],
-              required,
-              placeholder,
-              comment,
-              disabled,
-              multi,
-              fields
-            } = field;
-            const value = formData[key] || "";
+    <>
+       <form class="tbl-view">
+        <table>
+          <colgroup>
+              <col className="w250"></col>
+              <col></col>
+          </colgroup>
+          <tbody>
+            {subsriberResigerFields.map((field) => {
+              const {
+                key,
+                label,
+                type = "text",
+                options = [],
+                required,
+                placeholder,
+                comment,
+                disabled,
+                multi,
+                fields
+              } = field;
+              const value = formData[key] || "";
 
-            const handleChange = (val) => {
-              setFormData((prev) => ({ ...prev, [key]: val }));
-            };
+              const handleChange = (val) => {
+                setFormData((prev) => ({ ...prev, [key]: val }));
+              };
 
-            return (
-              <tr key={key}>
-                <td className="Labels" required={required}>
-                  {label}
-                </td>
-                <td className="value">
-                  {type === "select" ? (
-                    <Select
-                      value={value}
-                      options={options}
-                      onChange={(e) => handleChange(e.target.value)}
-                      nonEmpty={true}
-                    />
-                  ) : type === "radio" ? (
-                    <RadioGroup
-                      value={value}
-                      options={options}
-                      onChange={(e) => handleChange(e.target.value)}
-                    />
-                  ) : comment ? (
-                    <div>
+              return (
+                <tr key={key}>
+                  <th className="Labels" required={required}>
+                    {label}
+                  </th>
+                  <td className="value">
+                    {type === "select" ? (
+                      <Select
+                        value={value}
+                        options={options}
+                        onChange={(e) => handleChange(e.target.value)}
+                        nonEmpty={true}
+                      />
+                    ) : type === "radio" ? (
+                      <RadioGroup
+                        value={value}
+                        options={options}
+                        onChange={(e) => handleChange(e.target.value)}
+                      />
+                    ) : comment ? (
+                      <div>
+                        <Input
+                          value={value}
+                          type={type}
+                          placeholder={placeholder}
+                          onChange={(e) => handleChange(e.target.value)}
+                          disabled={disabled}
+                        />
+                        <span className="comment">{comment}</span>
+                      </div>
+                    ) : multi ? (
+                      <div>
+                        {fields.map((subField, idx) => (
+                          <div key={subField.key}>
+                            <Input
+                              type={subField.type}
+                              value={formData[subField.key] || ""}
+                              onChange={(e) =>
+                                setFormData((prev) => ({
+                                  ...prev,
+                                  [subField.key]: e.target.value,
+                                }))
+                              }
+                              disabled={disabled}
+                            />
+                            {idx === 0 && <span>{"-"}</span>}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
                       <Input
                         value={value}
                         type={type}
                         placeholder={placeholder}
                         onChange={(e) => handleChange(e.target.value)}
-                        disabled={disabled}
                       />
-                      <span className="comment">{comment}</span>
-                    </div>
-                  ) : multi ? (
-                    <div>
-                      {fields.map((subField, idx) => (
-                        <div key={subField.key}>
-                          <Input
-                            type={subField.type}
-                            value={formData[subField.key] || ""}
-                            onChange={(e) =>
-                              setFormData((prev) => ({
-                                ...prev,
-                                [subField.key]: e.target.value,
-                              }))
-                            }
-                            disabled={disabled}
-                          />
-                          {idx === 0 && <span>{"-"}</span>}
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <Input
-                      value={value}
-                      type={type}
-                      placeholder={placeholder}
-                      onChange={(e) => handleChange(e.target.value)}
-                    />
-                  )}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <div>
-        <Button type={BUTTON_CANCEL} onClick={cancelEdit} />
-        <Button onClick={handleSave} />
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </form>
+      <div class="btn-wrap">
+        <div>
+          <Button type={BUTTON_CANCEL} onClick={cancelEdit} />
+        </div>
+        <div>
+          <Button onClick={handleSave} />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

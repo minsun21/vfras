@@ -187,7 +187,7 @@ const Table = forwardRef(
       if (typeof rendered === "string") {
         return rendered.split("\n").map((line, i) => <div key={i}>{line}</div>);
       }
-      return <div style={{ whiteSpace: "pre-line" }}>{rendered}</div>;
+      return <div>{rendered}</div>;
     };
 
     return (

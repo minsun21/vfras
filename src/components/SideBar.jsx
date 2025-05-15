@@ -56,7 +56,7 @@ const SideBar = () => {
 
 
 
-      <nav>
+      <nav class="menu">
         {MenusConfig.map((group, index) => (
 
           <div key={`${group.classification}${index}`}>

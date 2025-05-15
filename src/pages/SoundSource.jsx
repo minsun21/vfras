@@ -29,19 +29,44 @@ const SoundSource = () => {
   };
 
   return (
-    <div>
-      <div className="search-area">
-        <div>
-          <Input
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            placeholder={soundSourceMessages.searchPlaceHolder}
-            size={INPUT_SIZE_LG}
-          />
-          <Button type={BUTTON_SEARCH} onClick={search} />
-        </div>
-        <span>{LABELS.SEARCH_RESULT(data.length)}</span>
-      </div>
+    <>
+      <form class="search-box">
+				<table class="tbl-input">
+						<colgroup>
+						</colgroup>
+						{/*<thead>
+							<tr>
+								<th>
+									<label class="schTxtL1">{LABELS.SEARCH}</label>
+								</th>
+							</tr>
+						</thead>
+            */}
+						<tbody>
+							<tr>
+								<td>
+									<div class="form-field dflex wrap gap10">
+                    <Input
+                      value={searchInput}
+                      onChange={(e) => setSearchInput(e.target.value)}
+                      placeholder={soundSourceMessages.searchPlaceHolder}
+                      size={INPUT_SIZE_LG}
+                    />
+                    <Button type={BUTTON_SEARCH} onClick={search} />
+										</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+			</form>
+      <form class="form">
+				<div class="tbl-list-top mt20">
+					<div class="top-button"> 
+						<span class="total mr0">{LABELS.SEARCH_RESULT(data.length)}</span> 
+					</div>
+				</div>
+      </form>              
+
       <Table
         ref={tableRef}
         columns={sounds_source_columns}
@@ -49,7 +74,9 @@ const SoundSource = () => {
         pageSize={10}
         rowSelectionEnabled={false}
       />
-    </div>
+
+
+    </>
   );
 };
 

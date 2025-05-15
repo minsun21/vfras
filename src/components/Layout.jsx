@@ -10,7 +10,6 @@ import { ROUTES } from "../constants/routes";
 import { LABELS } from "../constants/Labels";
 import { useModal } from "../contexts/ModalContext";
 import { infoMessages } from "../constants/Message";
-import '../asset/css/basic.css'; 
 
 const getCurrentSubMenuTitle = (currentPath) => {
   for (const group of MenusConfig) {

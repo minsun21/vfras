@@ -5,7 +5,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { ROUTES } from "../constants/routes";
 import { LABELS } from "../constants/Labels";
 import { loginMessages } from "../constants/Message";
-import '../asset/css/basic.css'; 
 
 const Login = () => {
   const dispatch = useDispatch();
