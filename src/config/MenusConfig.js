@@ -8,7 +8,7 @@ import { MdContentCopy } from "react-icons/md";
 export const MenusConfig = [
   {
     title: LABELS.SUBSCRIBER,
-    icon: <FaRegUser />,
+    icon: "sb-icon-user",
     items: [
       {
         title: LABELS.SUBSCRIBER_VIEW,
@@ -29,7 +29,7 @@ export const MenusConfig = [
   },
   {
     title: LABELS.COUNTRY_NUMBER,
-    icon: <FaRegListAlt />,
+    icon: "sb-icon-data",
     items: [
       {
         title: LABELS.COUNTRY_NUMBER_MANAGE,
@@ -40,7 +40,7 @@ export const MenusConfig = [
   },
   {
     title: LABELS.CONTENTS,
-    icon: <MdContentCopy />,
+    icon: "sb-icon-pop",
     items: [
       {
         title: LABELS.SOUNDS_VIEW,
@@ -51,7 +51,7 @@ export const MenusConfig = [
   },
   {
     title: LABELS.ACCOUNT,
-    icon: <CiSettings />,
+    icon: "sb-icon-system",
     items: [
       {
         title: LABELS.ACCOUNT_MANAGE,

@@ -1,20 +1,51 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { MenusConfig } from "../config/MenusConfig";
 import { LABELS } from "../constants/Labels";
 
 const SideBar = () => {
-  const navigate = useNavigate();
+  const location = useLocation();
 
-  const goPage = (path) => {
-    navigate(`${path}`);
-  };
+  // const activeKey = MenusConfig
+  //   .filter(
+  //     (menu) =>
+  //       location.pathname === menu.to ||
+  //       location.pathname.startsWith(menu.to + "/")
+  //   )
+  //   .sort((a, b) => b.to.length - a.to.length)[0]?.key;
 
   return (
     <>
-      <aside class="sidebar">
-        <div class="logo"><a href=""><span class="logoImg">{LABELS.HOME_TITLE}</span></a></div>
-        <nav class="menu">
+      <aside className="sidebar">
+        <div className="logo">
+          <Link href="">
+            <span className="logoImg">{LABELS.HOME_TITLE}</span>
+          </Link>
+        </div>
+        <nav className="menu">
+          <ul className="nav-links">
+            {MenusConfig.map((group, index) => (
+              <li className="in-submenu">
+                <div className="icon-link">
+                  <Link to="#">
+                    <i className={group.icon}></i>
+                    <span>{group.title}</span>
+                  </Link>
+                  {group.items.map((item) => (
+                    <ul className="sub-menu">
+                      <li>
+                        <Link to={item.path}>
+                          <span>{item.title}</span>
+                        </Link>
+                      </li>
+                    </ul>
+                  ))}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        {/* <nav class="menu">
           <ul class="nav-links">
             <li class="in-submenu">
               <div class="icon-link"> <a href="#"><i class="sb-icon-user"></i><span>가입자</span></a>
@@ -48,40 +79,9 @@ const SideBar = () => {
               </div>
             </li>
           </ul>
-        </nav>
-
-      {/*
-      <nav>
-        {MenusConfig.map((group, index) => (
-          <div key={`${group.classification}${index}`}>
-            <ul className="menu-group" key={group.classification}>
-              <div className="menu-title" key={group.title}>
-                {group.icon}
-                {group.title}
-              </div>
-              {group.items.map((item) => (
-                <li
-                  key={item.path}
-                  className="menu-item"
-                  onClick={() => goPage(item.path)}
-                >
-                  {item.title}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </nav>
-      */}
+        </nav> */}
       </aside>
-      
     </>
-
-
-    
-
-
-
   );
 };
 
