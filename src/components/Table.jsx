@@ -178,7 +178,6 @@ const Table = forwardRef(
         ? content.split("\n").map((line, i) => <div key={i}>{line}</div>)
         : content;
     };
-    
 
     const renderCell = (cell) => {
       const rendered = flexRender(
