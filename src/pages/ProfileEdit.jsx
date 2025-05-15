@@ -79,8 +79,13 @@ const ProfileEdit = () => {
   };
 
   return (
-    <div>
-      <table className="info-table">
+    <>
+       <form class="tbl-view">
+        <table>
+          <colgroup>
+              <col className="w250"></col>
+              <col></col>
+          </colgroup>
         <tbody>
           {profileEditFields.map((field) => {
             const { key, disabled } = field;
@@ -89,7 +94,7 @@ const ProfileEdit = () => {
             };
             return (
               <tr key={key}>
-                <td className="Labels">{field.label}</td>
+                <th className="Labels">{field.label}</th>
                 <td className="value">
                   {key === "password" ? (
                     <>
@@ -122,11 +127,16 @@ const ProfileEdit = () => {
           })}
         </tbody>
       </table>
-      <div>
-        <Button type={BUTTON_CANCEL} onClick={cancelEdit} />
-        <Button type={BUTTON_SAVE} onClick={handleSave} />
+      </form>
+      <div class="btn-wrap">
+        <div>
+          <Button type={BUTTON_CANCEL} onClick={cancelEdit} />
+        </div>
+        <div>
+          <Button type={BUTTON_SAVE} onClick={handleSave} />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
