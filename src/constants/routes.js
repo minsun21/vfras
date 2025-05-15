@@ -1,6 +1,7 @@
 export const ROUTES = {
     SUBSCRIBER : '/subscriber',
     SUBSCRIBER_MANAGE : '/subscriber/manage',
+    SUBSCRIBER_MANAGE_EDIT : '/subscriber/manage/edit',
     SUBSCRIBER_REGISTER: '/subscriber/register',
     COUNTRY_CODE : '/countrycode',
     SOUND_SOURCE :'/soundsource',
