@@ -178,16 +178,6 @@ const Table = forwardRef(
     const pageIndex = table.getState().pagination.pageIndex;
     const pageNumbers = Array.from({ length: pageCount }, (_, i) => i);
 
-    const renderHeader = (header) => {
-      const content = flexRender(
-        header.column.columnDef.header,
-        header.getContext()
-      );
-      return typeof content === "string"
-        ? content.split("\n").map((line, i) => <div key={i}>{line}</div>)
-        : content;
-    };
-
     const renderCell = (cell) => {
       const rendered = flexRender(
         cell.column.columnDef.cell,
@@ -207,10 +197,11 @@ const Table = forwardRef(
       return options;
     }, [data]);
 
-    useEffect(() => {
-      const headerGroups = table.getHeaderGroups();
-      console.log("📌 Header Groups:", headerGroups);
-    }, [table]);
+    const renderMultiLine = (value) => {
+      if (typeof value !== "string") return value;
+
+      return value.split("\n").map((line, i) => <div key={i}>{line}</div>);
+    };
 
     return (
       <>
@@ -244,39 +235,40 @@ const Table = forwardRef(
         <div className="tbl-list">
           <table>
             <thead>
-              {table.getHeaderGroups().length === 1 ? (
-                <tr>
-                  {table.getHeaderGroups()[0].headers.map((header) => (
-                    <th key={header.id} colSpan={header.colSpan}>
-                      {header.isPlaceholder ? null : renderHeader(header)}
-                    </th>
-                  ))}
-                </tr>
-              ) : (
-                table.getHeaderGroups().map((headerGroup, groupIndex) => (
-                  <tr key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => {
-                      const isTopRow = groupIndex === 0;
-                      const hasSubHeaders = header.subHeaders?.length > 0;
-                      const totalDepth = table.getHeaderGroups().length;
-
-                      // 상단의 단일 헤더에 rowSpan=2 적용
-                      const rowSpan =
-                        isTopRow && !hasSubHeaders && totalDepth > 1 ? 2 : 1;
-
-                      return (
-                        <th
-                          key={header.id}
-                          colSpan={header.colSpan}
-                          rowSpan={rowSpan}
-                        >
-                          {header.isPlaceholder ? null : renderHeader(header)}
-                        </th>
-                      );
-                    })}
-                  </tr>
-                ))
+            <tr>
+              {rowSelectionEnabled && (
+                <th rowSpan={2}>
+                  <input
+                    type="checkbox"
+                    checked={table.getIsAllPageRowsSelected()}
+                    onChange={(e) => {
+                      table.getToggleAllPageRowsSelectedHandler()(e);
+                    }}
+                  />
+                </th>
               )}
+              {showIndex && <th rowSpan={2}>{LABELS.INDEX}</th>}
+              {columns.map((col, idx) =>
+                col.columns ? (
+                  <th key={idx} colSpan={col.columns.length}>
+                    {renderMultiLine(col.header)}
+                  </th>
+                ) : (
+                  <th key={idx} rowSpan={2}>
+                    {renderMultiLine(col.header)}
+                  </th>
+                )
+              )}
+            </tr>
+            <tr>
+              {columns.flatMap((col, idx) =>
+                col.columns
+                  ? col.columns.map((sub, j) => (
+                      <th key={`sub-${idx}-${j}`}>{sub.header}</th>
+                    ))
+                  : []
+              )}
+            </tr>
             </thead>
             <tbody>
               {table.getRowModel().rows.map((row) => (
