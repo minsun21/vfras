@@ -8,12 +8,11 @@ import Button, {
 import Input from "../components/Input";
 import RadioGroup from "../components/RadioGroup";
 import {
-  accountEditFields,
   subscriberEditFields,
   subsriberManageFields,
 } from "../config/FieldsConfig";
 import { ROUTES } from "../constants/routes";
-import { isValidEmail, isValidPhone } from "../utils/FormValidation";
+import { fieldsValidate } from "../utils/FormValidation";
 import {
   errorMessages,
   infoMessages,
@@ -24,6 +23,8 @@ import { useModal } from "../contexts/ModalContext";
 import DidSetting from "../components/modals/DidSetting";
 import { KEYS } from "../constants/Keys";
 import axios from "../api/axios";
+import Form from "../components/Form";
+import PasswordReset from "../components/modals/PasswordReset";
 
 const SubscriberManageEdit = () => {
   const navigate = useNavigate();
@@ -44,70 +45,18 @@ const SubscriberManageEdit = () => {
     //   setFormData(res.data);
     // })
     setFormData(() =>
-      accountEditFields.reduce((acc, field) => {
-        acc[field.key] = field.placeholder || "";
+      subscriberEditFields.reduce((acc, field) => {
+        if (field.fields && Array.isArray(field.fields)) {
+          field.fields.forEach((subField) => {
+            acc[subField.key] = subField.value || "";
+          });
+        } else {
+          acc[field.key] = field.value || "";
+        }
         return acc;
       }, {})
     );
   }, [state]);
-
-  const validate = () => {
-    const newErrors = {};
-    if (!isValidEmail(formData.email)) {
-      showAlert({
-        message: errorMessages.invalidEmail,
-      });
-      return;
-    }
-
-    if (!isValidPhone(formData.phone)) {
-      showAlert({
-        message: errorMessages.invalidPhone,
-      });
-      return;
-    }
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSave = () => {
-    if (!validate()) {
-      return;
-    }
-
-    showAlert({
-      message: infoMessages.successEdit,
-      onConfirm: () =>
-        navigate(ROUTES.SUBSCRIBERS_MANAGE, {
-          state: {
-            selectedId: state?.selectedId,
-          },
-        }),
-    });
-  };
-
-  const cancelEdit = () => {
-    showDialog({
-      message: infoMessages.confirmCancel,
-      onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
-    });
-  };
-
-  const clickDidSetting = () => {
-    showModal({
-      content: <DidSetting />,
-    });
-  };
-
-  const clickResetPassword = () => {
-    showDialog({
-      message: subsriberMessages.resetPasswordConfirm,
-      onConfirm: restPassword,
-    });
-  };
-
-  const restPassword = () => {
-    console.log("reset");
-  };
 
   const search = () => {
     if (!searchSubNo) {
@@ -117,8 +66,14 @@ const SubscriberManageEdit = () => {
       return;
     }
     setFormData(() =>
-      accountEditFields.reduce((acc, field) => {
-        acc[field.key] = field.placeholder || "";
+      subscriberEditFields.reduce((acc, field) => {
+        if (field.fields && Array.isArray(field.fields)) {
+          field.fields.forEach((subField) => {
+            acc[subField.key] = subField.value || "";
+          });
+        } else {
+          acc[field.key] = field.value || "";
+        }
         return acc;
       }, {})
     );
@@ -132,9 +87,57 @@ const SubscriberManageEdit = () => {
     // });
   };
 
+  const handleSave = () => {
+    // const errValidate = fieldsValidate(subscriberEditFields, formData);
+    // if (errValidate) {
+    //   showAlert({
+    //     message: errValidate,
+    //     onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
+    //   });
+    // }
+
+    showAlert({
+      message: infoMessages.successEdit,
+      onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
+    });
+  };
+
+  const cancelEdit = () => {
+    showDialog({
+      message: infoMessages.confirmCancel,
+      onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
+    });
+  };
+
+  const clickDidSetting = () => {
+    showModal({
+      content: <DidSetting />,
+      header : LABELS.DID_TITLE
+    });
+  };
+
+  const clickResetPassword = () => {
+    showModal({
+      content: (
+        <PasswordReset
+          currentPassword={formData[KEYS.PASSWORD]}
+          restPassword={restPassword}
+        />
+      ),
+    });
+  };
+
+  const restPassword = () => {
+    // 대표번호 뒷자리로 초기화
+    setFormData({
+      ...formData,
+      [KEYS.PASSWORD] : formData[KEYS.SUB_NO].slice(-4)
+    })
+  };
+
   return (
     <>
-      <form className="search-box" onSubmit={(e) => e.preventDefault()}>
+      <Form className="search-box">
         <table className="tbl-input">
           <colgroup></colgroup>
           <thead>
@@ -159,9 +162,9 @@ const SubscriberManageEdit = () => {
             </tr>
           </tbody>
         </table>
-      </form>
+      </Form>
       {formData && (
-        <form className="tbl-view">
+        <Form className="tbl-view">
           <table>
             <colgroup>
               <col className="w250"></col>
@@ -175,7 +178,6 @@ const SubscriberManageEdit = () => {
                   type = "text",
                   options = [],
                   required,
-                  placeholder,
                   disabled,
                   multi,
                 } = field;
@@ -198,17 +200,13 @@ const SubscriberManageEdit = () => {
                   setFormData((prev) => ({ ...prev, ...newData }));
                 };
 
-                const dateChange = (key, val) => {
-                  setFormData((prev) => ({ ...prev, [key]: val }));
-                };
-
                 return (
                   <tr key={key}>
                     <th className="Labels" required={required}>
                       {label}
                     </th>
                     <td className="value">
-                      {key === "mainNumber" ? (
+                      {key === KEYS.SUB_NO ? (
                         <div>
                           <Input
                             value={formData[key] || ""}
@@ -217,7 +215,7 @@ const SubscriberManageEdit = () => {
                             disabled={disabled}
                             className="w400"
                           />
-                          {/** <span>{LABELS.LV_NUMBER}</span>  */}
+                          <span>{LABELS.LV_NUMBER}</span>
                         </div>
                       ) : key === "password" ? (
                         <>
@@ -233,45 +231,15 @@ const SubscriberManageEdit = () => {
                             onClick={clickResetPassword}
                           />
                         </>
-                      ) : key === "userUseState" ? (
-                        <div>
-                          <RadioGroup
-                            value={value}
-                            options={options}
-                            onChange={(e) => handleChange(e.target.value)}
-                          />
-                          {field.options
-                            .filter((option) => option.items)[0]
-                            .items.map((item, idx) => {
-                              return (
-                                <div key={idx}>
-                                  <Input
-                                    type="date"
-                                    value={formData[item.key] || ""}
-                                    onChange={(e) =>
-                                      dateChange(item.key, e.target.value)
-                                    }
-                                    disabled={
-                                      formData[key] !==
-                                      field.options.filter(
-                                        (option) => option.items
-                                      )[0].value
-                                    }
-                                  />
-                                  {idx === 0 && <span>{"~"}</span>}
-                                </div>
-                              );
-                            })}
-                        </div>
                       ) : type === "radio" ? (
                         <RadioGroup
                           value={value}
                           options={options}
                           onChange={(e) => handleChange(e.target.value)}
                         />
-                      ) : key === "did" ? (
+                      ) : key === KEYS.DID ? (
                         <div>
-                          <span>{value}</span>
+                          <label>{LABELS.CURRENT}<span>{value}</span>{LABELS.DID_VALUE}</label>
                           <Button
                             type={BUTTON_CANCEL}
                             label={LABELS.SETTING}
@@ -311,7 +279,7 @@ const SubscriberManageEdit = () => {
               })}
             </tbody>
           </table>
-        </form>
+        </Form>
       )}
       {formData && (
         <div className="btn-wrap">

@@ -110,5 +110,7 @@ export const LABELS = {
   SAVE_ID: "아이디 저장",
   ADMIN_LOGIN: "관리자 로그인",
   PASSWORD_CHECK3: "(초기 비밀번호는 대표번호 마지막 4자리)",
-  DIVISION_SEARCH : "검색 구분"
+  DIVISION_SEARCH : "검색 구분",
+  CURRENT : "현재 ",
+  DID_VALUE: `개 DID `,
 };

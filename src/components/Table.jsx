@@ -197,7 +197,7 @@ const Table = forwardRef(
     };
 
     const pageSizeOptions = useMemo(() => {
-      const baseSizes = [10, 20, 50, 100];
+      const baseSizes = [10, 30, 50, 100];
       const nextRounded = Math.ceil(data.length / 10) * 10;
       const options = baseSizes.filter((n) => n < nextRounded);
       if (!options.includes(nextRounded)) options.push(nextRounded);

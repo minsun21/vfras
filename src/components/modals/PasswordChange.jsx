@@ -8,7 +8,9 @@ import { hasEmptyValue, isValidPassword } from "../../utils/FormValidation";
 import { errorMessages, profileMessages } from "../../constants/Message";
 
 const PasswordChange = ({ info, onOk }) => {
-  const { showAlert, closeModal } = useModal();
+
+  const { closeModal } = useModal();
+
   const [formData, setFormData] = useState(
     passwordChange.reduce((acc, field) => {
       acc[field.key] = "";

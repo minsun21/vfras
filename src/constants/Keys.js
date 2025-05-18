@@ -10,7 +10,7 @@ export const KEYS = {
   USER_NUMBER: "userNumber", // 사용자번호
   PBX_NUMBER: "pbxNumber", // 교환기 번호
   MANAGE: "manage",
-  APPLY_DATE: "applyDate",
+  APPLY_DATE: "applyDate", //신청 일자
   CONTENT: "content",
   SOUND_CODE: "soundCode",
   CIRCULATION_RING: "circulationRing",
@@ -42,5 +42,6 @@ export const KEYS = {
   SUB_STATUS: "subStatus", // 사용자(가입자) 상태
   SUB_NO: "subNo", // 가입자 대표 번호
   SEARCH_DIVISION: "searchDivision", // 검색 구분
-  SEARCH_DIVISION_VALUE : "searchDivisionValue"// 검색 구분 text
+  SEARCH_DIVISION_VALUE: "searchDivisionValue", // 검색 구분 text
+  DID: "did", // did회선(개수)
 };

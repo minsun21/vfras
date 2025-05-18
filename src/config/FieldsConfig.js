@@ -13,7 +13,20 @@ export const SUBSRIBERS_TYPES = [
   { key: "1", value: "법인" },
 ];
 
+export const SEARCH_SUBSRIBERS_TYPES = [
+  { key: "", value: "전체" },
+  { key: "0", value: "개인" },
+  { key: "1", value: "법인" },
+];
+
 export const SERVICE_TYPES = [
+  { key: "0", value: "개인" },
+  { key: "1", value: "개인DJ" },
+  { key: "2", value: "기업" },
+];
+
+export const SEARCH_SERVICE_TYPES = [
+  { key: "", value: "전체" },
   { key: "0", value: "개인" },
   { key: "1", value: "개인DJ" },
   { key: "2", value: "기업" },
@@ -27,7 +40,14 @@ export const USER_STATES = [
 export const SUBSRIBERS_STATE = [
   { key: "0", value: "요청중" },
   { key: "1", value: "가입" },
-  { key: "2", value: "삭제대기" },
+  { key: "2", value: "삭제" },
+];
+
+export const SEARCH_SUBSRIBERS_STATE = [
+  { key: "", value: "전체" },
+  { key: "0", value: "요청중" },
+  { key: "1", value: "가입" },
+  { key: "2", value: "삭제" },
 ];
 
 export const option_userUseState = [
@@ -190,7 +210,7 @@ export const subsriberResigerFields = [
     type: "text",
     required: true,
     requiredLength: 4,
-    comment : LABELS.PASSWORD_CHECK3
+    comment: LABELS.PASSWORD_CHECK3,
   },
   {
     key: KEYS.ADDRESS1,
@@ -205,16 +225,16 @@ export const subsriberResigerFields = [
     placeholder: "OPTION",
   },
   {
-    key: "pbxNumber",
+    key: KEYS.PBX_NUMBER,
     label: LABELS.PBX_NUMBER_COL,
     multi: true,
     fields: [
-      { key: "startPbxNumber", type: "number" },
-      { key: "endPbxNumber", type: "number" },
+      { key: KEYS.FROM_NO, type: "number" },
+      { key: KEYS.TO_NO, type: "number" },
     ],
   },
   {
-    key: "userNumber",
+    key: KEYS.USER_NUMBER,
     label: LABELS.USER_NUMBER,
     multi: true,
     fields: [
@@ -321,93 +341,98 @@ export const subsriberManageFields = [
 
 export const subscriberEditFields = [
   {
-    key: "mainNumber",
+    key: KEYS.SUB_NO,
     label: LABELS.SUBSCRIBER_NUMBER,
     type: "text",
     value: "0211112222",
     disabled: true,
   },
   {
-    key: "userState",
+    key: KEYS.SUB_STATUS,
     label: LABELS.USER_STATE,
     type: "radio",
     options: SUBSRIBERS_STATE,
+    value: SUBSRIBERS_STATE[1].value,
   },
   {
-    key: "subsriberType",
+    key: KEYS.SUB_TYPE,
     label: LABELS.SUBSCRIBE_TYPE,
     type: "text",
     value: "법인",
     disabled: true,
   },
   {
-    key: "serviceType",
+    key: KEYS.SERVICE_TYPE,
     label: LABELS.SERVICE_TYPE,
     type: "text",
     value: "기업",
     disabled: true,
   },
   {
-    key: "name",
+    key: KEYS.NAME,
     label: LABELS.NAME,
     type: "text",
     value: "홍길동",
+    required: true,
   },
   {
-    key: "password",
+    key: KEYS.PASSWORD,
     label: LABELS.PASSWORD,
     type: "text",
     value: "0505",
+    required: true,
   },
   {
-    key: "address1",
+    key: KEYS.ADDRESS1,
     label: LABELS.ADDRESS1,
     type: "text",
     value: "서울시 강남구",
+    required: true,
   },
   {
-    key: "address2",
+    key: KEYS.ADDRESS2,
     label: LABELS.ADDRESS2_OPTION,
     type: "text",
     value: "",
   },
   {
-    key: "pbxNumber",
+    key: KEYS.PBX_NUMBER,
     label: LABELS.PBX_NUMBER_COL,
     multi: true,
     disabled: true,
     fields: [
-      { key: "startPbxNumber", type: "number", value: "0240050045" },
-      { key: "endPbxNumber", type: "number", value: "0240050045" },
+      { key: KEYS.FROM_NO, type: "number", value: "0240050045" },
+      { key: KEYS.TO_NO, type: "number", value: "0240050045" },
     ],
   },
   {
-    key: "userNumber",
+    key: KEYS.USER_NUMBER,
     label: LABELS.USER_NUMBER,
     multi: true,
     disabled: true,
     fields: [
-      { key: "starUsertNumber", type: "number", value: "0240050045" },
-      { key: "endUserNumber", type: "number", value: "0240050045" },
+      { key: KEYS.TEL_FROM_NO, type: "number", value: "0240050045" },
+      { key: KEYS.TEL_TO_NO, type: "number", value: "0240050045" },
     ],
   },
   {
-    key: "defaultCallRing",
+    key: KEYS.RBT_ID,
     label: LABELS.DEFAULT_CALLRING,
     type: "number",
     value: "050125",
+    required: true,
   },
+  // {
+  //   key: "userUseState",
+  //   label: LABELS.USER_STATE,
+  //   type: "radio",
+  //   options: option_userUseState,
+  // },
   {
-    key: "userUseState",
-    label: LABELS.USER_STATE,
-    type: "radio",
-    options: option_userUseState,
-  },
-  {
-    key: "did",
+    key: KEYS.DID,
     label: LABELS.DID_TITLE,
     type: "button",
-    value: "현재 xxx개 DID",
+    value: 13,
   },
 ];
 

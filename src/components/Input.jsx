@@ -22,6 +22,7 @@ const Input = ({
         onChange={onChange}
         placeholder={placeholder}
         className="form-input"
+        min="0"
       />
     </div>
   );

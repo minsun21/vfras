@@ -29,10 +29,6 @@ const DidSetting = ({ userInfo }) => {
 
   return (
     <div>
-      <header>
-        <h4>{LABELS.DID_TITLE}</h4>
-        <button onClick={closeModal}>x</button>
-      </header>
       <div style={{ display: "flex" }}>
         <div style={{ width: "50%" }}>
           <span>{LABELS.DID}</span>

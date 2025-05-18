@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Button, {
   BUTTON_SEARCH,
-  BUTTON_CANCEL,
   BUTTON_DELETE,
 } from "../components/Button";
 import Input from "../components/Input";
@@ -11,10 +10,10 @@ import Table from "../components/Table";
 import { ROUTES } from "../constants/routes";
 import { subscribe_columns, subscribe_data } from "../config/DataConfig";
 import {
-  SUBSRIBERS_TYPES,
+  SEARCH_SUBSRIBERS_TYPES,
   DIVISIONS,
-  SERVICE_TYPES,
-  SUBSRIBERS_STATE,
+  SEARCH_SERVICE_TYPES,
+  SEARCH_SUBSRIBERS_STATE,
 } from "../config/FieldsConfig";
 import { LABELS } from "../constants/Labels";
 import {
@@ -42,16 +41,16 @@ const Subscriber = () => {
 
   useEffect(() => {
     setAllType(DIVISIONS);
-    setsubsriberTypeOptions(SUBSRIBERS_TYPES);
-    setServiceTypeOptions(SERVICE_TYPES);
-    setUserStateOptions(SUBSRIBERS_STATE);
+    setsubsriberTypeOptions(SEARCH_SUBSRIBERS_TYPES);
+    setServiceTypeOptions(SEARCH_SERVICE_TYPES);
+    setUserStateOptions(SEARCH_SUBSRIBERS_STATE);
 
     setSearchInput({
       [KEYS.SEARCH_DIVISION_VALUE]: "",
       [KEYS.SEARCH_DIVISION]: DIVISIONS[0].key,
-      [KEYS.SUB_TYPE]: SUBSRIBERS_TYPES[0].key,
-      [KEYS.SERVICE_TYPE]: SERVICE_TYPES[0].key,
-      [KEYS.SUB_STATUS]: SUBSRIBERS_STATE[0].key,
+      [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[0].key,
+      [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[0].key,
+      [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[0].key,
     });
 
     setData(subscribe_data);
