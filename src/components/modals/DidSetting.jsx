@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useModal } from "../../contexts/ModalContext";
 import { LABELS } from "../../constants/Labels";
 import Table from "../Table";
 import { did_setting_columns, did_setting_data } from "../../config/DataConfig";
-import Button from "../Button";
+import Button, { BUTTON_DELETE } from "../Button";
 import Input from "../Input";
-import { subsriberMessages } from "../../constants/Message";
+import { errorMessages, subsriberMessages } from "../../constants/Message";
 import DidServiceToggle from "./DidServiceToggle";
+import { KEYS } from "../../constants/Keys";
 
 const DidSetting = ({ userInfo }) => {
-  const { closeModal } = useModal();
+
+  const tableRef = useRef();
+
+  const { showAlert } = useModal();
+
   const [data, setData] = useState([]);
   const [selectRows, setSelectRows] = useState([]);
 
@@ -27,10 +32,33 @@ const DidSetting = ({ userInfo }) => {
     });
   };
 
+  const deleteData = () => {
+    if (selectRows.length === 0) {
+      showAlert({
+        message: errorMessages.nonSelect,
+      });
+      return;
+    }
+
+    if (selectRows.length === data.length) {
+      showAlert({
+        message: errorMessages.deleteBulk,
+      });
+      return;
+    }
+
+    const filteredData = data.filter(
+      (item) => !selectRows.some((r) => r[KEYS.ID] === item[KEYS.ID])
+    );
+    setData(filteredData);
+
+    tableRef.current?.clearSelection();
+  };
+
   return (
     <div>
       <div style={{ display: "flex" }}>
-        <div style={{ width: "50%" }}>
+        <div style={{ width: "100%" }}>
           <span>{LABELS.DID}</span>
           <div
             style={{
@@ -45,11 +73,15 @@ const DidSetting = ({ userInfo }) => {
             <Button label={LABELS.ADD_ITEM} />
           </div>
           <Table
+            ref={tableRef}
             onRowSelectionChange={onSelectRows}
             columns={did_setting_columns}
             data={data}
             pageSize={5}
+            resultLabel={false}
+            pageSelect={false}
           />
+          <Button type={BUTTON_DELETE} onClick={deleteData} />
         </div>
         <div>
           <span>{LABELS.ADDITIONAL_SERVICE_SETTING}</span>

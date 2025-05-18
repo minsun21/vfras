@@ -7,6 +7,7 @@ export const infoMessages = {
   successAccountSave: `해당 계정이 등록되었습니다.`,
   confirmLogout: `로그아웃 하시겠습니까?`,
   confirmRegister: `등록 하시겠습니까?`,
+  confirmSave : "저장 하시겠습니까?"
 };
 
 export const profileMessages = {
@@ -30,7 +31,8 @@ export const errorMessages = {
   noPermission: `권한이 없습니다.`,
   noObject: `요청한 리소스를 찾을 수 없습니다.`,
   server: `서버 내부 오류입니다.`,
-  correctPassword: `비밀번호가 일치하지 않습니다. 다시 확인해주세요`,
+  correctPassword: `비밀번호가 일치하지 않습니다. 다시 확인해주세요.`,
+  deleteBulk : "전체 삭제는 할 수 없습니다."
 };
 
 export const loginMessages = {

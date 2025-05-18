@@ -29,7 +29,7 @@ import PasswordReset from "../components/modals/PasswordReset";
 const SubscriberManageEdit = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { showDialog, showAlert, showModal } = useModal();
+  const { showDialog, showAlert, showModal, closeModal } = useModal();
   const [searchSubNo, setSearchSubNo] = useState("");
 
   const [formData, setFormData] = useState();
@@ -88,14 +88,34 @@ const SubscriberManageEdit = () => {
   };
 
   const handleSave = () => {
-    // const errValidate = fieldsValidate(subscriberEditFields, formData);
-    // if (errValidate) {
+    showDialog({
+      message: infoMessages.confirmSave,
+      onConfirm: () => {
+        closeModal();
+
+        setTimeout(() => {
+          // const errValidate = fieldsValidate(subscriberEditFields, formData);
+          // if (errValidate) {
+          //   showAlert({
+          //     message: errValidate,
+          //     onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
+          //   });
+          // }
+
+          save();
+        }, 50);
+      },
+    });
+  };
+
+  const save = () => {
+
+    // axios.put(ROUTES.SUBSCRIBERS_DETAIL(formData[KEYS.SUB_NO]),formData ).then(res=>{
     //   showAlert({
-    //     message: errValidate,
+    //     message: infoMessages.successEdit,
     //     onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
     //   });
-    // }
-
+    // })
     showAlert({
       message: infoMessages.successEdit,
       onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
@@ -111,8 +131,8 @@ const SubscriberManageEdit = () => {
 
   const clickDidSetting = () => {
     showModal({
-      content: <DidSetting />,
-      header : LABELS.DID_TITLE
+      content: <DidSetting userInfo={formData} />,
+      header: LABELS.DID_TITLE,
     });
   };
 
@@ -131,8 +151,8 @@ const SubscriberManageEdit = () => {
     // 대표번호 뒷자리로 초기화
     setFormData({
       ...formData,
-      [KEYS.PASSWORD] : formData[KEYS.SUB_NO].slice(-4)
-    })
+      [KEYS.PASSWORD]: formData[KEYS.SUB_NO].slice(-4),
+    });
   };
 
   return (
@@ -239,7 +259,11 @@ const SubscriberManageEdit = () => {
                         />
                       ) : key === KEYS.DID ? (
                         <div>
-                          <label>{LABELS.CURRENT}<span>{value}</span>{LABELS.DID_VALUE}</label>
+                          <label>
+                            {LABELS.CURRENT}
+                            <span>{value}</span>
+                            {LABELS.DID_VALUE}
+                          </label>
                           <Button
                             type={BUTTON_CANCEL}
                             label={LABELS.SETTING}

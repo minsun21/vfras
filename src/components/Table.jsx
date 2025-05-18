@@ -154,6 +154,9 @@ const Table = forwardRef(
           );
           setTableData(updated);
         },
+        clearSelection: () => {
+          setRowSelection({});
+        },
       }),
       [tableData, table]
     );
@@ -204,6 +207,11 @@ const Table = forwardRef(
       return options;
     }, [data]);
 
+    useEffect(() => {
+      const headerGroups = table.getHeaderGroups();
+      console.log("📌 Header Groups:", headerGroups);
+    }, [table]);
+
     return (
       <>
         <Form className="form">
@@ -236,13 +244,39 @@ const Table = forwardRef(
         <div className="tbl-list">
           <table>
             <thead>
-              <tr>
-                {table.getHeaderGroups()[0].headers.map((header) => (
-                  <th key={header.id} colSpan={header.colSpan}>
-                    {header.isPlaceholder ? null : renderHeader(header)}
-                  </th>
-                ))}
-              </tr>
+              {table.getHeaderGroups().length === 1 ? (
+                <tr>
+                  {table.getHeaderGroups()[0].headers.map((header) => (
+                    <th key={header.id} colSpan={header.colSpan}>
+                      {header.isPlaceholder ? null : renderHeader(header)}
+                    </th>
+                  ))}
+                </tr>
+              ) : (
+                table.getHeaderGroups().map((headerGroup, groupIndex) => (
+                  <tr key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      const isTopRow = groupIndex === 0;
+                      const hasSubHeaders = header.subHeaders?.length > 0;
+                      const totalDepth = table.getHeaderGroups().length;
+
+                      // 상단의 단일 헤더에 rowSpan=2 적용
+                      const rowSpan =
+                        isTopRow && !hasSubHeaders && totalDepth > 1 ? 2 : 1;
+
+                      return (
+                        <th
+                          key={header.id}
+                          colSpan={header.colSpan}
+                          rowSpan={rowSpan}
+                        >
+                          {header.isPlaceholder ? null : renderHeader(header)}
+                        </th>
+                      );
+                    })}
+                  </tr>
+                ))
+              )}
             </thead>
             <tbody>
               {table.getRowModel().rows.map((row) => (
