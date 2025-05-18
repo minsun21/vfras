@@ -10,7 +10,7 @@ import { infoMessages } from "../constants/Message";
 
 const SubscriberManage = () => {
   const navigate = useNavigate();
-  const { showAlert, showDialog } = useModal();
+  const { showAlert } = useModal();
   const { state } = useLocation();
 
   const [data, setData] = useState(() =>
@@ -42,24 +42,24 @@ const SubscriberManage = () => {
 
   return (
     <>
-      <form class="search-box">
-				<table class="tbl-input">
+      <form className="search-box" onSubmit={(e) => e.preventDefault()}>
+				<table className="tbl-input">
 						<colgroup>
 						</colgroup>
 						<thead>
 							<tr>
 								<th>
-									<label class="schTxtL1">{LABELS.MAIN_NUMBER}</label>
+									<label className="schTxtL1">{LABELS.MAIN_NUMBER}</label>
 								</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
 								<td>
-									<div class="form-field dflex wrap gap10">
+									<div className="form-field dflex wrap gap10">
                      <Input
                       //  label={LABELS.MAIN_NUMBER}
-                        class="form-input"
+                        className="form-input"
                         value={searchMainNumber}
                         type="number"
                         onChange={(e) => setSearchMainNumber(e.target.value)}
@@ -68,7 +68,7 @@ const SubscriberManage = () => {
                       <Button
                         type={BUTTON_CANCEL}
                         label={LABELS.SUBSCRIBE_EDIT}
-                        onClick={() => navigate(ROUTES.ACCOUNT_MANAGE_EDIT)}
+                        onClick={() => navigate(ROUTES.ACCOUNTS_EDIT)}
                       />
 										</div>
 								</td>
@@ -76,7 +76,7 @@ const SubscriberManage = () => {
 						</tbody>
 					</table>
 			</form>
-      <form class="tbl-view">
+      <form className="tbl-view">
 				<table>
           <colgroup>
 							<col className="w250"></col>

@@ -1,9 +1,6 @@
 import { lazy } from "react";
 import { ROUTES } from "../constants/routes";
 import { LABELS } from "../constants/Labels";
-import { FaRegUser, FaRegListAlt } from "react-icons/fa";
-import { CiSettings } from "react-icons/ci";
-import { MdContentCopy } from "react-icons/md";
 
 export const MenusConfig = [
   {
@@ -12,18 +9,18 @@ export const MenusConfig = [
     items: [
       {
         title: LABELS.SUBSCRIBER_VIEW,
-        path: ROUTES.SUBSCRIBER,
-        component: lazy(() => import("../pages/Subscriber")),
+        path: ROUTES.SUBSCRIBERS,
+        component: lazy(() => import("../pages/Subscribers")),
       },
       {
         title: LABELS.SUBSCRIBER_MANAGE,
-        path: ROUTES.SUBSCRIBER_MANAGE,
-        component: lazy(() => import("../pages/SubscriberManage")),
+        path: ROUTES.SUBSCRIBERS_MANAGE,
+        component: lazy(() => import("../pages/SubscribersManageEdit")),
       },
       {
         title: LABELS.SUBSCRIBER_REGISTER,
-        path: ROUTES.SUBSCRIBER_REGISTER,
-        component: lazy(() => import("../pages/SubscriberRegister")),
+        path: ROUTES.SUBSCRIBERS_REGISTER,
+        component: lazy(() => import("../pages/SubscribersRegister")),
       },
     ],
   },
@@ -33,7 +30,7 @@ export const MenusConfig = [
     items: [
       {
         title: LABELS.COUNTRY_NUMBER_MANAGE,
-        path: ROUTES.COUNTRY_CODE,
+        path: ROUTES.LV,
         component: lazy(() => import("../pages/CountryCode")),
       },
     ],
@@ -44,7 +41,7 @@ export const MenusConfig = [
     items: [
       {
         title: LABELS.SOUNDS_VIEW,
-        path: ROUTES.SOUND_SOURCE,
+        path: ROUTES.CONTENTS,
         component: lazy(() => import("../pages/SoundSource")),
       },
     ],
@@ -55,42 +52,40 @@ export const MenusConfig = [
     items: [
       {
         title: LABELS.ACCOUNT_MANAGE,
-        path: ROUTES.ACCOUNT_MANAGE,
-        component: lazy(() => import("../pages/AccountManage")),
+        path: ROUTES.ACCOUNTS,
+        component: lazy(() => import("../pages/Accounts")),
       },
       {
-        title: LABELS.ACCOUNT_LOGS,
-        path: ROUTES.ACCOUNT_LOGS,
+        title: LABELS.HISTORY,
+        path: ROUTES.HISTORY,
         component: lazy(() => import("../pages/AccountLogs")),
       },
     ],
   },
 ];
 
+
 export const NonMenuConfig = [
   {
     title: LABELS.MY_INFO,
     path: ROUTES.PROFILE,
-    component: lazy(() => import("../pages/Profile")),
-  },
-  {
-    title: LABELS.MY_INFO,
-    path: ROUTES.PROFILE_EDIT,
     component: lazy(() => import("../pages/ProfileEdit")),
   },
   {
-    title: LABELS.USER_EDIT,
+    title: LABELS.USER_REGISTER,
     path: ROUTES.ACCOUNT_REGISTER,
+    parent : LABELS.ACCOUNT,
     component: lazy(() => import("../pages/AccountRegister")),
   },
   {
     title: LABELS.USER_EDIT,
     path: ROUTES.ACCOUNT_EDIT,
+    parent : LABELS.ACCOUNT,
     component: lazy(() => import("../pages/AccountEdit")),
   },
   {
     title: LABELS.SUBSCRIBER_MANAGE,
-    path: ROUTES.ACCOUNT_MANAGE_EDIT,
-    component: lazy(() => import("../pages/SubscriberManageEdit")),
+    path: ROUTES.SUBSCRIBERS_MANAGE,
+    component: lazy(() => import("../pages/SubscribersManageEdit")),
   },
 ];

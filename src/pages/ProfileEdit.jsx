@@ -13,11 +13,18 @@ import {
 import { LABELS } from "../constants/Labels";
 import { useModal } from "../contexts/ModalContext";
 import PasswordChange from "../components/modals/PasswordChange";
+import axios from "../api/axios";
+import { KEYS } from "../constants/Keys";
+import { useDispatch } from "react-redux";
+import { logout } from "../features/authSlice";
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
-  const { showDialog, showAlert, showModal } = useModal();
+  const dispatch = useDispatch();
+  const { showDialog, showAlert, showModal, closeModal } = useModal();
   const [formData, setFormData] = useState({});
+
+  const adminId = "";
 
   useEffect(() => {
     setFormData(() =>
@@ -26,21 +33,22 @@ const ProfileEdit = () => {
         return acc;
       }, {})
     );
-    // axios.get("/api/user/profile").then(res => {
-    //   setFormData(prev => ({ ...prev, ...res.data }));
+
+    // axios.get(ROUTES.PROFILE, adminId).then((res) => {
+    //   setFormData((prev) => ({ ...prev, ...res.data }));
     // });
   }, []);
 
   const validate = () => {
     const newErrors = {};
-    if (!isValidEmail(formData.email)) {
+    if (!isValidEmail(formData[KEYS.EMAIL])) {
       showAlert({
         message: errorMessages.invalidEmail,
       });
       return;
     }
 
-    if (!isValidPhone(formData.phone)) {
+    if (!isValidPhone(formData[KEYS.MOBILE])) {
       showAlert({
         message: errorMessages.invalidPhone,
       });
@@ -54,17 +62,23 @@ const ProfileEdit = () => {
       return;
     }
     console.log("저장할 데이터:", formData);
+    // axios.put(ROUTES.PASSWORD_CHANGE(adminId), formData).then((res) => {
+    //   showAlert({
+    //     message: profileMessages.successUserEdit,
+    //     onConfirm: () => navigate(ROUTES.PROFILE),
+    //   });
+    // });
 
     showAlert({
       message: profileMessages.successUserEdit,
-      onConfirm: () => navigate(ROUTES.PROFILE),
+      onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
     });
   };
 
   const cancelEdit = () => {
     showDialog({
       message: infoMessages.confirmCancel,
-      onConfirm: () => navigate(ROUTES.PROFILE),
+      onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
     });
   };
 
@@ -76,59 +90,80 @@ const ProfileEdit = () => {
 
   const changePassword = (newPassword) => {
     console.log("newPassword", newPassword);
+
+    // axios.put(ROUTES.PROFILE_EDIT(adminId), formData).then((res) => {
+    //   showAlert({
+    //     message: profileMessages.successPasswordChange,
+    //     onConfirm: () => {
+    //       closeModal();
+    //       dispatch(logout());
+    //     },
+    //   });
+    // });
+
+    showAlert({
+      message: profileMessages.successPasswordChange,
+      onConfirm: () => {
+        closeModal();
+        dispatch(logout());
+      },
+    });
   };
 
   return (
     <>
-       <form class="tbl-view">
+    <span>{profileMessages.info1}</span>
+      <form className="tbl-view" onSubmit={(e) => e.preventDefault()}>
         <table>
           <colgroup>
-              <col className="w250"></col>
-              <col></col>
+            <col className="w250"></col>
+            <col></col>
           </colgroup>
-        <tbody>
-          {profileEditFields.map((field) => {
-            const { key, disabled } = field;
-            const handleChange = (val) => {
-              setFormData((prev) => ({ ...prev, [key]: val }));
-            };
-            return (
-              <tr key={key}>
-                <th className="Labels">{field.label}</th>
-                <td className="value">
-                  {key === "password" ? (
-                    <>
-                      <Input
-                        type={field.type}
-                        value={LABELS.PASSWORD_PLACEHOLDER}
-                        onChange={(e) => handleChange(e.target.value)}
-                        disabled={disabled}
-                      />
-                      <Button
-                        type={BUTTON_CANCEL}
-                        label={LABELS.PASSWORD_CHANGE}
-                        onClick={clickChangePassword}
-                      />
-                    </>
-                  ) : (
-                    <>
-                      <Input
-                        value={formData[key] || ""}
-                        type={field.type}
-                        placeholder={formData[key]}
-                        onChange={(e) => handleChange(e.target.value)}
-                        disabled={disabled}
-                      />
-                    </>
-                  )}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+          <tbody>
+            {profileEditFields.map((field) => {
+              const { key, disabled, type, required } = field;
+              const handleChange = (val) => {
+                setFormData((prev) => ({ ...prev, [key]: val }));
+              };
+              return (
+                <tr key={key}>
+                  <th className="Labels">
+                    <label required={required}>{field.label}</label>
+                  </th>
+                  <td className="value">
+                    {key === KEYS.PASSWORD ? (
+                      <>
+                        <Input
+                          type={type}
+                          value={LABELS.PASSWORD_PLACEHOLDER}
+                          onChange={(e) => handleChange(e.target.value)}
+                          disabled={disabled}
+                        />
+                        <Button
+                          type={BUTTON_CANCEL}
+                          label={LABELS.PASSWORD_CHANGE}
+                          onClick={clickChangePassword}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <Input
+                          value={formData[key] || ""}
+                          type={field.type}
+                          placeholder={formData[key]}
+                          onChange={(e) => handleChange(e.target.value)}
+                          disabled={disabled}
+                        />
+                      </>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </form>
-      <div class="btn-wrap">
+      <div className="btn-wrap">
         <div>
           <Button type={BUTTON_CANCEL} onClick={cancelEdit} />
         </div>

@@ -1,3 +1,4 @@
+import { KEYS } from "../constants/Keys";
 import { errorMessages } from "../constants/Message";
 
 export const isValidEmail = (email) => {
@@ -12,14 +13,15 @@ export const isValidPhone = (phone) => {
 };
 
 export const isValidPassword = (password) => {
+  // 8~20 영문/숫자/특수문자 혼합
   const regex =
-    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[\]{};':"\\|,.<>/?]).{8,20}$/;
+    /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{}[\]|;:'",.<>/?`~\\]).{8,20}$/;
   return regex.test(password);
 };
 
 export const hasEmptyValue = (obj) => {
   if (!obj || Object.keys(obj).length === 0) return true;
-  
+
   return Object.values(obj).some(
     (value) =>
       value == null || // null, undefined
@@ -27,44 +29,41 @@ export const hasEmptyValue = (obj) => {
   );
 };
 
-export const accountValidate = (fields, formData) => {
+export const fieldsValidate = (fields, formData) => {
   for (const field of fields) {
-    const { key, label, required, type, requiredLength } = field;
+    const { key, label, required, type, min, max } = field;
     // 1. 필수값인지 확인
     if (required && !formData[key]) {
-      alert(errorMessages.required(label));
-      return false;
+      return errorMessages.required(label);
     }
 
     // 2. 타입에 따라 validation 체크(email, phone...)
+    if (key === KEYS.MOBILE && !isValidPhone(formData[key])) {
+      return errorMessages.invalidPhone;
+    }
+
     if (type === "email" && !isValidEmail(formData[key])) {
-      alert(errorMessages.invalidEmail);
-      return;
+      return errorMessages.invalidEmail;
     }
 
-    if (type === "phone" && !isValidPhone(formData[key])) {
-      alert(errorMessages.invalidPhone);
-      return;
+    // 3. 길이 체크
+    if (
+      min &&
+      max &&
+      (formData[key].length < min || formData[key].length > max)
+    ) {
+      return errorMessages.lengthMismatch(label, min, max);
     }
 
-    // 3. 최소 길이 체크
-    if (requiredLength && formData[key].length !== requiredLength) {
-      alert(errorMessages.lengthMismatch(label, requiredLength));
-      return;
-    }
-
-    // 4. 비밀번호 체크
+    // 비밀번호 체크
     if (type === "password") {
-      if(!isValidPassword(key)){
-        alert(errorMessages.invalidPassword());
-        return;
+      if (!isValidPassword(formData[key])) {
+        return errorMessages.invalidPassword;
       }
-      if(formData[key] === formData['passwordConfirm']){
-        alert(errorMessages.confirmPassword());
-        return;
+
+      if (formData[key] !== formData[KEYS.PASSWORD_CONFIRM]) {
+        return errorMessages.correctPassword;
       }
     }
   }
-
-  return true;
 };

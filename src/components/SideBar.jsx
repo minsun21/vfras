@@ -1,12 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { MenusConfig } from "../config/MenusConfig";
 import { LABELS } from "../constants/Labels";
 
 const SideBar = () => {
+  const location = useLocation();
 
-
-  
   return (
     <>
       <aside className="sidebar">
@@ -17,22 +16,34 @@ const SideBar = () => {
         </div>
         <nav className="menu">
           <ul className="nav-links">
-            {MenusConfig.map((group, index) => (
-              <li className="in-submenu">
+            {MenusConfig.map((group) => (
+              <li className="in-submenu" key={group.title}>
                 <div className="icon-link">
                   <Link to="#">
                     <i className={group.icon}></i>
                     <span>{group.title}</span>
                   </Link>
-                  {group.items.map((item) => (
-                    <ul className="sub-menu">
-                      <li>
-                        <Link to={item.path}>
-                          <span>{item.title}</span>
-                        </Link>
-                      </li>
-                    </ul>
-                  ))}
+                  {group.items.map((item) => {
+                    const activeKey = group.items
+                      .filter(
+                        (item) =>
+                          location.pathname === item.path ||
+                          location.pathname.startsWith(item.path + "/")
+                      )
+                      .sort((a, b) => b.path.length - a.path.length)[0]?.path;
+                    return (
+                      <ul className="sub-menu" key={item.path}>
+                        <li>
+                          <Link
+                            to={item.path}
+                            className={item.path === activeKey ? "active" : ""}
+                          >
+                            <span>{item.title}</span>
+                          </Link>
+                        </li>
+                      </ul>
+                    );
+                  })}
                 </div>
               </li>
             ))}

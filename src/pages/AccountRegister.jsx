@@ -1,48 +1,84 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { accountRegisterFields } from "../config/FieldsConfig";
+import { accountRegisterFields, ADMIN_TYPES } from "../config/FieldsConfig";
 import Button, { BUTTON_CANCEL, BUTTON_SAVE } from "../components/Button";
 import Input from "../components/Input";
 import Select from "../components/Select";
 import { ROUTES } from "../constants/routes";
-import { accountValidate } from "../utils/FormValidation";
 import { useModal } from "../contexts/ModalContext";
-import { infoMessages } from "../constants/Message";
+import { errorMessages, infoMessages } from "../constants/Message";
+import axios from "../api/axios";
+import { fieldsValidate } from "../utils/FormValidation";
+import { KEYS } from "../constants/Keys";
 
 const AccountRegister = () => {
   const navigate = useNavigate();
-  const { showAlert, showModal } = useModal();
+  const { showAlert, showDialog, closeModal } = useModal();
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
-    // axios.get("/api/user/profile").then(res => {
-    //   setFormData(prev => ({ ...prev, ...res.data }));
-    // });
+    // 초기 값 세팅
+    setFormData({
+      ...formData,
+      [KEYS.ADMIN_TYPE]: ADMIN_TYPES[0].key,
+    });
   }, []);
 
   const handleSave = () => {
-    if (!accountValidate(accountRegisterFields, formData)) {
-      return;
-    }
+    showDialog({
+      message: infoMessages.confirmRegister,
+      onConfirm: () => {
+        closeModal();
 
+        setTimeout(() => {
+          const errValidate = fieldsValidate(accountRegisterFields, formData);
+          if (errValidate) {
+            showAlert({
+              message: errValidate,
+              onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
+            });
+            return;
+          }
+
+          save();
+        }, 50);
+      },
+    });
+  };
+
+  const save = () => {
     console.log("저장할 데이터:", formData);
+
+    // axios.post(ROUTES.ACCOUNTS, formData).then(res=>{
+    //   showAlert({
+    //     message: infoMessages.successAccountSave,
+    //     onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
+    //   });
+    // })
 
     showAlert({
       message: infoMessages.successAccountSave,
-      onConfirm: () => navigate(ROUTES.SUBSCRIBER),
+      onConfirm: () => navigate(ROUTES.ACCOUNTS),
+    });
+  };
+
+  const cancel = () => {
+    showDialog({
+      message: infoMessages.confirmCancel,
+      onConfirm: () => navigate(ROUTES.ACCOUNTS),
     });
   };
 
   return (
     <>
-      <form class="tbl-view">
+      <form className="tbl-view">
         <table>
           <colgroup>
-              <col className="w250"></col>
-              <col></col>
+            <col className="w250"></col>
+            <col></col>
           </colgroup>
           <tbody>
-            {accountRegisterFields.map((field) => {
+            {accountRegisterFields.map((field, idx) => {
               const {
                 key,
                 label,
@@ -60,10 +96,10 @@ const AccountRegister = () => {
               };
 
               return (
-                <tr key={key}>
-                  <td className="Labels" required={required}>
-                    {label}
-                  </td>
+                <tr key={idx}>
+                  <th className="Labels">
+                    <label required={required}>{label}</label>
+                  </th>
                   <td className="value">
                     {type === "select" ? (
                       <Select
@@ -83,6 +119,21 @@ const AccountRegister = () => {
                         />
                         <span className="comment">{comment}</span>
                       </div>
+                    ) : key === KEYS.PASSWORD_CONFIRM ? (
+                      <div>
+                        <Input
+                          value={value}
+                          type={type}
+                          placeholder={placeholder}
+                          onChange={(e) => handleChange(e.target.value)}
+                          disabled={disabled}
+                        />
+                        <span>
+                          {formData[KEYS.PASSWORD] !==
+                            formData[KEYS.PASSWORD_CONFIRM] &&
+                            errorMessages.correctPassword}
+                        </span>
+                      </div>
                     ) : (
                       <Input
                         value={value}
@@ -99,14 +150,14 @@ const AccountRegister = () => {
           </tbody>
         </table>
       </form>
-      <div class="btn-wrap">
-				<div>
-					<Button type={BUTTON_CANCEL} onClick={() => navigate(ROUTES.PROFILE)} />
-				</div>
-				<div>
-					<Button type={BUTTON_SAVE} onClick={handleSave} />
-				</div>
-			</div>
+      <div className="btn-wrap">
+        <div>
+          <Button type={BUTTON_CANCEL} onClick={cancel} />
+        </div>
+        <div>
+          <Button type={BUTTON_SAVE} onClick={handleSave} />
+        </div>
+      </div>
     </>
   );
 };

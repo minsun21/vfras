@@ -23,7 +23,7 @@ export const ModalProvider = ({ children }) => {
   };
 
   const closeModal = () => {
-    setModals((prev) => prev.slice(0, -1)); // ✅ 마지막 모달만 제거
+    setModals((prev) => prev.slice(0, -1));
   };
 
   return (

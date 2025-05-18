@@ -10,18 +10,20 @@ import PrivateRoute from "../components/routes/PrivateRoute";
 import PublicRoute from "../components/routes/PublicRoute";
 import { MenusConfig, NonMenuConfig } from "../config/MenusConfig";
 import { ROUTES } from "../constants/routes";
+import PageTracker from "../components/PageTracker";
 
 const AppRouter = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return (
     <BrowserRouter>
+      <PageTracker />
       <Routes>
         <Route
           path={ROUTES.ROOT}
           element={
             isAuthenticated ? (
-              <Navigate to={ROUTES.SUBSCRIBER} replace />
+              <Navigate to={ROUTES.SUBSCRIBERS} replace />
             ) : (
               <Navigate to={ROUTES.LOGIN} replace />
             )

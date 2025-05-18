@@ -184,6 +184,6 @@ textarea {
 }
 
 .col-navigate {
-  color: blue;
+  color: blue !important;
   cursor: pointer;
 }

@@ -6,9 +6,9 @@ import Input from "../components/Input";
 import Select from "../components/Select";
 import RadioGroup from "../components/RadioGroup";
 import { ROUTES } from "../constants/routes";
-import { isValidEmail, isValidPhone } from "../utils/FormValidation";
-import { errorMessages, infoMessages } from "../constants/Message";
+import { infoMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
+import axios from "../api/axios";
 
 const SubscriberRegister = () => {
   const navigate = useNavigate();
@@ -32,71 +32,60 @@ const SubscriberRegister = () => {
   const cancelEdit = () => {
     showDialog({
       message: infoMessages.confirmCancel,
-      onConfirm: () => navigate(ROUTES.SUBSCRIBER),
+      onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
     });
   };
 
-  const validate = () => {
-    for (const field of subsriberResigerFields) {
-      const { key, label, required, type, requiredLength } = field;
-      // 1. 필수값인지 확인
-      if (required && !formData[key]) {
-        showAlert({
-          message: errorMessages.required(label),
-        });
-        return false;
-      }
-
-      // 2. 타입에 따라 validation 체크(email, phone...)
-      if (type === "email" && !isValidEmail(formData[key])) {
-        showAlert({
-          message: errorMessages.invalidEmail,
-        });
-        return;
-      }
-
-      if (type === "phone" && !isValidPhone(formData[key])) {
-        showAlert({
-          message: errorMessages.invalidPhone,
-        });
-        return;
-      }
-
-      // 3. 최소 길이 체크
-      if (requiredLength && formData[key].length !== requiredLength) {
-        showAlert({
-          message: errorMessages.lengthMismatch(label, requiredLength),
-        });
-        return;
-      }
-    }
-
-    return true;
-  };
-
-  const handleSave = () => {
-    if (!validate()) {
-      return;
-    }
-
+  const save = () => {
     console.log("저장할 데이터:", formData);
+
+    // axios.post(ROUTES.ACCOUNTS, formData).then(res=>{
+    //   showAlert({
+    //     message: infoMessages.successAccountSave,
+    //     onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
+    //   });
+    // })
 
     showAlert({
       message: infoMessages.successAccountSave,
-      onConfirm: () => navigate(ROUTES.SUBSCRIBER),
+      onConfirm: () => navigate(ROUTES.ACCOUNTS),
+    });
+  };
+
+  const handleSave = () => {
+    console.log("저장할 데이터:", formData);
+
+    // const errValidate = fieldsValidate(subsriberResigerFields, formData);
+    // if (errValidate) {
+    //   showAlert({
+    //     message: errValidate,
+    //     onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
+    //   });
+    // }
+
+    // axios.post(ROUTES.SUBSCRIBERS, formData).then(res=>{
+    //   showAlert({
+    //     message: infoMessages.successAccountSave,
+    //     onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
+    //   });
+    // })
+
+    showAlert({
+      message: infoMessages.successAccountSave,
+      onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
     });
   };
 
   return (
     <>
-       <form class="tbl-view">
+      <form className="tbl-view">
         <table>
           <colgroup>
-              <col className="w250"></col>
-              <col></col>
+            <col className="w250"></col>
+            <col></col>
           </colgroup>
           <tbody>
-            {subsriberResigerFields.map((field) => {
+            {subsriberResigerFields.map((field, idx) => {
               const {
                 key,
                 label,
@@ -107,7 +96,7 @@ const SubscriberRegister = () => {
                 comment,
                 disabled,
                 multi,
-                fields
+                fields,
               } = field;
               const value = formData[key] || "";
 
@@ -116,7 +105,7 @@ const SubscriberRegister = () => {
               };
 
               return (
-                <tr key={key}>
+                <tr key={idx}>
                   <th className="Labels" required={required}>
                     {label}
                   </th>
@@ -179,7 +168,7 @@ const SubscriberRegister = () => {
           </tbody>
         </table>
       </form>
-      <div class="btn-wrap">
+      <div className="btn-wrap">
         <div>
           <Button type={BUTTON_CANCEL} onClick={cancelEdit} />
         </div>

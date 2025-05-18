@@ -39,16 +39,32 @@ const ModalRenderer = () => {
           {type === "alert" ? (
             <div>
               <p>{props.message}</p>
-              <Button onClick={() => { props.onConfirm?.(); closeModal(); }} />
+              <Button
+                onClick={() => {
+                  props.onConfirm?.();
+                  closeModal();
+                }}
+              />
             </div>
           ) : type === "dialog" ? (
             <div>
               <p>{props.message}</p>
               <Button type={BUTTON_CANCEL} onClick={closeModal} />
-              <Button onClick={() => { props.onConfirm?.(); closeModal(); }} />
+              <Button
+                onClick={() => {
+                  props.onConfirm?.();
+                  closeModal();
+                }}
+              />
             </div>
           ) : (
-            <div>{props.content}</div>
+            <div>
+              <header>
+                <h4>{props.header}</h4>
+                <button onClick={closeModal}>x</button>
+              </header>
+              <div>{props.content}</div>
+            </div>
           )}
         </Modal>
       ))}

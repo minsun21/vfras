@@ -1,15 +1,15 @@
 import React from "react";
-import { useNavigate, Outlet, useLocation } from "react-router-dom";
+import { useNavigate, Outlet, useLocation, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../features/authSlice";
 import Breadcrumb from "./Breadcrumb";
 import SideBar from "./SideBar";
 import { MenusConfig, NonMenuConfig } from "../config/MenusConfig";
-import Button, { BUTTON_CANCEL } from "./Button";
 import { ROUTES } from "../constants/routes";
 import { LABELS } from "../constants/Labels";
 import { useModal } from "../contexts/ModalContext";
 import { infoMessages } from "../constants/Message";
+import axios from "../api/axios";
 
 const getCurrentSubMenuTitle = (currentPath) => {
   for (const group of MenusConfig) {
@@ -41,15 +41,12 @@ const Layout = () => {
     showDialog({
       message: infoMessages.confirmLogout,
       onConfirm: () => {
+        // axios.put(ROUTES.LOGOUT).then((res)=>{
+        //   dispatch(logout());
+        // })
         dispatch(logout());
-        localStorage.setItem("logout", Date.now()); // ✅ 트리거 역할
-        navigate(ROUTES.LOGIN, { replace: true });
       },
     });
-  };
-
-  const goProfile = () => {
-    navigate(ROUTES.PROFILE);
   };
 
   return (
@@ -59,15 +56,22 @@ const Layout = () => {
         <header className="header">
           <Breadcrumb />
           <div className="header-right">
-            <div class="log"> 
-              <span class="adminInfo"><label>관리자(admin)</label>님 안녕하세요</span> 
-              <a href="#" onClick={goProfile}><span class="editInfo">{LABELS.MY_INFO}</span></a> 
-              <a href="#" onClick={handleLogout}><span class="headLogout">{LABELS.LOGOUT}</span></a> 
+            <div className="log">
+              <span className="adminInfo">
+                <label>관리자(admin)</label>
+                {LABELS.GREETING}
+              </span>
+              <Link to={ROUTES.PROFILE}>
+                <span className="editInfo">{LABELS.MY_INFO}</span>
+              </Link>
+              <Link onClick={handleLogout}>
+                <span className="headLogout">{LABELS.LOGOUT}</span>
+              </Link>
             </div>
           </div>
         </header>
         <main className="content">
-          <h2 class="page-title">{title}</h2>
+          <h2 className="page-title">{title}</h2>
           <Outlet />
         </main>
       </div>

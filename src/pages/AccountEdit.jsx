@@ -5,56 +5,88 @@ import Button, { BUTTON_CANCEL, BUTTON_SAVE } from "../components/Button";
 import Input from "../components/Input";
 import Select from "../components/Select";
 import { ROUTES } from "../constants/routes";
-import { accountValidate } from "../utils/FormValidation";
-import { infoMessages } from "../constants/Message";
+import { fieldsValidate } from "../utils/FormValidation";
+import { errorMessages, infoMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
+import axios from "../api/axios";
+import { KEYS } from "../constants/Keys";
 
 const AccountEdit = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { showDialog, showAlert } = useModal();
+  const selectedId = state?.selectedId || [];
+
+  const { showDialog, showAlert, closeModal } = useModal();
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
     // userid로 정보 검색
+    if (!selectedId) return;
 
-    const selectedId = state?.selectedId || [];
-    // setInitData();
     setFormData(() =>
       accountEditFields.reduce((acc, field) => {
         acc[field.key] = field.placeholder || "";
         return acc;
       }, {})
     );
-  }, [state]);
+
+    // axios.get(ROUTES.ACCOUNTS_MANAGE(selectedId), formData).then((res) => {
+    //   setFormData(res.data);
+    // });
+  }, []);
 
   const handleSave = () => {
-    if (!accountValidate(accountEditFields, formData)) {
-      return;
-    }
+    showDialog({
+      message: infoMessages.confirmRegister,
+      onConfirm: () => {
+        closeModal();
 
+        setTimeout(() => {
+          const errValidate = fieldsValidate(accountEditFields, formData);
+          if (errValidate) {
+            showAlert({
+              message: errValidate,
+              onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
+            });
+            return;
+          }
+
+          save();
+        }, 50);
+      },
+    });
+  };
+
+  const save = () => {
     console.log("저장할 데이터:", formData);
+
+    // axios.put(ROUTES.ACCOUNTS_MANAGE(selectedId), formData).then(res=>{
+    //   showAlert({
+    //     message: infoMessages.successAccountSave,
+    //     onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
+    //   });
+    // })
 
     showAlert({
       message: infoMessages.successEdit,
-      onConfirm: () => navigate(ROUTES.ACCOUNT_MANAGE),
+      onConfirm: () => navigate(ROUTES.ACCOUNTS),
     });
   };
 
   const cancelEdit = () => {
     showDialog({
       message: infoMessages.confirmCancel,
-      onConfirm: () => navigate(ROUTES.ACCOUNT_MANAGE),
+      onConfirm: () => navigate(ROUTES.ACCOUNTS),
     });
   };
 
   return (
     <>
-      <form class="tbl-view">
+      <form className="tbl-view">
         <table>
           <colgroup>
-              <col className="w250"></col>
-              <col></col>
+            <col className="w250"></col>
+            <col></col>
           </colgroup>
           <tbody>
             {accountEditFields.map((field) => {
@@ -96,6 +128,21 @@ const AccountEdit = () => {
                         />
                         <span className="comment">{comment}</span>
                       </div>
+                    ) : key === KEYS.PASSWORD_CONFIRM ? (
+                      <div>
+                        <Input
+                          value={value}
+                          type={type}
+                          placeholder={formData[key]}
+                          onChange={(e) => handleChange(e.target.value)}
+                          disabled={disabled}
+                        />
+                        <span>
+                          {formData[KEYS.PASSWORD] !==
+                            formData[KEYS.PASSWORD_CONFIRM] &&
+                            errorMessages.correctPassword}
+                        </span>
+                      </div>
                     ) : (
                       <Input
                         value={value}
@@ -112,7 +159,7 @@ const AccountEdit = () => {
           </tbody>
         </table>
       </form>
-      <div class="btn-wrap">
+      <div className="btn-wrap">
         <div>
           <Button type={BUTTON_CANCEL} onClick={cancelEdit} />
         </div>

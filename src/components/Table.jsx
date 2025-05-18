@@ -12,6 +12,8 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import { LABELS } from "../constants/Labels";
+import Form from "./Form";
+import Select from "./Select";
 
 const Table = forwardRef(
   (
@@ -22,11 +24,15 @@ const Table = forwardRef(
       rowSelectionEnabled = true,
       onRowSelectionChange,
       showIndex = true,
+      resultLabel = true,
+      pageSelect = true,
+      topBtns,
     },
     ref
   ) => {
     const [rowSelection, setRowSelection] = useState({});
     const [tableData, setTableData] = useState([]);
+    const [currentPageSize, setCurrentPageSize] = useState(pageSize);
 
     useEffect(() => {
       setTableData(data);
@@ -68,7 +74,7 @@ const Table = forwardRef(
               ...col,
               cell: ({ row, getValue }) => (
                 <span
-                  className="col-navigate"
+                  className="col-clickable"
                   onClick={(e) => {
                     e.stopPropagation();
                     col.clickable({
@@ -153,8 +159,8 @@ const Table = forwardRef(
     );
 
     useEffect(() => {
-      table.setPageSize(pageSize);
-    }, [pageSize, table]);
+      table.setPageSize(currentPageSize);
+    }, [currentPageSize, table]);
 
     useEffect(() => {
       if (typeof onRowSelectionChange === "function") {
@@ -168,7 +174,7 @@ const Table = forwardRef(
     const pageCount = table.getPageCount();
     const pageIndex = table.getState().pagination.pageIndex;
     const pageNumbers = Array.from({ length: pageCount }, (_, i) => i);
-    
+
     const renderHeader = (header) => {
       const content = flexRender(
         header.column.columnDef.header,
@@ -190,61 +196,111 @@ const Table = forwardRef(
       return <div>{rendered}</div>;
     };
 
+    const pageSizeOptions = useMemo(() => {
+      const baseSizes = [10, 20, 50, 100];
+      const nextRounded = Math.ceil(data.length / 10) * 10;
+      const options = baseSizes.filter((n) => n < nextRounded);
+      if (!options.includes(nextRounded)) options.push(nextRounded);
+      return options;
+    }, [data]);
+
     return (
       <>
-      <div className="tbl-list">
-        <table>
-          <thead>
-            <tr>
-              {table.getHeaderGroups()[0].headers.map((header) => (
-                <th key={header.id} colSpan={header.colSpan}>
+        <Form className="form">
+          <div className="tbl-list-top mt20">
+            <div className="top-button">
+              {resultLabel && (
+                <span className="total mr0">
+                  {LABELS.SEARCH_RESULT(data.length)}
+                </span>
+              )}
+              {topBtns && <span>{topBtns()}</span>}
+            </div>
+            {pageSelect && (
+              <div className="top-button fRight">
+                <div className="select-box">
+                  <Select
+                    options={pageSizeOptions.map((n) => ({
+                      key: n,
+                      value: n,
+                    }))}
+                    nonEmpty={true}
+                    value={currentPageSize}
+                    onChange={(e) => setCurrentPageSize(Number(e.target.value))}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        </Form>
+        <div className="tbl-list">
+          <table>
+            <thead>
+              <tr>
+                {table.getHeaderGroups()[0].headers.map((header) => (
+                  <th key={header.id} colSpan={header.colSpan}>
                     {header.isPlaceholder ? null : renderHeader(header)}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {table.getRowModel().rows.map((row) => (
-              <tr
-                key={row.id}
-                className={row.getIsSelected() ? "selected" : ""}
-                onClick={() => {
-                  if (rowSelectionEnabled) row.toggleSelected();
-                }}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id}>{renderCell(cell)}</td>
+                  </th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="paging">
-          <ul>
-						<li class="first">
-              <button onClick={() => table.setPageIndex(0)} disabled={!table.getCanPreviousPage()}></button>
-            </li>
-						<li class="prev">
-              <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}></button>
-            </li>
-            {pageNumbers.map((num) => (
-              <li class="">
-              <button className={`${num === pageIndex ? "active" : ""}`}
-                key={num} onClick={() => table.setPageIndex(num)} > {num + 1}
-              </button>
-              </li>
-            ))}
-						<li class="next">
-              <button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}></button>
-            </li>
-						<li class="end">
-              <button onClick={() => table.setPageIndex(pageCount - 1)} disabled={!table.getCanNextPage()}></button>
-            </li>
-					</ul>
+            </thead>
+            <tbody>
+              {table.getRowModel().rows.map((row) => (
+                <tr
+                  key={row.id}
+                  className={row.getIsSelected() ? "selected" : ""}
+                  onClick={() => {
+                    if (rowSelectionEnabled) row.toggleSelected();
+                  }}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id}>{renderCell(cell)}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
 
+        <div className="paging">
+          <ul>
+            <li className="first">
+              <button
+                onClick={() => table.setPageIndex(0)}
+                disabled={!table.getCanPreviousPage()}
+              ></button>
+            </li>
+            <li className="prev">
+              <button
+                onClick={() => table.previousPage()}
+                disabled={!table.getCanPreviousPage()}
+              ></button>
+            </li>
+            {pageNumbers.map((num) => (
+              <li key={num}>
+                <button
+                  className={`${num === pageIndex ? "active" : ""}`}
+                  key={num}
+                  onClick={() => table.setPageIndex(num)}
+                >
+                  {num + 1}
+                </button>
+              </li>
+            ))}
+            <li className="next">
+              <button
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage()}
+              ></button>
+            </li>
+            <li className="end">
+              <button
+                onClick={() => table.setPageIndex(pageCount - 1)}
+                disabled={!table.getCanNextPage()}
+              ></button>
+            </li>
+          </ul>
+        </div>
       </>
     );
   }

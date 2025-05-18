@@ -4,6 +4,8 @@ import { LABELS } from "../constants/Labels";
 import { countryNumbers } from "../config/FieldsConfig";
 import { countryNumberMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
+import { ROUTES } from "../constants/routes";
+import axios from "../api/axios";
 
 const CountryCode = () => {
   const { showDialog, showAlert, closeModal } = useModal();
@@ -18,6 +20,13 @@ const CountryCode = () => {
     setCurrentValue(initData);
     setChangeLineCount(countryNumbers.length);
     setCurrentLineCount(countryNumbers.length);
+
+    // axios.get(ROUTES.LV).then(res=>{
+    //   setChangeValue(res.data);
+    //   setCurrentValue(res.data);
+    //   setChangeLineCount(res.data.length);
+    //   setCurrentLineCount(res.data.length);
+    // })
   }, []);
 
   const handleChange = (e) => {
@@ -80,7 +89,7 @@ const CountryCode = () => {
   };
 
   return (
-    <div>
+    <div style={{ display: "flex" }}>
       <div>
         <h5>{LABELS.STATION_CHANGE_NUMBER}</h5>
         <div>
@@ -98,7 +107,7 @@ const CountryCode = () => {
           rows={5}
           cols={5}
         />
-        <div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           <span>{countryNumberMessages.info1}</span>
           <span>{countryNumberMessages.info2}</span>
           <span>{countryNumberMessages.info3}</span>

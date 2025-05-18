@@ -1,14 +1,16 @@
 import React from "react";
 
-const Select = ({ value, options, onChange, nonEmpty = false }) => (
-  <select className="common-select" value={value} onChange={onChange}>
-    {!nonEmpty && <option value=""></option>}
-    {options.map((opt) => (
-      <option key={opt.key} value={opt.value}>
-        {opt.value}
-      </option>
-    ))}
-  </select>
+const Select = ({ value, options, onChange, nonEmpty = false, name, id }) => (
+  <div className="select-box">
+    <select name={name} id={id} value={value} onChange={onChange}>
+      {!nonEmpty && <option value=""></option>}
+      {options.map((opt) => (
+        <option key={opt.key} value={opt.key}>
+          {opt.value}
+        </option>
+      ))}
+    </select>
+  </div>
 );
 
 export default Select;

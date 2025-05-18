@@ -4,64 +4,116 @@ import { login } from "../features/authSlice";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ROUTES } from "../constants/routes";
 import { LABELS } from "../constants/Labels";
+import { KEYS } from "../constants/Keys";
 import { loginMessages } from "../constants/Message";
+import axios from "../api/axios";
+import { useModal } from "../contexts/ModalContext";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const { showAlert } = useModal();
 
-  const [errMsg, setErrMsg] = useState(loginMessages.infoId);
+  const [errMsg, setErrMsg] = useState("");
+  const [data, setData] = useState({});
+  const [checkSaveId, setCheckSaveId] = useState(true);
 
-  const from = location.state?.from?.pathname || ROUTES.SUBSCRIBER;
+  const from = location.state?.from?.pathname || ROUTES.SUBSCRIBERS;
 
   const handleLogin = () => {
-    const success = true;
-    if (success) {
-      dispatch(login({ username: "testUser" }));
-      navigate(from, { replace: true });
-    } else {
-      setErrMsg(loginMessages.errorId);
-      setErrMsg(loginMessages.errorPassword);
-      setErrMsg(loginMessages.errorIdConfirm);
-      setErrMsg(loginMessages.errorUsing);
-      setErrMsg(loginMessages.errorNetwork);
-      setErrMsg(loginMessages.errorPasswordAgreement);
-    }
+    dispatch(login({ userId: "test", username: "testUser" }));
+    navigate(from, { replace: true });
+
+    // axios
+    //   .put(ROUTES.LOGIN, data)
+    //   .then((res) => {
+    // if(checkSaveId){
+    //   // 아이디 저장은 로컬 스토리지로
+    //   localStorage.setItem("userInfo", JSON.stringify(res.data));
+    // }
+    //     dispatch(
+    // login({ userId: res.data.userId, userName: res.data.userName })
+    //     );
+    //     navigate(from, { replace: true });
+    //   })
+    //   .catch((err) => {
+    //     setErrMsg(loginMessages.errorId);
+    //     setErrMsg(loginMessages.errorPassword);
+    //     setErrMsg(loginMessages.errorIdConfirm);
+    //     setErrMsg(loginMessages.errorUsing);
+    //     setErrMsg(loginMessages.errorPasswordAgreement);
+    // 5회 이상 로그인 실패
+    // showAlert({
+    //   message: loginMessages.errorStopUser,
+    // });
+    //   });
   };
 
   return (
     <>
-      <section class="loginPage">
-        <div class="loginCenter">
-          <div class="logoTit">
-            <div class="logoTxt">{LABELS.HOME_TITLE}</div>
+      <section className="loginPage">
+        <div className="loginCenter">
+          <div className="logoTit">
+            <div className="logoTxt">{LABELS.HOME_TITLE}</div>
           </div>
-          <div class="loginBox">
-            <div class="loginMsg">
-                {errMsg.split("\n").map((line, idx) => (
+          <div className="loginBox">
+            <div className="loginMsg">
+              {errMsg.split("\n").map((line, idx) => (
                 <div key={idx}>{line}</div>
               ))}
-              <span>{loginMessages.info1}</span>
-              <span>{loginMessages.info2}</span>
+              <span>{errMsg}</span>
             </div>
-            <div class="loginTit">관리자 로그인</div>
-            <div class="form-field">
-              <input type="text" id="inputId" name="inputId" value="" class="form-input" placeholder={LABELS.ID} />
-              <input type="password" id="inputPass" name="inputPass" value="" class="form-input" placeholder={LABELS.PASSWORD} />
+            <div className="loginTit">{LABELS.ADMIN_LOGIN}</div>
+            <div className="form-field">
+              <input
+                type="text"
+                id="inputId"
+                name={KEYS.ID}
+                value={data[KEYS.ID]}
+                className="form-input"
+                placeholder={loginMessages.infoId}
+              />
+              <input
+                type="password"
+                id="inputPass"
+                name={KEYS.PASSWORD}
+                value={data[KEYS.PASSWORD]}
+                className="form-input"
+                placeholder={loginMessages.infoPassword}
+              />
             </div>
-            <div class="check-box loginCheck">
-              <input type="checkbox" name="loginIdCheck" id="loginIdCheck" value="아이디 저장" checked/>
-              <label for="loginIdCheck"><span class="mark"></span>아이디 저장</label>
+            <div className="check-box loginCheck">
+              <input
+                type="checkbox"
+                name="loginIdCheck"
+                id="loginIdCheck"
+                defaultChecked
+                onClick={(e) => setCheckSaveId(e.target.checked)}
+              />
+              <label htmlFor="loginIdCheck">
+                <span className="mark"></span>
+                {LABELS.SAVE_ID}
+              </label>
             </div>
-            <div class="loginBotBox center">
-              <button type="button" class="sbtn scolor" onClick={handleLogin}>{LABELS.LOGIN}</button>
+            <div className="loginBotBox center">
+              <button
+                type="button"
+                className="sbtn scolor"
+                onClick={handleLogin}
+              >
+                {LABELS.LOGIN}
+              </button>
             </div>
-            <div class="loginBotBox center loginBottom">
-              <span><a href="">아이디 찾기</a></span>
-              <span class="dline"></span>
-              <span><a href="">비밀번호 찾기</a></span>
-            </div>
+            {/* <div className="loginBotBox center loginBottom">
+              <span>
+                <Link to="#">아이디 찾기</Link>
+              </span>
+              <span className="dline"></span>
+              <span>
+                <Link to="#">비밀번호 찾기</Link>
+              </span>
+            </div> */}
           </div>
         </div>
       </section>

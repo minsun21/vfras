@@ -1,32 +1,33 @@
+import { KEYS } from "../constants/Keys";
 import { LABELS } from "../constants/Labels";
 
-export const option_subsriberType = [
-  { key: "all", value: "전체" },
-  { key: "individual", value: "개인" },
-  { key: "corporation", value: "법인" },
+export const DIVISIONS = [
+  { key: "", value: LABELS.ALL },
+  { key: KEYS.NAME, value: LABELS.SUBSCRIBER_NAME },
+  { key: KEYS.SUB_NO, value: LABELS.MAIN_NUMBER },
+  { key: KEYS.PBX_NUMBER, value: LABELS.PBX_NUMBER },
+  { key: KEYS.USER_NUMBER, value: LABELS.USER_NUMBER_F },
 ];
-export const option_allType = [
-  { key: "all", value: "전체" },
-  { key: "corporation", value: "기업" },
-  { key: "individual", value: "개인" },
-];
-export const option_serviceType = [
-  { key: "all", value: "전체" },
-  { key: "corporation", value: "기업" },
-  { key: "individual", value: "개인" },
-  { key: "individualdj", value: "개인DJ" },
+export const SUBSRIBERS_TYPES = [
+  { key: "0", value: "개인" },
+  { key: "1", value: "법인" },
 ];
 
-export const option_userState = [
-  { key: "all", value: "전체" },
-  { key: "SUBSCRIBE", value: "가입" },
-  { key: "request", value: "요청중" },
+export const SERVICE_TYPES = [
+  { key: "0", value: "개인" },
+  { key: "1", value: "개인DJ" },
+  { key: "2", value: "기업" },
 ];
 
-export const option_substriber_userState = [
-  { key: "request", value: "요청중" },
-  { key: "SUBSCRIBE", value: "가입" },
-  { key: "delete", value: "삭제" },
+export const USER_STATES = [
+  { key: "0", value: "가입" },
+  { key: "1", value: "요청중" },
+];
+
+export const SUBSRIBERS_STATE = [
+  { key: "0", value: "요청중" },
+  { key: "1", value: "가입" },
+  { key: "2", value: "삭제대기" },
 ];
 
 export const option_userUseState = [
@@ -42,9 +43,10 @@ export const option_userUseState = [
   },
 ];
 
-export const user_classification = [
+export const ADMIN_TYPES = [
   { key: "admin", value: "Admin" },
   { key: "user", value: "User" },
+  { key: "guest", value: "Guest" },
 ];
 
 export const profileFields = [
@@ -95,7 +97,7 @@ export const profileFields = [
 
 export const profileEditFields = [
   {
-    key: "classification",
+    key: KEYS.ADMIN_TYPE,
     label: LABELS.CLASSIFICATION,
     value: "Admin",
     type: "text",
@@ -103,7 +105,7 @@ export const profileEditFields = [
     disabled: true,
   },
   {
-    key: "department",
+    key: KEYS.DEPARTMENT,
     label: LABELS.DEPARTMENT,
     value: "운영팀",
     type: "text",
@@ -111,7 +113,7 @@ export const profileEditFields = [
     disabled: true,
   },
   {
-    key: "id",
+    key: KEYS.ID,
     label: LABELS.ID,
     value: "vFRAS",
     type: "text",
@@ -119,7 +121,7 @@ export const profileEditFields = [
     disabled: true,
   },
   {
-    key: "password",
+    key: KEYS.PASSWORD,
     label: LABELS.PASSWORD,
     value: "!sdf423",
     type: "text",
@@ -127,7 +129,7 @@ export const profileEditFields = [
     disabled: true,
   },
   {
-    key: "name",
+    key: KEYS.NAME,
     label: LABELS.NAME,
     value: "홍길동",
     type: "text",
@@ -135,14 +137,14 @@ export const profileEditFields = [
     disabled: true,
   },
   {
-    key: "phone",
+    key: KEYS.MOBILE,
     label: LABELS.PHONE,
     value: "010-1234-5678",
     type: "text",
     required: true,
   },
   {
-    key: "email",
+    key: KEYS.EMAIL,
     label: LABELS.EMAIL,
     value: "test@lguplus.co.kr",
     type: "email",
@@ -152,51 +154,52 @@ export const profileEditFields = [
 
 export const subsriberResigerFields = [
   {
-    key: "mainNumber",
+    key: KEYS.SUB_NO,
     label: LABELS.MAIN_NUMBER,
     type: "text",
     required: true,
     requiredLength: 11,
   },
   {
-    key: "userState",
+    key: KEYS.SUB_STATUS,
     label: LABELS.USER_STATE,
     type: "radio",
-    options: option_userState,
+    options: USER_STATES,
   },
   {
-    key: "subsriberType",
+    key: KEYS.SUB_TYPE,
     label: LABELS.SUBSCRIBE_TYPE,
     type: "radio",
-    options: option_subsriberType,
+    options: SUBSRIBERS_TYPES,
   },
   {
-    key: "serviceType",
+    key: KEYS.SERVICE_TYPE,
     label: LABELS.SERVICE_TYPE,
     type: "radio",
-    options: option_serviceType,
+    options: SERVICE_TYPES,
   },
   {
-    key: "name",
+    key: KEYS.NAME,
     label: LABELS.NAME,
     type: "text",
     required: true,
   },
   {
-    key: "password",
+    key: KEYS.PASSWORD,
     label: LABELS.PASSWORD,
     type: "text",
     required: true,
     requiredLength: 4,
+    comment : LABELS.PASSWORD_CHECK3
   },
   {
-    key: "address1",
+    key: KEYS.ADDRESS1,
     label: LABELS.ADDRESS1,
     type: "text",
     required: true,
   },
   {
-    key: "address2",
+    key: KEYS.ADDRESS2,
     label: LABELS.ADDRESS2_OPTION,
     type: "text",
     placeholder: "OPTION",
@@ -215,12 +218,12 @@ export const subsriberResigerFields = [
     label: LABELS.USER_NUMBER,
     multi: true,
     fields: [
-      { key: "starUsertNumber", type: "number" },
-      { key: "endUserNumber", type: "number" },
+      { key: KEYS.TEL_FROM_NO, type: "number" },
+      { key: KEYS.TEL_TO_NO, type: "number" },
     ],
   },
   {
-    key: "defaultCallRing",
+    key: KEYS.RBT_ID,
     label: LABELS.DEFAULT_CALLRING,
     type: "number",
     required: true,
@@ -328,7 +331,7 @@ export const subscriberEditFields = [
     key: "userState",
     label: LABELS.USER_STATE,
     type: "radio",
-    options: option_substriber_userState,
+    options: SUBSRIBERS_STATE,
   },
   {
     key: "subsriberType",
@@ -410,63 +413,69 @@ export const subscriberEditFields = [
 
 export const accountRegisterFields = [
   {
-    key: "id",
+    key: KEYS.ID,
     label: LABELS.ID,
     type: "text",
     required: true,
+    min: 4,
+    max: 20,
   },
   {
-    key: "classification",
+    key: KEYS.ADMIN_TYPE,
     label: LABELS.CLASSIFICATION,
     type: "select",
-    options: user_classification,
+    options: ADMIN_TYPES,
     required: true,
   },
   {
-    key: "department",
+    key: KEYS.DEPARTMENT,
     label: LABELS.DEPARTMENT,
     type: "text",
     required: true,
   },
   {
-    key: "name",
+    key: KEYS.NAME,
     label: LABELS.NAME,
     type: "text",
     required: true,
   },
   {
-    key: "phone",
+    key: KEYS.MOBILE,
     label: LABELS.PHONE,
     type: "text",
+    required: true,
   },
   {
-    key: "email",
+    key: KEYS.EMAIL,
     label: LABELS.EMAIL,
     type: "email",
+    required: true,
   },
   {
-    key: "remarks",
+    key: KEYS.REMARKS,
     label: LABELS.REMARKS,
     type: "text",
   },
   {
-    key: "password",
+    key: KEYS.PASSWORD,
     label: LABELS.PASSWORD,
-    type: "text",
+    type: "password",
     required: true,
     comment: LABELS.PASSWORD_CHECK,
+    min: 8,
+    max: 20,
   },
   {
-    key: "passwordConfirm",
+    key: KEYS.PASSWORD_CONFIRM,
     label: LABELS.PASSWORD_CONFIRM,
-    type: "text",
+    type: "password",
     required: true,
   },
 ];
 
 export const accountEditFields = [
   {
-    key: "id",
+    key: KEYS.ID,
     label: LABELS.ID,
     placeholder: "vFRAS",
     type: "text",
@@ -474,59 +483,60 @@ export const accountEditFields = [
     disabled: true,
   },
   {
-    key: "classification",
+    key: KEYS.ADMIN_TYPE,
     label: LABELS.CLASSIFICATION,
     placeholder: "Admin",
-    type: "text",
+    type: "select",
+    options: ADMIN_TYPES,
     required: true,
   },
   {
-    key: "department",
+    key: KEYS.DEPARTMENT,
     label: LABELS.DEPARTMENT,
     placeholder: "운영팀",
     type: "text",
     required: true,
   },
   {
-    key: "name",
+    key: KEYS.NAME,
     label: LABELS.NAME,
     placeholder: "홍길동",
     type: "text",
     required: true,
   },
   {
-    key: "phone",
+    key: KEYS.MOBILE,
     label: LABELS.PHONE,
     placeholder: "010-1234-5678",
     type: "text",
     required: true,
   },
   {
-    key: "email",
+    key: KEYS.EMAIL,
     label: LABELS.EMAIL,
     placeholder: "test@lguplus.co.kr",
     type: "email",
     required: true,
   },
   {
-    key: "remarks",
+    key: KEYS.REMARKS,
     label: LABELS.REMARKS,
     placeholder: "협력사 요청",
     type: "text",
   },
   {
-    key: "password",
+    key: KEYS.PASSWORD,
     label: LABELS.PASSWORD,
-    placeholder: "******",
-    type: "text",
+    placeholder: "1234abcd!@#$",
+    type: "password",
     comment: LABELS.PASSWORD_CHECK,
     required: true,
   },
   {
-    key: "passwordConfirm",
+    key: KEYS.PASSWORD_CONFIRM,
     label: LABELS.PASSWORD_CONFIRM,
-    type: "text",
-    placeholder: "******",
+    type: "password",
+    placeholder: "1234abcd!@#$",
     required: true,
   },
 ];
@@ -539,17 +549,17 @@ export const countryNumbers = [
 
 export const passwordChange = [
   {
-    key: "currentPassword",
+    key: KEYS.OLD_PASSWORD,
     placeholder: LABELS.CURRENT_PASSWORD,
     type: "text",
   },
   {
-    key: "changePassword",
+    key: KEYS.NEW_PASSWORD1,
     placeholder: LABELS.CHANGE_PASSWORD,
     type: "text",
   },
   {
-    key: "changeConfirmPassword",
+    key: KEYS.NEW_PASSWORD2,
     placeholder: LABELS.CHANGE_PASSWORD_CONFIRM,
     type: "text",
   },

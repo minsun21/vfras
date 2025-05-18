@@ -5,7 +5,7 @@ import { ROUTES } from '../constants/routes';
 
 const NotFound = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const homePath = isAuthenticated ? ROUTES.SUBSCRIBER : ROUTES.LOGIN;
+  const homePath = isAuthenticated ? ROUTES.SUBSCRIBERS : ROUTES.LOGIN;
 
   return (
     <div style={{ textAlign: 'center', marginTop: '100px' }}>

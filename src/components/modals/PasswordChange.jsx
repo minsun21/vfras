@@ -5,11 +5,7 @@ import Input from "../Input";
 import { passwordChange } from "../../config/FieldsConfig";
 import { LABELS } from "../../constants/Labels";
 import { hasEmptyValue, isValidPassword } from "../../utils/FormValidation";
-import {
-  errorMessages,
-  profileMessages,
-  ProfileMessages,
-} from "../../constants/Message";
+import { errorMessages, profileMessages } from "../../constants/Message";
 
 const PasswordChange = ({ info, onOk }) => {
   const { showAlert, closeModal } = useModal();
@@ -22,44 +18,37 @@ const PasswordChange = ({ info, onOk }) => {
 
   const changePassword = () => {
     // 1. 빈 값 확인
-    if (hasEmptyValue(formData)) {
-      showAlert({
-        message: errorMessages.emptyValue,
-      });
-      return;
-    }
+    // if (hasEmptyValue(formData)) {
+    //   showAlert({
+    //     message: errorMessages.emptyValue,
+    //   });
+    //   return;
+    // }
 
-    // 2. 현재 비밀번호 확인
-    if (info.password !== formData.currentPassword) {
-      showAlert({
-        message: errorMessages.confirmCurrentPassword,
-      });
-      return;
-    }
+    // // 2. 현재 비밀번호 확인
+    // if (info.password !== formData.currentPassword) {
+    //   showAlert({
+    //     message: errorMessages.confirmCurrentPassword,
+    //   });
+    //   return;
+    // }
 
-    // 3. 변경 비밀번호 validation
-    if (!isValidPassword(formData.changePassword)) {
-      showAlert({
-        message: errorMessages.invalidPassword,
-      });
-      return;
-    }
+    // // 3. 변경 비밀번호 validation
+    // if (!isValidPassword(formData.changePassword)) {
+    //   showAlert({
+    //     message: errorMessages.invalidPassword,
+    //   });
+    //   return;
+    // }
 
-    // 4. 변경 비밀번호 재확인
-    if (formData.changePassword !== formData.changeConfirmPassword) {
-      showAlert({
-        message: errorMessages.confirmPassword,
-      });
-      return;
-    }
-
-    showAlert({
-      message: profileMessages.successPasswordChange,
-      onConfirm: () => {
-        onOk(formData);
-        closeModal();
-      },
-    });
+    // // 4. 변경 비밀번호 재확인
+    // if (formData.changePassword !== formData.changeConfirmPassword) {
+    //   showAlert({
+    //     message: errorMessages.confirmPassword,
+    //   });
+    //   return;
+    // }
+    onOk(formData);
   };
 
   return (
