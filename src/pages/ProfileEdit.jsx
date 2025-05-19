@@ -85,6 +85,7 @@ const ProfileEdit = () => {
   const clickChangePassword = () => {
     showModal({
       content: <PasswordChange info={formData} onOk={changePassword} />,
+      header: LABELS.PASSWORD_CHANGE,
     });
   };
 

@@ -18,6 +18,7 @@ export const LABELS = {
   PASSWORD_CHECK2: "* 8~20자의 영문 대,소문자,숫자,특수문자",
   HOME_TITLE: "vFRAS 가입자 관리",
   SEARCH: "검색",
+  ALERT_MSG: "알림",
   MY_INFO: "내 정보",
   USER_REGISTER: "사용자 등록",
   USER_STATE: "사용자 상태",

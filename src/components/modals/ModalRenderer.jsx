@@ -1,6 +1,7 @@
 import Modal from "react-modal";
 import { useModal } from "../../contexts/ModalContext";
 import Button, { BUTTON_CANCEL } from "../Button";
+import { LABELS } from "../../constants/Labels";
 
 const ModalRenderer = () => {
   const { modals, closeModal } = useModal();
@@ -37,34 +38,67 @@ const ModalRenderer = () => {
           }}
         >
           {type === "alert" ? (
-            <div>
-              <p>{props.message}</p>
-              <Button
-                onClick={() => {
-                  props.onConfirm?.();
-                  closeModal();
-                }}
-              />
+             <div class="layer-popup open"> 
+                <div class="md-content w400">
+                    <div class="msg-header">
+                        <h3>{LABELS.ALERT_MSG}</h3>
+                    </div>
+                  <div class="msg-body">
+                    <p>{props.message}</p>
+                  </div>
+                  <div class="msg-footer">
+                    <div class="btn-wrap center">
+                      <Button
+                      onClick={() => {
+                        props.onConfirm?.();
+                        closeModal()
+                      }}
+                    />
+                    </div>
+                  </div>
+              </div>
             </div>
+
           ) : type === "dialog" ? (
-            <div>
-              <p>{props.message}</p>
-              <Button type={BUTTON_CANCEL} onClick={closeModal} />
-              <Button
-                onClick={() => {
-                  props.onConfirm?.();
-                  closeModal();
-                }}
-              />
+            <div class="layer-popup open"> 
+                <div class="md-content w400">
+                    <div class="msg-header">
+                        <h3>{LABELS.ALERT_MSG}</h3>
+                    </div>
+                  <div class="msg-body">
+                    <p>{props.message}</p>
+                  </div>
+                  <div class="msg-footer">
+                    <div class="btn-wrap center">
+                      <Button type={BUTTON_CANCEL} onClick={closeModal} />
+                      <Button
+                        onClick={() => {
+                        props.onConfirm?.();
+                        closeModal();
+                          }}
+                        />
+                    </div>
+                  </div>
+              </div>
             </div>
+
           ) : (
-            <div>
-              <header>
-                <h4>{props.header}</h4>
-                <button onClick={closeModal}>x</button>
-              </header>
-              <div>{props.content}</div>
+            <div class="layer-popup open"> 
+                <div class="md-content">
+                    <div class="msg-header">
+                        <h3>{props.header}</h3>
+                    </div>
+                  <div class="msg-body">
+                    <p>{props.content}</p>
+                  </div>
+                  <div class="msg-footer">
+                    <div class="btn-wrap center">
+                      <button onClick={closeModal}>x</button>
+                    </div>
+                  </div>
+              </div>
             </div>
+
           )}
         </Modal>
       ))}
