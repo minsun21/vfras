@@ -131,10 +131,17 @@ const SubscriberManageEdit = () => {
   };
 
   const clickDidSetting = () => {
-    showModal({
-      content: <DidSetting userInfo={formData} />,
-      header: LABELS.DID_TITLE,
-    });
+    if(formData[KEYS.SUB_TYPE] === LABELS.CORPORATION){
+      showModal({
+        content: <DidSetting userInfo={formData} />,
+        header: LABELS.DID_TITLE,
+      });
+    }else {
+      showModal({
+        content: <DidSettingPersonal userInfo={formData} />,
+        header: LABELS.DID_TITLE_PERSONAL,
+      });
+    }
   };
 
   const clickResetPassword = () => {

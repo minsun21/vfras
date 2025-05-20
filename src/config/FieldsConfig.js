@@ -358,7 +358,7 @@ export const subscriberEditFields = [
     key: KEYS.SUB_TYPE,
     label: LABELS.SUBSCRIBE_TYPE,
     type: "text",
-    value: "법인",
+    value: "개인",
     disabled: true,
   },
   {
