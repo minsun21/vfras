@@ -79,6 +79,9 @@ caption, legend, .hidden, .visually-hidden, hr { position: absolute !important; 
 .mb40 { margin-bottom:4rem !important; } 
 .mb50 { margin-bottom:5rem !important; } 
 
+.mb-20 { margin-bottom:-2rem !important; } 
+.mb-30 { margin-bottom:-3rem !important; }
+.mb-40 { margin-bottom:-4rem !important; }
 /* margin left */
 .ml0 { margin-left: 0 !important; } 
 .ml10 { margin-left:1rem !important; } 
@@ -100,6 +103,7 @@ caption, legend, .hidden, .visually-hidden, hr { position: absolute !important; 
 .w100 { width:10rem !important; } 
 .w120 { width:12rem !important; } 
 .w130 { width:13rem !important; } 
+.w140 { width:14rem !important; } 
 .w150 { width:15rem !important; } 
 .w200 { width:20rem !important; } 
 .w250 { width:25rem !important; } 

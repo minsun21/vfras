@@ -57,7 +57,7 @@ const DidSetting = ({ userInfo }) => {
 
   return (
     <div>
-      <div className="dflex gap10">
+      <div className="didLayout">
         <div className="w60p">
           <div className="popSubTit">{LABELS.DID}</div>
           <form class="popSchBox">
@@ -69,7 +69,7 @@ const DidSetting = ({ userInfo }) => {
           </form>
           
           <form class="form">
-            <div class="tbl-list-top mt10">
+            <div class="tbl-list-top mt10 mb-20">
               <div class="top-button"> 
                 <span>
                   <Button type={BUTTON_DELETE} onClick={deleteData} /></span>
@@ -96,7 +96,7 @@ const DidSetting = ({ userInfo }) => {
           </form>
           <div class="configBox">
               {selectRows.length === 0 && (
-                <span>{subsriberMessages.didPlaceHolder}</span>
+                <div className="configAlertTxt">{subsriberMessages.didPlaceHolder}</div>
               )}
               {selectRows.length > 0 && (
                 <DidServiceToggle title={LABELS.CIRCULAR} />

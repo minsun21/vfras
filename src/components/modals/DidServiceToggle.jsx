@@ -66,16 +66,8 @@ const ToggleTable = ({ title }) => {
   };
 
   return (
-    <div style={{ border: "1px solid black", width: 500 }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          borderBottom: "1px solid black",
-          padding: 10,
-        }}
-      >
+    <div className="svcItem">
+      <div  className="svcTit">
         <h4>{title}</h4>
         <div>
           <span>{LABELS.IS_OPEN}</span>
@@ -91,17 +83,9 @@ const ToggleTable = ({ title }) => {
       </div>
       {/* 본문: 오픈 시에만 표시 */}
       {open && (
-        <div style={{ display: "flex" }}>
+        <div className="svcBox">
           {/* 왼쪽 */}
-          <div
-            style={{
-              borderRight: "1px solid #0074C1",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              padding: 10,
-            }}
-          >
+          <div className="svcBoxL">
             {left.map((item) => {
               const {
                 key,
@@ -133,7 +117,7 @@ const ToggleTable = ({ title }) => {
                     <div>
                       {fields.map((subField, idx) => (
                         <div key={subField.key}>
-                          <Input
+                          <Input size="w130"
                             type={subField.type}
                             value={inputs[subField.key] || ""}
                             onChange={(e) =>
@@ -148,7 +132,7 @@ const ToggleTable = ({ title }) => {
                       ))}
                     </div>
                   ) : (
-                    <Input
+                    <Input size="w150"
                       value={value}
                       type={type}
                       placeholder={placeholder}
@@ -161,25 +145,8 @@ const ToggleTable = ({ title }) => {
           </div>
 
           {/* 버튼 영역 */}
-          <div
-            style={{
-              borderRight: "1px solid #0074C1",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              padding: 10,
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                borderBottom: "1px solid black",
-                paddingBottom: "5px",
-                marginBottom: "5px",
-              }}
-            >
+          <div className="svcBoxC">
+            <div>
               <Button
                 type={BUTTON_CANCEL}
                 label={LABELS.ADD}
@@ -192,13 +159,7 @@ const ToggleTable = ({ title }) => {
                 onClick={handleDeleteAll}
               />
             </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
+            <div>
               <div>{LABELS.MAIN_NUMBER}</div>
               <Button
                 type={BUTTON_DELETE}
@@ -214,7 +175,7 @@ const ToggleTable = ({ title }) => {
           </div>
 
           {/* 테이블 영역 */}
-          <div style={{ flex: 1, padding: 10 }}>
+          <div className="svcBoxR">
             <Table columns={columns} data={data} />
           </div>
         </div>
