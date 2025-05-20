@@ -23,7 +23,7 @@
 .sidebar.close .logo a span:last-child::after { transition-delay: 0s; opacity: 0; pointer-events: none; } 
 
 /* menu */
-.menu { /*height: calc(100% - 120px);*/ overflow: auto; background: #FAFAFA; } 
+.menu { height: calc(100% - 120px); overflow: auto; background: #FAFAFA; } 
 .menu::-webkit-scrollbar { display: none; width: 4px; background: var(--scolor); } 
 .menu::-webkit-scrollbar-thumb, .menu::-webkit-scrollbar-track { border-radius: 100vh; box-shadow: none}
 .menu::-webkit-scrollbar-thumb { background: #6280D3}
@@ -109,7 +109,6 @@
 h2.page-title { margin: 2rem 1rem 1rem 0rem; font-size: 2.2rem; color: #000; font-weight: 700; /*border-bottom: 1px solid #DDD; padding-bottom: 1rem; */}
 h3.page-title { margin: 0 0 0.5rem 0; font-size: 1.8rem; color: #000; font-weight: 500; } 
 h3.chart-title { margin: 0; font-size: 2rem; color: #000; font-weight: 600; } 
-
 /* 임시 */
 
 /* side bar */

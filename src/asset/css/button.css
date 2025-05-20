@@ -24,7 +24,9 @@
 .sbtn.cancel { border:solid 1px #ccc; background:#fff; color:#757575; } 
 .sbtn.search { border:solid 1px #000; background:#000; color:#fff; } 
 
-.miniK {min-width:40px; height:25px; line-height:25px; padding:0 10px; border-radius: 7px;  font-size: 12px; font-weight: 400; border:solid 1px #000; background:#000; color:#fff;}  
+.miniK { min-width:40px; height:25px; line-height:25px; padding:0 10px; border-radius: 7px;  font-size: 12px; font-weight: 400; border:solid 1px #000; background:#000; color:#fff;}  
+
+.tbl-list-top .sbtn { min-width:50px; height:30px; line-height:30px; padding:0 10px; border-radius: 5px; font-size: 13px; font-weight: 400; }
 
 /* btn groip */
 .btnGroup .sbtn { border:solid 1px #ccc; background:#fff; color:#757575; } 

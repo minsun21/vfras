@@ -57,21 +57,25 @@ const DidSetting = ({ userInfo }) => {
 
   return (
     <div>
-      <div style={{ display: "flex" }}>
-        <div style={{ width: "100%" }}>
-          <span>{LABELS.DID}</span>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              backgroundColor: "rgba(0, 0, 0, 0.1)",
-              padding: "10px",
-              marginRight: "10px",
-            }}
-          >
-            <Input label={LABELS.MAIN_NUMBER} />
-            <Button label={LABELS.ADD_ITEM} />
-          </div>
+      <div className="dflex gap10">
+        <div className="w60p">
+          <div className="popSubTit">{LABELS.DID}</div>
+          <form class="popSchBox">
+              <label class="schTxtL1">대표번호</label>
+              <Input label={LABELS.MAIN_NUMBER} size="lg" />
+              <div className="mlAuto">
+                <Button label={LABELS.ADD_ITEM}  class="sbtn black"/>
+              </div>
+          </form>
+          
+          <form class="form">
+            <div class="tbl-list-top mt10">
+              <div class="top-button"> 
+                <span>
+                  <Button type={BUTTON_DELETE} onClick={deleteData} /></span>
+              </div>
+            </div>
+          </form>
           <Table
             ref={tableRef}
             onRowSelectionChange={onSelectRows}
@@ -81,22 +85,16 @@ const DidSetting = ({ userInfo }) => {
             resultLabel={false}
             pageSelect={false}
           />
-          <Button type={BUTTON_DELETE} onClick={deleteData} />
         </div>
-        <div>
-          <span>{LABELS.ADDITIONAL_SERVICE_SETTING}</span>
-          <div style={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}>
-            <div
-              style={{
-                display: "flex",
-                padding: "10px",
-                borderBottom: "1px solid black",
-              }}
-            >
-              <Input label={LABELS.DEFAULT_RING} />
-              <Input />
-            </div>
-            <div>
+
+        <div className="w40p">
+          <div className="popSubTit">{LABELS.ADDITIONAL_SERVICE_SETTING}</div>
+          <form class="popSchBox">
+              <label class="schTxtL1">기본링</label>
+              <Input label={LABELS.DEFAULT_RING} size="sm"/>
+              <Input size="w200" />
+          </form>
+          <div class="configBox">
               {selectRows.length === 0 && (
                 <span>{subsriberMessages.didPlaceHolder}</span>
               )}
@@ -104,7 +102,6 @@ const DidSetting = ({ userInfo }) => {
                 <DidServiceToggle title={LABELS.CIRCULAR} />
               )}
             </div>
-          </div>
         </div>
       </div>
     </div>

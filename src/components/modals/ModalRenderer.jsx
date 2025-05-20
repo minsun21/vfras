@@ -84,12 +84,12 @@ const ModalRenderer = () => {
 
           ) : (
             <div class="layer-popup open"> 
-                <div class="md-content">
+                <div class="md-content w1600">
                     <div class="msg-header">
                         <h3>{props.header}</h3>
                     </div>
-                  <div class="msg-body">
-                    <p>{props.content}</p>
+                  <div class="pop-body">
+                    {props.content}
                   </div>
                   <div class="msg-footer">
                     <div class="btn-wrap center">

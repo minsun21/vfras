@@ -1,7 +1,8 @@
 import React from "react";
 
-export const INPUT_SIZE_LG = "lg";
-export const INPUT_SIZE_SM = "sm";
+export const INPUT_SIZE_SM = "sm"; // 160px
+export const INPUT_SIZE_LG = "lg"; // 400px
+export const INPUT_SIZE_FL = "fl"; // 100%
 
 const Input = ({
   type = "text",
@@ -9,22 +10,19 @@ const Input = ({
   disabled = false,
   onChange,
   placeholder = "",
-  size = "md",
+  size = "nm",
   name,
 }) => {
   return (
-    <div className={`form-field ${size}`}>
-      <input
+      <input className={`form-input ${size}`}
         name={name}
         type={type}
         value={value}
         disabled={disabled}
         onChange={onChange}
         placeholder={placeholder}
-        className="form-input"
         min="0"
       />
-    </div>
   );
 };
 

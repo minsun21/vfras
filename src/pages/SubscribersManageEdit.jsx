@@ -233,7 +233,6 @@ const SubscriberManageEdit = () => {
                             type={field.type}
                             onChange={(e) => handleChange(e.target.value)}
                             disabled={disabled}
-                            className="w400"
                           />
                           <span>{LABELS.LV_NUMBER}</span>
                         </div>
@@ -244,6 +243,7 @@ const SubscriberManageEdit = () => {
                             type={field.type}
                             onChange={(e) => handleChange(e.target.value)}
                             disabled={disabled}
+                            size="nm"
                           />
                           <Button
                             type={BUTTON_CANCEL}
@@ -290,7 +290,7 @@ const SubscriberManageEdit = () => {
                           ))}
                         </div>
                       ) : (
-                        <Input
+                        <Input size="nm"
                           value={value}
                           type={type}
                           disabled={disabled}

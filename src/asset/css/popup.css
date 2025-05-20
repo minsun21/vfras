@@ -71,3 +71,18 @@
 .msg-body .pwDefault { width: 100%; height: 40px; background: #EEE; line-height: 40px; text-align: center; border-radius: 7px; margin-top: 10px }
 .msg-footer { padding-top: 2rem; } 
 .msg-footer .btn-wrap { padding-top: 15px; }
+
+/* 설정 팝업 */
+.popSchBox { display: flex; padding: 10px 15px; border-radius: 6px; background-color: #F8F8F8; gap: 1rem }
+
+.popSubTit { margin: 5px 10px 5px 0px; padding-bottom: 4px; font-size: 16px; color: #000; font-weight: 600; text-align: left; border-bottom: 1px solid #DDD; }
+.pop-body { overflow-y: auto; max-height: calc(100vh - 29rem); border-top: solid 1px var(--scolor); padding: 10px 0px; min-height: 100px; height: 800px; font-size: 16px; font-weight: 500; color: #666; line-height: 1.6; word-break: break-all; word-wrap: break-word; } 
+.configBox { padding: 10px 0px;  }
+
+
+.pop-footer { padding-top: 2rem; } 
+.pop-footer .btn-wrap { padding-top: 15px; }
+
+
+.ReactModal__Content.ReactModal__Content--after-open.common-modal.modal,
+.common-modal.modal { padding: 0px !important;}

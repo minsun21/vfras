@@ -134,7 +134,7 @@ const ProfileEdit = () => {
                   <td className="value">
                     {key === KEYS.PASSWORD ? (
                       <>
-                        <Input
+                        <Input size="nm"
                           type={type}
                           value={LABELS.PASSWORD_PLACEHOLDER}
                           onChange={(e) => handleChange(e.target.value)}
@@ -148,7 +148,7 @@ const ProfileEdit = () => {
                       </>
                     ) : (
                       <>
-                        <Input
+                        <Input size="nm"
                           value={formData[key] || ""}
                           type={field.type}
                           placeholder={formData[key]}

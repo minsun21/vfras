@@ -1,19 +1,24 @@
 import React from "react";
 
 const RadioGroup = ({ value, options, onChange }) => (
-  <div className="common-radio">
+  <div className="radio-box">
     {options.map((opt) => (
-      <label key={opt.key}>
+      <span class="items">
         <input
           type="radio"
           value={opt.value}
           checked={value === opt.value}
           onChange={onChange}
         />
-        {opt.value}
-      </label>
+       <label key={opt.key}>{opt.value}</label>
+      </span>
     ))}
   </div>
 );
 
 export default RadioGroup;
+
+
+
+
+
