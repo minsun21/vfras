@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useModal } from "../../contexts/ModalContext";
 import { LABELS } from "../../constants/Labels";
 import Table from "../Table";
-import { did_setting_columns, did_setting_data } from "../../config/DataConfig";
+import { circularsInfo, did_setting_columns, did_setting_data, duras, groups, orgns, times, weeks } from "../../config/DataConfig";
 import Button, { BUTTON_DELETE } from "../Button";
 import Input from "../Input";
 import { errorMessages, subsriberMessages } from "../../constants/Message";
@@ -98,9 +98,16 @@ const DidSetting = ({ userInfo }) => {
               {selectRows.length === 0 && (
                 <span>{subsriberMessages.didPlaceHolder}</span>
               )}
-              {selectRows.length > 0 && (
-                <DidServiceToggle title={LABELS.CIRCULAR} />
-              )}
+               {selectRows.length > 0 && (
+              <div>
+                <DidServiceToggle info={circularsInfo} />
+                <DidServiceToggle info={times} />
+                <DidServiceToggle info={weeks} />
+                <DidServiceToggle info={orgns} />
+                <DidServiceToggle info={groups} />
+                <DidServiceToggle info={duras} />
+              </div>
+            )}
             </div>
         </div>
       </div>

@@ -114,4 +114,10 @@ export const LABELS = {
   DIVISION_SEARCH : "검색 구분",
   CURRENT : "현재 ",
   DID_VALUE: `개 DID `,
+  DID_TITLE_PERSONAL: "DID 회선 설정 - 개인",
+  CORPORATION: "법인",
+  GERNERAL_PERMISSIONS : "일반 권한",
+  DEPARTMENT_PERMISSIONS :"부서 권한",
+  MODIFY : "수정",
+  DID_CONFIG_LENGH : (cnt, max) => `${cnt}개 (최대 ${max})`,
 };

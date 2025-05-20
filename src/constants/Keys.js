@@ -44,4 +44,7 @@ export const KEYS = {
   SEARCH_DIVISION: "searchDivision", // 검색 구분
   SEARCH_DIVISION_VALUE: "searchDivisionValue", // 검색 구분 text
   DID: "did", // did회선(개수)
+  GERNERAL_PERMISSIONS: "generalPermissions", // 일반 권한
+  DEPARTMENT_PERMISSIONS: "departmentPermissions", // 부서 권한
+  MODIFY: "modifyPermissions",
 };

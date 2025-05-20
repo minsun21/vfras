@@ -25,6 +25,8 @@ import { KEYS } from "../constants/Keys";
 import axios from "../api/axios";
 import Form from "../components/Form";
 import PasswordReset from "../components/modals/PasswordReset";
+import { didPersonal } from "../config/DataConfig";
+import DidSettingPersonal from "../components/modals/DidSettingPersonal";
 
 const SubscriberManageEdit = () => {
   const navigate = useNavigate();
@@ -109,7 +111,6 @@ const SubscriberManageEdit = () => {
   };
 
   const save = () => {
-
     // axios.put(ROUTES.SUBSCRIBERS_DETAIL(formData[KEYS.SUB_NO]),formData ).then(res=>{
     //   showAlert({
     //     message: infoMessages.successEdit,
@@ -290,7 +291,8 @@ const SubscriberManageEdit = () => {
                           ))}
                         </div>
                       ) : (
-                        <Input size="nm"
+                        <Input
+                          size="nm"
                           value={value}
                           type={type}
                           disabled={disabled}

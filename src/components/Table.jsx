@@ -19,7 +19,8 @@ const Table = forwardRef(
   (
     {
       columns,
-      data,
+      data:tableData,
+      setTableData,
       pageSize = 5,
       rowSelectionEnabled = true,
       onRowSelectionChange,
@@ -27,18 +28,16 @@ const Table = forwardRef(
       resultLabel = true,
       pageSelect = true,
       topBtns,
+      paginationEnabled = true,
     },
     ref
   ) => {
     const [rowSelection, setRowSelection] = useState({});
-    const [tableData, setTableData] = useState([]);
     const [currentPageSize, setCurrentPageSize] = useState(pageSize);
 
-    useEffect(() => {
-      setTableData(data);
-    }, [data]);
+    const shouldScroll = tableData.length > 10;
 
-    const handleRowRadioChange = (rowIndex, columnId) => {
+    const handleCheckBox = (rowIndex, columnId) => {
       const updated = tableData.map((row, i) => {
         if (i === rowIndex) {
           return { ...row, [columnId]: !row[columnId] };
@@ -55,16 +54,16 @@ const Table = forwardRef(
             return { ...col, columns: enhanceColumns(col.columns) };
           }
 
-          if (col.id?.startsWith("radio")) {
-            const columnId = col.id;
+          if (col.type?.startsWith("check")) {
+            const columnId = col.accessorKey;
             return {
               ...col,
               cell: ({ row }) => (
                 <input
                   type="checkbox"
-                  className="radio-style"
+                  className="check-style"
                   checked={!!row.original[columnId]}
-                  onChange={() => handleRowRadioChange(row.index, columnId)}
+                  onChange={() => handleCheckBox(row.index, columnId)}
                 />
               ),
             };
@@ -137,7 +136,9 @@ const Table = forwardRef(
       state: { rowSelection },
       onRowSelectionChange: setRowSelection,
       getCoreRowModel: getCoreRowModel(),
-      getPaginationRowModel: getPaginationRowModel(),
+      ...(paginationEnabled
+        ? { getPaginationRowModel: getPaginationRowModel() }
+        : {}),
       enableRowSelection: true,
     });
 
@@ -162,8 +163,10 @@ const Table = forwardRef(
     );
 
     useEffect(() => {
-      table.setPageSize(currentPageSize);
-    }, [currentPageSize, table]);
+      if (paginationEnabled) {
+        table.setPageSize(currentPageSize);
+      }
+    }, [currentPageSize, table, paginationEnabled]);
 
     useEffect(() => {
       if (typeof onRowSelectionChange === "function") {
@@ -191,11 +194,11 @@ const Table = forwardRef(
 
     const pageSizeOptions = useMemo(() => {
       const baseSizes = [10, 30, 50, 100];
-      const nextRounded = Math.ceil(data.length / 10) * 10;
+      const nextRounded = Math.ceil(tableData.length / 10) * 10;
       const options = baseSizes.filter((n) => n < nextRounded);
       if (!options.includes(nextRounded)) options.push(nextRounded);
       return options;
-    }, [data]);
+    }, [tableData]);
 
     const renderMultiLine = (value) => {
       if (typeof value !== "string") return value;
@@ -210,7 +213,7 @@ const Table = forwardRef(
             <div className="top-button">
               {resultLabel && (
                 <span className="total mr0">
-                  {LABELS.SEARCH_RESULT(data.length)}
+                  {LABELS.SEARCH_RESULT(tableData.length)}
                 </span>
               )}
               {topBtns && <span>{topBtns()}</span>}
@@ -235,43 +238,46 @@ const Table = forwardRef(
         <div className="tbl-list">
           <table>
             <thead>
-            <tr>
-              {rowSelectionEnabled && (
-                <th rowSpan={2}>
-                  <input
-                    type="checkbox"
-                    checked={table.getIsAllPageRowsSelected()}
-                    onChange={(e) => {
-                      table.getToggleAllPageRowsSelectedHandler()(e);
-                    }}
-                  />
-                </th>
-              )}
-              {showIndex && <th rowSpan={2}>{LABELS.INDEX}</th>}
-              {columns.map((col, idx) =>
-                col.columns ? (
-                  <th key={idx} colSpan={col.columns.length}>
-                    {renderMultiLine(col.header)}
+              <tr>
+                {rowSelectionEnabled && (
+                  <th rowSpan={2}>
+                    <input
+                      type="checkbox"
+                      checked={table.getIsAllPageRowsSelected()}
+                      onChange={(e) => {
+                        table.getToggleAllPageRowsSelectedHandler()(e);
+                      }}
+                    />
                   </th>
-                ) : (
-                  <th key={idx} rowSpan={2}>
-                    {renderMultiLine(col.header)}
-                  </th>
-                )
-              )}
-            </tr>
-            <tr>
-              {columns.flatMap((col, idx) =>
-                col.columns
-                  ? col.columns.map((sub, j) => (
-                      <th key={`sub-${idx}-${j}`}>{sub.header}</th>
-                    ))
-                  : []
-              )}
-            </tr>
+                )}
+                {showIndex && <th rowSpan={2}>{LABELS.INDEX}</th>}
+                {columns.map((col, idx) =>
+                  col.columns ? (
+                    <th key={idx} colSpan={col.columns.length}>
+                      {renderMultiLine(col.header)}
+                    </th>
+                  ) : (
+                    <th key={idx} rowSpan={2}>
+                      {renderMultiLine(col.header)}
+                    </th>
+                  )
+                )}
+              </tr>
+              <tr>
+                {columns.flatMap((col, idx) =>
+                  col.columns
+                    ? col.columns.map((sub, j) => (
+                        <th key={`sub-${idx}-${j}`}>{sub.header}</th>
+                      ))
+                    : []
+                )}
+              </tr>
             </thead>
             <tbody>
-              {table.getRowModel().rows.map((row) => (
+              {(paginationEnabled
+                ? table.getRowModel().rows
+                : table.getPrePaginationRowModel().rows
+              ).map((row) => (
                 <tr
                   key={row.id}
                   className={row.getIsSelected() ? "selected" : ""}
@@ -287,46 +293,47 @@ const Table = forwardRef(
             </tbody>
           </table>
         </div>
-
-        <div className="paging">
-          <ul>
-            <li className="first">
-              <button
-                onClick={() => table.setPageIndex(0)}
-                disabled={!table.getCanPreviousPage()}
-              ></button>
-            </li>
-            <li className="prev">
-              <button
-                onClick={() => table.previousPage()}
-                disabled={!table.getCanPreviousPage()}
-              ></button>
-            </li>
-            {pageNumbers.map((num) => (
-              <li key={num}>
+        {paginationEnabled && (
+          <div className="paging">
+            <ul>
+              <li className="first">
                 <button
-                  className={`${num === pageIndex ? "active" : ""}`}
-                  key={num}
-                  onClick={() => table.setPageIndex(num)}
-                >
-                  {num + 1}
-                </button>
+                  onClick={() => table.setPageIndex(0)}
+                  disabled={!table.getCanPreviousPage()}
+                ></button>
               </li>
-            ))}
-            <li className="next">
-              <button
-                onClick={() => table.nextPage()}
-                disabled={!table.getCanNextPage()}
-              ></button>
-            </li>
-            <li className="end">
-              <button
-                onClick={() => table.setPageIndex(pageCount - 1)}
-                disabled={!table.getCanNextPage()}
-              ></button>
-            </li>
-          </ul>
-        </div>
+              <li className="prev">
+                <button
+                  onClick={() => table.previousPage()}
+                  disabled={!table.getCanPreviousPage()}
+                ></button>
+              </li>
+              {pageNumbers.map((num) => (
+                <li key={num}>
+                  <button
+                    className={`${num === pageIndex ? "active" : ""}`}
+                    key={num}
+                    onClick={() => table.setPageIndex(num)}
+                  >
+                    {num + 1}
+                  </button>
+                </li>
+              ))}
+              <li className="next">
+                <button
+                  onClick={() => table.nextPage()}
+                  disabled={!table.getCanNextPage()}
+                ></button>
+              </li>
+              <li className="end">
+                <button
+                  onClick={() => table.setPageIndex(pageCount - 1)}
+                  disabled={!table.getCanNextPage()}
+                ></button>
+              </li>
+            </ul>
+          </div>
+        )}
       </>
     );
   }

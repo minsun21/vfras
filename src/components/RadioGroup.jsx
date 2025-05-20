@@ -3,7 +3,7 @@ import React from "react";
 const RadioGroup = ({ value, options, onChange }) => (
   <div className="radio-box">
     {options.map((opt) => (
-      <span class="items">
+      <span className="items" key={opt.value}>
         <input
           type="radio"
           value={opt.value}
