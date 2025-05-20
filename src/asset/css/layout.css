@@ -2,7 +2,7 @@
  }*/
 .container { } 
 .layout { display: flex; height: 100vh;}
-.sidebar { position: fixed; top: 0; left: 0; height: 100%; width: 25rem; background-color: rgb(255 255 255); color: white; padding: 0; transition: all 0.3s ease; z-index: 10; border-right: 1px solid #EEE; box-shadow: 5px 0px 5px #DDD; } 
+.sidebar { position: fixed; top: 0; left: 0; height: 100%; width: 25rem; background-color: rgb(255 255 255); color: white; padding: 0; transition: all 0.3s ease; z-index: 0; border-right: 1px solid #EEE; box-shadow: 5px 0px 5px #DDD; } 
 
 /* sidebar close */.sidebar.close { width: 6.8rem; padding: 3rem 0; } 
 .sidebar.close .sidebar-handle::after { transform: rotate(180deg); } 

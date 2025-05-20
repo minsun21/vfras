@@ -25,6 +25,11 @@ textarea:-ms-input-placeholder { color: #999; font-weight: 400; line-height: 1.6
 .form-input.fl { width: 100%; }
 
 .form-input.w100 { width: 100px; }
+.form-input.w100 { width: 100px; }
+.form-input.w120 { width: 120px; }
+.form-input.w140 { width: 140px; }
+.form-input.w160 { width: 160px; }
+.form-input.w180 { width: 180px; }
 .form-input.w200 { width: 200px; }
 .form-input.w300 { width: 300px; }
 .form-input.w400 { width: 400px; }

@@ -24,16 +24,8 @@ const ToggleTable = ({ info }) => {
   // };
 
   return (
-    <div style={{ border: "1px solid black", width: 500 }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          borderBottom: "1px solid black",
-          padding: 10,
-        }}
-      >
+    <div className="svcItem">
+      <div className="svcTit">
         <h4>{info.title}</h4>
         <h4>{LABELS.DID_CONFIG_LENGH(info.data.length, info.max)}</h4>
         <div>
@@ -50,23 +42,16 @@ const ToggleTable = ({ info }) => {
       </div>
       {/* 본문: 오픈 시에만 표시 */}
       {open && (
-        <div style={{ display: "flex" }}>
+        <div className="svcBox">
           {/* 왼쪽 */}
-          <div
-            style={{
-              borderRight: "1px solid #0074C1",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              padding: 10,
-            }}
-          >
+          <div className="svcBoxL">
             {info.forms.map((item) => {
               const {
                 key,
                 type = "text",
                 options = [],
                 placeholder,
+                multi,
                 fields,
               } = item;
 
@@ -87,11 +72,12 @@ const ToggleTable = ({ info }) => {
                     />
                   ) : type === "textarea" ? (
                     <textarea style={{ height: "80px" }} />
-                  ) : fields ? (
+                  ) : multi ? (
                     <div>
                       {fields.map((subField, idx) => (
                         <div key={subField.key}>
                           <Input
+                            size="w130"
                             type={subField.type}
                             value={inputs[subField.key] || ""}
                             onChange={(e) =>
@@ -107,6 +93,7 @@ const ToggleTable = ({ info }) => {
                     </div>
                   ) : (
                     <Input
+                      size="w150"
                       value={value}
                       type={type}
                       placeholder={placeholder}
@@ -119,33 +106,15 @@ const ToggleTable = ({ info }) => {
           </div>
 
           {/* 버튼 영역 */}
-          <div
-            style={{
-              borderRight: "1px solid #0074C1",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              padding: 10,
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                borderBottom: "1px solid black",
-                paddingBottom: "5px",
-                marginBottom: "5px",
-              }}
-            >
+          <div className="svcBoxC">
+            <div>
               <Button
                 type={BUTTON_CANCEL}
                 label={LABELS.ADD}
                 // onClick={handleAdd}
               />
-              <Button
-                type={BUTTON_DELETE}
-                // onClick={handleDelete}
+              <Button type={BUTTON_DELETE} 
+              // onClick={handleDelete} 
               />
               <Button
                 type={BUTTON_CANCEL}
@@ -153,13 +122,7 @@ const ToggleTable = ({ info }) => {
                 // onClick={handleDeleteAll}
               />
             </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
+            <div>
               <div>{LABELS.MAIN_NUMBER}</div>
               <Button
                 type={BUTTON_DELETE}
@@ -175,7 +138,7 @@ const ToggleTable = ({ info }) => {
           </div>
 
           {/* 테이블 영역 */}
-          <div style={{ flex: 1, padding: 10 }}>
+          <div className="svcBoxR">
             <Table columns={info.columns} data={info.data} />
           </div>
         </div>
@@ -185,4 +148,3 @@ const ToggleTable = ({ info }) => {
 };
 
 export default ToggleTable;
-
