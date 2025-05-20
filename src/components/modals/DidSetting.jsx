@@ -2,7 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { useModal } from "../../contexts/ModalContext";
 import { LABELS } from "../../constants/Labels";
 import Table from "../Table";
-import { circularsInfo, did_setting_columns, did_setting_data, duras, groups, orgns, times, weeks } from "../../config/DataConfig";
+import {
+  circularsInfo,
+  did_setting_columns,
+  did_setting_data,
+  duras,
+  groups,
+  interrupt,
+  orgns,
+  times,
+  weeks,
+} from "../../config/DataConfig";
 import Button, { BUTTON_DELETE } from "../Button";
 import Input from "../Input";
 import { errorMessages, subsriberMessages } from "../../constants/Message";
@@ -10,7 +20,6 @@ import DidServiceToggle from "./DidServiceToggle";
 import { KEYS } from "../../constants/Keys";
 
 const DidSetting = ({ userInfo }) => {
-
   const tableRef = useRef();
 
   const { showAlert } = useModal();
@@ -61,18 +70,24 @@ const DidSetting = ({ userInfo }) => {
         <div className="w60p">
           <div className="popSubTit">{LABELS.DID}</div>
           <form class="popSchBox">
-              <label class="schTxtL1">대표번호</label>
-              <Input label={LABELS.MAIN_NUMBER} size="lg" />
-              <div className="mlAuto">
-                <Button label={LABELS.ADD_ITEM}  class="sbtn black"/>
-              </div>
+            <label class="schTxtL1">{LABELS.MAIN_NUMBER}</label>
+            <Input
+              label={LABELS.MAIN_NUMBER}
+              size="lg"
+              value={userInfo[KEYS.SUB_NO]}
+              disabled
+            />
+            <div className="mlAuto">
+              <Button label={LABELS.ADD_ITEM} class="sbtn black" />
+            </div>
           </form>
-          
+
           <form class="form">
             <div class="tbl-list-top mt10 mb-20">
-              <div class="top-button"> 
+              <div class="top-button">
                 <span>
-                  <Button type={BUTTON_DELETE} onClick={deleteData} /></span>
+                  <Button type={BUTTON_DELETE} onClick={deleteData} />
+                </span>
               </div>
             </div>
           </form>
@@ -86,19 +101,25 @@ const DidSetting = ({ userInfo }) => {
             pageSelect={false}
           />
         </div>
-
         <div className="w40p">
           <div className="popSubTit">{LABELS.ADDITIONAL_SERVICE_SETTING}</div>
           <form class="popSchBox">
-              <label class="schTxtL1">기본링</label>
-              <Input label={LABELS.DEFAULT_RING} size="sm"/>
-              <Input size="w200" />
+            <label class="schTxtL1">{LABELS.DEFAULT_RING}</label>
+            <Input
+              label={LABELS.DEFAULT_RING}
+              size="sm"
+              disabled
+              value={userInfo[KEYS.RBT_ID]}
+            />
+            <Input size="w200" disabled/>
           </form>
           <div class="configBox">
-              {selectRows.length === 0 && (
-                <div className="configAlertTxt">{subsriberMessages.didPlaceHolder}</div>
-              )}
-             {selectRows.length > 0 && (
+            {selectRows.length === 0 && (
+              <div className="configAlertTxt">
+                {subsriberMessages.didPlaceHolder}
+              </div>
+            )}
+            {selectRows.length > 0 && (
               <div>
                 <DidServiceToggle info={circularsInfo} />
                 <DidServiceToggle info={times} />
@@ -108,7 +129,7 @@ const DidSetting = ({ userInfo }) => {
                 <DidServiceToggle info={duras} />
               </div>
             )}
-            </div>
+          </div>
         </div>
       </div>
     </div>

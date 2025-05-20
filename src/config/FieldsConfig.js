@@ -358,7 +358,7 @@ export const subscriberEditFields = [
     key: KEYS.SUB_TYPE,
     label: LABELS.SUBSCRIBE_TYPE,
     type: "text",
-    value: "개인",
+    value: "법인",
     disabled: true,
   },
   {
@@ -401,8 +401,8 @@ export const subscriberEditFields = [
     multi: true,
     disabled: true,
     fields: [
-      { key: KEYS.FROM_NO, type: "number", value: "0240050045" },
-      { key: KEYS.TO_NO, type: "number", value: "0240050045" },
+      { key: KEYS.FROM_NO, type: "number", value: "0240050045", size: "sm" },
+      { key: KEYS.TO_NO, type: "number", value: "0240050045", size: "sm" },
     ],
   },
   {
@@ -411,8 +411,8 @@ export const subscriberEditFields = [
     multi: true,
     disabled: true,
     fields: [
-      { key: KEYS.TEL_FROM_NO, type: "number", value: "0240050045" },
-      { key: KEYS.TEL_TO_NO, type: "number", value: "0240050045" },
+      { key: KEYS.TEL_FROM_NO, type: "number", value: "0240050045", size: "sm" },
+      { key: KEYS.TEL_TO_NO, type: "number", value: "0240050045" , size: "sm"},
     ],
   },
   {

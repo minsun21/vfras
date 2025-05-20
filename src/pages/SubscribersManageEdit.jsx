@@ -9,12 +9,9 @@ import Input from "../components/Input";
 import RadioGroup from "../components/RadioGroup";
 import {
   subscriberEditFields,
-  subsriberManageFields,
 } from "../config/FieldsConfig";
 import { ROUTES } from "../constants/routes";
-import { fieldsValidate } from "../utils/FormValidation";
 import {
-  errorMessages,
   infoMessages,
   subsriberMessages,
 } from "../constants/Message";
@@ -131,17 +128,28 @@ const SubscriberManageEdit = () => {
   };
 
   const clickDidSetting = () => {
-    if(formData[KEYS.SUB_TYPE] === LABELS.CORPORATION){
-      showModal({
-        content: <DidSetting userInfo={formData} />,
-        header: LABELS.DID_TITLE,
-      });
-    }else {
-      showModal({
-        content: <DidSettingPersonal userInfo={formData} />,
-        header: LABELS.DID_TITLE_PERSONAL,
-      });
-    }
+    // if(formData[KEYS.SUB_TYPE] === LABELS.CORPORATION){
+    //   showModal({
+    //     content: <DidSetting userInfo={formData} />,
+    //     header: LABELS.DID_TITLE,
+    //   });
+    // }else {
+    //   showModal({
+    //     content: <DidSettingPersonal userInfo={formData} />,
+    //     header: LABELS.DID_TITLE_PERSONAL,
+    //   });
+    // }
+    showModal({
+      content: <DidSetting userInfo={formData} />,
+      header: LABELS.DID_TITLE,
+    });
+  };
+
+  const clickDidSettingPersonal = () => {
+    showModal({
+      content: <DidSettingPersonal userInfo={formData} />,
+      header: LABELS.DID_TITLE_PERSONAL,
+    });
   };
 
   const clickResetPassword = () => {
@@ -277,6 +285,11 @@ const SubscriberManageEdit = () => {
                             label={LABELS.SETTING}
                             onClick={clickDidSetting}
                           />
+                           <Button
+                            type={BUTTON_CANCEL}
+                            label={"개인용-임시"}
+                            onClick={clickDidSettingPersonal}
+                          />
                         </div>
                       ) : multi ? (
                         <div>
@@ -292,6 +305,7 @@ const SubscriberManageEdit = () => {
                                   }))
                                 }
                                 disabled={disabled}
+                                size={subField.size}
                               />
                               {idx === 0 && <span>{"-"}</span>}
                             </div>

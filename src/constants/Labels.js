@@ -120,4 +120,5 @@ export const LABELS = {
   DEPARTMENT_PERMISSIONS :"부서 권한",
   MODIFY : "수정",
   DID_CONFIG_LENGH : (cnt, max) => `${cnt}개 (최대 ${max})`,
+  INTTERUPT : "일시정지"
 };

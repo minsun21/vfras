@@ -892,6 +892,68 @@ export const duras = {
   ],
 };
 
+export const interrupt = {
+  title: LABELS.INTTERUPT,
+  max: 50,
+  forms: [
+    {
+      key: "date",
+      fields: [
+        {
+          key: "startDate",
+          type: "date",
+        },
+        {
+          key: "endDate",
+          type: "date",
+        },
+      ],
+    },
+    { key: "soundCode", type: "number", placeholder: "음원코드" },
+  ],
+  columns: [
+    {
+      accessorKey: KEYS.RBT_ID,
+      header: LABELS.SOUNDS_CODE,
+    },
+    {
+      accessorKey: "startDate",
+      header: "시작일",
+    },
+    {
+      accessorKey: "endDate",
+      header: "종료일",
+    },
+  ],
+  data: [
+    {
+      [KEYS.RBT_ID]: "11111",
+      startDate: "20250501",
+      endDate: "20250501",
+    },
+    {
+      [KEYS.RBT_ID]: "22222",
+      startDate: "20250501",
+      endDate: "20250501",
+    },
+    {
+      [KEYS.RBT_ID]: "33333",
+      startDate: "20250501",
+      endDate: "20250501",
+    },
+    {
+      [KEYS.RBT_ID]: "44444",
+      startDate: "20250501",
+      endDate: "20250501",
+    },
+    {
+      [KEYS.RBT_ID]: "55555",
+      startDate: "20250501",
+      endDate: "20250501",
+    },
+  ],
+};
+
 export const did_personal_setting_columns = [
   {
     accessorKey: KEYS.USER_NUMBER,
