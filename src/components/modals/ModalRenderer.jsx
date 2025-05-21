@@ -20,16 +20,16 @@ const ModalRenderer = () => {
           shouldCloseOnEsc={false}
           ariaHideApp={false} >
           {type === "alert" ? (
-             <div class="layer-popup open"> 
-                <div class="md-content w400">
-                    <div class="msg-header">
+             <div className="layer-popup open"> 
+                <div className="md-content w400">
+                    <div className="msg-header">
                         <h3>{LABELS.ALERT_MSG}</h3>
                     </div>
-                  <div class="msg-body">
+                  <div className="msg-body">
                     <p>{props.message}</p>
                   </div>
-                  <div class="msg-footer">
-                    <div class="btn-wrap center">
+                  <div className="msg-footer">
+                    <div className="btn-wrap center">
                       <Button
                       onClick={() => {
                         props.onConfirm?.();
@@ -42,16 +42,16 @@ const ModalRenderer = () => {
             </div>
 
           ) : type === "dialog" ? (
-            <div class="layer-popup open"> 
-                <div class="md-content w400">
-                    <div class="msg-header">
+            <div className="layer-popup open"> 
+                <div className="md-content w400">
+                    <div className="msg-header">
                         <h3>{LABELS.ALERT_MSG}</h3>
                     </div>
-                  <div class="msg-body">
+                  <div className="msg-body">
                     <p>{props.message}</p>
                   </div>
-                  <div class="msg-footer">
-                    <div class="btn-wrap center">
+                  <div className="msg-footer">
+                    <div className="btn-wrap center">
                       <Button type={BUTTON_CANCEL} onClick={closeModal} />
                       <Button
                         onClick={() => {
@@ -65,19 +65,19 @@ const ModalRenderer = () => {
             </div>
 
           ) : (
-            <div class="layer-popup open"> 
-                <div class="md-content w1600">
-                    <div class="pop-header">
+            <div className="layer-popup open"> 
+                <div className="md-content w1600">
+                    <div className="pop-header">
                         <h3>{props.header}</h3>
-                        <div class="pop-header-close">
+                        <div className="pop-header-close">
                           <button onClick={closeModal}/>
                         </div>
                     </div>
-                  <div class="pop-body">
+                  <div className="pop-body">
                     {props.content}
                   </div>
-                  <div class="pop-footer">
-                    <div class="btn-wrap center">
+                  <div className="pop-footer">
+                    <div className="btn-wrap center">
                       <Button type={BUTTON_CANCEL} onClick={closeModal} />
                       <Button onClick={() => { props.onConfirm?.(); closeModal(); }} />
                     </div>

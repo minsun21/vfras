@@ -2,22 +2,24 @@ import React, { useEffect, useRef, useState } from "react";
 import { useModal } from "../../contexts/ModalContext";
 import { LABELS } from "../../constants/Labels";
 import Table from "../Table";
-import { circularsInfo, did_setting_columns, did_setting_data, duras,groups, interrupt, orgns, times, weeks,} from "../../config/DataConfig";
+import { DID_CONFIG_DATAS, did_setting_columns } from "../../config/DataConfig";
 import Button, { BUTTON_DELETE } from "../Button";
 import Input from "../Input";
 import { errorMessages, subsriberMessages } from "../../constants/Message";
-import DidServiceToggle from "./DidServiceToggle";
+import DidConfig from "./DidConfig";
 import { KEYS } from "../../constants/Keys";
 
 const DidSetting = ({ userInfo }) => {
   const tableRef = useRef();
+  const parentRef = useRef(null);
+
   const { showAlert } = useModal();
   const [data, setData] = useState([]);
   const [selectRows, setSelectRows] = useState([]);
 
   useEffect(() => {
     // console.log("id", userInfo);
-    setData(did_setting_data);
+    setData(userInfo.did_config);
   }, []);
 
   const onSelectRows = (rows) => {
@@ -45,23 +47,33 @@ const DidSetting = ({ userInfo }) => {
     }
 
     const filteredData = data.filter(
-      (item) => !selectRows.some((r) => r[KEYS.ID] === item[KEYS.ID])
+      (item) =>
+        !selectRows.some((r) => r[KEYS.ADMIN_ID] === item[KEYS.ADMIN_ID])
     );
     setData(filteredData);
 
     tableRef.current?.clearSelection();
   };
 
-  const titleRows = document.querySelectorAll('.lvAccordion .title-row');
-    titleRows.forEach(row => {
-      row.addEventListener('click', () => {
-        const item = row.parentElement;
-        const isActive = item.classList.contains('active');
-        document.querySelectorAll('.lvAccordion .lvItem').forEach(i => i.classList.remove('active'));
-        if (!isActive) item.classList.add('active');
-      });
-    });
+  const openAccordion = () => {
+    const child = parentRef.current.querySelector(".lvItem");
+    if (child) {
+      child.classList.toggle("active");
+    }
+  };
 
+  const addDid = (accessorKey) => {
+    const selectedIds = tableRef.current?.getSelectedRowIds?.();
+    if (!selectedIds?.length) return;
+    tableRef.current.updateRowsById(selectedIds, (row) => ({
+      ...row,
+      [accessorKey]: !row[accessorKey], // ✅ true <-> false 토글
+    }));
+  };
+
+  useEffect(() => {
+    console.log("데이터 변경됨:", data);
+  }, [data]);
 
   return (
     <div>
@@ -80,7 +92,6 @@ const DidSetting = ({ userInfo }) => {
               <Button label={LABELS.ADD_ITEM} class="sbtn black" />
             </div>
           </form>
-
           <form class="form">
             <div class="tbl-list-top mt10 mb-20">
               <div class="top-button">
@@ -95,7 +106,8 @@ const DidSetting = ({ userInfo }) => {
             onRowSelectionChange={onSelectRows}
             columns={did_setting_columns}
             data={data}
-            pageSize={5}
+            setTableData={setData}
+            pageSize={10}
             resultLabel={false}
             pageSelect={false}
           />
@@ -110,23 +122,21 @@ const DidSetting = ({ userInfo }) => {
               disabled
               value={userInfo[KEYS.RBT_ID]}
             />
-            <Input size="w200" disabled/>
+            <Input size="sm" value={userInfo[KEYS.RBT_ID_VALUE]} disabled />
           </form>
           <div class="configBox">
-            {selectRows.length === 0 && (
+            {selectRows.length === 0 ? (
               <div className="configAlertTxt">
                 {subsriberMessages.didPlaceHolder}
               </div>
-            )}
-            {selectRows.length > 0 && (
-              <div class="lvAccordion">
-                <DidServiceToggle info={circularsInfo} />
-                <DidServiceToggle info={times} />
-                <DidServiceToggle info={weeks} />
-                <DidServiceToggle info={orgns} />
-                <DidServiceToggle info={groups} />
-                <DidServiceToggle info={duras} />
+            ) : selectRows.length === 1 ? (
+              <div class="lvAccordion" ref={parentRef} onClick={openAccordion}>
+                {DID_CONFIG_DATAS.map((config) => (
+                  <DidConfig config={config} initChekced={selectRows[0][config.key]} addDid={addDid} />
+                ))}
               </div>
+            ) : (
+              <div className="configAlertTxt">{errorMessages.oneSelect}</div>
             )}
           </div>
         </div>

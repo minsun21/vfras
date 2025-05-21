@@ -69,8 +69,8 @@ const Login = () => {
               <input
                 type="text"
                 id="inputId"
-                name={KEYS.ID}
-                value={data[KEYS.ID]}
+                name={KEYS.ADMIN_ID}
+                value={data[KEYS.ADMIN_ID]}
                 className="form-input"
                 placeholder={loginMessages.infoId}
               />

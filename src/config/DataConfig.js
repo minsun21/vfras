@@ -2,6 +2,7 @@ import React from "react";
 import Button from "../components/Button";
 import { LABELS } from "../constants/Labels";
 import { KEYS } from "../constants/Keys";
+import { SUBSRIBERS_STATE } from "./FieldsConfig";
 
 export const sounds_source_columns = [
   {
@@ -59,7 +60,7 @@ export const sounds_source_data = [
 export const HISTORY_columns = (func) => {
   return [
     {
-      accessorKey: KEYS.ID,
+      accessorKey: KEYS.ADMIN_ID,
       header: LABELS.ID,
       clickable: ({ row }) => func(row.original),
     },
@@ -88,7 +89,7 @@ export const HISTORY_columns = (func) => {
 
 export const HISTORY_data = [
   {
-    [KEYS.ID]: "admin",
+    [KEYS.ADMIN_ID]: "admin",
     [KEYS.NAME]: "관리자",
     [KEYS.DEPARTMENT]: "-",
     [KEYS.USER_TYPE]: "Admin",
@@ -96,7 +97,7 @@ export const HISTORY_data = [
     [KEYS.LAST_ACCESS_TIME]: "2024.02.04 11:23:27",
   },
   {
-    [KEYS.ID]: "cwback",
+    [KEYS.ADMIN_ID]: "cwback",
     [KEYS.NAME]: "백창우",
     [KEYS.DEPARTMENT]: "고객만족팀",
     [KEYS.USER_TYPE]: "User",
@@ -104,7 +105,7 @@ export const HISTORY_data = [
     [KEYS.LAST_ACCESS_TIME]: "2024.02.01 09:12:35",
   },
   {
-    [KEYS.ID]: "wooseok",
+    [KEYS.ADMIN_ID]: "wooseok",
     [KEYS.NAME]: "주우석",
     [KEYS.DEPARTMENT]: "고객만족팀",
     [KEYS.USER_TYPE]: "User",
@@ -112,7 +113,7 @@ export const HISTORY_data = [
     [KEYS.LAST_ACCESS_TIME]: "2024.02.02 12:03:04",
   },
   {
-    [KEYS.ID]: "hong",
+    [KEYS.ADMIN_ID]: "hong",
     [KEYS.NAME]: "홍길동",
     [KEYS.DEPARTMENT]: "고객만족팀",
     [KEYS.USER_TYPE]: "User",
@@ -120,7 +121,7 @@ export const HISTORY_data = [
     [KEYS.LAST_ACCESS_TIME]: "2024.04.23 11:55:01",
   },
   {
-    [KEYS.ID]: "kim",
+    [KEYS.ADMIN_ID]: "kim",
     [KEYS.NAME]: "김철수",
     [KEYS.DEPARTMENT]: "고객만족팀",
     [KEYS.USER_TYPE]: "User",
@@ -131,7 +132,7 @@ export const HISTORY_data = [
 
 export const account_manage_columns = [
   {
-    accessorKey: KEYS.ID,
+    accessorKey: KEYS.ADMIN_ID,
     header: LABELS.ID,
   },
   {
@@ -158,7 +159,7 @@ export const account_manage_columns = [
 
 export const account_manage_data = [
   {
-    [KEYS.ID]: "admin",
+    [KEYS.ADMIN_ID]: "admin",
     [KEYS.NAME]: "관리자",
     [KEYS.DEPARTMENT]: "-",
     [KEYS.USER_TYPE]: "Admin",
@@ -166,7 +167,7 @@ export const account_manage_data = [
     [KEYS.LAST_ACCESS_TIME]: "2024.02.04 11:23:27",
   },
   {
-    [KEYS.ID]: "cwback",
+    [KEYS.ADMIN_ID]: "cwback",
     [KEYS.NAME]: "백창우",
     [KEYS.DEPARTMENT]: "고객만족팀",
     [KEYS.USER_TYPE]: "User",
@@ -174,7 +175,7 @@ export const account_manage_data = [
     [KEYS.LAST_ACCESS_TIME]: "2024.02.01 09:12:35",
   },
   {
-    [KEYS.ID]: "wooseok",
+    [KEYS.ADMIN_ID]: "wooseok",
     [KEYS.NAME]: "주우석",
     [KEYS.DEPARTMENT]: "고객만족팀",
     [KEYS.USER_TYPE]: "User",
@@ -182,7 +183,7 @@ export const account_manage_data = [
     [KEYS.LAST_ACCESS_TIME]: "2024.02.02 12:03:04",
   },
   {
-    [KEYS.ID]: "hong",
+    [KEYS.ADMIN_ID]: "hong",
     [KEYS.NAME]: "홍길동",
     [KEYS.DEPARTMENT]: "고객만족팀",
     [KEYS.USER_TYPE]: "User",
@@ -190,7 +191,7 @@ export const account_manage_data = [
     [KEYS.LAST_ACCESS_TIME]: "2024.04.23 11:55:01",
   },
   {
-    [KEYS.ID]: "kim",
+    [KEYS.ADMIN_ID]: "kim",
     [KEYS.NAME]: "김철수",
     [KEYS.DEPARTMENT]: "고객만족팀",
     [KEYS.USER_TYPE]: "User",
@@ -246,7 +247,7 @@ export const subscribe_columns = (navigateManage) => {
 
 export const subscribe_data = [
   {
-    [KEYS.ID]: 1,
+    [KEYS.ADMIN_ID]: 1,
     [KEYS.SUB_NO]: "0211112222",
     [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
@@ -255,7 +256,7 @@ export const subscribe_data = [
     [KEYS.SUB_STATUS]: "요청",
   },
   {
-    [KEYS.ID]: 2,
+    [KEYS.ADMIN_ID]: 2,
     [KEYS.SUB_NO]: "0211112222",
     [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
@@ -264,7 +265,7 @@ export const subscribe_data = [
     [KEYS.SUB_STATUS]: "요청",
   },
   {
-    [KEYS.ID]: 3,
+    [KEYS.ADMIN_ID]: 3,
     [KEYS.SUB_NO]: "0211112222",
     [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
@@ -273,7 +274,7 @@ export const subscribe_data = [
     [KEYS.SUB_STATUS]: "가입",
   },
   {
-    [KEYS.ID]: 4,
+    [KEYS.ADMIN_ID]: 4,
     [KEYS.SUB_NO]: "0211112222",
     [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
@@ -282,7 +283,7 @@ export const subscribe_data = [
     [KEYS.SUB_STATUS]: "가입",
   },
   {
-    [KEYS.ID]: 5,
+    [KEYS.ADMIN_ID]: 5,
     [KEYS.SUB_NO]: "0211112222",
     [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
@@ -291,7 +292,7 @@ export const subscribe_data = [
     [KEYS.SUB_STATUS]: "가입",
   },
   {
-    [KEYS.ID]: 6,
+    [KEYS.ADMIN_ID]: 6,
     [KEYS.SUB_NO]: "0211112222",
     [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
@@ -300,7 +301,7 @@ export const subscribe_data = [
     [KEYS.SUB_STATUS]: "가입",
   },
   {
-    [KEYS.ID]: 7,
+    [KEYS.ADMIN_ID]: 7,
     [KEYS.SUB_NO]: "0211112222",
     [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
@@ -309,7 +310,7 @@ export const subscribe_data = [
     [KEYS.SUB_STATUS]: "가입",
   },
   {
-    [KEYS.ID]: 8,
+    [KEYS.ADMIN_ID]: 8,
     [KEYS.SUB_NO]: "0211112222",
     [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
@@ -318,7 +319,7 @@ export const subscribe_data = [
     [KEYS.SUB_STATUS]: "가입",
   },
   {
-    [KEYS.ID]: 9,
+    [KEYS.ADMIN_ID]: 9,
     [KEYS.SUB_NO]: "0211112222",
     [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
@@ -327,7 +328,7 @@ export const subscribe_data = [
     [KEYS.SUB_STATUS]: "가입",
   },
   {
-    [KEYS.ID]: 9,
+    [KEYS.ADMIN_ID]: 9,
     [KEYS.SUB_NO]: "0211112222",
     [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
@@ -336,7 +337,7 @@ export const subscribe_data = [
     [KEYS.SUB_STATUS]: "가입",
   },
   {
-    [KEYS.ID]: 9,
+    [KEYS.ADMIN_ID]: 9,
     [KEYS.SUB_NO]: "0211112222",
     [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
@@ -345,7 +346,7 @@ export const subscribe_data = [
     [KEYS.SUB_STATUS]: "가입",
   },
   {
-    [KEYS.ID]: 9,
+    [KEYS.ADMIN_ID]: 9,
     [KEYS.SUB_NO]: "0211112222",
     [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
@@ -354,7 +355,7 @@ export const subscribe_data = [
     [KEYS.SUB_STATUS]: "가입",
   },
   {
-    [KEYS.ID]: 9,
+    [KEYS.ADMIN_ID]: 9,
     [KEYS.SUB_NO]: "0211112222",
     [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
@@ -363,7 +364,7 @@ export const subscribe_data = [
     [KEYS.SUB_STATUS]: "가입",
   },
   {
-    [KEYS.ID]: 9,
+    [KEYS.ADMIN_ID]: 9,
     [KEYS.SUB_NO]: "0211112222",
     [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
@@ -372,7 +373,7 @@ export const subscribe_data = [
     [KEYS.SUB_STATUS]: "가입",
   },
   {
-    [KEYS.ID]: 9,
+    [KEYS.ADMIN_ID]: 9,
     [KEYS.SUB_NO]: "0211112222",
     [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
@@ -381,7 +382,7 @@ export const subscribe_data = [
     [KEYS.SUB_STATUS]: "가입",
   },
   {
-    [KEYS.ID]: 9,
+    [KEYS.ADMIN_ID]: 9,
     [KEYS.SUB_NO]: "0211112222",
     [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
@@ -390,7 +391,7 @@ export const subscribe_data = [
     [KEYS.SUB_STATUS]: "가입",
   },
   {
-    [KEYS.ID]: 9,
+    [KEYS.ADMIN_ID]: 9,
     [KEYS.SUB_NO]: "0211112222",
     [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
@@ -443,516 +444,418 @@ export const did_setting_columns = [
     header: LABELS.IS_ADDITIONAL_SERVICE,
     columns: [
       {
-        accessorKey: KEYS.CIRCULATION_RING,
+        accessorKey: KEYS.IS_INTERRUPT,
+        header: LABELS.INTERRUPT,
+        cell: ({ row, getValue }) => (
+          <input type="checkbox" checked={!!getValue()} disabled readOnly />
+        ),
+      },
+      {
+        accessorKey: KEYS.IS_CIRCULR_JOINED,
         header: LABELS.CIRCULATION_RING,
+        cell: ({ row, getValue }) => (
+          <input type="checkbox" checked={!!getValue()} disabled readOnly />
+        ),
       },
       {
-        accessorKey: KEYS.TIME_SLOT,
+        accessorKey: KEYS.IS_TIME_JOINED,
         header: LABELS.TIME_SLOT,
+        cell: ({ row, getValue }) => (
+          <input type="checkbox" checked={!!getValue()} disabled readOnly />
+        ),
       },
       {
-        accessorKey: KEYS.DAY_OF_WEEKEND,
+        accessorKey: KEYS.IS_WEEK_JOINED,
         header: LABELS.DAY_OF_WEEKEND,
+        cell: ({ row, getValue }) => (
+          <input type="checkbox" checked={!!getValue()} disabled readOnly />
+        ),
       },
       {
-        accessorKey: KEYS.CALLER_AREA,
+        accessorKey: KEYS.IS_ORGN_JOINED,
         header: LABELS.CALLER_AREA,
+        cell: ({ row, getValue }) => (
+          <input type="checkbox" checked={!!getValue()} disabled readOnly />
+        ),
       },
       {
-        accessorKey: KEYS.CALLER_NUMBER,
+        accessorKey: KEYS.IS_GROUP_JOINED,
         header: LABELS.CALLER_NUMBER,
+        cell: ({ row, getValue }) => (
+          <input type="checkbox" checked={!!getValue()} disabled readOnly />
+        ),
       },
       {
-        accessorKey: KEYS.ANNIVERSARY,
+        accessorKey: KEYS.IS_DURA_JOINED,
         header: LABELS.ANNIVERSARY,
+        cell: ({ row, getValue }) => (
+          <input type="checkbox" checked={!!getValue()} disabled readOnly />
+        ),
       },
     ],
   },
 ];
 
-export const did_setting_data = [
+export const DID_CONFIG_DATAS = [
   {
-    [KEYS.ID]: 1,
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112233",
-    [KEYS.RBT_ID]: "599145",
-    [KEYS.SOUND_CODE]: "사랑을 했다",
-  },
-
-  {
-    [KEYS.ID]: 11,
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112244",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112244",
-    [KEYS.RBT_ID]: "1111211",
-    [KEYS.SOUND_CODE]: "아파트",
-  },
-  {
-    [KEYS.ID]: 112,
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.RBT_ID]: "323232",
-    [KEYS.SOUND_CODE]: "네모의 꿈",
-  },
-  {
-    [KEYS.ID]: 112,
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.RBT_ID]: "323232",
-    [KEYS.SOUND_CODE]: "네모의 꿈",
-  },
-  {
-    [KEYS.ID]: 112,
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.RBT_ID]: "323232",
-    [KEYS.SOUND_CODE]: "네모의 꿈",
-  },
-  {
-    [KEYS.ID]: 112,
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.RBT_ID]: "323232",
-    [KEYS.SOUND_CODE]: "네모의 꿈",
-  },
-  {
-    [KEYS.ID]: 112,
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.RBT_ID]: "323232",
-    [KEYS.SOUND_CODE]: "네모의 꿈",
-  },
-  {
-    [KEYS.ID]: 112,
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.RBT_ID]: "323232",
-    [KEYS.SOUND_CODE]: "네모의 꿈",
-  },
-  {
-    [KEYS.ID]: 112,
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.RBT_ID]: "323232",
-    [KEYS.SOUND_CODE]: "네모의 꿈",
+    key: KEYS.IS_INTERRUPT,
+    title: LABELS.INTERRUPT,
+    max: 50,
+    forms: [
+      {
+        key: "date",
+        fields: [
+          {
+            key: "startDate",
+            type: "date",
+          },
+          {
+            key: "endDate",
+            type: "date",
+          },
+        ],
+      },
+      { key: "soundCode", type: "number", placeholder: "음원코드" },
+    ],
+    columns: [
+      {
+        accessorKey: KEYS.RBT_ID,
+        header: LABELS.SOUNDS_CODE,
+      },
+      {
+        accessorKey: "startDate",
+        header: "시작일",
+      },
+      {
+        accessorKey: "endDate",
+        header: "종료일",
+      },
+    ],
+    data: [
+      {
+        [KEYS.RBT_ID]: "11111",
+        startDate: "20250501",
+        endDate: "20250501",
+      },
+      {
+        [KEYS.RBT_ID]: "22222",
+        startDate: "20250501",
+        endDate: "20250501",
+      },
+      {
+        [KEYS.RBT_ID]: "33333",
+        startDate: "20250501",
+        endDate: "20250501",
+      },
+      {
+        [KEYS.RBT_ID]: "44444",
+        startDate: "20250501",
+        endDate: "20250501",
+      },
+      {
+        [KEYS.RBT_ID]: "55555",
+        startDate: "20250501",
+        endDate: "20250501",
+      },
+    ],
   },
   {
-    [KEYS.ID]: 112,
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.RBT_ID]: "323232",
-    [KEYS.SOUND_CODE]: "네모의 꿈",
+    key: KEYS.IS_CIRCULR_JOINED,
+    title: LABELS.CIRCULAR,
+    max: 5,
+    forms: [{ key: "soundCode", type: "number", placeholder: "음원코드" }],
+    columns: [
+      {
+        accessorKey: KEYS.RBT_ID,
+        header: LABELS.SOUNDS_CODE,
+      },
+    ],
+    data: [
+      { [KEYS.RBT_ID]: "11111" },
+      { [KEYS.RBT_ID]: "12345" },
+      { [KEYS.RBT_ID]: "22222" },
+      { [KEYS.RBT_ID]: "44444" },
+    ],
   },
   {
-    [KEYS.ID]: 112,
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.RBT_ID]: "323232",
-    [KEYS.SOUND_CODE]: "네모의 꿈",
+    key: KEYS.IS_TIME_JOINED,
+    title: LABELS.BY_TIME_ZONE,
+    max: 35,
+    forms: [
+      {
+        key: "dayType",
+        type: "select",
+        placeholder: "요일",
+        options: [
+          { key: "1", value: "월" },
+          { key: "2", value: "화" },
+          { key: "3", value: "수" },
+          { key: "4", value: "목" },
+          { key: "5", value: "금" },
+          { key: "6", value: "토" },
+          { key: "0", value: "일" },
+        ],
+      },
+      {
+        key: "time",
+        fields: [
+          {
+            key: "startTime",
+            type: "time",
+          },
+          {
+            key: "endTime",
+            type: "time",
+          },
+        ],
+      },
+      { key: "soundCode", type: "number", placeholder: "음원코드" },
+    ],
+    columns: [
+      {
+        accessorKey: KEYS.RBT_ID,
+        header: LABELS.SOUNDS_CODE,
+      },
+      {
+        accessorKey: "dayType",
+        header: "요일",
+      },
+      {
+        accessorKey: "startTime",
+        header: "시작시간",
+      },
+      {
+        accessorKey: "endTime",
+        header: "종료시간",
+      },
+    ],
+    data: [
+      {
+        [KEYS.RBT_ID]: "11111",
+        startTime: "0800",
+        endTime: "1100",
+        dayType: "월",
+      },
+      {
+        [KEYS.RBT_ID]: "12345",
+        startTime: "0800",
+        endTime: "1100",
+        dayType: "월",
+      },
+      {
+        [KEYS.RBT_ID]: "22222",
+        startTime: "0800",
+        endTime: "1100",
+        dayType: "월",
+      },
+      {
+        [KEYS.RBT_ID]: "44444",
+        startTime: "0800",
+        endTime: "1100",
+        dayType: "월",
+      },
+      {
+        [KEYS.RBT_ID]: "33333",
+        startTime: "0800",
+        endTime: "1100",
+        dayType: "월",
+      },
+      {
+        [KEYS.RBT_ID]: "24343",
+        startTime: "0800",
+        endTime: "1100",
+        dayType: "월",
+      },
+      {
+        [KEYS.RBT_ID]: "65456",
+        startTime: "0800",
+        endTime: "1100",
+        dayType: "월",
+      },
+    ],
   },
   {
-    [KEYS.ID]: 112,
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.RBT_ID]: "323232",
-    [KEYS.SOUND_CODE]: "네모의 꿈",
+    key: KEYS.IS_WEEK_JOINED,
+    title: LABELS.BY_DAY,
+    max: 7,
+    forms: [
+      {
+        key: "dayType",
+        type: "select",
+        placeholder: "요일",
+        options: [
+          { key: "1", value: "월" },
+          { key: "2", value: "화" },
+          { key: "3", value: "수" },
+          { key: "4", value: "목" },
+          { key: "5", value: "금" },
+          { key: "6", value: "토" },
+          { key: "0", value: "일" },
+        ],
+      },
+      { key: "soundCode", type: "number", placeholder: "음원코드" },
+    ],
+    columns: [
+      {
+        accessorKey: KEYS.RBT_ID,
+        header: LABELS.SOUNDS_CODE,
+      },
+      {
+        accessorKey: "dayType",
+        header: "요일",
+      },
+    ],
+    data: [
+      {
+        [KEYS.RBT_ID]: "11111",
+        dayType: "월",
+      },
+      {
+        [KEYS.RBT_ID]: "12345",
+        dayType: "월",
+      },
+    ],
   },
   {
-    [KEYS.ID]: 112,
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.RBT_ID]: "323232",
-    [KEYS.SOUND_CODE]: "네모의 꿈",
+    key: KEYS.IS_ORGN_JOINED,
+    title: LABELS.BY_SENDING_AREA,
+    max: 17,
+    forms: [
+      {
+        key: "areaCode",
+        type: "select",
+        placeholder: "지역",
+        options: [
+          { key: "02", value: "서울" },
+          { key: "031", value: "경기" },
+          { key: "052", value: "대구" },
+        ],
+      },
+      { key: "soundCode", type: "number", placeholder: "음원코드" },
+    ],
+    columns: [
+      {
+        accessorKey: KEYS.RBT_ID,
+        header: LABELS.SOUNDS_CODE,
+      },
+      {
+        accessorKey: "areaCode",
+        header: "지역",
+      },
+    ],
+    data: [
+      {
+        [KEYS.RBT_ID]: "11111",
+        areaCode: "02(서울)",
+      },
+      {
+        [KEYS.RBT_ID]: "12345",
+        areaCode: "031(경기)",
+      },
+    ],
   },
   {
-    [KEYS.ID]: 112,
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.RBT_ID]: "323232",
-    [KEYS.SOUND_CODE]: "네모의 꿈",
+    key: KEYS.IS_GROUP_JOINED,
+    title: LABELS.BY_CALLER_NUMBER,
+    max: 3,
+    forms: [
+      {
+        label: "발신번호(','구분, 최대 5개)",
+        key: "numbers",
+        type: "textarea",
+      },
+      { key: "soundCode", type: "number", placeholder: "음원코드" },
+    ],
+    columns: [
+      {
+        accessorKey: "groupId",
+        header: "그룹",
+      },
+      {
+        accessorKey: KEYS.RBT_ID,
+        header: LABELS.SOUNDS_CODE,
+      },
+      {
+        accessorKey: "numbers",
+        header: "발신번호",
+      },
+    ],
+    data: [
+      {
+        groupId: "그룹1",
+        [KEYS.RBT_ID]: "11111",
+        numbers: "01012344444\n01033334444\n01099998888",
+      },
+      {
+        groupId: "그룹2",
+        [KEYS.RBT_ID]: "12345",
+        numbers: "01012344444\n01033334444\n01099998888",
+      },
+    ],
   },
   {
-    [KEYS.ID]: 112,
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.RBT_ID]: "323232",
-    [KEYS.SOUND_CODE]: "네모의 꿈",
-  },
-  {
-    [KEYS.ID]: 112,
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.RBT_ID]: "323232",
-    [KEYS.SOUND_CODE]: "네모의 꿈",
-  },
-  {
-    [KEYS.ID]: 112,
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.RBT_ID]: "323232",
-    [KEYS.SOUND_CODE]: "네모의 꿈",
-  },
-  {
-    [KEYS.ID]: 112,
-    [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-    [KEYS.RBT_ID]: "323232",
-    [KEYS.SOUND_CODE]: "네모의 꿈",
+    key: KEYS.IS_DURA_JOINED,
+    title: LABELS.BY_ANNIVERSARY,
+    max: 50,
+    forms: [
+      {
+        key: "date",
+        fields: [
+          {
+            key: "startDate",
+            type: "date",
+          },
+          {
+            key: "endDate",
+            type: "date",
+          },
+        ],
+      },
+      { key: "soundCode", type: "number", placeholder: "음원코드" },
+    ],
+    columns: [
+      {
+        accessorKey: KEYS.RBT_ID,
+        header: LABELS.SOUNDS_CODE,
+      },
+      {
+        accessorKey: "startDate",
+        header: "시작일",
+      },
+      {
+        accessorKey: "endDate",
+        header: "종료일",
+      },
+    ],
+    data: [
+      {
+        [KEYS.RBT_ID]: "11111",
+        startDate: "20250501",
+        endDate: "20250501",
+      },
+      {
+        [KEYS.RBT_ID]: "22222",
+        startDate: "20250501",
+        endDate: "20250501",
+      },
+      {
+        [KEYS.RBT_ID]: "33333",
+        startDate: "20250501",
+        endDate: "20250501",
+      },
+      {
+        [KEYS.RBT_ID]: "44444",
+        startDate: "20250501",
+        endDate: "20250501",
+      },
+      {
+        [KEYS.RBT_ID]: "55555",
+        startDate: "20250501",
+        endDate: "20250501",
+      },
+    ],
   },
 ];
-
-export const circularsInfo = {
-  title: LABELS.CIRCULAR,
-  max: 5,
-  forms: [{ key: "soundCode", type: "number", placeholder: "음원코드" }],
-  columns: [
-    {
-      accessorKey: KEYS.RBT_ID,
-      header: LABELS.SOUNDS_CODE,
-    },
-  ],
-  data: [
-    { [KEYS.RBT_ID]: "11111" },
-    { [KEYS.RBT_ID]: "12345" },
-    { [KEYS.RBT_ID]: "22222" },
-    { [KEYS.RBT_ID]: "44444" },
-  ],
-};
-
-export const times = {
-  title: LABELS.BY_TIME_ZONE,
-  max: 35,
-  forms: [
-    {
-      key: "dayType",
-      type: "select",
-      placeholder: "요일",
-      options: [
-        { key: "1", value: "월" },
-        { key: "2", value: "화" },
-        { key: "3", value: "수" },
-        { key: "4", value: "목" },
-        { key: "5", value: "금" },
-        { key: "6", value: "토" },
-        { key: "0", value: "일" },
-      ],
-    },
-    {
-      key: "time",
-      fields: [
-        {
-          key: "startTime",
-          type: "time",
-        },
-        {
-          key: "endTime",
-          type: "time",
-        },
-      ],
-    },
-    { key: "soundCode", type: "number", placeholder: "음원코드" },
-  ],
-  columns: [
-    {
-      accessorKey: KEYS.RBT_ID,
-      header: LABELS.SOUNDS_CODE,
-    },
-    {
-      accessorKey: "dayType",
-      header: "요일",
-    },
-    {
-      accessorKey: "startTime",
-      header: "시작시간",
-    },
-    {
-      accessorKey: "endTime",
-      header: "종료시간",
-    },
-  ],
-  data: [
-    {
-      [KEYS.RBT_ID]: "11111",
-      startTime: "0800",
-      endTime: "1100",
-      dayType: "월",
-    },
-    {
-      [KEYS.RBT_ID]: "12345",
-      startTime: "0800",
-      endTime: "1100",
-      dayType: "월",
-    },
-    {
-      [KEYS.RBT_ID]: "22222",
-      startTime: "0800",
-      endTime: "1100",
-      dayType: "월",
-    },
-    {
-      [KEYS.RBT_ID]: "44444",
-      startTime: "0800",
-      endTime: "1100",
-      dayType: "월",
-    },
-    {
-      [KEYS.RBT_ID]: "33333",
-      startTime: "0800",
-      endTime: "1100",
-      dayType: "월",
-    },
-    {
-      [KEYS.RBT_ID]: "24343",
-      startTime: "0800",
-      endTime: "1100",
-      dayType: "월",
-    },
-    {
-      [KEYS.RBT_ID]: "65456",
-      startTime: "0800",
-      endTime: "1100",
-      dayType: "월",
-    },
-  ],
-};
-
-export const weeks = {
-  title: LABELS.BY_DAY,
-  max: 7,
-  forms: [
-    {
-      key: "dayType",
-      type: "select",
-      placeholder: "요일",
-      options: [
-        { key: "1", value: "월" },
-        { key: "2", value: "화" },
-        { key: "3", value: "수" },
-        { key: "4", value: "목" },
-        { key: "5", value: "금" },
-        { key: "6", value: "토" },
-        { key: "0", value: "일" },
-      ],
-    },
-    { key: "soundCode", type: "number", placeholder: "음원코드" },
-  ],
-  columns: [
-    {
-      accessorKey: KEYS.RBT_ID,
-      header: LABELS.SOUNDS_CODE,
-    },
-    {
-      accessorKey: "dayType",
-      header: "요일",
-    },
-  ],
-  data: [
-    {
-      [KEYS.RBT_ID]: "11111",
-      dayType: "월",
-    },
-    {
-      [KEYS.RBT_ID]: "12345",
-      dayType: "월",
-    },
-  ],
-};
-
-export const orgns = {
-  title: LABELS.BY_SENDING_AREA,
-  max: 17,
-  forms: [
-    {
-      key: "areaCode",
-      type: "select",
-      placeholder: "지역",
-      options: [
-        { key: "02", value: "서울" },
-        { key: "031", value: "경기" },
-        { key: "052", value: "대구" },
-      ],
-    },
-    { key: "soundCode", type: "number", placeholder: "음원코드" },
-  ],
-  columns: [
-    {
-      accessorKey: KEYS.RBT_ID,
-      header: LABELS.SOUNDS_CODE,
-    },
-    {
-      accessorKey: "areaCode",
-      header: "지역",
-    },
-  ],
-  data: [
-    {
-      [KEYS.RBT_ID]: "11111",
-      areaCode: "02(서울)",
-    },
-    {
-      [KEYS.RBT_ID]: "12345",
-      areaCode: "031(경기)",
-    },
-  ],
-};
-
-export const groups = {
-  title: LABELS.BY_CALLER_NUMBER,
-  max: 3,
-  forms: [
-    { label: "발신번호(','구분, 최대 5개)", key: "numbers", type: "textarea" },
-    { key: "soundCode", type: "number", placeholder: "음원코드" },
-  ],
-  columns: [
-    {
-      accessorKey: "groupId",
-      header: "그룹",
-    },
-    {
-      accessorKey: KEYS.RBT_ID,
-      header: LABELS.SOUNDS_CODE,
-    },
-    {
-      accessorKey: "numbers",
-      header: "발신번호",
-    },
-  ],
-  data: [
-    {
-      groupId: "그룹1",
-      [KEYS.RBT_ID]: "11111",
-      numbers: "01012344444\n01033334444\n01099998888",
-    },
-    {
-      groupId: "그룹2",
-      [KEYS.RBT_ID]: "12345",
-      numbers: "01012344444\n01033334444\n01099998888",
-    },
-  ],
-};
-
-export const duras = {
-  title: LABELS.BY_ANNIVERSARY,
-  max: 50,
-  forms: [
-    {
-      key: "date",
-      fields: [
-        {
-          key: "startDate",
-          type: "date",
-        },
-        {
-          key: "endDate",
-          type: "date",
-        },
-      ],
-    },
-    { key: "soundCode", type: "number", placeholder: "음원코드" },
-  ],
-  columns: [
-    {
-      accessorKey: KEYS.RBT_ID,
-      header: LABELS.SOUNDS_CODE,
-    },
-    {
-      accessorKey: "startDate",
-      header: "시작일",
-    },
-    {
-      accessorKey: "endDate",
-      header: "종료일",
-    },
-  ],
-  data: [
-    {
-      [KEYS.RBT_ID]: "11111",
-      startDate: "20250501",
-      endDate: "20250501",
-    },
-    {
-      [KEYS.RBT_ID]: "22222",
-      startDate: "20250501",
-      endDate: "20250501",
-    },
-    {
-      [KEYS.RBT_ID]: "33333",
-      startDate: "20250501",
-      endDate: "20250501",
-    },
-    {
-      [KEYS.RBT_ID]: "44444",
-      startDate: "20250501",
-      endDate: "20250501",
-    },
-    {
-      [KEYS.RBT_ID]: "55555",
-      startDate: "20250501",
-      endDate: "20250501",
-    },
-  ],
-};
-
-export const interrupt = {
-  title: LABELS.INTTERUPT,
-  max: 50,
-  forms: [
-    {
-      key: "date",
-      fields: [
-        {
-          key: "startDate",
-          type: "date",
-        },
-        {
-          key: "endDate",
-          type: "date",
-        },
-      ],
-    },
-    { key: "soundCode", type: "number", placeholder: "음원코드" },
-  ],
-  columns: [
-    {
-      accessorKey: KEYS.RBT_ID,
-      header: LABELS.SOUNDS_CODE,
-    },
-    {
-      accessorKey: "startDate",
-      header: "시작일",
-    },
-    {
-      accessorKey: "endDate",
-      header: "종료일",
-    },
-  ],
-  data: [
-    {
-      [KEYS.RBT_ID]: "11111",
-      startDate: "20250501",
-      endDate: "20250501",
-    },
-    {
-      [KEYS.RBT_ID]: "22222",
-      startDate: "20250501",
-      endDate: "20250501",
-    },
-    {
-      [KEYS.RBT_ID]: "33333",
-      startDate: "20250501",
-      endDate: "20250501",
-    },
-    {
-      [KEYS.RBT_ID]: "44444",
-      startDate: "20250501",
-      endDate: "20250501",
-    },
-    {
-      [KEYS.RBT_ID]: "55555",
-      startDate: "20250501",
-      endDate: "20250501",
-    },
-  ],
-};
 
 export const did_personal_setting_columns = [
   {
@@ -991,7 +894,7 @@ export const did_personal_setting_columns = [
 
 export const did_personal_setting_data = [
   {
-    [KEYS.ID]: 1,
+    [KEYS.ADMIN_ID]: 1,
     [KEYS.USER_NUMBER]: "02111112222\n~\n0211112233",
     [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112233",
     [KEYS.RBT_ID]: "599145",
@@ -1001,3 +904,217 @@ export const did_personal_setting_data = [
     [KEYS.MODIFY]: false,
   },
 ];
+
+export const SUBSRIBERS_INFO_DUMMY = {
+  [KEYS.SUB_NO]: "0211112222",
+  [KEYS.SUB_STATUS]: SUBSRIBERS_STATE[1].value,
+  [KEYS.SUB_TYPE]: "법인",
+  [KEYS.SERVICE_TYPE]: "기업",
+  [KEYS.NAME]: "홍길동",
+  [KEYS.PASSWORD]: "0505",
+  [KEYS.ADDRESS1]: "서울시 강남구",
+  [KEYS.ADDRESS2]: "",
+  [KEYS.FROM_NO]: "0240050045",
+  [KEYS.TO_NO]: "0240050111",
+  [KEYS.TEL_FROM_NO]: "0240050045",
+  [KEYS.TEL_TO_NO]: "0240054232",
+  [KEYS.RBT_ID]: "050125",
+  [KEYS.RBT_ID_VALUE]: "050125",
+  [KEYS.DID]: "13",
+  did_personal: [
+    {
+      [KEYS.ADMIN_ID]: 1,
+      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112233",
+      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112233",
+      [KEYS.RBT_ID]: "599145",
+      [KEYS.SOUND_CODE]: "사랑을 했다",
+      [KEYS.GERNERAL_PERMISSIONS]: true,
+      [KEYS.DEPARTMENT_PERMISSIONS]: false,
+      [KEYS.MODIFY]: false,
+    },
+  ],
+  did_config: [
+    {
+      [KEYS.ID]: 1222,
+      [KEYS.ADMIN_ID]: 1,
+      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112233",
+      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112233",
+      [KEYS.RBT_ID]: "599145",
+      [KEYS.SOUND_CODE]: "사랑을 했다",
+      [KEYS.IS_INTERRUPT]: true,
+      [KEYS.IS_CIRCULR_JOINED]: true,
+      [KEYS.IS_WEEK_JOINED]: true,
+      [KEYS.IS_TIME_JOINED]: false,
+      [KEYS.IS_ORGN_JOINED]: false,
+      [KEYS.IS_GROUP_JOINED]: true,
+      [KEYS.IS_DURA_JOINED]: false,
+    },
+    {
+      [KEYS.ID]: 28,
+      [KEYS.ADMIN_ID]: 11,
+      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112244",
+      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112244",
+      [KEYS.RBT_ID]: "1111211",
+      [KEYS.SOUND_CODE]: "아파트",
+      [KEYS.IS_INTERRUPT]: true,
+      [KEYS.IS_CIRCULR_JOINED]: false,
+      [KEYS.IS_WEEK_JOINED]: false,
+      [KEYS.IS_TIME_JOINED]: false,
+      [KEYS.IS_ORGN_JOINED]: false,
+      [KEYS.IS_GROUP_JOINED]: true,
+      [KEYS.IS_DURA_JOINED]: false,
+    },
+    {
+      [KEYS.ID]: 27,
+      [KEYS.ADMIN_ID]: 112,
+      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.RBT_ID]: "323232",
+      [KEYS.SOUND_CODE]: "네모의 꿈",
+      [KEYS.IS_INTERRUPT]: true,
+      [KEYS.IS_CIRCULR_JOINED]: false,
+      [KEYS.IS_WEEK_JOINED]: true,
+      [KEYS.IS_TIME_JOINED]: false,
+      [KEYS.IS_ORGN_JOINED]: false,
+      [KEYS.IS_GROUP_JOINED]: true,
+      [KEYS.IS_DURA_JOINED]: false,
+    },
+    {
+      [KEYS.ID]: 26,
+      [KEYS.ADMIN_ID]: 112,
+      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.RBT_ID]: "323232",
+      [KEYS.SOUND_CODE]: "네모의 꿈",
+      [KEYS.IS_INTERRUPT]: false,
+      [KEYS.IS_CIRCULR_JOINED]: false,
+      [KEYS.IS_WEEK_JOINED]: true,
+      [KEYS.IS_TIME_JOINED]: false,
+      [KEYS.IS_ORGN_JOINED]: false,
+      [KEYS.IS_GROUP_JOINED]: true,
+      [KEYS.IS_DURA_JOINED]: false,
+    },
+    {
+      [KEYS.ID]: 25,
+      [KEYS.ADMIN_ID]: 112,
+      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.RBT_ID]: "323232",
+      [KEYS.SOUND_CODE]: "네모의 꿈",
+      [KEYS.IS_INTERRUPT]: false,
+      [KEYS.IS_CIRCULR_JOINED]: false,
+      [KEYS.IS_WEEK_JOINED]: true,
+      [KEYS.IS_TIME_JOINED]: false,
+      [KEYS.IS_ORGN_JOINED]: true,
+      [KEYS.IS_GROUP_JOINED]: true,
+      [KEYS.IS_DURA_JOINED]: true,
+    },
+    {
+      [KEYS.ID]: 24,
+      [KEYS.ADMIN_ID]: 112,
+      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.RBT_ID]: "323232",
+      [KEYS.SOUND_CODE]: "네모의 꿈",
+      [KEYS.IS_INTERRUPT]: false,
+      [KEYS.IS_CIRCULR_JOINED]: false,
+      [KEYS.IS_WEEK_JOINED]: true,
+      [KEYS.IS_TIME_JOINED]: false,
+      [KEYS.IS_ORGN_JOINED]: true,
+      [KEYS.IS_GROUP_JOINED]: true,
+      [KEYS.IS_DURA_JOINED]: true,
+    },
+    {
+      [KEYS.ID]: 23,
+      [KEYS.ADMIN_ID]: 112,
+      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.RBT_ID]: "323232",
+      [KEYS.SOUND_CODE]: "네모의 꿈",
+    },
+    {
+      [KEYS.ADMIN_ID]: 22,
+      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.RBT_ID]: "323232",
+      [KEYS.SOUND_CODE]: "네모의 꿈",
+    },
+    {
+      [KEYS.ADMIN_ID]: 21,
+      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.RBT_ID]: "323232",
+      [KEYS.SOUND_CODE]: "네모의 꿈",
+    },
+    {
+      [KEYS.ID]: 19,
+      [KEYS.ADMIN_ID]: 112,
+      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.RBT_ID]: "323232",
+      [KEYS.SOUND_CODE]: "네모의 꿈",
+    },
+    {
+      [KEYS.ID]: 18,
+      [KEYS.ADMIN_ID]: 112,
+      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.RBT_ID]: "323232",
+      [KEYS.SOUND_CODE]: "네모의 꿈",
+    },
+    {
+      [KEYS.ADMIN_ID]: 17,
+      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.RBT_ID]: "323232",
+      [KEYS.SOUND_CODE]: "네모의 꿈",
+    },
+    {
+      [KEYS.ID]: 16,
+      [KEYS.ADMIN_ID]: 112,
+      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.RBT_ID]: "323232",
+      [KEYS.SOUND_CODE]: "네모의 꿈",
+    },
+    {
+      [KEYS.ADMIN_ID]: 15,
+      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.RBT_ID]: "323232",
+      [KEYS.SOUND_CODE]: "네모의 꿈",
+    },
+    {
+      [KEYS.ID]: 14,
+      [KEYS.ADMIN_ID]: 112,
+      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.RBT_ID]: "323232",
+      [KEYS.SOUND_CODE]: "네모의 꿈",
+    },
+    {
+      [KEYS.ID]: 13,
+      [KEYS.ADMIN_ID]: 112,
+      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.RBT_ID]: "323232",
+      [KEYS.SOUND_CODE]: "네모의 꿈",
+    },
+    {
+      [KEYS.ID]: 12,
+      [KEYS.ADMIN_ID]: 112,
+      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.RBT_ID]: "323232",
+      [KEYS.SOUND_CODE]: "네모의 꿈",
+    },
+    {
+      [KEYS.ID]: 11,
+      [KEYS.ADMIN_ID]: 112,
+      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.RBT_ID]: "323232",
+      [KEYS.SOUND_CODE]: "네모의 꿈",
+    },
+  ],
+};

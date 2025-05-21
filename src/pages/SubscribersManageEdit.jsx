@@ -22,7 +22,7 @@ import { KEYS } from "../constants/Keys";
 import axios from "../api/axios";
 import Form from "../components/Form";
 import PasswordReset from "../components/modals/PasswordReset";
-import { didPersonal } from "../config/DataConfig";
+import { didPersonal, SUBSRIBERS_INFO_DUMMY } from "../config/DataConfig";
 import DidSettingPersonal from "../components/modals/DidSettingPersonal";
 
 const SubscriberManageEdit = () => {
@@ -43,18 +43,7 @@ const SubscriberManageEdit = () => {
     // axios.get(ROUTES.SUBSCRIBERS_DETAIL(subNo)).then(res=>{
     //   setFormData(res.data);
     // })
-    setFormData(() =>
-      subscriberEditFields.reduce((acc, field) => {
-        if (field.fields && Array.isArray(field.fields)) {
-          field.fields.forEach((subField) => {
-            acc[subField.key] = subField.value || "";
-          });
-        } else {
-          acc[field.key] = field.value || "";
-        }
-        return acc;
-      }, {})
-    );
+    setFormData(SUBSRIBERS_INFO_DUMMY);
   }, [state]);
 
   const search = () => {
@@ -64,18 +53,7 @@ const SubscriberManageEdit = () => {
       });
       return;
     }
-    setFormData(() =>
-      subscriberEditFields.reduce((acc, field) => {
-        if (field.fields && Array.isArray(field.fields)) {
-          field.fields.forEach((subField) => {
-            acc[subField.key] = subField.value || "";
-          });
-        } else {
-          acc[field.key] = field.value || "";
-        }
-        return acc;
-      }, {})
-    );
+    setFormData(SUBSRIBERS_INFO_DUMMY);
     // axios.get(ROUTES.SUBSCRIBERS_DETAIL(searchSubNo)).then((res) => {
     //   if(!res.data){
     //     showAlert({

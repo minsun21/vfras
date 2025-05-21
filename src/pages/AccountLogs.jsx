@@ -34,7 +34,7 @@ const AccountLogs = () => {
 
   const clickIdColumn = (row) => {
     showModal({
-      header: `${row[KEYS.ID]} ${LABELS.ACCOUNT_DETAIL_LOGS}`,
+      header: `${row[KEYS.ADMIN_ID]} ${LABELS.ACCOUNT_DETAIL_LOGS}`,
       content: <AccountDetailLog selectRow={row} />,
     });
   };

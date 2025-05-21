@@ -19,7 +19,7 @@ const Table = forwardRef(
   (
     {
       columns,
-      data:tableData,
+      data: tableData,
       setTableData,
       pageSize = 5,
       rowSelectionEnabled = true,
@@ -34,8 +34,6 @@ const Table = forwardRef(
   ) => {
     const [rowSelection, setRowSelection] = useState({});
     const [currentPageSize, setCurrentPageSize] = useState(pageSize);
-
-    const shouldScroll = tableData.length > 10;
 
     const handleCheckBox = (rowIndex, columnId) => {
       const updated = tableData.map((row, i) => {
@@ -153,10 +151,7 @@ const Table = forwardRef(
           const updated = tableData.map((row) =>
             ids.includes(row.id) ? updater(row) : row
           );
-          setTableData(updated);
-        },
-        clearSelection: () => {
-          setRowSelection({});
+          setTableData(updated); // 여기서 오류 발생 가능
         },
       }),
       [tableData, table]

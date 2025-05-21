@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { LABELS } from "../../constants/Labels";
 import Table from "../Table";
-import { did_personal_setting_data, did_personal_setting_columns } from "../../config/DataConfig";
+import { did_personal_setting_columns } from "../../config/DataConfig";
 import Input, { INPUT_SIZE_SM } from "../Input";
 import { KEYS } from "../../constants/Keys";
 
@@ -11,13 +11,12 @@ const DidSettingPersonal = ({ userInfo }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    console.log("id", userInfo);
-    setData(did_personal_setting_data);
-  }, []);
+    setData(userInfo.did_personal);
+  }, [userInfo]);
 
-  useEffect(()=>{
-    console.log(data)
-  },[data])
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <div>

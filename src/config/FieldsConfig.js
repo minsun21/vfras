@@ -133,7 +133,7 @@ export const profileEditFields = [
     disabled: true,
   },
   {
-    key: KEYS.ID,
+    key: KEYS.ADMIN_ID,
     label: LABELS.ID,
     value: "vFRAS",
     type: "text",
@@ -438,7 +438,7 @@ export const subscriberEditFields = [
 
 export const accountRegisterFields = [
   {
-    key: KEYS.ID,
+    key: KEYS.ADMIN_ID,
     label: LABELS.ID,
     type: "text",
     required: true,
@@ -500,7 +500,7 @@ export const accountRegisterFields = [
 
 export const accountEditFields = [
   {
-    key: KEYS.ID,
+    key: KEYS.ADMIN_ID,
     label: LABELS.ID,
     placeholder: "vFRAS",
     type: "text",

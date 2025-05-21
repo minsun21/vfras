@@ -1,7 +1,8 @@
 export const KEYS = {
   CODE: "code",
   TITLE: "title",
-  ID: "adminId", // 계정 ID
+  ADMIN_ID: "adminId", // 계정 ID
+  ID: "id",
   NAME: "name", // 이름
   USER_TYPE: "userType",
   ACCESS_TIME: "accessTime",
@@ -47,4 +48,12 @@ export const KEYS = {
   GERNERAL_PERMISSIONS: "generalPermissions", // 일반 권한
   DEPARTMENT_PERMISSIONS: "departmentPermissions", // 부서 권한
   MODIFY: "modifyPermissions",
+  RBT_ID_VALUE: "rbtIdValue", // 통화 연결음 제목
+  IS_INTERRUPT : "isInterrupt", // 일시정지(임시)
+  IS_CIRCULR_JOINED: "isCircularJoined", // 순환형 가입여부
+  IS_WEEK_JOINED: "isWeekJoined", // 요일별 가입여부
+  IS_TIME_JOINED: "isTimeJoined", // 시간대별 가입여부
+  IS_ORGN_JOINED: "isOrgnJoined", // 지역별 가입여부
+  IS_GROUP_JOINED: "isGroupJoined", // 그룹별 가입여부
+  IS_DURA_JOINED: "isDuraJoined", // 기간별 가입여부
 };

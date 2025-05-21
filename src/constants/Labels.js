@@ -27,7 +27,7 @@ export const LABELS = {
   SEARCH_RESULT: (result) => `검색결과 : ${result}건`,
   EDIT: "수정",
   PASSWORD_CHANGE: "비밀번호 변경",
-  PASSWORD_RESET: "패스워드 초기화",
+  PASSWORD_RESET: "비밀번호 초기화",
   APPROVE: "승인",
   SUBSCRIBER_TYPE: "가입자 유형",
   SERVICE_TYPE: "서비스 유형",
@@ -120,5 +120,5 @@ export const LABELS = {
   DEPARTMENT_PERMISSIONS :"부서 권한",
   MODIFY : "수정",
   DID_CONFIG_LENGH : (cnt, max) => `${cnt}개 (최대 ${max})`,
-  INTTERUPT : "일시정지"
+  INTERRUPT : "일시정지"
 };
