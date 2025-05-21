@@ -107,7 +107,7 @@
 .title-row { display: flex; justify-content: space-between; padding: 5px 20px; background-color: #e9e9e9; cursor: pointer; font-weight: bold; transition: 0.3s; } 
 .title-row:hover { background-color: #ddd; } 
 .lvItem .lvContent { height: 0px; overflow: hidden; padding: 0; background: #fff; transition: 0.4s; } 
-.lvItem.active .lvContent { height: 400px; padding:0px; display: flex; flex-direction: row; transition: 0.4s; border-top: 1px solid #BBB; } 
+.lvItem.active .lvContent { height: 420px; padding:0px; display: flex; flex-direction: row; transition: 0.4s; border-top: 1px solid #BBB; } 
 .lvItem:last-child.active  { border-bottom: none }
 
 /* 토글 스위치 */
