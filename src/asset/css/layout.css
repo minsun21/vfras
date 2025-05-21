@@ -108,34 +108,11 @@
 /* 페이지 타이틀 */
 h2.page-title { margin: 2rem 1rem 1rem 0rem; font-size: 2.2rem; color: #000; font-weight: 700; /*border-bottom: 1px solid #DDD; padding-bottom: 1rem; */}
 h3.page-title { margin: 0 0 0.5rem 0; font-size: 1.8rem; color: #000; font-weight: 500; } 
-h3.chart-title { margin: 0; font-size: 2rem; color: #000; font-weight: 600; } 
+h4.page-title { margin: 0; font-size: 1.6rem; color: #000; font-weight: 600;  } 
 /* 임시 */
 
 /* side bar */
-.menu-group {
-  margin-bottom: 20px;
-  list-style: none;
-}
-
-.menu-title {
-  font-weight: bold;
-  color: #222;
-  margin-bottom: 6px;
-  font-size: 14px;
-}
-
-.menu-item {
-  background-color: #d0d0d0;
-  border: none;
-  padding: 6px 10px;
-  margin: 2px 0;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-  font-size: 13px;
-  border-radius: 4px;
-}
-
-.menu-item:hover {
-  background-color: #bbb;
-}
+.menu-group {  margin-bottom: 20px;  list-style: none;}
+.menu-title {  font-weight: bold;  color: #222;  margin-bottom: 6px;  font-size: 14px;}
+.menu-item {  background-color: #d0d0d0;  border: none;  padding: 6px 10px;  margin: 2px 0;  width: 100%;  text-align: left;  cursor: pointer;  font-size: 13px;  border-radius: 4px;}
+.menu-item:hover {  background-color: #bbb;}

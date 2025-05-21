@@ -89,34 +89,40 @@ const CountryCode = () => {
   };
 
   return (
-    <div style={{ display: "flex" }}>
-      <div>
-        <h5>{LABELS.STATION_CHANGE_NUMBER}</h5>
-        <div>
-          <span>{LABELS.COUNT_RESULT(changeLineCount)}</span>
-          <Button
-            type={BUTTON_CANCEL}
-            label={LABELS.ALL_CHANGE}
-            onClick={clickAllChange}
+    <div className="lvBoxLayout">
+
+      <div class="lvBox">
+          <h4 class="page-title">{LABELS.STATION_CHANGE_NUMBER}</h4>
+          <div className="tbl-list-top">
+            <div className="top-button">
+              <span className="total mr0">
+                {LABELS.COUNT_RESULT(changeLineCount)}
+              </span>
+            </div>
+            <Button
+                type={BUTTON_CANCEL}
+                label={LABELS.ALL_CHANGE}
+                onClick={clickAllChange}
+              />
+          </div>
+
+          <textarea
+            value={changeValue}
+            onChange={handleChange}
+            type="number"
+            rows={5}
+            cols={5}
           />
-        </div>
-        <textarea
-          value={changeValue}
-          onChange={handleChange}
-          type="number"
-          rows={5}
-          cols={5}
-        />
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <span>{countryNumberMessages.info1}</span>
-          <span>{countryNumberMessages.info2}</span>
-          <span>{countryNumberMessages.info3}</span>
-        </div>
       </div>
-      <div>
-        <h5>{LABELS.STATION_CURRENT_NUMBER}</h5>
-        <div>
-          <span>{LABELS.COUNT_RESULT(currentLineCount)}</span>
+
+      <div class="lvBox">
+        <h4 class="page-title">{LABELS.STATION_CURRENT_NUMBER}</h4>
+        <div className="tbl-list-top">
+          <div className="top-button">
+            <span className="total mr0">
+                {LABELS.COUNT_RESULT(currentLineCount)}
+              </span>
+          </div>
           <Button type={BUTTON_CANCEL} label={LABELS.VIEW} />
         </div>
         <textarea
@@ -126,6 +132,11 @@ const CountryCode = () => {
           rows={5}
           cols={5}
         />
+      </div>
+      <div class="lvBoxBottom">
+        <span>{countryNumberMessages.info1}</span>
+        <span>{countryNumberMessages.info2}</span>
+        <span>{countryNumberMessages.info3}</span>
       </div>
     </div>
   );

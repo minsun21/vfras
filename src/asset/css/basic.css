@@ -64,8 +64,16 @@ div.sch-top .left { }
 .stateBlock { font-size: 1.2rem; color: #FFF; border: 1px solid #999; border-radius: 12px; padding: 3px 10px; display: inline; background-color: #754000 } 
 .stateWait { font-size: 1.2rem; color: #FFF; border: 1px solid #999; border-radius: 12px; padding: 3px 10px; display: inline; background-color: #999 } 
 
-
-
+/* LV 관리 */
+.lvBoxLayout { display: block; border-radius: 6px; background-color: #F8F8F8; padding-bottom: 5px; }
+.lvBoxLayout .lvBox { padding: 20px 10px 0px 10px; width: calc(50% - 5px); height: 690px; float: left; }
+.lvBoxLayout .lvBox:first-child { margin-right: 10px; }
+.lvBoxLayout .lvBox textarea { width: 100%; height: 590px; border: 1px solid #ccc; border-radius: 6px; font-size: 15px; resize: none; line-height: 1.4; padding: 10px 20px; }
+.lvBoxLayout .lvBox textarea:focus { outline: none; border: 1px solid var(--scolor); background-color: #fffae3; }
+.lvBoxLayout .lvBoxBottom { display: flex; flex-direction: column; width: calc(100% - 20px); height: auto; clear: both; padding: 15px 20px; border-radius: 6px; background-color: #e3e3e3; margin: 0px 10px 10px 10px; font-size: 14px; line-height: 1.4; color: #cb001d}
+.lvBoxLayout .lvBoxBottom span::before { content:'●'; font-size: 11px; font-family: Arial; margin-right: 7px; line-height: 20px; vertical-align: bottom; }
+.lvBoxLayout .lvBox h4.page-title { margin: 5px 10px 5px 0px; padding-bottom: 4px; font-size: 16px; color: #000; font-weight: 600; text-align: left; border-bottom: 1px solid #DDD;   } 
+.lvBoxLayout .lvBox .tbl-list-top { margin: 10px 0px 5px 0px }
 
 /* new 아이콘 */
 i.new { display:inline-block; width:2.2rem; height:2.2rem; background:url("../img/new.png") no-repeat center; background-size:contain; font-size:0; vertical-align:middle; margin:0 0.2rem; } 

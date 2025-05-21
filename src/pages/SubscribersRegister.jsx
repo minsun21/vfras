@@ -124,7 +124,7 @@ const SubscriberRegister = () => {
                         onChange={(e) => handleChange(e.target.value)}
                       />
                     ) : comment ? (
-                      <div>
+                      <div className="rowBox">
                         <Input
                           value={value}
                           type={type}
@@ -135,10 +135,10 @@ const SubscriberRegister = () => {
                         <span className="comment">{comment}</span>
                       </div>
                     ) : multi ? (
-                      <div>
+                      <div className="dflex">
                         {fields.map((subField, idx) => (
-                          <div key={subField.key}>
-                            <Input
+                          <div key={subField.key} className="rowBox">
+                            <Input size="sm"
                               type={subField.type}
                               value={formData[subField.key] || ""}
                               onChange={(e) =>
@@ -149,7 +149,7 @@ const SubscriberRegister = () => {
                               }
                               disabled={disabled}
                             />
-                            {idx === 0 && <span>{"-"}</span>}
+                            {idx === 0 && <span className="dashCenter">{"-"}</span>}
                           </div>
                         ))}
                       </div>

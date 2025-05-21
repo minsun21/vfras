@@ -2,17 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useModal } from "../../contexts/ModalContext";
 import { LABELS } from "../../constants/Labels";
 import Table from "../Table";
-import {
-  circularsInfo,
-  did_setting_columns,
-  did_setting_data,
-  duras,
-  groups,
-  interrupt,
-  orgns,
-  times,
-  weeks,
-} from "../../config/DataConfig";
+import { circularsInfo, did_setting_columns, did_setting_data, duras,groups, interrupt, orgns, times, weeks,} from "../../config/DataConfig";
 import Button, { BUTTON_DELETE } from "../Button";
 import Input from "../Input";
 import { errorMessages, subsriberMessages } from "../../constants/Message";
@@ -21,9 +11,7 @@ import { KEYS } from "../../constants/Keys";
 
 const DidSetting = ({ userInfo }) => {
   const tableRef = useRef();
-
   const { showAlert } = useModal();
-
   const [data, setData] = useState([]);
   const [selectRows, setSelectRows] = useState([]);
 
@@ -120,7 +108,7 @@ const DidSetting = ({ userInfo }) => {
               </div>
             )}
             {selectRows.length > 0 && (
-              <div>
+              <div class="lvAccordion">
                 <DidServiceToggle info={circularsInfo} />
                 <DidServiceToggle info={times} />
                 <DidServiceToggle info={weeks} />

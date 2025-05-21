@@ -186,7 +186,7 @@ const SubscriberManageEdit = () => {
           <tbody>
             <tr>
               <td>
-                <div className="form-field dflex wrap gap10">
+                <div className="dflex gap10">
                   <Input
                     value={searchSubNo}
                     type="number"
@@ -243,7 +243,7 @@ const SubscriberManageEdit = () => {
                     </th>
                     <td className="value">
                       {key === KEYS.SUB_NO ? (
-                        <div>
+                        <div className="rowBox">
                           <Input
                             value={formData[key] || ""}
                             type={field.type}
@@ -253,7 +253,7 @@ const SubscriberManageEdit = () => {
                           <span>{LABELS.LV_NUMBER}</span>
                         </div>
                       ) : key === "password" ? (
-                        <>
+                        <div className="rowBox">
                           <Input
                             value={formData[key] || ""}
                             type={field.type}
@@ -261,12 +261,12 @@ const SubscriberManageEdit = () => {
                             disabled={disabled}
                             size="nm"
                           />
-                          <Button
+                          <Button 
                             type={BUTTON_CANCEL}
                             label={LABELS.PASSWORD_RESET}
                             onClick={clickResetPassword}
                           />
-                        </>
+                        </div>
                       ) : type === "radio" ? (
                         <RadioGroup
                           value={value}
@@ -274,7 +274,7 @@ const SubscriberManageEdit = () => {
                           onChange={(e) => handleChange(e.target.value)}
                         />
                       ) : key === KEYS.DID ? (
-                        <div>
+                        <div className="rowBox">
                           <label>
                             {LABELS.CURRENT}
                             <span>{value}</span>
@@ -292,10 +292,10 @@ const SubscriberManageEdit = () => {
                           />
                         </div>
                       ) : multi ? (
-                        <div>
+                        <div className="dflex">
                           {field.fields.map((subField, idx) => (
-                            <div key={subField.key}>
-                              <Input
+                            <div key={subField.key} className="rowBox">
+                              <Input 
                                 type={subField.type}
                                 value={formData[subField.key] || ""}
                                 onChange={(e) =>
@@ -307,7 +307,7 @@ const SubscriberManageEdit = () => {
                                 disabled={disabled}
                                 size={subField.size}
                               />
-                              {idx === 0 && <span>{"-"}</span>}
+                              {idx === 0 && <span className="dashCenter">{"-"}</span>}
                             </div>
                           ))}
                         </div>

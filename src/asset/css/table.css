@@ -75,3 +75,8 @@ table.tbl-input tr td:first-child::before { display: none }
 .tbl-view th em { color:var(--scolor); margin-left: 5px; } 
 
 .tbl-view td a.link { text-decoration:underline; } 
+
+/* td row */
+.rowBox { display: flex; gap: 10px; line-height: 40px; }
+.rowBox .sbtn { border:solid 1px #3A4A40; background:#3A4A40; color:#fff; } 
+.dashCenter { width: 15px; text-align: left; }

@@ -23,26 +23,37 @@ const ToggleTable = ({ info }) => {
   //   setData([]);
   // };
 
+    const titleRows = document.querySelectorAll('.lvAccordion .title-row');
+      titleRows.forEach(row => {
+        row.addEventListener('click', () => {
+          const item = row.parentElement;
+          const isActive = item.classList.contains('active');
+          document.querySelectorAll('.lvAccordion .item').forEach(i => i.classList.remove('active'));
+          if (!isActive) item.classList.add('active');
+        });
+      });
+
   return (
-    <div className="svcItem">
-      <div className="svcTit">
-        <h4>{info.title}</h4>
-        <h4>{LABELS.DID_CONFIG_LENGH(info.data.length, info.max)}</h4>
-        <div>
-          <span>{LABELS.IS_OPEN}</span>
-          <label>
-            <input
-              type="checkbox"
-              checked={open}
-              onChange={() => setOpen((prev) => !prev)}
-              style={{ width: 40, height: 20 }}
-            />
+      <div class="item">
+        <div class="title-row">
+            <div class="lvTitleBox">
+              <div class="lvTitle">{info.title}</div>
+              <div class="lvSummary">{LABELS.DID_CONFIG_LENGH(info.data.length, info.max)}</div>
+            </div>
+            <label class="lvSwitch">
+              {/*  <span>{LABELS.IS_OPEN}</span> */} 
+              <input
+                  type="checkbox"
+                //  checked={open}
+                //  onChange={() => setOpen((prev) => !prev)}
+                />
+              <span class="slider"></span>
           </label>
-        </div>
       </div>
+
       {/* 본문: 오픈 시에만 표시 */}
       {open && (
-        <div className="svcBox">
+        <div className="content">
           {/* 왼쪽 */}
           <div className="svcBoxL">
             {info.forms.map((item) => {
@@ -62,7 +73,7 @@ const ToggleTable = ({ info }) => {
               };
 
               return (
-                <div style={{ marginBottom: "5px" }} key={key}>
+                <div key={key}>
                   {item.type === "select" ? (
                     <Select
                       value={value}
@@ -71,7 +82,7 @@ const ToggleTable = ({ info }) => {
                       nonEmpty={true}
                     />
                   ) : type === "textarea" ? (
-                    <textarea style={{ height: "80px" }} />
+                    <textarea/>
                   ) : multi ? (
                     <div>
                       {fields.map((subField, idx) => (
@@ -107,7 +118,6 @@ const ToggleTable = ({ info }) => {
 
           {/* 버튼 영역 */}
           <div className="svcBoxC">
-            <div>
               <Button
                 type={BUTTON_CANCEL}
                 label={LABELS.ADD}
@@ -121,9 +131,7 @@ const ToggleTable = ({ info }) => {
                 label={LABELS.ALL_DELETE}
                 // onClick={handleDeleteAll}
               />
-            </div>
-            <div>
-              <div>{LABELS.MAIN_NUMBER}</div>
+              <div className="svcBoxCTxt">{LABELS.MAIN_NUMBER}</div>
               <Button
                 type={BUTTON_DELETE}
                 // onClick={handleDelete}
@@ -134,7 +142,6 @@ const ToggleTable = ({ info }) => {
                 label={LABELS.BULK_DELETE}
                 // onClick={handleDeleteAll}
               />
-            </div>
           </div>
 
           {/* 테이블 영역 */}

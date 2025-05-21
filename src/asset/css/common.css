@@ -133,6 +133,9 @@ caption, legend, .hidden, .visually-hidden, hr { position: absolute !important; 
 .h40 { height: 4rem !important }
 .h45 { height: 4.5rem !important }
 .h50 { height: 5rem !important }
+.h600 { height: 60rem !important }
+.h700 { height: 70rem !important }
+.h800 { height: 80rem !important }
 
 /* min-height */
 .mh380 { min-height:38rem; } 
