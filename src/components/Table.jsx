@@ -29,11 +29,33 @@ const Table = forwardRef(
       pageSelect = true,
       topBtns,
       paginationEnabled = true,
+      manualPagination = false,
+      fetchData,
+      maxHeight,
     },
     ref
   ) => {
     const [rowSelection, setRowSelection] = useState({});
     const [currentPageSize, setCurrentPageSize] = useState(pageSize);
+    const [pageInfo, setPageInfo] = useState({
+      pageIndex: 0,
+      pageSize: 10,
+      totalPages: 0,
+      totalElements: 0,
+    });
+
+    useEffect(() => {
+      if (manualPagination && typeof fetchData === "function") {
+        fetchData(pageInfo.pageIndex, pageInfo.pageSize).then((res) => {
+          setTableData(res.content || []);
+          setPageInfo((prev) => ({
+            ...prev,
+            totalPages: res.totalPages,
+            totalElements: res.totalElements,
+          }));
+        });
+      }
+    }, [pageInfo.pageIndex, pageInfo.pageSize]);
 
     const handleCheckBox = (rowIndex, columnId) => {
       const updated = tableData.map((row, i) => {
@@ -230,7 +252,13 @@ const Table = forwardRef(
             )}
           </div>
         </Form>
-        <div className="tbl-list">
+        <div
+          className="tbl-list"
+          style={{
+            maxHeight: maxHeight && `${maxHeight}px`,
+            overflowY: maxHeight ? "auto" : "visible",
+          }}
+        >
           <table>
             <thead>
               <tr>

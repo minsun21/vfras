@@ -110,6 +110,8 @@ const DidSetting = ({ userInfo }) => {
             pageSize={10}
             resultLabel={false}
             pageSelect={false}
+            paginationEnabled={false}
+            maxHeight={600}
           />
         </div>
         <div className="w40p">
@@ -132,7 +134,11 @@ const DidSetting = ({ userInfo }) => {
             ) : selectRows.length === 1 ? (
               <div class="lvAccordion" ref={parentRef} onClick={openAccordion}>
                 {DID_CONFIG_DATAS.map((config) => (
-                  <DidConfig config={config} initChekced={selectRows[0][config.key]} addDid={addDid} />
+                  <DidConfig
+                    config={config}
+                    initChekced={selectRows[0][config.key]}
+                    addDid={addDid}
+                  />
                 ))}
               </div>
             ) : (
