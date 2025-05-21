@@ -261,7 +261,7 @@ const Table = forwardRef(
                   overflowY: "auto",
                 }
               : {
-                  overflowY: "visible", // ✅ 스크롤 없게
+                  overflowY: "visible",
                 }
           }
         >

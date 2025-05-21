@@ -11,7 +11,6 @@ import { KEYS } from "../../constants/Keys";
 
 const DidSetting = ({ userInfo }) => {
   const tableRef = useRef();
-  const parentRef = useRef(null);
 
   const { showAlert } = useModal();
   const [data, setData] = useState([]);
@@ -55,13 +54,6 @@ const DidSetting = ({ userInfo }) => {
     tableRef.current?.clearSelection();
   };
 
-  const openAccordion = () => {
-    const child = parentRef.current.querySelector(".lvItem");
-    if (child) {
-      child.classList.toggle("active");
-    }
-  };
-
   const addDid = (accessorKey) => {
     const selectedIds = tableRef.current?.getSelectedRowIds?.();
     if (!selectedIds?.length) return;
@@ -80,8 +72,8 @@ const DidSetting = ({ userInfo }) => {
       <div className="didLayout">
         <div className="w60p">
           <div className="popSubTit">{LABELS.DID}</div>
-          <form class="popSchBox">
-            <label class="schTxtL1">{LABELS.MAIN_NUMBER}</label>
+          <form className="popSchBox">
+            <label className="schTxtL1">{LABELS.MAIN_NUMBER}</label>
             <Input
               label={LABELS.MAIN_NUMBER}
               size="lg"
@@ -89,12 +81,12 @@ const DidSetting = ({ userInfo }) => {
               disabled
             />
             <div className="mlAuto">
-              <Button label={LABELS.ADD_ITEM} class="sbtn black" />
+              <Button label={LABELS.ADD_ITEM} className="sbtn black" />
             </div>
           </form>
-          <form class="form">
-            <div class="tbl-list-top mt10 mb-20">
-              <div class="top-button">
+          <form className="form">
+            <div className="tbl-list-top mt10 mb-20">
+              <div className="top-button">
                 <span>
                   <Button type={BUTTON_DELETE} onClick={deleteData} />
                 </span>
@@ -116,8 +108,8 @@ const DidSetting = ({ userInfo }) => {
         </div>
         <div className="w40p">
           <div className="popSubTit">{LABELS.ADDITIONAL_SERVICE_SETTING}</div>
-          <form class="popSchBox">
-            <label class="schTxtL1">{LABELS.DEFAULT_RING}</label>
+          <form className="popSchBox">
+            <label className="schTxtL1">{LABELS.DEFAULT_RING}</label>
             <Input
               label={LABELS.DEFAULT_RING}
               size="sm"
@@ -126,15 +118,16 @@ const DidSetting = ({ userInfo }) => {
             />
             <Input size="sm" value={userInfo[KEYS.RBT_ID_VALUE]} disabled />
           </form>
-          <div class="configBox">
+          <div className="configBox">
             {selectRows.length === 0 ? (
               <div className="configAlertTxt">
                 {subsriberMessages.didPlaceHolder}
               </div>
             ) : selectRows.length === 1 ? (
-              <div class="lvAccordion" ref={parentRef} onClick={openAccordion}>
-                {DID_CONFIG_DATAS.map((config) => (
+              <div className="lvAccordion">
+                {DID_CONFIG_DATAS.map((config, idx) => (
                   <DidConfig
+                  key={idx}
                     config={config}
                     initChekced={selectRows[0][config.key]}
                     addDid={addDid}

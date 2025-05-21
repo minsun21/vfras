@@ -7,6 +7,7 @@ import Table from "../Table";
 
 const DidConfig = ({ config, initChekced, addDid }) => {
   const [inputs, setInputs] = useState({});
+  const parentRef = useRef(null);
 
   // const handleAdd = () => {
   //   const nextId = data.length ? Math.max(...data.map((d) => d.id)) + 1 : 1;
@@ -22,22 +23,27 @@ const DidConfig = ({ config, initChekced, addDid }) => {
   //   setData([]);
   // };
 
+  const openAccordion = (e) => {
+    const child = e.currentTarget;
+    child.classList.toggle("active");
+  };
+
   return (
-    <div class="lvItem">
-      <div class="title-row">
-        <div class="lvTitleBox">
-          <div class="lvTitle">{config.title}</div>
-          <div class="lvSummary">
+    <div className="lvItem" onClick={openAccordion}>
+      <div className="title-row">
+        <div className="lvTitleBox">
+          <div className="lvTitle">{config.title}</div>
+          <div className="lvSummary">
             {LABELS.DID_CONFIG_LENGH(config.data.length, config.max)}
           </div>
         </div>
-        <label class="lvSwitch">
+        <label className="lvSwitch">
           <input
             type="checkbox"
             defaultChecked={initChekced}
             onChange={() => addDid(config.key)}
           />
-          <span class="slider"></span>
+          <span className="slider"></span>
         </label>
       </div>
 
