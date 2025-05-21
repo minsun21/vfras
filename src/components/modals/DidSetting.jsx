@@ -52,6 +52,17 @@ const DidSetting = ({ userInfo }) => {
     tableRef.current?.clearSelection();
   };
 
+  const titleRows = document.querySelectorAll('.lvAccordion .title-row');
+    titleRows.forEach(row => {
+      row.addEventListener('click', () => {
+        const item = row.parentElement;
+        const isActive = item.classList.contains('active');
+        document.querySelectorAll('.lvAccordion .lvItem').forEach(i => i.classList.remove('active'));
+        if (!isActive) item.classList.add('active');
+      });
+    });
+
+
   return (
     <div>
       <div className="didLayout">

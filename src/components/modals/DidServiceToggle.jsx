@@ -23,18 +23,18 @@ const ToggleTable = ({ info }) => {
   //   setData([]);
   // };
 
-    const titleRows = document.querySelectorAll('.lvAccordion .title-row');
-      titleRows.forEach(row => {
-        row.addEventListener('click', () => {
-          const item = row.parentElement;
-          const isActive = item.classList.contains('active');
-          document.querySelectorAll('.lvAccordion .item').forEach(i => i.classList.remove('active'));
-          if (!isActive) item.classList.add('active');
-        });
+const titleRows = document.querySelectorAll('.lvAccordion .title-row');
+    titleRows.forEach(row => {
+      row.addEventListener('click', () => {
+        const item = row.parentElement;
+        const isActive = item.classList.contains('active');
+        document.querySelectorAll('.lvAccordion .lvItem').forEach(i => i.classList.remove('active'));
+        if (!isActive) item.classList.add('active');
       });
+    });
 
   return (
-      <div class="item">
+      <div class="lvItem">
         <div class="title-row">
             <div class="lvTitleBox">
               <div class="lvTitle">{info.title}</div>
@@ -44,16 +44,16 @@ const ToggleTable = ({ info }) => {
               {/*  <span>{LABELS.IS_OPEN}</span> */} 
               <input
                   type="checkbox"
-                //  checked={open}
-                //  onChange={() => setOpen((prev) => !prev)}
+               //   checked={open}
+               //   onChange={() => setOpen((prev) => !prev)}
                 />
               <span class="slider"></span>
           </label>
       </div>
 
       {/* 본문: 오픈 시에만 표시 */}
-      {open && (
-        <div className="content">
+ {/*      {open && (  */}
+        <div className="lvContent">
           {/* 왼쪽 */}
           <div className="svcBoxL">
             {info.forms.map((item) => {
@@ -149,7 +149,7 @@ const ToggleTable = ({ info }) => {
             <Table columns={info.columns} data={info.data} />
           </div>
         </div>
-      )}
+  {/*     )}    */}
     </div>
   );
 };
