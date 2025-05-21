@@ -66,7 +66,7 @@ const ModalRenderer = () => {
 
           ) : (
             <div className="layer-popup open"> 
-                <div className="md-content w1600">
+                <div className="md-content didPop">
                     <div className="pop-header">
                         <h3>{props.header}</h3>
                         <div className="pop-header-close">

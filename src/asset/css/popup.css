@@ -73,6 +73,11 @@
 .msg-footer .btn-wrap { padding-top: 15px; } 
 
 /* 설정 팝업 */
+.didPop { width: 1600px;}
+.didPop .tbl-list th { font-size: 14px; height: 45px;padding: 5px; }
+.didPop .tbl-list td { font-size: 14px; height: 45px;padding: 5px; }
+.didPop .configBox .tbl-list th { font-size: 14px; height: 40px;padding: 5px; }
+.didPop .configBox .tbl-list td { font-size: 14px; height: 35px;padding: 5px; }
 .pop-header h3 { font-size: 2rem; font-weight: bold; text-align: left; color: #000; margin-bottom: 1rem; padding-right: 2rem; line-height: 1.4; } 
 .pop-header-close { position: absolute; top: 3rem; right: 4rem; font-size: 0; width: 4rem; height: 4rem; background: url("../img/layer-close.png") no-repeat center; background-size: auto; } 
 .pop-header-close button { width: 100%; height: 100%; background: none; border: none; cursor: pointer; } 
@@ -106,7 +111,7 @@
 .lvSummary::before { content: '|'; font-size: 10px; color: #999; font-family: Arial; margin-right: 20px;  }
 .title-row { display: flex; justify-content: space-between; padding: 5px 20px; background-color: #e9e9e9; cursor: pointer; font-weight: bold; transition: 0.3s; } 
 .title-row:hover { background-color: #ddd; } 
-.lvItem .lvContent { height: 0px; overflow: hidden; padding: 0; background: #fff; transition: 0.4s; } 
+.lvItem .lvContent { height: 0px; overflow: hidden; padding: 0; background: #fff; display: flex; flex-direction: row; transition: 0.2s; } 
 .lvItem.active .lvContent { height: 420px; padding:0px; display: flex; flex-direction: row; transition: 0.4s; border-top: 1px solid #BBB; } 
 .lvItem:last-child.active  { border-bottom: none }
 
