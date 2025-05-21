@@ -111,7 +111,7 @@ const DidSetting = ({ userInfo }) => {
             resultLabel={false}
             pageSelect={false}
             // paginationEnabled={false}
-            maxHeight={600}
+            // maxHeight={600}
           />
         </div>
         <div className="w40p">

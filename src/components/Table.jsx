@@ -254,10 +254,16 @@ const Table = forwardRef(
         </Form>
         <div
           className="tbl-list"
-          style={{
-            maxHeight: maxHeight && `${maxHeight}px`,
-            overflowY: maxHeight ? "auto" : "visible",
-          }}
+          style={
+            maxHeight
+              ? {
+                  maxHeight: `${maxHeight}px`,
+                  overflowY: "auto",
+                }
+              : {
+                  overflowY: "visible", // ✅ 스크롤 없게
+                }
+          }
         >
           <table>
             <thead>
