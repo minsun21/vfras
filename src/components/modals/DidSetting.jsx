@@ -110,7 +110,7 @@ const DidSetting = ({ userInfo }) => {
             pageSize={10}
             resultLabel={false}
             pageSelect={false}
-            paginationEnabled={false}
+            // paginationEnabled={false}
             maxHeight={600}
           />
         </div>
