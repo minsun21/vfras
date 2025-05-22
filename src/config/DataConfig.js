@@ -248,6 +248,7 @@ export const subscribe_columns = (navigateManage) => {
 export const subscribe_data = [
   {
     [KEYS.ADMIN_ID]: 1,
+    [KEYS.ID]: 1,
     [KEYS.SUB_NO]: "0211112222",
     [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
@@ -257,6 +258,7 @@ export const subscribe_data = [
   },
   {
     [KEYS.ADMIN_ID]: 2,
+    [KEYS.ID]: 12,
     [KEYS.SUB_NO]: "0211112222",
     [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
@@ -266,6 +268,7 @@ export const subscribe_data = [
   },
   {
     [KEYS.ADMIN_ID]: 3,
+    [KEYS.ID]: 13,
     [KEYS.SUB_NO]: "0211112222",
     [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
     [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
@@ -427,18 +430,104 @@ export const access_detail_data = [
   },
 ];
 
-export const did_setting_columns = [
+export const DID_SETTING_COLUMNS = (handleInputChange) => [
   {
     accessorKey: KEYS.USER_NUMBER,
     header: LABELS.USER_NUMBER_MULTI,
+    cell: ({ row }) => {
+      if (!row.original._isNew) {
+        return (
+          <span>
+            {row.original[KEYS.TEL_FROM_NO]} ~ {row.original[KEYS.TEL_TO_NO]}
+          </span>
+        );
+      }
+
+      return (
+        <>
+          <input
+            type="number"
+            value={row.original[KEYS.TEL_FROM_NO]}
+            onChange={(e) => {
+              e.stopPropagation();
+              handleInputChange?.(
+                row.index,
+                KEYS.TEL_FROM_NO,
+                e.target.value
+              );
+            }}
+          />
+          &nbsp;~&nbsp;
+          <input
+            type="number"
+            value={row.original[KEYS.TEL_TO_NO]}
+            onChange={(e) => {
+              e.stopPropagation();
+              handleInputChange?.(
+                row.index,
+                KEYS.TEL_TO_NO,
+                e.target.value
+              );
+            }}
+          />
+        </>
+      );
+    },
   },
   {
     accessorKey: KEYS.PBX_NUMBER,
     header: LABELS.PBX_NUMBER_COL_MULTI,
+    cell: ({ row }) => {
+      if (!row.original._isNew) {
+        return (
+          <span>
+            {row.original[KEYS.FROM_NO]} ~ {row.original[KEYS.TO_NO]}
+          </span>
+        );
+      }
+
+      return (
+        <>
+          <input
+            type="number"
+            value={row.original[KEYS.FROM_NO]}
+            onChange={(e) => {
+              e.stopPropagation();
+              handleInputChange?.(row.index, KEYS.FROM_NO, e.target.value);
+            }}
+          />
+          &nbsp;~&nbsp;
+          <input
+            type="number"
+            value={row.original[KEYS.TO_NO]}
+            onChange={(e) => {
+              e.stopPropagation();
+              handleInputChange?.(row.index, KEYS.TO_NO, e.target.value);
+            }}
+          />
+        </>
+      );
+    },
   },
   {
     accessorKey: KEYS.RBT_ID,
     header: LABELS.SOUND_CODE_COL_MULTI,
+    cell: ({ row }) => {
+      if (!row.original._isNew) {
+        return <span>{row.original[KEYS.RBT_ID]}</span>;
+      }
+
+      return (
+        <input
+          type="number"
+          value={row.original[KEYS.RBT_ID]}
+          onChange={(e) => {
+            e.stopPropagation();
+            handleInputChange(row.index, KEYS.RBT_ID, e.target.value);
+          }}
+        />
+      );
+    },
   },
   {
     header: LABELS.IS_ADDITIONAL_SERVICE,
@@ -919,13 +1008,15 @@ export const SUBSRIBERS_INFO_DUMMY = {
   [KEYS.TEL_FROM_NO]: "0240050045",
   [KEYS.TEL_TO_NO]: "0240054232",
   [KEYS.RBT_ID]: "050125",
-  [KEYS.RBT_ID_VALUE]: "050125",
+  [KEYS.RBT_ID_VALUE]: "사랑을 했다",
   [KEYS.DID]: "13",
   did_personal: [
     {
       [KEYS.ADMIN_ID]: 1,
-      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112233",
-      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112233",
+      [KEYS.TEL_FROM_NO]: "02111112222",
+      [KEYS.TEL_TO_NO]: "02111112222",
+      [KEYS.FROM_NO]: "02111112222",
+      [KEYS.TO_NO]: "02111112222",
       [KEYS.RBT_ID]: "599145",
       [KEYS.SOUND_CODE]: "사랑을 했다",
       [KEYS.GERNERAL_PERMISSIONS]: true,
@@ -937,8 +1028,10 @@ export const SUBSRIBERS_INFO_DUMMY = {
     {
       [KEYS.ID]: 1222,
       [KEYS.ADMIN_ID]: 1,
-      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112233",
-      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112233",
+      [KEYS.TEL_FROM_NO]: "02111112222",
+      [KEYS.TEL_TO_NO]: "02111112222",
+      [KEYS.FROM_NO]: "02111112222",
+      [KEYS.TO_NO]: "02111112222",
       [KEYS.RBT_ID]: "599145",
       [KEYS.SOUND_CODE]: "사랑을 했다",
       [KEYS.IS_INTERRUPT]: true,
@@ -952,8 +1045,10 @@ export const SUBSRIBERS_INFO_DUMMY = {
     {
       [KEYS.ID]: 28,
       [KEYS.ADMIN_ID]: 11,
-      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112244",
-      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112244",
+      [KEYS.TEL_FROM_NO]: "02111112222",
+      [KEYS.TEL_TO_NO]: "02111112222",
+      [KEYS.FROM_NO]: "02111112222",
+      [KEYS.TO_NO]: "02111112222",
       [KEYS.RBT_ID]: "1111211",
       [KEYS.SOUND_CODE]: "아파트",
       [KEYS.IS_INTERRUPT]: true,
@@ -967,8 +1062,11 @@ export const SUBSRIBERS_INFO_DUMMY = {
     {
       [KEYS.ID]: 27,
       [KEYS.ADMIN_ID]: 112,
-      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.TEL_FROM_NO]: "02111112222",
+      [KEYS.TEL_TO_NO]: "02111112222",
+      [KEYS.FROM_NO]: "02111112222",
+      [KEYS.TO_NO]: "02111112222",
+      [KEYS.RBT_ID]: "1111211",
       [KEYS.RBT_ID]: "323232",
       [KEYS.SOUND_CODE]: "네모의 꿈",
       [KEYS.IS_INTERRUPT]: true,
@@ -982,8 +1080,10 @@ export const SUBSRIBERS_INFO_DUMMY = {
     {
       [KEYS.ID]: 26,
       [KEYS.ADMIN_ID]: 112,
-      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.TEL_FROM_NO]: "02111112222",
+      [KEYS.TEL_TO_NO]: "02111112222",
+      [KEYS.FROM_NO]: "02111112222",
+      [KEYS.TO_NO]: "02111112222",
       [KEYS.RBT_ID]: "323232",
       [KEYS.SOUND_CODE]: "네모의 꿈",
       [KEYS.IS_INTERRUPT]: false,
@@ -997,8 +1097,10 @@ export const SUBSRIBERS_INFO_DUMMY = {
     {
       [KEYS.ID]: 25,
       [KEYS.ADMIN_ID]: 112,
-      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
+      [KEYS.TEL_FROM_NO]: "02111112222",
+      [KEYS.TEL_TO_NO]: "02111112222",
+      [KEYS.FROM_NO]: "02111112222",
+      [KEYS.TO_NO]: "02111112222",
       [KEYS.RBT_ID]: "323232",
       [KEYS.SOUND_CODE]: "네모의 꿈",
       [KEYS.IS_INTERRUPT]: false,
@@ -1008,113 +1110,6 @@ export const SUBSRIBERS_INFO_DUMMY = {
       [KEYS.IS_ORGN_JOINED]: true,
       [KEYS.IS_GROUP_JOINED]: true,
       [KEYS.IS_DURA_JOINED]: true,
-    },
-    {
-      [KEYS.ID]: 24,
-      [KEYS.ADMIN_ID]: 112,
-      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.RBT_ID]: "323232",
-      [KEYS.SOUND_CODE]: "네모의 꿈",
-      [KEYS.IS_INTERRUPT]: false,
-      [KEYS.IS_CIRCULR_JOINED]: false,
-      [KEYS.IS_WEEK_JOINED]: true,
-      [KEYS.IS_TIME_JOINED]: false,
-      [KEYS.IS_ORGN_JOINED]: true,
-      [KEYS.IS_GROUP_JOINED]: true,
-      [KEYS.IS_DURA_JOINED]: true,
-    },
-    {
-      [KEYS.ID]: 23,
-      [KEYS.ADMIN_ID]: 112,
-      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.RBT_ID]: "323232",
-      [KEYS.SOUND_CODE]: "네모의 꿈",
-    },
-    {
-      [KEYS.ADMIN_ID]: 22,
-      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.RBT_ID]: "323232",
-      [KEYS.SOUND_CODE]: "네모의 꿈",
-    },
-    {
-      [KEYS.ADMIN_ID]: 21,
-      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.RBT_ID]: "323232",
-      [KEYS.SOUND_CODE]: "네모의 꿈",
-    },
-    {
-      [KEYS.ID]: 19,
-      [KEYS.ADMIN_ID]: 112,
-      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.RBT_ID]: "323232",
-      [KEYS.SOUND_CODE]: "네모의 꿈",
-    },
-    {
-      [KEYS.ID]: 18,
-      [KEYS.ADMIN_ID]: 112,
-      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.RBT_ID]: "323232",
-      [KEYS.SOUND_CODE]: "네모의 꿈",
-    },
-    {
-      [KEYS.ADMIN_ID]: 17,
-      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.RBT_ID]: "323232",
-      [KEYS.SOUND_CODE]: "네모의 꿈",
-    },
-    {
-      [KEYS.ID]: 16,
-      [KEYS.ADMIN_ID]: 112,
-      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.RBT_ID]: "323232",
-      [KEYS.SOUND_CODE]: "네모의 꿈",
-    },
-    {
-      [KEYS.ADMIN_ID]: 15,
-      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.RBT_ID]: "323232",
-      [KEYS.SOUND_CODE]: "네모의 꿈",
-    },
-    {
-      [KEYS.ID]: 14,
-      [KEYS.ADMIN_ID]: 112,
-      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.RBT_ID]: "323232",
-      [KEYS.SOUND_CODE]: "네모의 꿈",
-    },
-    {
-      [KEYS.ID]: 13,
-      [KEYS.ADMIN_ID]: 112,
-      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.RBT_ID]: "323232",
-      [KEYS.SOUND_CODE]: "네모의 꿈",
-    },
-    {
-      [KEYS.ID]: 12,
-      [KEYS.ADMIN_ID]: 112,
-      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.RBT_ID]: "323232",
-      [KEYS.SOUND_CODE]: "네모의 꿈",
-    },
-    {
-      [KEYS.ID]: 11,
-      [KEYS.ADMIN_ID]: 112,
-      [KEYS.USER_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.PBX_NUMBER]: "02111112222\n~\n0211112255",
-      [KEYS.RBT_ID]: "323232",
-      [KEYS.SOUND_CODE]: "네모의 꿈",
     },
   ],
 };

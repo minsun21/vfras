@@ -1,9 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import Button, {
-  BUTTON_SEARCH,
-  BUTTON_DELETE,
-} from "../components/Button";
+import Button, { BUTTON_SEARCH, BUTTON_DELETE } from "../components/Button";
 import Input from "../components/Input";
 import Select from "../components/Select";
 import Table from "../components/Table";
@@ -28,22 +25,16 @@ import axios from "../api/axios";
 const Subscriber = () => {
   const tableRef = useRef();
   const navigate = useNavigate();
-  const { showAlert, showDialog } = useModal();
+  const { showAlert, showDialog, closeModal } = useModal();
 
   const [searchInput, setSearchInput] = useState({});
   const [data, setData] = useState([]);
   const [allType, setAllType] = useState([]);
-  const [subsriberTypeOptions, setsubsriberTypeOptions] = useState([]);
-  const [serviceTypeOptions, setServiceTypeOptions] = useState([]);
-  const [userStateOptions, setUserStateOptions] = useState([]);
 
   const [selectedRows, setSelectedRows] = useState([]);
 
   useEffect(() => {
     setAllType(DIVISIONS);
-    setsubsriberTypeOptions(SEARCH_SUBSRIBERS_TYPES);
-    setServiceTypeOptions(SEARCH_SERVICE_TYPES);
-    setUserStateOptions(SEARCH_SUBSRIBERS_STATE);
 
     setSearchInput({
       [KEYS.SEARCH_DIVISION_VALUE]: "",
@@ -73,7 +64,7 @@ const Subscriber = () => {
     }
 
     for (const selectedRow of selectedRows) {
-      if (selectedRow.state === LABELS.SUBSCRIBE) {
+      if (selectedRow[KEYS.SUB_STATUS] === LABELS.SUBSCRIBE) {
         showAlert({
           message: subsriberMessages.approvedError,
         });
@@ -95,7 +86,7 @@ const Subscriber = () => {
     const selectedIds = tableRef.current.getSelectedRowIds();
     tableRef.current.updateRowsById(selectedIds, (row) => ({
       ...row,
-      state: LABELS.SUBSCRIBE,
+      [KEYS.SUB_STATUS]: LABELS.SUBSCRIBE,
     }));
     showAlert({
       message: infoMessages.successEdit,
@@ -123,9 +114,20 @@ const Subscriber = () => {
     //   });
     // });
 
-    showAlert({
-      message: infoMessages.successDelete,
-    });
+    const filteredData = data.filter(
+      (item) =>
+        !selectedRows.some((r) => r[KEYS.ADMIN_ID] === item[KEYS.ADMIN_ID])
+    );
+    setData(filteredData);
+    tableRef.current?.clearSelection();
+
+    // closeModal();
+
+    setTimeout(() => {
+      showAlert({
+        message: infoMessages.successDelete,
+      });
+    }, 100);
   };
 
   const search = () => {
@@ -147,10 +149,10 @@ const Subscriber = () => {
 
   const topBtns = () => {
     return (
-      <span>
+      <>
         <Button label={LABELS.APPROVE} onClick={approvedSub} />
         <Button type={BUTTON_DELETE} onClick={clickDelete} />
-      </span>
+      </>
     );
   };
 
@@ -209,7 +211,7 @@ const Subscriber = () => {
               <td>
                 <Select
                   value={searchInput[KEYS.SUB_TYPE]}
-                  options={subsriberTypeOptions}
+                  options={SEARCH_SUBSRIBERS_TYPES}
                   nonEmpty={true}
                   name={KEYS.SUB_TYPE}
                   onChange={onChange}
@@ -218,7 +220,7 @@ const Subscriber = () => {
               <td>
                 <Select
                   value={searchInput[KEYS.SERVICE_TYPE]}
-                  options={serviceTypeOptions}
+                  options={SEARCH_SERVICE_TYPES}
                   nonEmpty={true}
                   name={KEYS.SERVICE_TYPE}
                   onChange={onChange}
@@ -227,7 +229,7 @@ const Subscriber = () => {
               <td>
                 <Select
                   value={searchInput[KEYS.SUB_STATUS]}
-                  options={userStateOptions}
+                  options={SEARCH_SUBSRIBERS_STATE}
                   nonEmpty={true}
                   name={KEYS.SUB_STATUS}
                   onChange={onChange}
@@ -241,6 +243,7 @@ const Subscriber = () => {
         ref={tableRef}
         columns={subscribe_columns(navigateManage)}
         data={data}
+        setTableData={setData}
         pageSize={10}
         onRowSelectionChange={setSelectedRows}
         topBtns={topBtns}

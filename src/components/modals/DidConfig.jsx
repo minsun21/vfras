@@ -24,13 +24,14 @@ const DidConfig = ({ config, initChekced, addDid }) => {
   // };
 
   const openAccordion = (e) => {
-    const child = e.currentTarget;
-    child.classList.toggle("active");
+    if (parentRef.current) {
+      parentRef.current.classList.toggle("active");
+    }
   };
 
   return (
-    <div className="lvItem" onClick={openAccordion}>
-      <div className="title-row">
+    <div className="lvItem" ref={parentRef}>
+      <div className="title-row" onClick={openAccordion}>
         <div className="lvTitleBox">
           <div className="lvTitle">{config.title}</div>
           <div className="lvSummary">
@@ -70,7 +71,7 @@ const DidConfig = ({ config, initChekced, addDid }) => {
             return (
               <div key={key}>
                 {item.type === "select" ? (
-                  <Select 
+                  <Select
                     value={value}
                     options={options}
                     onChange={(e) => handleChange(e.target.value)}
@@ -142,7 +143,14 @@ const DidConfig = ({ config, initChekced, addDid }) => {
 
         {/* 테이블 영역 */}
         <div className="svcBoxR">
-          <Table columns={config.columns} data={config.data} />
+          <Table
+            columns={config.columns}
+            data={config.data}
+            paginationEnabled={false}
+            maxHeight = {300}
+            resultLabel={false}
+            pageSelect={false}
+          />
         </div>
       </div>
     </div>
