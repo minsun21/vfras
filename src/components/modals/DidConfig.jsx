@@ -70,7 +70,7 @@ const DidConfig = ({ config, initChekced, addDid }) => {
             return (
               <div key={key}>
                 {item.type === "select" ? (
-                  <Select
+                  <Select 
                     value={value}
                     options={options}
                     onChange={(e) => handleChange(e.target.value)}
@@ -83,7 +83,7 @@ const DidConfig = ({ config, initChekced, addDid }) => {
                     {fields.map((subField, idx) => (
                       <div key={subField.key}>
                         <Input
-                          size="w130"
+                          size="w120"
                           type={subField.type}
                           value={inputs[subField.key] || ""}
                           onChange={(e) =>
@@ -99,7 +99,7 @@ const DidConfig = ({ config, initChekced, addDid }) => {
                   </div>
                 ) : (
                   <Input
-                    size="w150"
+                    size="w120"
                     value={value}
                     type={type}
                     placeholder={placeholder}

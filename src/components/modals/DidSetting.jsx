@@ -70,7 +70,7 @@ const DidSetting = ({ userInfo }) => {
   return (
     <div>
       <div className="didLayout">
-        <div className="w60p">
+        <div className="w55p">
           <div className="popSubTit">{LABELS.DID}</div>
           <form className="popSchBox">
             <label className="schTxtL1">{LABELS.MAIN_NUMBER}</label>
@@ -106,7 +106,7 @@ const DidSetting = ({ userInfo }) => {
             // maxHeight={600}
           />
         </div>
-        <div className="w40p">
+        <div className="w45p">
           <div className="popSubTit">{LABELS.ADDITIONAL_SERVICE_SETTING}</div>
           <form className="popSchBox">
             <label className="schTxtL1">{LABELS.DEFAULT_RING}</label>
@@ -118,6 +118,7 @@ const DidSetting = ({ userInfo }) => {
             />
             <Input size="sm" value={userInfo[KEYS.RBT_ID_VALUE]} disabled />
           </form>
+
           <div className="configBox">
             {selectRows.length === 0 ? (
               <div className="configAlertTxt">
@@ -127,7 +128,7 @@ const DidSetting = ({ userInfo }) => {
               <div className="lvAccordion">
                 {DID_CONFIG_DATAS.map((config, idx) => (
                   <DidConfig
-                  key={idx}
+                    key={idx}
                     config={config}
                     initChekced={selectRows[0][config.key]}
                     addDid={addDid}

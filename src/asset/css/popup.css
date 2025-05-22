@@ -73,11 +73,12 @@
 .msg-footer .btn-wrap { padding-top: 15px; } 
 
 /* 설정 팝업 */
-.didPop { width: 1600px;}
-.didPop .tbl-list th { font-size: 14px; height: 45px;padding: 5px; }
-.didPop .tbl-list td { font-size: 14px; height: 45px;padding: 5px; }
-.didPop .configBox .tbl-list th { font-size: 14px; height: 40px;padding: 5px; }
-.didPop .configBox .tbl-list td { font-size: 14px; height: 35px;padding: 5px; }
+.didPop { width: 1600px; min-width: 1600px; } 
+.didPop .tbl-list tr th { font-size: 14px; height: 35px; padding: 5px; } 
+.didPop .tbl-list tr:nth-child(2) th { font-size: 12px; font-weight: 400; width: 50px; } 
+.didPop .tbl-list tr td { font-size: 13px; font-weight: 400; height: 45px; padding: 4px; } 
+.didPop .configBox .tbl-list th { font-size: 14px; height: 35px; padding: 5px; } 
+.didPop .configBox .tbl-list td { font-size: 14px; height: 30px; padding: 5px; } 
 .pop-header h3 { font-size: 2rem; font-weight: bold; text-align: left; color: #000; margin-bottom: 1rem; padding-right: 2rem; line-height: 1.4; } 
 .pop-header-close { position: absolute; top: 3rem; right: 4rem; font-size: 0; width: 4rem; height: 4rem; background: url("../img/layer-close.png") no-repeat center; background-size: auto; } 
 .pop-header-close button { width: 100%; height: 100%; background: none; border: none; cursor: pointer; } 
@@ -85,35 +86,34 @@
 .popSubTit { margin: 5px 10px 5px 0px; padding-bottom: 4px; font-size: 16px; color: #000; font-weight: 600; text-align: left; border-bottom: 1px solid #DDD; } 
 .pop-body { overflow-y: auto; max-height: calc(100vh - 29rem); border-top: solid 1px var(--scolor); padding: 10px 0px; min-height: 100px; height: 830px; font-size: 16px; font-weight: 500; color: #666; line-height: 1.6; word-break: break-all; word-wrap: break-word; } 
 .didLayout { display: flex; gap: 15px; } 
-.configBox { padding: 0px; border: 1px solid #eee; border-radius: 5px; height: 700px; margin-top: 5px;} 
+.configBox { padding: 0px; border: 1px solid #eee; border-radius: 5px; height: 700px; margin-top: 5px; } 
 .configAlertTxt { font-size: 15px; font-weight: 500; color: #666; line-height: 3; word-break: break-all; word-wrap: break-word; text-align: center; } 
 .pop-footer { padding-top: 0rem; } 
 .pop-footer .btn-wrap { padding-top: 10px; } 
-/*
-.svcItem { border: 1px solid black; width: 100%; } 
-.svcTit { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid black; padding: 10px } 
-.svcBox { display: flex; flex-direction: row; align-items: center; justify-content: center; opacity: 1; transform: translateY(0); transition: opacity 1s ease, transform 1s ease; } 
-*/
-.svcBoxL { width: 190px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 7px; } 
-.svcBoxL textarea { width: 100%; height: 100px; border: 1px solid #999; } 
-.svcBoxC { width: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border: 1px solid #eee; border-width: 0px 1px; } 
-.svcBoxC .sbtn { min-width: 70px; height: 30px; line-height: 30px; padding: 0 10px; border-radius: 5px; font-size: 13px; font-weight: 400; } 
-.svcBoxC .svcBoxCTxt { font-size: 15px; font-weight: 500; } 
-.svcBoxR { width: calc(100% - 200px); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 7px; } 
 
 /* 아코디언 */
 .lvAccordion { width: 100%; border: 1px solid #DDD; border-bottom: none; border-radius: 6px; overflow: hidden; font-family: sans-serif; } 
-.lvItem { border-top: 1px solid #ffffff; border-bottom: 1px solid #565656; } 
-.lvItem:last-child { border-bottom: 1px solid #aaa; } 
-.lvTitleBox { display: flex; flex-direction: row; flex: 1; } 
-.lvTitle { font-weight: 600; font-size: 16px; color: #000; line-height: 26px; margin-right: 20px; } 
-.lvSummary { font-weight: 500; font-size: 14px; color: #333; line-height: 26px; } 
-.lvSummary::before { content: '|'; font-size: 10px; color: #999; font-family: Arial; margin-right: 20px;  }
-.title-row { display: flex; justify-content: space-between; padding: 5px 20px; background-color: #e9e9e9; cursor: pointer; font-weight: bold; transition: 0.3s; } 
-.title-row:hover { background-color: #ddd; } 
-.lvItem .lvContent { height: 0px; overflow: hidden; padding: 0; background: #fff; display: flex; flex-direction: row; transition: 0.2s; } 
-.lvItem.active .lvContent { height: 420px; padding:0px; display: flex; flex-direction: row; transition: 0.4s; border-top: 1px solid #BBB; } 
-.lvItem:last-child.active  { border-bottom: none }
+.lvAccordion .lvItem { border-top: 1px solid #ffffff; border-bottom: 1px solid #565656; } 
+.lvAccordion .lvItem:last-child { border-bottom: 1px solid #aaa; } 
+.lvAccordion .lvTitleBox { display: flex; flex-direction: row; flex: 1; } 
+.lvAccordion .lvTitle { font-weight: 600; font-size: 16px; color: #000; line-height: 26px; margin-right: 20px; } 
+.lvAccordion .lvSummary { font-weight: 500; font-size: 14px; color: #333; line-height: 26px; } 
+.lvAccordion .lvSummary::before { content: '|'; font-size: 10px; color: #999; font-family: Arial; margin-right: 20px; } 
+.lvAccordion .title-row { display: flex; justify-content: space-between; padding: 5px 20px; background-color: #e9e9e9; cursor: pointer; font-weight: bold; transition: 0.3s; } 
+.lvAccordion .title-row:hover { background-color: #ddd; } 
+.lvAccordion .lvItem .lvContent { height: 0px; overflow: hidden; padding: 0; background: #fff; display: flex; flex-direction: row; transition: 0.2s; } 
+.lvAccordion .lvItem.active .lvContent { height: 350px; padding:0px; display: flex; flex-direction: row; transition: 0.4s; border-top: 1px solid #BBB; } 
+.lvAccordion .lvItem:last-child.active { border-bottom: none } 
+
+/* in box */
+.lvAccordion .lvItem .svcBoxL { width: 140px; display: flex; flex-direction: column; gap: 10px; align-items: center; justify-content: center; padding: 7px; } 
+.lvAccordion .lvItem .svcBoxL textarea { width: 100%; height: 100px; border: 1px solid #999; } 
+.lvDateBox { display: flex; gap: 10px; align-items: center; } 
+.lvCalDate { height: 4rem; line-height: 4rem; padding: 0 1.5rem; border-radius: 0.8rem; border: solid 1px #ddd; background: #fff; transition: all 0.35s; position: relative; width: 11rem; outline: 0; font-size: 1.3rem; color: #333; } 
+.lvAccordion .lvItem .svcBoxC { width: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border: 1px solid #eee; border-width: 0px 1px; } 
+.lvAccordion .lvItem .svcBoxC .sbtn { min-width: 60px; height: 30px; line-height: 30px; padding: 0 5px; border-radius: 5px; font-size: 12px; font-weight: 400; } 
+.lvAccordion .lvItem .svcBoxC .svcBoxCTxt { font-size: 14px; font-weight: 700; color: #000; border-top: 1px dashed #bbb; margin: 15px 0px 5px 0px; width: 80%; text-align: center; padding-top: 10px; } 
+.lvAccordion .lvItem .svcBoxR { width: calc(100% - 240px); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 7px; } 
 
 /* 토글 스위치 */
 .lvSwitch { position: relative; display: inline-block; width: 55px; height: 26px; } 
