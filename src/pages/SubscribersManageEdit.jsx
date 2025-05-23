@@ -7,14 +7,9 @@ import Button, {
 } from "../components/Button";
 import Input from "../components/Input";
 import RadioGroup from "../components/RadioGroup";
-import {
-  subscriberEditFields,
-} from "../config/FieldsConfig";
+import { subscriberEditFields } from "../config/FieldsConfig";
 import { ROUTES } from "../constants/routes";
-import {
-  infoMessages,
-  subsriberMessages,
-} from "../constants/Message";
+import { infoMessages, subsriberMessages } from "../constants/Message";
 import { LABELS } from "../constants/Labels";
 import { useModal } from "../contexts/ModalContext";
 import DidSetting from "../components/modals/DidSetting";
@@ -132,13 +127,9 @@ const SubscriberManageEdit = () => {
 
   const clickResetPassword = () => {
     showModal({
-      content: (
-        <PasswordReset
-          currentPassword={formData[KEYS.PASSWORD]}
-          restPassword={restPassword}
-        />
-      ),
-      header : LABELS.PASSWORD_RESET
+      content: <PasswordReset currentPassword={formData[KEYS.PASSWORD]} />,
+      header: LABELS.PASSWORD_RESET,
+      onConfirm: restPassword,
     });
   };
 
@@ -148,6 +139,12 @@ const SubscriberManageEdit = () => {
       ...formData,
       [KEYS.PASSWORD]: formData[KEYS.SUB_NO].slice(-4),
     });
+
+    setTimeout(() => {
+      showAlert({
+        message: subsriberMessages.resetPassword,
+      });
+    }, 100);
   };
 
   return (
@@ -240,7 +237,7 @@ const SubscriberManageEdit = () => {
                             disabled={disabled}
                             size="nm"
                           />
-                          <Button 
+                          <Button
                             type={BUTTON_CANCEL}
                             label={LABELS.PASSWORD_RESET}
                             onClick={clickResetPassword}
@@ -264,7 +261,7 @@ const SubscriberManageEdit = () => {
                             label={LABELS.SETTING}
                             onClick={clickDidSetting}
                           />
-                           <Button
+                          <Button
                             type={BUTTON_CANCEL}
                             label={"개인용-임시"}
                             onClick={clickDidSettingPersonal}
@@ -274,7 +271,7 @@ const SubscriberManageEdit = () => {
                         <div className="dflex">
                           {field.fields.map((subField, idx) => (
                             <div key={subField.key} className="rowBox">
-                              <Input 
+                              <Input
                                 type={subField.type}
                                 value={formData[subField.key] || ""}
                                 onChange={(e) =>
@@ -286,7 +283,9 @@ const SubscriberManageEdit = () => {
                                 disabled={disabled}
                                 size={subField.size}
                               />
-                              {idx === 0 && <span className="dashCenter">{"-"}</span>}
+                              {idx === 0 && (
+                                <span className="dashCenter">{"-"}</span>
+                              )}
                             </div>
                           ))}
                         </div>

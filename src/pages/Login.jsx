@@ -105,15 +105,6 @@ const Login = () => {
                 {LABELS.LOGIN}
               </button>
             </div>
-            {/* <div className="loginBotBox center loginBottom">
-              <span>
-                <Link to="#">아이디 찾기</Link>
-              </span>
-              <span className="dline"></span>
-              <span>
-                <Link to="#">비밀번호 찾기</Link>
-              </span>
-            </div> */}
           </div>
         </div>
       </section>

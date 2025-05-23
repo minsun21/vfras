@@ -84,13 +84,45 @@ const ProfileEdit = () => {
 
   const clickChangePassword = () => {
     showModal({
-      content: <PasswordChange info={formData} onOk={changePassword} />,
+      content: <PasswordChange info={formData} />,
       header: LABELS.PASSWORD_CHANGE,
+      onConfirm: changePassword,
     });
   };
 
   const changePassword = (newPassword) => {
     console.log("newPassword", newPassword);
+    // 1. 빈 값 확인
+    // if (hasEmptyValue(formData)) {
+    //   showAlert({
+    //     message: errorMessages.emptyValue,
+    //   });
+    //   return;
+    // }
+
+    // // 2. 현재 비밀번호 확인
+    // if (info.password !== formData.currentPassword) {
+    //   showAlert({
+    //     message: errorMessages.confirmCurrentPassword,
+    //   });
+    //   return;
+    // }
+
+    // // 3. 변경 비밀번호 validation
+    // if (!isValidPassword(formData.changePassword)) {
+    //   showAlert({
+    //     message: errorMessages.invalidPassword,
+    //   });
+    //   return;
+    // }
+
+    // // 4. 변경 비밀번호 재확인
+    // if (formData.changePassword !== formData.changeConfirmPassword) {
+    //   showAlert({
+    //     message: errorMessages.confirmPassword,
+    //   });
+    //   return;
+    // }
 
     // axios.put(ROUTES.PROFILE_EDIT(adminId), formData).then((res) => {
     //   showAlert({
@@ -102,18 +134,20 @@ const ProfileEdit = () => {
     //   });
     // });
 
-    showAlert({
-      message: profileMessages.successPasswordChange,
-      onConfirm: () => {
-        closeModal();
-        dispatch(logout());
-      },
-    });
+    setTimeout(() => {
+      showAlert({
+        message: profileMessages.successPasswordChange,
+        onConfirm: () => {
+          closeModal();
+          dispatch(logout());
+        },
+      });
+    }, 100);
   };
 
   return (
     <>
-    <span>{profileMessages.info1}</span>
+      <span>{profileMessages.info1}</span>
       <form className="tbl-view" onSubmit={(e) => e.preventDefault()}>
         <table>
           <colgroup>
@@ -134,7 +168,8 @@ const ProfileEdit = () => {
                   <td className="value">
                     {key === KEYS.PASSWORD ? (
                       <>
-                        <Input size="nm"
+                        <Input
+                          size="nm"
                           type={type}
                           value={LABELS.PASSWORD_PLACEHOLDER}
                           onChange={(e) => handleChange(e.target.value)}
@@ -148,7 +183,8 @@ const ProfileEdit = () => {
                       </>
                     ) : (
                       <>
-                        <Input size="nm"
+                        <Input
+                          size="nm"
                           value={formData[key] || ""}
                           type={field.type}
                           placeholder={formData[key]}

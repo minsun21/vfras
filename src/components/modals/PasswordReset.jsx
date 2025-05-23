@@ -1,19 +1,13 @@
 import React from "react";
-import Button, { BUTTON_CANCEL } from "../Button";
-import { useModal } from "../../contexts/ModalContext";
 import { subsriberMessages } from "../../constants/Message";
+import Input from "../Input";
 
-const PasswordReset = ({ currentPassword, restPassword }) => {
-  const { closeModal } = useModal();
+const PasswordReset = ({ currentPassword }) => {
 
   return (
     <div>
       <span>{subsriberMessages.resetPasswordConfirm}</span>
-      <div>{currentPassword}</div>
-      <div className="modal-footer">
-        <Button type={BUTTON_CANCEL} onClick={closeModal} />
-        <Button onClick={restPassword} />
-      </div>
+      <Input value={currentPassword} disabled />
     </div>
   );
 };
