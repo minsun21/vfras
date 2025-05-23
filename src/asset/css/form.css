@@ -91,20 +91,23 @@ input[type="checkbox"]:disabled { border-color: #ddd; background: #ddd; }
 input[type="checkbox"]:focus { outline: auto; } 
 */
 
-/**  date,month,time,datetime-local :  **/.form-field .form-calendar { position: relative; width: 14rem; outline: 0; font-size: 1.4rem; color: #999; } 
+/**  date,month,time,datetime-local :  **/
+.form-calendar { position: relative; width: 14rem; outline: 0; font-size: 1.4rem; color: #999; } 
+/* date 아이콘 포커스를 위한 위치,사이즈 지정 */
+.form-calendar::-webkit-calendar-picker-indicator { position: absolute; top: 50%; transform: translateY(-50%); right: 1.1rem; width: 2rem; height: 2.2rem; background: transparent; color: transparent; cursor: pointer; z-index: 1; } 
+.form-calendar::-webkit-clear-button, .form-calendar::-webkit-inner-spin-button { display: none; } 
+.form-calendar:after { position: absolute; top: 50%; right: 1.2rem; content: ""; width: 1.8rem; height: 1.8rem; background: url("../img/calendar.png") no-repeat center center / contain; transform: translateY(-50%); z-index: 0; } 
 
-/* date 아이콘 포커스를 위한 위치,사이즈 지정 */.form-field .form-calendar::-webkit-calendar-picker-indicator { position: absolute; top: 50%; transform: translateY(-50%); right: 1.1rem; width: 2rem; height: 2.2rem; background: transparent; color: transparent; cursor: pointer; z-index: 1; } 
-.form-field .form-calendar::-webkit-clear-button, .form-field .form-calendar::-webkit-inner-spin-button { display: none; } 
-.form-field .form-calendar:after { position: absolute; top: 50%; right: 1.2rem; content: ""; width: 1.8rem; height: 1.8rem; background: url("../img/calendar.png") no-repeat center center / contain; transform: translateY(-50%); z-index: 0; } 
-
-/* time 아이콘 포커스를 위한 위치,사이즈 지정 */.form-field .form-calendar[type=time]::-webkit-calendar-picker-indicator { width: 1.6rem; right: 0.9rem; } 
-.form-field .form-calendar[type=time]:after { width: 1.6rem; height: 1.6rem; background: url("../img/time.png") no-repeat center center / contain; } 
-.form-field .form-calendar[type=datetime-local] { width: 21rem !important; } 
+/* time 아이콘 포커스를 위한 위치,사이즈 지정 */
+.form-calendar[type=time]::-webkit-calendar-picker-indicator { width: 1.6rem; right: 0.9rem; } 
+.form-calendar[type=time]:after { width: 1.6rem; height: 1.6rem; background: url("../img/time.png") no-repeat center center / contain; } 
+.form-calendar[type=datetime-local] { width: 21rem !important; } 
 
 /* datetime-local 아이콘 포커스를 위한 위치,사이즈 지정 */.form-field .form-calendar[type=datetime-local]::-webkit-calendar-picker-indicator { width: 1.6rem; right: 0.9rem; } 
-.form-field .form-calendar[type=datetime-local]:after { right: 1.1rem; width: 1.6rem; height: 1.6rem; background: url("../img/time.png") no-repeat center center / contain; } 
+.form-calendar[type=datetime-local]:after { right: 1.1rem; width: 1.6rem; height: 1.6rem; background: url("../img/time.png") no-repeat center center / contain; } 
 
-/** file box  **/.file-box { position: relative; display: flex; align-items: center; column-gap: 1rem; } 
+/** file box  **/
+.file-box { position: relative; display: flex; align-items: center; column-gap: 1rem; } 
 .file-box input[type="file"] { position: absolute !important; clip: rect(1px, 1px, 1px, 1px); padding: 0 !important; border: 0 !important; height: 1px !important; width: 1px !important; overflow: hidden; } 
 .file-box > label { display: flex; align-items: center; gap: 1rem; width: 100%; } 
 .file-box .file_name { flex: 1; display: inline-block; height: 4rem; line-height: 4rem; padding: 0 1.5rem; font-size: 1.5rem; color: #999; border-radius: 0.8rem; border: solid 1px #ddd; background: #fff; transition: all 0.35s; } 
