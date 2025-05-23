@@ -7,7 +7,8 @@ export const infoMessages = {
   successAccountSave: `해당 계정이 등록되었습니다.`,
   confirmLogout: `로그아웃 하시겠습니까?`,
   confirmRegister: `등록 하시겠습니까?`,
-  confirmSave : "저장 하시겠습니까?"
+  confirmSave : "저장 하시겠습니까?",
+  confirmAdd : "추가 하시겠습니까?"
 };
 
 export const profileMessages = {

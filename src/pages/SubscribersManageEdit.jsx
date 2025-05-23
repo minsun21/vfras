@@ -138,6 +138,7 @@ const SubscriberManageEdit = () => {
           restPassword={restPassword}
         />
       ),
+      header : LABELS.PASSWORD_RESET
     });
   };
 

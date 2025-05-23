@@ -32,6 +32,8 @@ const Table = forwardRef(
       manualPagination = false,
       fetchData,
       maxHeight,
+      scrollRef,
+      newRowRef
     },
     ref
   ) => {
@@ -173,7 +175,10 @@ const Table = forwardRef(
           const updated = tableData.map((row) =>
             ids.includes(row.id) ? updater(row) : row
           );
-          setTableData(updated); // 여기서 오류 발생 가능
+          setTableData(updated);
+        },
+        clearSelection: () => {
+          setRowSelection({});
         },
       }),
       [tableData, table]
@@ -254,6 +259,7 @@ const Table = forwardRef(
         </Form>
         <div
           className="tbl-list"
+          ref={scrollRef}
           style={
             maxHeight
               ? {
@@ -309,8 +315,10 @@ const Table = forwardRef(
               ).map((row) => (
                 <tr
                   key={row.id}
+                  ref={row.original?._isNew ? newRowRef : null}
                   className={row.getIsSelected() ? "selected" : ""}
                   onClick={() => {
+                    if (row.original._isNew) return;
                     if (rowSelectionEnabled) row.toggleSelected();
                   }}
                 >

@@ -83,9 +83,11 @@ const CountryCode = () => {
     closeModal();
 
     // 성공
-    showAlert({
-      message: countryNumberMessages.successChange,
-    });
+    setTimeout(() => {
+      showAlert({
+        message: countryNumberMessages.successChange,
+      });
+    }, 100);
   };
 
   return (

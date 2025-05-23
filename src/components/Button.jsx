@@ -7,9 +7,8 @@ export const BUTTON_SEARCH = "search";
 export const BUTTON_SAVE = "save";
 export const BUTTON_DELETE = "delete";
 
-const Button = ({ type = "confirm", label, onClick }) => {
+const Button = ({ type = "confirm", label, onClick, disabled = false }) => {
   const [btnLabel, setBtnLabel] = useState("");
-  const [classType, setClassType] = useState("scolor");
 
   useEffect(() => {
     if (label) {
@@ -21,19 +20,27 @@ const Button = ({ type = "confirm", label, onClick }) => {
       setBtnLabel(LABELS.CONFIRM);
     } else if (type === BUTTON_CANCEL) {
       setBtnLabel(LABELS.CANCEL);
-      setClassType("cancel");
     } else if (type === BUTTON_SEARCH) {
       setBtnLabel(LABELS.SEARCH);
     } else if (type === BUTTON_SAVE) {
       setBtnLabel(LABELS.SAVE);
     } else if (type === BUTTON_DELETE) {
       setBtnLabel(LABELS.DELETE);
-      setClassType(BUTTON_DELETE);
     }
   }, [label, type]);
 
   return (
-    <button className={`sbtn ${classType}`} onClick={onClick}>
+    <button
+      className={`sbtn ${
+        type === BUTTON_CANCEL
+          ? BUTTON_CANCEL
+          : type === BUTTON_DELETE
+          ? BUTTON_DELETE
+          : "scolor"
+      }`}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {btnLabel}
     </button>
   );

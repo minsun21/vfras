@@ -36,6 +36,7 @@ const DidSettingPersonal = ({ userInfo }) => {
             resultLabel={false}
             pageSelect={false}
             rowSelectionEnabled={false}
+            paginationEnabled={false}
           />
         </div>
 
