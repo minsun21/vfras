@@ -6,7 +6,7 @@ import Input from "../components/Input";
 import Select from "../components/Select";
 import { ROUTES } from "../constants/routes";
 import { useModal } from "../contexts/ModalContext";
-import { errorMessages, infoMessages } from "../constants/Message";
+import { ErrorMessages, InfoMessages } from "../constants/Message";
 import axios from "../api/axios";
 import { fieldsValidate } from "../utils/FormValidation";
 import { KEYS } from "../constants/Keys";
@@ -28,7 +28,7 @@ const AccountRegister = () => {
 
   const handleSave = () => {
     showDialog({
-      message: infoMessages.confirmRegister,
+      message: InfoMessages.confirmRegister,
       onConfirm: () => {
         closeModal();
 
@@ -54,20 +54,20 @@ const AccountRegister = () => {
 
     // axios.post(ROUTES.ACCOUNTS, formData).then(res=>{
     //   showAlert({
-    //     message: infoMessages.successAccountSave,
+    //     message: InfoMessages.successAccountSave,
     //     onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
     //   });
     // })
 
     showAlert({
-      message: infoMessages.successAccountSave,
+      message: InfoMessages.successAccountSave,
       onConfirm: () => navigate(ROUTES.ACCOUNTS),
     });
   };
 
   const cancel = () => {
     showDialog({
-      message: infoMessages.confirmCancel,
+      message: InfoMessages.confirmCancel,
       onConfirm: () => navigate(ROUTES.ACCOUNTS),
     });
   };
@@ -141,7 +141,7 @@ const AccountRegister = () => {
                         <span className="password-confirm">
                           {formData[KEYS.PASSWORD] !==
                             formData[KEYS.PASSWORD_CONFIRM] &&
-                            errorMessages.correctPassword}
+                            ErrorMessages.correctPassword}
                         </span>
                       </div>
                     ) : (

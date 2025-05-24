@@ -1,5 +1,5 @@
 import axios from "axios";
-import { errorMessages } from "../constants/Message";
+import { ErrorMessages } from "../constants/Message";
 
 let alertHandler = null;
 
@@ -21,13 +21,13 @@ instance.interceptors.response.use(
     if (alertHandler) {
       switch (status) {
         case 403:
-          alertHandler({ message: errorMessages.noPermission });
+          alertHandler({ message: ErrorMessages.noPermission });
           break;
         case 404:
-          alertHandler({ message: errorMessages.noObject });
+          alertHandler({ message: ErrorMessages.noObject });
           break;
         case 500:
-          alertHandler({ message: errorMessages.server });
+          alertHandler({ message: ErrorMessages.server });
           break;
         default:
           alertHandler({ message: message });

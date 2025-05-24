@@ -10,14 +10,15 @@ import Input, { INPUT_SIZE_LG } from "../components/Input";
 import { ACCOUNTS_COLUMNS } from "../config/DataConfig";
 import { ROUTES } from "../constants/routes";
 import {
-  accountMessages,
-  errorMessages,
-  infoMessages,
+  AccountMessages,
+  ErrorMessages,
+  InfoMessages,
 } from "../constants/Message";
 import { LABELS } from "../constants/Labels";
 import { useModal } from "../contexts/ModalContext";
 import axios from "../api/axios";
 import { KEYS } from "../constants/Keys";
+import Form from "../components/Form";
 
 const AccountManage = () => {
   const navigate = useNavigate();
@@ -74,7 +75,7 @@ const AccountManage = () => {
     // axios.get(ROUTES.ACCOUNTS, keyword).then((res) => {
     //   if (res.data.length === 0) {
     //     showAlert({
-    //       message: infoMessages.noSearchResult,
+    //       message: InfoMessages.noSearchResult,
     //     });
     //     return;
     //   }
@@ -84,13 +85,13 @@ const AccountManage = () => {
 
   const search = () => {
     showAlert({
-      message: infoMessages.noSearchResult,
+      message: InfoMessages.noSearchResult,
     });
 
     // axios.get(ROUTES.ACCOUNTS, { params: { keyword } }).then((res) => {
     //   if (res.data.length === 0) {
     //     showAlert({
-    //       message: infoMessages.noSearchResult,
+    //       message: InfoMessages.noSearchResult,
     //     });
     //     return;
     //   }
@@ -101,13 +102,13 @@ const AccountManage = () => {
   const clickEdit = () => {
     if (selectRows.length === 0) {
       showAlert({
-        message: errorMessages.nonSelect,
+        message: ErrorMessages.nonSelect,
       });
       return;
     }
     if (selectRows.length > 1) {
       showAlert({
-        message: errorMessages.oneSelect,
+        message: ErrorMessages.oneSelect,
       });
       return;
     }
@@ -115,7 +116,7 @@ const AccountManage = () => {
     navigate(ROUTES.ACCOUNT_EDIT, {
       state: {
         selectedId: selectRows[0].id,
-        selectedInfo : selectRows[0] // TOBE :: 삭제
+        selectedInfo: selectRows[0], // TOBE :: 삭제
       },
     });
   };
@@ -123,13 +124,13 @@ const AccountManage = () => {
   const clickDelete = () => {
     if (selectRows.length === 0) {
       showAlert({
-        message: errorMessages.nonSelect,
+        message: ErrorMessages.nonSelect,
       });
       return;
     }
 
     showDialog({
-      message: infoMessages.confirmDelete(selectRows.length),
+      message: InfoMessages.confirmDelete(selectRows.length),
       onConfirm: deleteAccount,
     });
   };
@@ -138,14 +139,17 @@ const AccountManage = () => {
     // for (const selectedRow of selectRows) {
     //   axios.delete(ROUTES.ACCOUNTS_MANAGE(selectedRow.adminId)).then(res => {
     //     showAlert({
-    //       message: infoMessages.successDelete,
+    //       message: InfoMessages.successDelete,
     //     });
     //   })
     // }
 
     setData((prev) =>
       prev.filter(
-        (item) => !selectRows.some((selected) => selected[KEYS.ADMIN_ID] === item[KEYS.ADMIN_ID])
+        (item) =>
+          !selectRows.some(
+            (selected) => selected[KEYS.ADMIN_ID] === item[KEYS.ADMIN_ID]
+          )
       )
     );
 
@@ -154,20 +158,14 @@ const AccountManage = () => {
 
     setTimeout(() => {
       showAlert({
-        message: infoMessages.successDelete,
+        message: InfoMessages.successDelete,
       });
     }, 100);
   };
 
   return (
     <>
-      <form
-        className="search-box"
-        onSubmit={(e) => {
-          e.preventDefault();
-          search();
-        }}
-      >
+      <Form className="search-box" onSubmit={search}>
         <table className="tbl-input">
           <tbody>
             <tr>
@@ -176,10 +174,10 @@ const AccountManage = () => {
                   <Input
                     value={keyword}
                     onChange={(e) => setKeyword(e.target.value)}
-                    placeholder={accountMessages.searchPlaceHolder}
+                    placeholder={AccountMessages.searchPlaceHolder}
                     size={INPUT_SIZE_LG}
                   />
-                  <Button type={BUTTON_SEARCH} />
+                  <Button type={BUTTON_SEARCH} onClick={search} />
                   <Button
                     label={LABELS.USER_REGISTER}
                     onClick={() => navigate(ROUTES.ACCOUNT_REGISTER)}
@@ -189,7 +187,7 @@ const AccountManage = () => {
             </tr>
           </tbody>
         </table>
-      </form>
+      </Form>
       <Table
         ref={tableRef}
         columns={ACCOUNTS_COLUMNS}

@@ -6,7 +6,7 @@ import Input from "../components/Input";
 import { subsriberManageFields } from "../config/FieldsConfig";
 import { ROUTES } from "../constants/routes";
 import { useModal } from "../contexts/ModalContext";
-import { infoMessages } from "../constants/Message";
+import { InfoMessages } from "../constants/Message";
 
 const SubscriberManage = () => {
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const SubscriberManage = () => {
 
   const search = () => {
     showAlert({
-      message: infoMessages.noSearchResult,
+      message: InfoMessages.noSearchResult,
     });
   };
 

@@ -6,9 +6,9 @@ import Input from "../components/Input";
 import { ROUTES } from "../constants/routes";
 import { isValidEmail, isValidPhone } from "../utils/FormValidation";
 import {
-  errorMessages,
-  infoMessages,
-  profileMessages,
+  ErrorMessages,
+  InfoMessages,
+  ProfileMessages,
 } from "../constants/Message";
 import { LABELS } from "../constants/Labels";
 import { useModal } from "../contexts/ModalContext";
@@ -44,14 +44,14 @@ const ProfileEdit = () => {
     const newErrors = {};
     if (!isValidEmail(formData[KEYS.EMAIL])) {
       showAlert({
-        message: errorMessages.invalidEmail,
+        message: ErrorMessages.invalidEmail,
       });
       return;
     }
 
     if (!isValidPhone(formData[KEYS.MOBILE])) {
       showAlert({
-        message: errorMessages.invalidPhone,
+        message: ErrorMessages.invalidPhone,
       });
       return;
     }
@@ -65,20 +65,20 @@ const ProfileEdit = () => {
     console.log("저장할 데이터:", formData);
     // axios.put(ROUTES.PASSWORD_CHANGE(adminId), formData).then((res) => {
     //   showAlert({
-    //     message: profileMessages.successUserEdit,
+    //     message: ProfileMessages.successUserEdit,
     //     onConfirm: () => navigate(ROUTES.PROFILE),
     //   });
     // });
 
     showAlert({
-      message: profileMessages.successUserEdit,
+      message: ProfileMessages.successUserEdit,
       onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
     });
   };
 
   const cancelEdit = () => {
     showDialog({
-      message: infoMessages.confirmCancel,
+      message: InfoMessages.confirmCancel,
       onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
     });
   };
@@ -97,7 +97,7 @@ const ProfileEdit = () => {
     // 1. 빈 값 확인
     // if (hasEmptyValue(formData)) {
     //   showAlert({
-    //     message: errorMessages.emptyValue,
+    //     message: ErrorMessages.emptyValue,
     //   });
     //   return;
     // }
@@ -105,7 +105,7 @@ const ProfileEdit = () => {
     // // 2. 현재 비밀번호 확인
     // if (info.password !== formData.currentPassword) {
     //   showAlert({
-    //     message: errorMessages.confirmCurrentPassword,
+    //     message: ErrorMessages.confirmCurrentPassword,
     //   });
     //   return;
     // }
@@ -113,7 +113,7 @@ const ProfileEdit = () => {
     // // 3. 변경 비밀번호 validation
     // if (!isValidPassword(formData.changePassword)) {
     //   showAlert({
-    //     message: errorMessages.invalidPassword,
+    //     message: ErrorMessages.invalidPassword,
     //   });
     //   return;
     // }
@@ -121,14 +121,14 @@ const ProfileEdit = () => {
     // // 4. 변경 비밀번호 재확인
     // if (formData.changePassword !== formData.changeConfirmPassword) {
     //   showAlert({
-    //     message: errorMessages.confirmPassword,
+    //     message: ErrorMessages.confirmPassword,
     //   });
     //   return;
     // }
 
     // axios.put(ROUTES.PROFILE_EDIT(adminId), formData).then((res) => {
     //   showAlert({
-    //     message: profileMessages.successPasswordChange,
+    //     message: ProfileMessages.successPasswordChange,
     //     onConfirm: () => {
     //       closeModal();
     //       dispatch(logout());
@@ -138,7 +138,7 @@ const ProfileEdit = () => {
 
     setTimeout(() => {
       showAlert({
-        message: profileMessages.successPasswordChange,
+        message: ProfileMessages.successPasswordChange,
         onConfirm: () => {
           closeModal();
           dispatch(logout());
@@ -149,7 +149,7 @@ const ProfileEdit = () => {
 
   return (
     <>
-      <span>{profileMessages.info1}</span>
+      <span>{ProfileMessages.info1}</span>
       <form className="tbl-view" onSubmit={(e) => e.preventDefault()}>
         <table>
           <colgroup>

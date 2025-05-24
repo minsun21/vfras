@@ -12,8 +12,8 @@ import { DID_CONFIG_DATAS, DID_SETTING_COLUMNS } from "../../config/DataConfig";
 import Button, { BUTTON_DELETE } from "../Button";
 import Input from "../Input";
 import {
-  errorMessages,
-  infoMessages,
+  ErrorMessages,
+  InfoMessages,
   subsriberMessages,
 } from "../../constants/Message";
 import DidConfig from "./DidConfig";
@@ -105,20 +105,20 @@ const DidSetting = ({ userInfo }) => {
   const deleteData = () => {
     if (selectRows.length === 0) {
       showAlert({
-        message: errorMessages.nonSelect,
+        message: ErrorMessages.nonSelect,
       });
       return;
     }
 
     if (selectRows.length === data.length) {
       showAlert({
-        message: errorMessages.deleteBulk,
+        message: ErrorMessages.deleteBulk,
       });
       return;
     }
 
     showDialog({
-      message: infoMessages.confirmDelete(selectRows.length),
+      message: InfoMessages.confirmDelete(selectRows.length),
       onConfirm: () => {
         const filteredData = data.filter(
           (item) =>
@@ -129,7 +129,7 @@ const DidSetting = ({ userInfo }) => {
 
         setTimeout(() => {
           showAlert({
-            message: infoMessages.successDelete,
+            message: InfoMessages.successDelete,
           });
         }, 100);
       },
@@ -493,7 +493,7 @@ const DidSetting = ({ userInfo }) => {
                 ))}
               </div>
             ) : (
-              <div className="configAlertTxt">{errorMessages.oneSelect}</div>
+              <div className="configAlertTxt">{ErrorMessages.oneSelect}</div>
             )}
           </div>
         </div>

@@ -1,4 +1,4 @@
-export const infoMessages = {
+export const InfoMessages = {
   noSearchResult: `해당하는 데이터가 없습니다.`,
   successDelete: "삭제 되었습니다.",
   successEdit: "수정정보가 저장되었습니다.",
@@ -11,13 +11,13 @@ export const infoMessages = {
   confirmAdd : "추가 하시겠습니까?"
 };
 
-export const profileMessages = {
+export const ProfileMessages = {
   successUserEdit: `프로필이 성공적으로 저장되었습니다.`,
   successPasswordChange: `비밀번호가 변경되었습니다.`,
   info1: `※ 사용자구분, 부서 변경이 필요한 경우 시스템 관리자에게 문의해 주세요.`,
 };
 
-export const errorMessages = {
+export const ErrorMessages = {
   required: (label) => `${label}을(를) 입력해주세요.`,
   invalidEmail: `이메일 형식이 올바르지 않습니다.`,
   invalidPhone: `전화번호 형식이 올바르지 않습니다.`,
@@ -36,7 +36,7 @@ export const errorMessages = {
   deleteBulk : "전체 삭제는 할 수 없습니다."
 };
 
-export const loginMessages = {
+export const LoginMessages = {
   title: `vFRAS 가입자 관리`,
   info1: `로그인이 안될 경우 관리자에게 문의하세요`,
   info2: `로그인이 안될 경우 관리자에게 문의하세요`,
@@ -52,11 +52,11 @@ export const loginMessages = {
     "비밀번호 5회 이상 검증 실패로 사용자 계정이 자동중지 처리되었습니다.\n관리자에게 문의하세요.",
 };
 
-export const accountMessages = {
+export const AccountMessages = {
   searchPlaceHolder: `아이디, 이름, 부서를 입력해주세요.`,
 };
 
-export const soundSourceMessages = {
+export const SoundSourceMessages = {
   searchPlaceHolder: `음원코드, 제목/설명을 입력해주세요.`,
 };
 
@@ -69,7 +69,7 @@ export const subsriberMessages = {
   resetPassword : `초기화 되었습니다.`
 };
 
-export const countryNumberMessages = {
+export const LvMessages = {
   info1: `국번을 라인단위로 입력해주세요.`,
   info2: `라인간에는 반드시 엔터를 쳐주시기 바랍니다.`,
   info3: `변경할 국번을 준비하여 복사 후 붙여주세요.`,

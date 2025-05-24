@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { ROUTES } from "../constants/routes";
 import { LABELS } from "../constants/Labels";
 import { KEYS } from "../constants/Keys";
-import { loginMessages } from "../constants/Message";
+import { LoginMessages } from "../constants/Message";
 import axios from "../api/axios";
 import { useModal } from "../contexts/ModalContext";
 
@@ -38,14 +38,14 @@ const Login = () => {
     //     navigate(from, { replace: true });
     //   })
     //   .catch((err) => {
-    //     setErrMsg(loginMessages.errorId);
-    //     setErrMsg(loginMessages.errorPassword);
-    //     setErrMsg(loginMessages.errorIdConfirm);
-    //     setErrMsg(loginMessages.errorUsing);
-    //     setErrMsg(loginMessages.errorPasswordAgreement);
+    //     setErrMsg(LoginMessages.errorId);
+    //     setErrMsg(LoginMessages.errorPassword);
+    //     setErrMsg(LoginMessages.errorIdConfirm);
+    //     setErrMsg(LoginMessages.errorUsing);
+    //     setErrMsg(LoginMessages.errorPasswordAgreement);
     // 5회 이상 로그인 실패
     // showAlert({
-    //   message: loginMessages.errorStopUser,
+    //   message: LoginMessages.errorStopUser,
     // });
     //   });
   };
@@ -72,7 +72,7 @@ const Login = () => {
                 name={KEYS.ADMIN_ID}
                 value={data[KEYS.ADMIN_ID]}
                 className="form-input"
-                placeholder={loginMessages.infoId}
+                placeholder={LoginMessages.infoId}
               />
               <input
                 type="password"
@@ -80,7 +80,7 @@ const Login = () => {
                 name={KEYS.PASSWORD}
                 value={data[KEYS.PASSWORD]}
                 className="form-input"
-                placeholder={loginMessages.infoPassword}
+                placeholder={LoginMessages.infoPassword}
               />
             </div>
             <div className="check-box loginCheck">

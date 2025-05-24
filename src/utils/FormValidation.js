@@ -1,5 +1,5 @@
 import { KEYS } from "../constants/Keys";
-import { errorMessages } from "../constants/Message";
+import { ErrorMessages } from "../constants/Message";
 
 export const isValidEmail = (email) => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -34,16 +34,16 @@ export const fieldsValidate = (fields, formData) => {
     const { key, label, required, type, min, max } = field;
     // 1. 필수값인지 확인
     if (required && !formData[key]) {
-      return errorMessages.required(label);
+      return ErrorMessages.required(label);
     }
 
     // 2. 타입에 따라 validation 체크(email, phone...)
     if (key === KEYS.MOBILE && !isValidPhone(formData[key])) {
-      return errorMessages.invalidPhone;
+      return ErrorMessages.invalidPhone;
     }
 
     if (type === "email" && !isValidEmail(formData[key])) {
-      return errorMessages.invalidEmail;
+      return ErrorMessages.invalidEmail;
     }
 
     // 3. 길이 체크
@@ -52,17 +52,17 @@ export const fieldsValidate = (fields, formData) => {
       max &&
       (formData[key].length < min || formData[key].length > max)
     ) {
-      return errorMessages.lengthMismatch(label, min, max);
+      return ErrorMessages.lengthMismatch(label, min, max);
     }
 
     // 비밀번호 체크
     if (type === "password") {
       if (!isValidPassword(formData[key])) {
-        return errorMessages.invalidPassword;
+        return ErrorMessages.invalidPassword;
       }
 
       if (formData[key] !== formData[KEYS.PASSWORD_CONFIRM]) {
-        return errorMessages.correctPassword;
+        return ErrorMessages.correctPassword;
       }
     }
   }
