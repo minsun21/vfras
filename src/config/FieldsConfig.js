@@ -8,13 +8,11 @@ import {
   USER_STATES,
 } from "./OPTIONS";
 
-
 export const SUBSRIBERS_STATE = [
   { key: "0", value: "요청중" },
   { key: "1", value: "가입" },
   { key: "2", value: "삭제" },
 ];
-
 
 export const option_userUseState = [
   { key: "notUsed", value: "사용안함" },
@@ -211,7 +209,7 @@ export const SUBSRIBERS_REGISTER_FIELDS = [
   },
 ];
 
-export const subsriberManageFields = [
+export const SUBSRIBERS_MANAGE_FILEDS = [
   {
     key: "mainNumber",
     label: LABELS.SUBSCRIBER_NUMBER,

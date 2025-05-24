@@ -251,6 +251,7 @@ const Subscriber = () => {
     navigate(ROUTES.SUBSCRIBERS_MANAGE, {
       state: {
         [KEYS.SUB_NO]: row[KEYS.SUB_NO],
+        seletRow : row, // TOBE :: 삭제
       },
     });
   };
