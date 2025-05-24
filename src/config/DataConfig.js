@@ -89,28 +89,20 @@ export const SUBSRIBES_COLUMNS = (navigateManage) => {
     {
       accessorKey: KEYS.USER_NUMBER,
       header: LABELS.USER_NUMBER,
-      cell: ({ row }) => {
-        if (!row.original._isNew) {
-          return (
-            <span>
-              {row.original[KEYS.TEL_FROM_NO]} ~ {row.original[KEYS.TEL_TO_NO]}
-            </span>
-          );
-        }
-      },
+      cell: ({ row }) => (
+        <span>
+          {row.original[KEYS.TEL_FROM_NO]} ~ {row.original[KEYS.TEL_TO_NO]}
+        </span>
+      ),
     },
     {
       accessorKey: KEYS.PBX_NUMBER,
       header: LABELS.PBX_NUMBER_COL,
-      cell: ({ row }) => {
-        if (!row.original._isNew) {
-          return (
-            <span>
-              {row.original[KEYS.FROM_NO]} ~ {row.original[KEYS.TO_NO]}
-            </span>
-          );
-        }
-      },
+      cell: ({ row }) => (
+        <span>
+          {row.original[KEYS.FROM_NO]} ~ {row.original[KEYS.TO_NO]}
+        </span>
+      ),
     },
     {
       accessorKey: KEYS.NAME,
@@ -540,14 +532,24 @@ export const DID_CONFIG_DATAS = [
   },
 ];
 
-export const did_personal_setting_columns = [
+export const DID_PERSONAL_SETTING_COLUMNS = [
   {
     accessorKey: KEYS.USER_NUMBER,
-    header: LABELS.USER_NUMBER_MULTI,
+    header: LABELS.USER_NUMBER,
+    cell: ({ row }) => (
+      <span>
+        {row.original[KEYS.TEL_FROM_NO]} ~ {row.original[KEYS.TEL_TO_NO]}
+      </span>
+    ),
   },
   {
     accessorKey: KEYS.PBX_NUMBER,
-    header: LABELS.PBX_NUMBER_COL_MULTI,
+    header: LABELS.PBX_NUMBER_COL,
+    cell: ({ row }) => (
+      <span>
+        {row.original[KEYS.FROM_NO]} ~ {row.original[KEYS.TO_NO]}
+      </span>
+    ),
   },
   {
     accessorKey: KEYS.RBT_ID,
