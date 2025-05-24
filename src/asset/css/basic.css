@@ -12,10 +12,10 @@ section.layer { padding-top:8rem; display:flex; justify-content:center; align-it
 section.loading { padding-top:8rem; display:flex; justify-content:center; align-items:center; flex-direction:column; } 
 
 /* search-box */
-.search-box {padding: 10px;border-radius: 12px;background-color: #FAFAFA;} 
+.search-box { padding: 10px;border-radius: 12px;background-color: #FAFAFA; margin-bottom: 10px;} 
 
 /* search-box Label */
-.schTxtL1 {font-size: 14px;color: #000;line-height: 1;margin: 10px 3px 4px 10px;display: block;} 
+.schTxtL1 { font-size: 14px;color: #000;line-height: 1;margin: 10px 3px 4px 10px;display: block;} 
 .schTxtL1 b { color: var(--scolor); margin: 0 0.3rem 0 0.5rem } 
 .schTxtL1 font { color: #757575; margin: 0 0.3rem 0 0.5rem } 
 .schTxtL1.hIcon::before { content: '●'; font-size: 6px; margin: 0 0.5rem; vertical-align: middle; color:var(--scolor); } 

@@ -82,6 +82,7 @@
 .didPop .tbl-list tr td { font-size: 13px; font-weight: 400; height: 45px; padding: 4px; } 
 .didPop .configBox .tbl-list th { font-size: 14px; height: 35px; padding: 5px; } 
 .didPop .configBox .tbl-list td { font-size: 14px; height: 30px; padding: 5px; } 
+.didPop .didStopBox { display: flex; gap: 10px; line-height: 40px; padding: 5px 10px; }
 .pop-header h3 { font-size: 2rem; font-weight: bold; text-align: left; color: #000; margin-bottom: 1rem; padding-right: 2rem; line-height: 1.4; } 
 .pop-header-close { position: absolute; top: 3rem; right: 4rem; font-size: 0; width: 4rem; height: 4rem; background: url("../img/layer-close.png") no-repeat center; background-size: auto; } 
 .pop-header-close button { width: 100%; height: 100%; background: none; border: none; cursor: pointer; } 
@@ -105,16 +106,17 @@
 .lvAccordion .title-row { display: flex; justify-content: space-between; padding: 5px 20px; background-color: #e9e9e9; cursor: pointer; font-weight: bold; transition: 0.3s; } 
 .lvAccordion .title-row:hover { background-color: #ddd; } 
 .lvAccordion .lvItem .lvContent { height: 0px; overflow: hidden; padding: 0; background: #fff; display: flex; flex-direction: row; transition: 0.2s; } 
-.lvAccordion .lvItem.active .lvContent { height: 350px; padding:0px; display: flex; flex-direction: row; transition: 0.4s; border-top: 1px solid #BBB; } 
+.lvAccordion .lvItem.active .lvContent { height: 420px; padding:0px; display: flex; flex-direction: row; transition: 0.4s; border-top: 1px solid #BBB; } 
 .lvAccordion .lvItem:last-child.active { border-bottom: none } 
 
 /* in box */
-.lvAccordion .lvItem .svcBoxL { width: 140px; display: flex; flex-direction: column; gap: 10px; align-items: center; justify-content: center; padding: 7px; } 
+.lvAccordion .lvItem .svcBoxL { width: 170px; display: flex; flex-direction: column; gap: 10px; align-items: center; justify-content: center; padding: 7px; } 
 .lvAccordion .lvItem .svcBoxL textarea { width: 100%; height: 100px; border: 1px solid #999; } 
 .lvAccordion .lvItem .svcBoxC { width: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border: 1px solid #eee; border-width: 0px 1px; } 
 .lvAccordion .lvItem .svcBoxC .sbtn { min-width: 60px; height: 30px; line-height: 30px; padding: 0 5px; border-radius: 5px; font-size: 12px; font-weight: 400; } 
 .lvAccordion .lvItem .svcBoxC .svcBoxCTxt { font-size: 14px; font-weight: 700; color: #000; border-top: 1px dashed #bbb; margin: 15px 0px 5px 0px; width: 80%; text-align: center; padding-top: 10px; } 
-.lvAccordion .lvItem .svcBoxR { width: calc(100% - 240px); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 7px; } 
+.lvAccordion .lvItem .svcBoxR { width: calc(100% - 250px); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 7px; margin-bottom: auto; } 
+.lvAccordion .lvItem .svcBoxR .tbl-list { height: 400px; margin-top: 0px;}
 /* cal */
 .lvDateBox { display: flex; gap: 10px; align-items: center; } 
 .lvCalDate { height: 4rem; line-height: 4rem; padding: 0 1.5rem; border-radius: 0.8rem; border: solid 1px #ddd; background: #fff; transition: all 0.35s; position: relative; width: 11rem; outline: 0; font-size: 1.3rem; color: #333; } 

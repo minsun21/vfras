@@ -153,7 +153,7 @@ const ProfileEdit = () => {
 
   return (
     <>
-      <span>{ProfileMessages.info1}</span>
+      <span className="ft13">{ProfileMessages.info1}</span>
       <form className="tbl-view" onSubmit={(e) => e.preventDefault()}>
         <table>
           <colgroup>
@@ -177,7 +177,7 @@ const ProfileEdit = () => {
                   </th>
                   <td className="value">
                     {key === KEYS.PASSWORD ? (
-                      <div className="dflex gap10">
+                      <div className="rowBox">
                         <Input
                           size="nm"
                           type={type}
