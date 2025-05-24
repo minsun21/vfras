@@ -108,7 +108,6 @@ const ProfileEdit = () => {
 
   const changePassword = () => {
     const passwordData = store.getState().password;
-    console.log(passwordData);
     // 1. 빈 값 확인
     if (hasEmptyValue(passwordData)) {
       showAlert({
@@ -150,7 +149,7 @@ const ProfileEdit = () => {
     //     },
     //   });
     // });
-    
+
     closeModal();
     setTimeout(() => {
       showAlert({
