@@ -7,7 +7,7 @@ import { useModal } from "../contexts/ModalContext";
 import { ROUTES } from "../constants/routes";
 import axios from "../api/axios";
 
-const CountryCode = () => {
+const LvManage = () => {
   const { showDialog, showAlert, closeModal } = useModal();
   const [changeValue, setChangeValue] = useState("");
   const [currentValue, setCurrentValue] = useState("");
@@ -144,4 +144,4 @@ const CountryCode = () => {
   );
 };
 
-export default CountryCode;
+export default LvManage;

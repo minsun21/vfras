@@ -31,7 +31,7 @@ export const MenusConfig = [
       {
         title: LABELS.COUNTRY_NUMBER_MANAGE,
         path: ROUTES.LV,
-        component: lazy(() => import("../pages/CountryCode")),
+        component: lazy(() => import("../pages/LvManage")),
       },
     ],
   },
