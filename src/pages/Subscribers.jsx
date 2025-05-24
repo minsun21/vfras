@@ -31,7 +31,7 @@ const Subscriber = () => {
   const [data, setData] = useState([]);
   const [allType, setAllType] = useState([]);
 
-  const [selectedRows, setSelectedRows] = useState([]);
+  const [selectRows, setselectRows] = useState([]);
 
   useEffect(() => {
     setAllType(DIVISIONS);
@@ -56,14 +56,14 @@ const Subscriber = () => {
   };
 
   const approvedSub = () => {
-    if (selectedRows.length === 0) {
+    if (selectRows.length === 0) {
       showAlert({
         message: errorMessages.nonSelect,
       });
       return;
     }
 
-    for (const selectedRow of selectedRows) {
+    for (const selectedRow of selectRows) {
       if (selectedRow[KEYS.SUB_STATUS] === LABELS.SUBSCRIBE) {
         showAlert({
           message: subsriberMessages.approvedError,
@@ -72,7 +72,7 @@ const Subscriber = () => {
       }
     }
 
-    // axios.put(ROUTES.SUBSCRIBERS_APPROVE, selectedRows).then(res=>{
+    // axios.put(ROUTES.SUBSCRIBERS_APPROVE, selectRows).then(res=>{
     //   const selectedIds = tableRef.current.getSelectedRowIds();
     //   tableRef.current.updateRowsById(selectedIds, (row) => ({
     //     ...row,
@@ -94,7 +94,7 @@ const Subscriber = () => {
   };
 
   const clickDelete = () => {
-    if (selectedRows.length === 0) {
+    if (selectRows.length === 0) {
       showAlert({
         message: errorMessages.nonSelect,
       });
@@ -102,13 +102,13 @@ const Subscriber = () => {
     }
 
     showDialog({
-      message: infoMessages.confirmDelete(selectedRows.length),
+      message: infoMessages.confirmDelete(selectRows.length),
       onConfirm: deleteAccount,
     });
   };
 
   const deleteAccount = () => {
-    // axios.delete(ROUTES.SUBSCRIBERS, selectedRows).then((res) => {
+    // axios.delete(ROUTES.SUBSCRIBERS, selectRows).then((res) => {
     //   showAlert({
     //     message: infoMessages.successDelete,
     //   });
@@ -116,7 +116,7 @@ const Subscriber = () => {
 
     const filteredData = data.filter(
       (item) =>
-        !selectedRows.some((r) => r[KEYS.ADMIN_ID] === item[KEYS.ADMIN_ID])
+        !selectRows.some((r) => r[KEYS.ADMIN_ID] === item[KEYS.ADMIN_ID])
     );
     setData(filteredData);
     tableRef.current?.clearSelection();
@@ -245,7 +245,7 @@ const Subscriber = () => {
         data={data}
         setTableData={setData}
         pageSize={10}
-        onRowSelectionChange={setSelectedRows}
+        onRowSelectionChange={setselectRows}
         topBtns={topBtns}
       />
     </div>

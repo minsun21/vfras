@@ -7,10 +7,7 @@ import Button, {
   BUTTON_SEARCH,
 } from "../components/Button";
 import Input, { INPUT_SIZE_LG } from "../components/Input";
-import {
-  account_manage_columns,
-  account_manage_data,
-} from "../config/DataConfig";
+import { ACCOUNTS_COLUMNS } from "../config/DataConfig";
 import { ROUTES } from "../constants/routes";
 import {
   accountMessages,
@@ -20,17 +17,59 @@ import {
 import { LABELS } from "../constants/Labels";
 import { useModal } from "../contexts/ModalContext";
 import axios from "../api/axios";
+import { KEYS } from "../constants/Keys";
 
 const AccountManage = () => {
   const navigate = useNavigate();
   const tableRef = useRef();
   const { showAlert, showDialog } = useModal();
-  const [selectedRows, setSelectedRows] = useState([]);
+  const [selectRows, setselectRows] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    setData(account_manage_data);
+    setData([
+      {
+        [KEYS.ADMIN_ID]: "admin",
+        [KEYS.NAME]: "관리자",
+        [KEYS.DEPARTMENT]: "-",
+        [KEYS.ADMIN_TYPE]: "Admin",
+        [KEYS.CREATED_AT]: "2024.02.04 11:23:37",
+        [KEYS.LAST_ACCESS_TIME]: "2024.02.04 11:23:27",
+      },
+      {
+        [KEYS.ADMIN_ID]: "cwback",
+        [KEYS.NAME]: "백창우",
+        [KEYS.DEPARTMENT]: "고객만족팀",
+        [KEYS.ADMIN_TYPE]: "User",
+        [KEYS.CREATED_AT]: "2024.02.04 11:23:37",
+        [KEYS.LAST_ACCESS_TIME]: "2024.02.01 09:12:35",
+      },
+      {
+        [KEYS.ADMIN_ID]: "wooseok",
+        [KEYS.NAME]: "주우석",
+        [KEYS.DEPARTMENT]: "고객만족팀",
+        [KEYS.ADMIN_TYPE]: "User",
+        [KEYS.CREATED_AT]: "2024.02.04 11:23:37",
+        [KEYS.LAST_ACCESS_TIME]: "2024.02.02 12:03:04",
+      },
+      {
+        [KEYS.ADMIN_ID]: "hong",
+        [KEYS.NAME]: "홍길동",
+        [KEYS.DEPARTMENT]: "고객만족팀",
+        [KEYS.ADMIN_TYPE]: "User",
+        [KEYS.CREATED_AT]: "2024.04.23 10:55:45",
+        [KEYS.LAST_ACCESS_TIME]: "2024.04.23 11:55:01",
+      },
+      {
+        [KEYS.ADMIN_ID]: "kim",
+        [KEYS.NAME]: "김철수",
+        [KEYS.DEPARTMENT]: "고객만족팀",
+        [KEYS.ADMIN_TYPE]: "User",
+        [KEYS.CREATED_AT]: "2024.04.29 01:24:35",
+        [KEYS.LAST_ACCESS_TIME]: "2024.04.30 05:13:09",
+      },
+    ]);
     // TODO :: 최초 로드는 전체 리스트 출력 하는지? , keywords를 빈값으로 보내면 되는건지?
     // axios.get(ROUTES.ACCOUNTS, keyword).then((res) => {
     //   if (res.data.length === 0) {
@@ -48,7 +87,7 @@ const AccountManage = () => {
       message: infoMessages.noSearchResult,
     });
 
-    // axios.get(ROUTES.ACCOUNTS, keyword).then((res) => {
+    // axios.get(ROUTES.ACCOUNTS, { params: { keyword } }).then((res) => {
     //   if (res.data.length === 0) {
     //     showAlert({
     //       message: infoMessages.noSearchResult,
@@ -60,13 +99,13 @@ const AccountManage = () => {
   };
 
   const clickEdit = () => {
-    if (selectedRows.length === 0) {
+    if (selectRows.length === 0) {
       showAlert({
         message: errorMessages.nonSelect,
       });
       return;
     }
-    if (selectedRows.length > 1) {
+    if (selectRows.length > 1) {
       showAlert({
         message: errorMessages.oneSelect,
       });
@@ -75,13 +114,13 @@ const AccountManage = () => {
 
     navigate(ROUTES.ACCOUNT_EDIT, {
       state: {
-        selectedId: selectedRows[0].id,
+        selectedId: selectRows[0].id,
       },
     });
   };
 
   const clickDelete = () => {
-    if (selectedRows.length === 0) {
+    if (selectRows.length === 0) {
       showAlert({
         message: errorMessages.nonSelect,
       });
@@ -89,26 +128,46 @@ const AccountManage = () => {
     }
 
     showDialog({
-      message: infoMessages.confirmDelete(selectedRows.length),
+      message: infoMessages.confirmDelete(selectRows.length),
       onConfirm: deleteAccount,
     });
   };
 
   const deleteAccount = () => {
-    // for (const selectedRow of selectedRows) {
+    // for (const selectedRow of selectRows) {
     //   axios.delete(ROUTES.ACCOUNTS_MANAGE(selectedRow.adminId)).then(res => {
     //     showAlert({
     //       message: infoMessages.successDelete,
     //     });
     //   })
     // }
+
+    setData((prev) =>
+      prev.filter(
+        (item) => !selectRows.some((selected) => selected[KEYS.ADMIN_ID] === item[KEYS.ADMIN_ID])
+      )
+    );
+
+    tableRef.current?.clearSelection();
+    setselectRows([]); // 선택 초기화
+
+    setTimeout(() => {
+      showAlert({
+        message: infoMessages.successDelete,
+      });
+    }, 100);
   };
 
   return (
     <>
-      <form className="search-box" onSubmit={(e) => e.preventDefault()}>
+      <form
+        className="search-box"
+        onSubmit={(e) => {
+          e.preventDefault();
+          search();
+        }}
+      >
         <table className="tbl-input">
-          <colgroup></colgroup>
           <tbody>
             <tr>
               <td>
@@ -119,7 +178,7 @@ const AccountManage = () => {
                     placeholder={accountMessages.searchPlaceHolder}
                     size={INPUT_SIZE_LG}
                   />
-                  <Button type={BUTTON_SEARCH} onClick={search} />
+                  <Button type={BUTTON_SEARCH} />
                   <Button
                     label={LABELS.USER_REGISTER}
                     onClick={() => navigate(ROUTES.ACCOUNT_REGISTER)}
@@ -132,10 +191,10 @@ const AccountManage = () => {
       </form>
       <Table
         ref={tableRef}
-        columns={account_manage_columns}
+        columns={ACCOUNTS_COLUMNS}
         data={data}
         pageSize={5}
-        onRowSelectionChange={setSelectedRows}
+        onRowSelectionChange={setselectRows}
       />
       <div className="btn-wrap">
         <div>

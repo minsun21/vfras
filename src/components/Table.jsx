@@ -192,10 +192,10 @@ const Table = forwardRef(
 
     useEffect(() => {
       if (typeof onRowSelectionChange === "function") {
-        const selectedRows = table
+        const selectRows = table
           .getSelectedRowModel()
           .rows.map((row) => row.original);
-        onRowSelectionChange(selectedRows);
+        onRowSelectionChange(selectRows);
       }
     }, [rowSelection, table, onRowSelectionChange]);
 

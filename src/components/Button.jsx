@@ -38,6 +38,7 @@ const Button = ({ type = "confirm", label, onClick, disabled = false }) => {
           ? BUTTON_DELETE
           : "scolor"
       }`}
+      type="button"
       onClick={onClick}
       disabled={disabled}
     >
