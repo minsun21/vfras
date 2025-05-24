@@ -434,7 +434,8 @@ export const subscriberEditFields = [
   },
 ];
 
-export const accountRegisterFields = [
+// 계정 관리 > 사용자 등록
+export const ACCOUNTS_REGISTER_FIELDS = [
   {
     key: KEYS.ADMIN_ID,
     label: LABELS.ID,
@@ -496,7 +497,8 @@ export const accountRegisterFields = [
   },
 ];
 
-export const accountEditFields = [
+// 계정관리 > 사용자 정보 수정
+export const ACCOUNTS_EDIT_FIELDS = [
   {
     key: KEYS.ADMIN_ID,
     label: LABELS.ID,

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { accountEditFields } from "../config/FieldsConfig";
+import { ACCOUNTS_EDIT_FIELDS } from "../config/FieldsConfig";
 import Button, { BUTTON_CANCEL, BUTTON_SAVE } from "../components/Button";
 import Input from "../components/Input";
 import Select from "../components/Select";
@@ -10,8 +10,9 @@ import { errorMessages, infoMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 import axios from "../api/axios";
 import { KEYS } from "../constants/Keys";
-import { findMappedKey, findMappedValue } from "../utils/Util";
+import { findMappedKey } from "../utils/Util";
 import { ADMIN_TYPES } from "../config/OPTIONS";
+import PhoneNumberInput from "../components/PhoneNumberInput";
 
 const AccountEdit = () => {
   const navigate = useNavigate();
@@ -27,16 +28,13 @@ const AccountEdit = () => {
     if (!selectedId) return;
     setFormData({
       ...selectRow,
-      // [KEYS.ADMIN_ID] : "vFRAS",
       [KEYS.ADMIN_TYPE]: findMappedKey(ADMIN_TYPES, selectRow[KEYS.ADMIN_TYPE]),
-      // [KEYS.DEPARTMENT] : "운영팀",
-      // [KEYS.NAME] : "홍길동",
       [KEYS.MOBILE]: "010-1234-5678",
       [KEYS.EMAIL]: "test@lguplus.co.kr",
       [KEYS.REMARKS]: "협력사 요청",
       [KEYS.EMAIL]: "test@lguplus.co.kr",
-      [KEYS.PASSWORD]: "",
-      [KEYS.PASSWORD_CHECK]: "",
+      [KEYS.PASSWORD]: "aA12345678!",
+      [KEYS.PASSWORD_CONFIRM]: "aA12345678!",
     });
 
     // axios.get(ROUTES.ACCOUNTS_MANAGE(selectedId), formData).then((res) => {
@@ -51,11 +49,10 @@ const AccountEdit = () => {
         closeModal();
 
         setTimeout(() => {
-          const errValidate = fieldsValidate(accountEditFields, formData);
+          const errValidate = fieldsValidate(ACCOUNTS_EDIT_FIELDS, formData);
           if (errValidate) {
             showAlert({
               message: errValidate,
-              onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
             });
             return;
           }
@@ -98,7 +95,7 @@ const AccountEdit = () => {
             <col></col>
           </colgroup>
           <tbody>
-            {accountEditFields.map((field) => {
+            {ACCOUNTS_EDIT_FIELDS.map((field) => {
               const {
                 key,
                 label,
@@ -110,8 +107,8 @@ const AccountEdit = () => {
               } = field;
               const value = formData[key] || "";
 
-              const handleChange = (val) => {
-                setFormData((prev) => ({ ...prev, [key]: val }));
+              const handleChange = (e) => {
+                setFormData((prev) => ({ ...prev, [key]: e.target.value }));
               };
 
               return (
@@ -126,7 +123,7 @@ const AccountEdit = () => {
                         nonEmpty={true}
                         value={value}
                         options={options}
-                        onChange={(e) => handleChange(e.target.value)}
+                        onChange={handleChange}
                       />
                     ) : comment ? (
                       <div>
@@ -134,21 +131,27 @@ const AccountEdit = () => {
                           value={value}
                           type={type}
                           placeholder={formData[key]}
-                          onChange={(e) => handleChange(e.target.value)}
+                          onChange={handleChange}
                           disabled={disabled}
                         />
                         <span className="comment">{comment}</span>
                       </div>
+                    ) : key === KEYS.MOBILE ? (
+                      <PhoneNumberInput
+                        placeholder={formData[key]}
+                        value={value}
+                        onChange={handleChange}
+                      />
                     ) : key === KEYS.PASSWORD_CONFIRM ? (
                       <div>
                         <Input
                           value={value}
                           type={type}
                           placeholder={formData[key]}
-                          onChange={(e) => handleChange(e.target.value)}
+                          onChange={handleChange}
                           disabled={disabled}
                         />
-                        <span>
+                        <span className="password-confirm">
                           {formData[KEYS.PASSWORD] !==
                             formData[KEYS.PASSWORD_CONFIRM] &&
                             errorMessages.correctPassword}
@@ -159,7 +162,7 @@ const AccountEdit = () => {
                         value={value}
                         type={type}
                         placeholder={formData[key]}
-                        onChange={(e) => handleChange(e.target.value)}
+                        onChange={handleChange}
                         disabled={disabled}
                       />
                     )}

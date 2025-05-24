@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { accountRegisterFields } from "../config/FieldsConfig";
+import { ACCOUNTS_REGISTER_FIELDS } from "../config/FieldsConfig";
 import Button, { BUTTON_CANCEL, BUTTON_SAVE } from "../components/Button";
 import Input from "../components/Input";
 import Select from "../components/Select";
@@ -11,6 +11,7 @@ import axios from "../api/axios";
 import { fieldsValidate } from "../utils/FormValidation";
 import { KEYS } from "../constants/Keys";
 import { ADMIN_TYPES } from "../config/OPTIONS";
+import PhoneNumberInput from "../components/PhoneNumberInput";
 
 const AccountRegister = () => {
   const navigate = useNavigate();
@@ -32,7 +33,10 @@ const AccountRegister = () => {
         closeModal();
 
         setTimeout(() => {
-          const errValidate = fieldsValidate(accountRegisterFields, formData);
+          const errValidate = fieldsValidate(
+            ACCOUNTS_REGISTER_FIELDS,
+            formData
+          );
           if (errValidate) {
             showAlert({
               message: errValidate,
@@ -77,7 +81,7 @@ const AccountRegister = () => {
             <col></col>
           </colgroup>
           <tbody>
-            {accountRegisterFields.map((field, idx) => {
+            {ACCOUNTS_REGISTER_FIELDS.map((field, idx) => {
               const {
                 key,
                 label,
@@ -90,8 +94,8 @@ const AccountRegister = () => {
               } = field;
               const value = formData[key] || "";
 
-              const handleChange = (val) => {
-                setFormData((prev) => ({ ...prev, [key]: val }));
+              const handleChange = (e) => {
+                setFormData((prev) => ({ ...prev, [key]: e.target.value }));
               };
 
               return (
@@ -105,7 +109,7 @@ const AccountRegister = () => {
                       <Select
                         value={value}
                         options={options}
-                        onChange={(e) => handleChange(e.target.value)}
+                        onChange={handleChange}
                         nonEmpty={true}
                       />
                     ) : comment ? (
@@ -114,21 +118,27 @@ const AccountRegister = () => {
                           value={value}
                           type={type}
                           placeholder={placeholder}
-                          onChange={(e) => handleChange(e.target.value)}
+                          onChange={handleChange}
                           disabled={disabled}
                         />
                         <span className="comment">{comment}</span>
                       </div>
+                    ) : key === KEYS.MOBILE ? (
+                      <PhoneNumberInput
+                        placeholder={formData[key]}
+                        value={value}
+                        onChange={handleChange}
+                      />
                     ) : key === KEYS.PASSWORD_CONFIRM ? (
                       <div>
                         <Input
                           value={value}
                           type={type}
                           placeholder={placeholder}
-                          onChange={(e) => handleChange(e.target.value)}
+                          onChange={handleChange}
                           disabled={disabled}
                         />
-                        <span>
+                        <span className="password-confirm">
                           {formData[KEYS.PASSWORD] !==
                             formData[KEYS.PASSWORD_CONFIRM] &&
                             errorMessages.correctPassword}
@@ -139,7 +149,7 @@ const AccountRegister = () => {
                         value={value}
                         type={type}
                         placeholder={placeholder}
-                        onChange={(e) => handleChange(e.target.value)}
+                        onChange={handleChange}
                         disabled={disabled}
                       />
                     )}
