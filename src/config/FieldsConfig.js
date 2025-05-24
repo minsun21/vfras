@@ -65,8 +65,7 @@ export const option_userUseState = [
   },
 ];
 
-
-export const profileFields = [
+export const PROFILE_FIELDS = [
   {
     key: "classification",
     label: LABELS.CLASSIFICATION,
@@ -112,11 +111,11 @@ export const profileFields = [
   },
 ];
 
-export const profileEditFields = [
+// 내 정보
+export const PROFILE_EDIT_FIELDS = [
   {
     key: KEYS.ADMIN_TYPE,
     label: LABELS.CLASSIFICATION,
-    value: "Admin",
     type: "text",
     required: true,
     disabled: true,
@@ -124,7 +123,6 @@ export const profileEditFields = [
   {
     key: KEYS.DEPARTMENT,
     label: LABELS.DEPARTMENT,
-    value: "운영팀",
     type: "text",
     required: true,
     disabled: true,
@@ -132,7 +130,6 @@ export const profileEditFields = [
   {
     key: KEYS.ADMIN_ID,
     label: LABELS.ID,
-    value: "vFRAS",
     type: "text",
     required: true,
     disabled: true,
@@ -140,7 +137,6 @@ export const profileEditFields = [
   {
     key: KEYS.PASSWORD,
     label: LABELS.PASSWORD,
-    value: "!sdf423",
     type: "text",
     required: true,
     disabled: true,
@@ -148,7 +144,6 @@ export const profileEditFields = [
   {
     key: KEYS.NAME,
     label: LABELS.NAME,
-    value: "홍길동",
     type: "text",
     required: true,
     disabled: true,
@@ -156,14 +151,12 @@ export const profileEditFields = [
   {
     key: KEYS.MOBILE,
     label: LABELS.PHONE,
-    value: "010-1234-5678",
     type: "text",
     required: true,
   },
   {
     key: KEYS.EMAIL,
     label: LABELS.EMAIL,
-    value: "test@lguplus.co.kr",
     type: "email",
     required: true,
   },

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { profileEditFields } from "../config/FieldsConfig";
+import { PROFILE_EDIT_FIELDS } from "../config/FieldsConfig";
 import Button, { BUTTON_CANCEL, BUTTON_SAVE } from "../components/Button";
 import Input from "../components/Input";
 import { ROUTES } from "../constants/routes";
@@ -18,6 +18,7 @@ import { KEYS } from "../constants/Keys";
 import { useDispatch } from "react-redux";
 import { logout } from "../features/authSlice";
 import { MODAL_SM } from "../components/modals/ModalRenderer";
+import PhoneNumberInput from "../components/PhoneNumberInput";
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
@@ -28,12 +29,15 @@ const ProfileEdit = () => {
   const adminId = "";
 
   useEffect(() => {
-    setFormData(() =>
-      profileEditFields.reduce((acc, field) => {
-        acc[field.key] = field.value || "";
-        return acc;
-      }, {})
-    );
+    setFormData({
+      [KEYS.ADMIN_TYPE]: "Admin",
+      [KEYS.DEPARTMENT]: "운영팀",
+      [KEYS.ADMIN_ID]: "vFRAS",
+      [KEYS.PASSWORD]: "!sdf423",
+      [KEYS.NAME]: "홍길동",
+      [KEYS.MOBILE]: "010-1234-5678",
+      [KEYS.EMAIL]: "test@lguplus.co.kr",
+    });
 
     // axios.get(ROUTES.PROFILE, adminId).then((res) => {
     //   setFormData((prev) => ({ ...prev, ...res.data }));
@@ -157,11 +161,15 @@ const ProfileEdit = () => {
             <col></col>
           </colgroup>
           <tbody>
-            {profileEditFields.map((field) => {
+            {PROFILE_EDIT_FIELDS.map((field) => {
               const { key, disabled, type, required } = field;
+
+              const value = formData[key] || "";
+
               const handleChange = (val) => {
                 setFormData((prev) => ({ ...prev, [key]: val }));
               };
+
               return (
                 <tr key={key}>
                   <th className="Labels">
@@ -173,7 +181,6 @@ const ProfileEdit = () => {
                         <Input
                           size="nm"
                           type={type}
-                          value={LABELS.PASSWORD_PLACEHOLDER}
                           onChange={(e) => handleChange(e.target.value)}
                           disabled={disabled}
                         />
@@ -183,11 +190,15 @@ const ProfileEdit = () => {
                           onClick={clickChangePassword}
                         />
                       </>
+                    ) : key === KEYS.MOBILE ? (
+                      <PhoneNumberInput
+                        value={value}
+                        onChange={handleChange}
+                      />
                     ) : (
                       <>
                         <Input
-                          size="nm"
-                          value={formData[key] || ""}
+                          value={value}
                           type={field.type}
                           placeholder={formData[key]}
                           onChange={(e) => handleChange(e.target.value)}

@@ -125,7 +125,6 @@ const AccountRegister = () => {
                       </div>
                     ) : key === KEYS.MOBILE ? (
                       <PhoneNumberInput
-                        placeholder={formData[key]}
                         value={value}
                         onChange={handleChange}
                       />

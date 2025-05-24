@@ -163,6 +163,18 @@ const AccountManage = () => {
     }, 100);
   };
 
+  const topBtns = () => {
+    return (
+      <>
+        <Button
+            label={LABELS.USER_EDIT}
+            onClick={clickEdit}
+          />
+         <Button type={BUTTON_DELETE} onClick={clickDelete} />
+      </>
+    );
+  };
+
   return (
     <>
       <Form className="search-box" onSubmit={search}>
@@ -194,19 +206,8 @@ const AccountManage = () => {
         data={data}
         pageSize={5}
         onRowSelectionChange={setselectRows}
+        topBtns={topBtns}
       />
-      <div className="btn-wrap">
-        <div>
-          <Button
-            type={BUTTON_CANCEL}
-            label={LABELS.USER_EDIT}
-            onClick={clickEdit}
-          />
-        </div>
-        <div>
-          <Button type={BUTTON_DELETE} onClick={clickDelete} />
-        </div>
-      </div>
     </>
   );
 };

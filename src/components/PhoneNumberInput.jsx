@@ -1,4 +1,5 @@
 import React from "react";
+import { InfoMessages } from "../constants/Message";
 
 const formatPhoneNumber = (value) => {
   const digits = value.replace(/\D/g, "");
@@ -11,10 +12,17 @@ const formatPhoneNumber = (value) => {
   return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7, 11)}`;
 };
 
-const PhoneNumberInput = ({ value, onChange, placeholder, size = "nm" }) => {
+const PhoneNumberInput = ({ value, onChange, size = "nm" }) => {
   const handleChange = (e) => {
     const formatted = formatPhoneNumber(e.target.value);
-    onChange?.(formatted);
+    const syntheticEvent = {
+      ...e,
+      target: {
+        ...e.target,
+        value: formatted,
+      },
+    };
+    onChange?.(syntheticEvent);
   };
 
   return (
@@ -24,7 +32,7 @@ const PhoneNumberInput = ({ value, onChange, placeholder, size = "nm" }) => {
       value={value}
       onChange={handleChange}
       maxLength={13}
-      placeholder={placeholder}
+      placeholder={InfoMessages.mobile}
     />
   );
 };
