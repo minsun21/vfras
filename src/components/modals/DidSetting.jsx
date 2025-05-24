@@ -34,9 +34,10 @@ const DidSetting = ({ userInfo }) => {
   const [selectRows, setSelectRows] = useState([]);
 
   useEffect(() => {
+    console.log(userInfo)
     // console.log("id", userInfo);
-    setData(userInfo.did_config);
-  }, []);
+    setData(userInfo[KEYS.DID_CONFIG]);
+  }, [userInfo]);
 
   useEffect(() => {
     if (!selectRows || selectRows.length !== 1) {

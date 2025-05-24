@@ -605,7 +605,7 @@ export const SUBSRIBERS_INFO_DUMMY = {
   [KEYS.TEL_TO_NO]: "0240054232",
   [KEYS.RBT_ID]: "050125",
   [KEYS.RBT_ID_VALUE]: "사랑을 했다",
-  did_personal: [
+  [KEYS.DID_PERSONAL_CONFIG]: [
     {
       [KEYS.ADMIN_ID]: 1,
       [KEYS.TEL_FROM_NO]: "02111629222",

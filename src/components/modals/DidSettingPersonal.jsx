@@ -15,7 +15,7 @@ const DidSettingPersonal = ({ userInfo }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    setData(userInfo.did_personal);
+    setData(userInfo[KEYS.DID_PERSONAL_CONFIG]);
   }, [userInfo]); 
 
   useEffect(()=>{
