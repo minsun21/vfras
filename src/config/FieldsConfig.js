@@ -559,12 +559,6 @@ export const ACCOUNTS_EDIT_FIELDS = [
   },
 ];
 
-export const countryNumbers = [
-  7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
-  7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
-  7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
-];
-
 export const passwordChange = [
   {
     key: KEYS.OLD_PASSWORD,

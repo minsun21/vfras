@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button, { BUTTON_CANCEL } from "../components/Button";
 import { LABELS } from "../constants/Labels";
-import { countryNumbers } from "../config/FieldsConfig";
 import { LvMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 import { ROUTES } from "../constants/routes";
@@ -14,12 +13,18 @@ const LvManage = () => {
   const [changeLineCount, setChangeLineCount] = useState(0);
   const [currentLineCount, setCurrentLineCount] = useState(0);
 
+  const lvNumbers =[
+    7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
+    7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
+    7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
+  ]
+
   useEffect(() => {
-    const initData = countryNumbers.join("\n");
+    const initData = lvNumbers.join("\n");
     setChangeValue(initData);
     setCurrentValue(initData);
-    setChangeLineCount(countryNumbers.length);
-    setCurrentLineCount(countryNumbers.length);
+    setChangeLineCount(lvNumbers.length);
+    setCurrentLineCount(lvNumbers.length);
 
     // axios.get(ROUTES.LV).then(res=>{
     //   setChangeValue(res.data);
