@@ -8,26 +8,6 @@ import {
   USER_STATES,
 } from "./OPTIONS";
 
-export const DIVISIONS = [
-  { key: "", value: LABELS.ALL },
-  { key: KEYS.NAME, value: LABELS.SUBSCRIBER_NAME },
-  { key: KEYS.SUB_NO, value: LABELS.MAIN_NUMBER },
-  { key: KEYS.PBX_NUMBER, value: LABELS.PBX_NUMBER },
-  { key: KEYS.USER_NUMBER, value: LABELS.USER_NUMBER_F },
-];
-
-export const SEARCH_SUBSRIBERS_TYPES = [
-  { key: "", value: "전체" },
-  { key: "0", value: "개인" },
-  { key: "1", value: "법인" },
-];
-
-export const SEARCH_SERVICE_TYPES = [
-  { key: "", value: "전체" },
-  { key: "0", value: "개인" },
-  { key: "1", value: "개인DJ" },
-  { key: "2", value: "기업" },
-];
 
 export const SUBSRIBERS_STATE = [
   { key: "0", value: "요청중" },
@@ -35,12 +15,6 @@ export const SUBSRIBERS_STATE = [
   { key: "2", value: "삭제" },
 ];
 
-export const SEARCH_SUBSRIBERS_STATE = [
-  { key: "", value: "전체" },
-  { key: "0", value: "요청중" },
-  { key: "1", value: "가입" },
-  { key: "2", value: "삭제" },
-];
 
 export const option_userUseState = [
   { key: "notUsed", value: "사용안함" },
