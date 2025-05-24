@@ -160,7 +160,7 @@ const DidSetting = ({ userInfo }) => {
         [KEYS.FROM_NO]: "",
         [KEYS.TO_NO]: "",
         [KEYS.RBT_ID]: "",
-        [KEYS.SOUND_CODE]: "",
+        [KEYS.RBT_ID_VALUE]: "",
         [KEYS.IS_INTERRUPT]: false,
         [KEYS.IS_CIRCULR_JOINED]: false,
         [KEYS.IS_WEEK_JOINED]: false,
@@ -468,7 +468,7 @@ const DidSetting = ({ userInfo }) => {
             <Input
               size="sm"
               value={
-                !isAddMode && selectDidInfo ? selectDidInfo[KEYS.RBT_VALUE] : ""
+                !isAddMode && selectDidInfo ? selectDidInfo[KEYS.RBT_ID_VALUE] : ""
               }
               disabled
             />

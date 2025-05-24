@@ -68,6 +68,6 @@ export const KEYS = {
   GROUPS: "groups",
   CALLING_NUMBER: "callingNUmber",
   GROUP_ID: "groupId",
-  RBT_VALUE: "rbtValue",
-  DESCRIPT : "descript"
+  DESCRIPT : "descript",
+  DID_CONFIG : "didConfig"
 };

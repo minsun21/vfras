@@ -7,7 +7,7 @@ import Button, {
 } from "../components/Button";
 import Input from "../components/Input";
 import RadioGroup from "../components/RadioGroup";
-import { subscriberEditFields } from "../config/FieldsConfig";
+import { SUBSRIBERS_EDIT_FIELDS } from "../config/FieldsConfig";
 import { ROUTES } from "../constants/routes";
 import { InfoMessages, subsriberMessages } from "../constants/Message";
 import { LABELS } from "../constants/Labels";
@@ -17,9 +17,9 @@ import { KEYS } from "../constants/Keys";
 import axios from "../api/axios";
 import Form from "../components/Form";
 import PasswordReset from "../components/modals/PasswordReset";
-import { didPersonal, SUBSRIBERS_INFO_DUMMY } from "../config/DataConfig";
+import { SUBSRIBERS_INFO_DUMMY } from "../config/DataConfig";
 import DidSettingPersonal from "../components/modals/DidSettingPersonal";
-import { MODAL_MD, MODAL_SM } from "../components/modals/ModalRenderer";
+import { MODAL_SM } from "../components/modals/ModalRenderer";
 
 const SubscriberManageEdit = () => {
   const navigate = useNavigate();
@@ -32,14 +32,20 @@ const SubscriberManageEdit = () => {
   useEffect(() => {
     // userid로 정보 검색
     if (!state) return;
-    const subNo = state[KEYS.SUB_NO];
-    setSearchSubNo(subNo);
+    // const subNo = state[KEYS.SUB_NO];
+    // setSearchSubNo(subNo);
 
     // 초기화
     // axios.get(ROUTES.SUBSCRIBERS_DETAIL(subNo)).then(res=>{
     //   setFormData(res.data);
     // })
-    setFormData(SUBSRIBERS_INFO_DUMMY);
+    // 임시
+    const selectRow = state.selectRow;
+    setFormData({
+      ...SUBSRIBERS_INFO_DUMMY,
+      ...selectRow,
+      [KEYS.PASSWORD] : 1234
+    });
   }, [state]);
 
   const search = () => {
@@ -67,7 +73,7 @@ const SubscriberManageEdit = () => {
         closeModal();
 
         setTimeout(() => {
-          // const errValidate = fieldsValidate(subscriberEditFields, formData);
+          // const errValidate = fieldsValidate(SUBSRIBERS_EDIT_FIELDS, formData);
           // if (errValidate) {
           //   showAlert({
           //     message: errValidate,
@@ -131,7 +137,7 @@ const SubscriberManageEdit = () => {
       content: <PasswordReset currentPassword={formData[KEYS.PASSWORD]} />,
       header: LABELS.PASSWORD_RESET,
       onConfirm: restPassword,
-      size : MODAL_SM
+      size: MODAL_SM,
     });
   };
 
@@ -141,6 +147,8 @@ const SubscriberManageEdit = () => {
       ...formData,
       [KEYS.PASSWORD]: formData[KEYS.SUB_NO].slice(-4),
     });
+
+    closeModal();
 
     setTimeout(() => {
       showAlert({
@@ -185,7 +193,7 @@ const SubscriberManageEdit = () => {
               <col></col>
             </colgroup>
             <tbody>
-              {subscriberEditFields.map((field) => {
+              {SUBSRIBERS_EDIT_FIELDS.map((field) => {
                 const {
                   key,
                   label,
@@ -193,12 +201,13 @@ const SubscriberManageEdit = () => {
                   options = [],
                   required,
                   disabled,
-                  multi,
-                  size
+                  fields,
+                  size,
                 } = field;
                 const value = formData[key] || "";
 
-                const handleChange = (val) => {
+                const handleChange = (e) => {
+                  const val = e.target.value;
                   const newData = {
                     [key]: val,
                   };
@@ -219,6 +228,7 @@ const SubscriberManageEdit = () => {
                   <tr key={key}>
                     <th className="Labels" required={required}>
                       {label}
+                      {required && <em>*</em>}
                     </th>
                     <td className="value">
                       {key === KEYS.SUB_NO ? (
@@ -226,7 +236,7 @@ const SubscriberManageEdit = () => {
                           <Input
                             value={formData[key] || ""}
                             type={field.type}
-                            onChange={(e) => handleChange(e.target.value)}
+                            onChange={handleChange}
                             disabled={disabled}
                           />
                           <span>{LABELS.LV_NUMBER}</span>
@@ -236,7 +246,7 @@ const SubscriberManageEdit = () => {
                           <Input
                             value={formData[key] || ""}
                             type={field.type}
-                            onChange={(e) => handleChange(e.target.value)}
+                            onChange={handleChange}
                             disabled={disabled}
                             size="nm"
                           />
@@ -250,13 +260,13 @@ const SubscriberManageEdit = () => {
                         <RadioGroup
                           value={value}
                           options={options}
-                          onChange={(e) => handleChange(e.target.value)}
+                          onChange={handleChange}
                         />
-                      ) : key === KEYS.DID ? (
+                      ) : key === KEYS.DID_CONFIG ? (
                         <div className="rowBox">
                           <label>
                             {LABELS.CURRENT}
-                            <span>{value}</span>
+                            <span>{value.length}</span>
                             {LABELS.DID_VALUE}
                           </label>
                           <Button
@@ -270,7 +280,7 @@ const SubscriberManageEdit = () => {
                             onClick={clickDidSettingPersonal}
                           />
                         </div>
-                      ) : multi ? (
+                      ) : fields ? (
                         <div className="dflex">
                           {field.fields.map((subField, idx) => (
                             <div key={subField.key} className="rowBox">
@@ -298,7 +308,7 @@ const SubscriberManageEdit = () => {
                           value={value}
                           type={type}
                           disabled={disabled}
-                          onChange={(e) => handleChange(e.target.value)}
+                          onChange={handleChange}
                         />
                       )}
                     </td>
