@@ -125,7 +125,7 @@ const AccountEdit = () => {
                         onChange={handleChange}
                       />
                     ) : comment ? (
-                      <div className="hFlex">
+                      <div className="rowBox">
                         <Input
                           value={value}
                           type={type}
@@ -141,7 +141,7 @@ const AccountEdit = () => {
                         onChange={handleChange}
                       />
                     ) : key === KEYS.PASSWORD_CONFIRM ? (
-                      <div className="hFlex">
+                      <div className="rowBox">
                         <Input
                           value={value}
                           type={type}

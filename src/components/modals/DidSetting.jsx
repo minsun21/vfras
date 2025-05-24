@@ -406,7 +406,7 @@ const DidSetting = ({ userInfo }) => {
   return (
     <div>
       <div className="didLayout">
-        <div className="w55p">
+        <div className="w60p">
           <div className="popSubTit">{LABELS.DID}</div>
           <Form className="popSchBox">
             <label className="schTxtL1">{LABELS.MAIN_NUMBER}</label>
@@ -426,7 +426,7 @@ const DidSetting = ({ userInfo }) => {
             </div>
           </Form>
           <Form className="form">
-            <div className="tbl-list-top mt10 mb-20">
+            <div className="tbl-list-top mt20">
               <div className="top-button">
                 <span>
                   <Button
@@ -453,7 +453,7 @@ const DidSetting = ({ userInfo }) => {
             newRowRef={newRowRef}
           />
         </div>
-        <div className="w45p">
+        <div className="w40p">
           <div className="popSubTit">{LABELS.ADDITIONAL_SERVICE_SETTING}</div>
           <Form className="popSchBox">
             <label className="schTxtL1">{LABELS.DEFAULT_RING}</label>
@@ -473,7 +473,26 @@ const DidSetting = ({ userInfo }) => {
               disabled
             />
           </Form>
-
+           {/* 시작, 일시정지 */}
+          <div class="didStopBox">
+            <div class="radio-box">
+              <span class="items">
+                <input type="radio" name="rdDidS" id="rdDidStart" value="시작" checked/>
+                <label for="viewTime1">시작</label>
+              </span> 
+              <span class="items">
+                <input type="radio" name="rdDidS" id="rdDidStop" value="시작" checked/>
+                <label for="viewTime1">일시정지</label>
+              </span> 
+              <span class="items">
+                <input type="radio" name="rdDidS" id="rdDidStopRe" value="시작" checked/>
+                <label for="viewTime1">일시정지 예약</label>
+              </span> 
+            </div>
+            <div>
+                <Input type="date" size="w140"/>
+            </div>
+          </div>    
           <div className="configBox">
             {!isAddMode && selectRows.length === 0 ? (
               <div className="configAlertTxt">

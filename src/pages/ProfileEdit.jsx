@@ -191,7 +191,7 @@ const ProfileEdit = () => {
                   </th>
                   <td className="value">
                     {key === KEYS.PASSWORD ? (
-                      <div className="dflex gap10">
+                      <div className="rowBox">
                         <Input
                           size="nm"
                           type={type}

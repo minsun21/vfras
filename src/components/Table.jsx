@@ -231,7 +231,7 @@ const Table = forwardRef(
     return (
       <>
         <Form className="form">
-          <div className="tbl-list-top mt20">
+          <div className="tbl-list-top">
             <div className="top-button">
               {resultLabel && (
                 <span className="total mr0">
