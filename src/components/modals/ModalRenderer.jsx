@@ -3,9 +3,9 @@ import { useModal } from "../../contexts/ModalContext";
 import Button, { BUTTON_CANCEL } from "../Button";
 import { LABELS } from "../../constants/Labels";
 
-export const MODAL_SM = "w400"; 
-export const MODAL_LG = "didPop"; 
-export const MODAL_MD = "w600"; 
+export const MODAL_SM = "w400";
+export const MODAL_LG = "didPop";
+export const MODAL_MD = "w600";
 
 const ModalRenderer = () => {
   const { modals, closeModal } = useModal();
@@ -14,17 +14,17 @@ const ModalRenderer = () => {
 
   return (
     <>
-      {modals?.map(({ type, props }, index) => (
+      {modals.map(({ type, props }, index) => (
         <Modal
-          className={`${type}`}
           key={index}
           isOpen={true}
+          className={type}
           onRequestClose={closeModal}
           shouldCloseOnOverlayClick={false}
           shouldCloseOnEsc={false}
           ariaHideApp={false}
         >
-          {type === "alert" ? (
+          {type === "alert" && (
             <div className="layer-popup open">
               <div className="md-content w400">
                 <div className="msg-header">
@@ -45,7 +45,9 @@ const ModalRenderer = () => {
                 </div>
               </div>
             </div>
-          ) : type === "dialog" ? (
+          )}
+
+          {type === "dialog" && (
             <div className="layer-popup open">
               <div className="md-content w400">
                 <div className="msg-header">
@@ -73,7 +75,8 @@ const ModalRenderer = () => {
                 </div>
               </div>
             </div>
-          ) : (
+          )}
+          {type !== "alert" && type !== "dialog" && (
             <div className="layer-popup open">
               <div className={`md-content ${props.size || MODAL_LG}`}>
                 <div className="pop-header">
@@ -85,13 +88,14 @@ const ModalRenderer = () => {
                 <div className="pop-body">{props.content}</div>
                 <div className="pop-footer">
                   <div className="btn-wrap center">
-                    <Button type={BUTTON_CANCEL} onClick={closeModal} />
                     <Button
+                      type={BUTTON_CANCEL}
                       onClick={() => {
-                        props.onConfirm?.();
+                        props.onClose?.();
                         closeModal();
                       }}
                     />
+                    <Button onClick={() => props.onConfirm?.()} />
                   </div>
                 </div>
               </div>
