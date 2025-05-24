@@ -72,17 +72,23 @@
 .msg-footer { padding-top: 2rem; } 
 .msg-footer .btn-wrap { padding-top: 15px; } 
 
-/* 설정 팝업 */
+/* 팝업 table */
+.pop-body .tbl-list tr th { font-size: 14px; height: 35px; padding: 5px; }  
+.pop-body .tbl-list tr td { font-size: 13px; font-weight: 400; height: 35px; padding: 4px; } 
+
+
+/* did 팝업 */
 .didPop { width: 1600px; min-width: 1600px; } 
 .didPop .pop-body { height: 830px; } 
 .w400 .pop-body { height: 250px; } 
 .w600 .pop-body { height: 500px; } 
-.didPop .tbl-list tr th { font-size: 14px; height: 35px; padding: 5px; } 
-.didPop .tbl-list tr:nth-child(2) th { font-size: 12px; font-weight: 400; width: 50px; } 
-.didPop .tbl-list tr td { font-size: 13px; font-weight: 400; height: 45px; padding: 4px; } 
-.didPop .configBox .tbl-list th { font-size: 14px; height: 35px; padding: 5px; } 
-.didPop .configBox .tbl-list td { font-size: 14px; height: 30px; padding: 5px; } 
-.didPop .didStopBox { display: flex; gap: 10px; line-height: 40px; padding: 5px 10px; }
+.didPop .pop-body .tbl-list tr th { font-size: 14px; height: 35px; padding: 5px; } 
+.didPop .pop-body .tbl-list tr:nth-child(2) th { font-size: 12px; font-weight: 400; width: 50px; } 
+.didPop .pop-body .tbl-list tr td { font-size: 13px; font-weight: 400; height: 45px; padding: 4px; } 
+.didPop .pop-body .configBox .tbl-list th { font-size: 14px; height: 35px; padding: 5px; } 
+.didPop .pop-body .configBox .tbl-list td { font-size: 14px; height: 30px; padding: 5px; } 
+
+.pop-body .didStopBox { display: flex; gap: 10px; line-height: 40px; padding: 5px 10px; }
 .pop-header h3 { font-size: 2rem; font-weight: bold; text-align: left; color: #000; margin-bottom: 1rem; padding-right: 2rem; line-height: 1.4; } 
 .pop-header-close { position: absolute; top: 3rem; right: 4rem; font-size: 0; width: 4rem; height: 4rem; background: url("../img/layer-close.png") no-repeat center; background-size: auto; } 
 .pop-header-close button { width: 100%; height: 100%; background: none; border: none; cursor: pointer; } 

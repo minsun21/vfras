@@ -127,7 +127,7 @@ caption, legend, .hidden, .visually-hidden, hr { position: absolute !important; 
 .w70p { width:70% !important; } 
 .w80p { width:80% !important; } 
 .w90p { width:90% !important; } 
-.wd100 { width:100% !important; } 
+.wd100, .w100p { width:100% !important; } 
 
 /* height */
 .h30 { height: 3rem !important }

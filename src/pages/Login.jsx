@@ -71,7 +71,7 @@ const Login = () => {
                 id="inputId"
                 name={KEYS.ADMIN_ID}
                 value={data[KEYS.ADMIN_ID]}
-                className="form-input"
+                className="form-input w100p"
                 placeholder={LoginMessages.infoId}
               />
               <input
@@ -79,7 +79,7 @@ const Login = () => {
                 id="inputPass"
                 name={KEYS.PASSWORD}
                 value={data[KEYS.PASSWORD]}
-                className="form-input"
+                className="form-input w100p"
                 placeholder={LoginMessages.infoPassword}
               />
             </div>
