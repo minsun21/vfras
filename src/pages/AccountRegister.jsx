@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { accountRegisterFields, ADMIN_TYPES } from "../config/FieldsConfig";
+import { accountRegisterFields } from "../config/FieldsConfig";
 import Button, { BUTTON_CANCEL, BUTTON_SAVE } from "../components/Button";
 import Input from "../components/Input";
 import Select from "../components/Select";
@@ -10,6 +10,7 @@ import { errorMessages, infoMessages } from "../constants/Message";
 import axios from "../api/axios";
 import { fieldsValidate } from "../utils/FormValidation";
 import { KEYS } from "../constants/Keys";
+import { ADMIN_TYPES } from "../config/OPTIONS";
 
 const AccountRegister = () => {
   const navigate = useNavigate();
@@ -35,11 +36,9 @@ const AccountRegister = () => {
           if (errValidate) {
             showAlert({
               message: errValidate,
-              onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
             });
             return;
           }
-
           save();
         }, 50);
       },
@@ -98,7 +97,8 @@ const AccountRegister = () => {
               return (
                 <tr key={idx}>
                   <th className="Labels">
-                    <label required={required}>{label}</label>
+                    {label}
+                    {required && <em>*</em>}
                   </th>
                   <td className="value">
                     {type === "select" ? (

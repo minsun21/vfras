@@ -1,6 +1,7 @@
 import { INPUT_SIZE_FL } from "../components/Input";
 import { KEYS } from "../constants/Keys";
 import { LABELS } from "../constants/Labels";
+import { ADMIN_TYPES } from "./OPTIONS";
 
 export const DIVISIONS = [
   { key: "", value: LABELS.ALL },
@@ -64,11 +65,6 @@ export const option_userUseState = [
   },
 ];
 
-export const ADMIN_TYPES = [
-  { key: "admin", value: "Admin" },
-  { key: "user", value: "User" },
-  { key: "guest", value: "Guest" },
-];
 
 export const profileFields = [
   {
@@ -504,7 +500,6 @@ export const accountEditFields = [
   {
     key: KEYS.ADMIN_ID,
     label: LABELS.ID,
-    placeholder: "vFRAS",
     type: "text",
     required: true,
     disabled: true,
@@ -512,7 +507,6 @@ export const accountEditFields = [
   {
     key: KEYS.ADMIN_TYPE,
     label: LABELS.CLASSIFICATION,
-    placeholder: "Admin",
     type: "select",
     options: ADMIN_TYPES,
     required: true,
@@ -520,35 +514,30 @@ export const accountEditFields = [
   {
     key: KEYS.DEPARTMENT,
     label: LABELS.DEPARTMENT,
-    placeholder: "운영팀",
     type: "text",
     required: true,
   },
   {
     key: KEYS.NAME,
     label: LABELS.NAME,
-    placeholder: "홍길동",
     type: "text",
     required: true,
   },
   {
     key: KEYS.MOBILE,
     label: LABELS.PHONE,
-    placeholder: "010-1234-5678",
     type: "text",
     required: true,
   },
   {
     key: KEYS.EMAIL,
     label: LABELS.EMAIL,
-    placeholder: "test@lguplus.co.kr",
     type: "email",
     required: true,
   },
   {
     key: KEYS.REMARKS,
     label: LABELS.REMARKS,
-    placeholder: "협력사 요청",
     type: "text",
   },
   {

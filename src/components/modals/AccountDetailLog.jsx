@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useModal } from "../../contexts/ModalContext";
 import { LABELS } from "../../constants/Labels";
 import Table from "../Table";
 import {
@@ -11,7 +10,6 @@ import { ROUTES } from "../../constants/routes";
 import { KEYS } from "../../constants/Keys";
 
 const AccountDetailLog = ({ selectRow }) => {
-  const { closeModal } = useModal();
   const [data, setData] = useState([]);
   const [lastAccessTime, setLastAccessTime] = useState("");
 

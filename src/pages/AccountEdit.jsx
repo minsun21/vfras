@@ -10,11 +10,14 @@ import { errorMessages, infoMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 import axios from "../api/axios";
 import { KEYS } from "../constants/Keys";
+import { findMappedKey, findMappedValue } from "../utils/Util";
+import { ADMIN_TYPES } from "../config/OPTIONS";
 
 const AccountEdit = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const selectedId = state?.selectedId || [];
+  const selectRow = state?.selectedInfo || {}; // 삭제
 
   const { showDialog, showAlert, closeModal } = useModal();
   const [formData, setFormData] = useState({});
@@ -22,13 +25,19 @@ const AccountEdit = () => {
   useEffect(() => {
     // userid로 정보 검색
     if (!selectedId) return;
-
-    setFormData(() =>
-      accountEditFields.reduce((acc, field) => {
-        acc[field.key] = field.placeholder || "";
-        return acc;
-      }, {})
-    );
+    setFormData({
+      ...selectRow,
+      // [KEYS.ADMIN_ID] : "vFRAS",
+      [KEYS.ADMIN_TYPE]: findMappedKey(ADMIN_TYPES, selectRow[KEYS.ADMIN_TYPE]),
+      // [KEYS.DEPARTMENT] : "운영팀",
+      // [KEYS.NAME] : "홍길동",
+      [KEYS.MOBILE]: "010-1234-5678",
+      [KEYS.EMAIL]: "test@lguplus.co.kr",
+      [KEYS.REMARKS]: "협력사 요청",
+      [KEYS.EMAIL]: "test@lguplus.co.kr",
+      [KEYS.PASSWORD]: "",
+      [KEYS.PASSWORD_CHECK]: "",
+    });
 
     // axios.get(ROUTES.ACCOUNTS_MANAGE(selectedId), formData).then((res) => {
     //   setFormData(res.data);
@@ -107,12 +116,14 @@ const AccountEdit = () => {
 
               return (
                 <tr key={key}>
-                  <th className="Labels" required={required}>
+                  <th className="Labels">
                     {label}
+                    {required && <em>*</em>}
                   </th>
                   <td className="value">
                     {type === "select" ? (
                       <Select
+                        nonEmpty={true}
                         value={value}
                         options={options}
                         onChange={(e) => handleChange(e.target.value)}

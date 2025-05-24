@@ -13,3 +13,10 @@ export const ORGNS = [
   { key: "031", value: "경기" },
   { key: "052", value: "대구" },
 ];
+
+// 사용자 구분
+export const ADMIN_TYPES = [ 
+  { key: "admin", value: "Admin" },
+  { key: "user", value: "User" },
+  { key: "guest", value: "Guest" },
+];

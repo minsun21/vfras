@@ -115,6 +115,7 @@ const AccountManage = () => {
     navigate(ROUTES.ACCOUNT_EDIT, {
       state: {
         selectedId: selectRows[0].id,
+        selectedInfo : selectRows[0] // TOBE :: 삭제
       },
     });
   };
