@@ -166,8 +166,8 @@ const ProfileEdit = () => {
 
               const value = formData[key] || "";
 
-              const handleChange = (val) => {
-                setFormData((prev) => ({ ...prev, [key]: val }));
+              const handleChange = (e) => {
+                setFormData((prev) => ({ ...prev, [key]: e.target.value }));
               };
 
               return (
@@ -177,11 +177,11 @@ const ProfileEdit = () => {
                   </th>
                   <td className="value">
                     {key === KEYS.PASSWORD ? (
-                      <>
+                      <div className="dflex gap10">
                         <Input
                           size="nm"
                           type={type}
-                          onChange={(e) => handleChange(e.target.value)}
+                          onChange={handleChange}
                           disabled={disabled}
                         />
                         <Button
@@ -189,7 +189,7 @@ const ProfileEdit = () => {
                           label={LABELS.PASSWORD_CHANGE}
                           onClick={clickChangePassword}
                         />
-                      </>
+                      </div>
                     ) : key === KEYS.MOBILE ? (
                       <PhoneNumberInput
                         value={value}
@@ -201,7 +201,7 @@ const ProfileEdit = () => {
                           value={value}
                           type={field.type}
                           placeholder={formData[key]}
-                          onChange={(e) => handleChange(e.target.value)}
+                          onChange={handleChange}
                           disabled={disabled}
                         />
                       </>

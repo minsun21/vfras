@@ -75,6 +75,7 @@
 /* 설정 팝업 */
 .didPop { width: 1600px; min-width: 1600px; } 
 .didPop .pop-body { height: 830px; } 
+.w400 .pop-body { height: 250px; } 
 .w600 .pop-body { height: 500px; } 
 .didPop .tbl-list tr th { font-size: 14px; height: 35px; padding: 5px; } 
 .didPop .tbl-list tr:nth-child(2) th { font-size: 12px; font-weight: 400; width: 50px; } 

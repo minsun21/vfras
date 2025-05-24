@@ -14,6 +14,8 @@ dl,ul,ol,li { list-style:none }
 blockquote, q { quotes: none } 
 blockquote:before, blockquote:after, q:before, q:after { content:''; content:none } 
 input,select,textarea,button { vertical-align:middle } 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0;} 
 button { border:0 none; background-color:transparent; cursor:pointer } 
 body,th,td,input,select,textarea,button { font-family:'Pretendard','Malgun Gothic','맑은 고딕',AppleGothic,Dotum,"돋움",sans-serif; } 
 a { color:#333; text-decoration:none } 
@@ -23,14 +25,7 @@ table { border-collapse:collapse; border-spacing:0; }
 button:disabled { cursor: not-allowed;} 
 html { font-size:62.5%; overflow-x:hidden; } 
 
-/* media queries */
-/* @media (max-width:1024px) { html { font-size:55%; } 
- }
-@media (max-width:480px) { html { font-size:50%; } 
- }*/
-
 :root { --ccolor:#4c5771; --scolor:#a50034; } 
-
 
 /* display none */
 .dn { display:none !important; } 
