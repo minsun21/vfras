@@ -1,12 +1,14 @@
-// src/store.js
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './features/authSlice';
 import breadcrumbReducer from './features/breadcrumbSlice';
 import passwordReducer from './features/passwordSlice';
+import didPersonalReducer from './features/didPersonalSlice';
+
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // 기본: localStorage
 
 import { combineReducers } from 'redux';
+import { KEYS } from './constants/Keys';
 
 const persistConfig = {
   key: 'root',
@@ -17,7 +19,8 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authReducer,
   breadcrumb: breadcrumbReducer,
-  password: passwordReducer,
+  [KEYS.PASSWORD]: passwordReducer,
+  [KEYS.DID_PERSONAL_CONFIG] : didPersonalReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

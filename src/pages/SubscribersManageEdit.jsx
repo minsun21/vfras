@@ -20,6 +20,8 @@ import PasswordReset from "../components/modals/PasswordReset";
 import { SUBSRIBERS_INFO_DUMMY } from "../config/DataConfig";
 import DidSettingPersonal from "../components/modals/DidSettingPersonal";
 import { MODAL_SM } from "../components/modals/ModalRenderer";
+import { SUBSRIBERS_TYPES } from "../config/OPTIONS";
+import { store } from "../store";
 
 const SubscriberManageEdit = () => {
   const navigate = useNavigate();
@@ -44,7 +46,7 @@ const SubscriberManageEdit = () => {
     setFormData({
       ...SUBSRIBERS_INFO_DUMMY,
       ...selectRow,
-      [KEYS.PASSWORD] : 1234
+      [KEYS.PASSWORD]: 1234,
     });
   }, [state]);
 
@@ -129,6 +131,21 @@ const SubscriberManageEdit = () => {
     showModal({
       content: <DidSettingPersonal userInfo={formData} />,
       header: LABELS.DID_TITLE_PERSONAL,
+      onConfirm: changeDidSettingPersonal,
+    });
+  };
+
+  // did 회선 설정 - 개인 변경
+  const changeDidSettingPersonal = () => {
+    const didPersonalData =
+      store.getState()[KEYS.DID_PERSONAL_CONFIG][KEYS.DID_PERSONAL_CONFIG];
+    console.log(didPersonalData);
+
+    showAlert({
+      message: InfoMessages.successEdit,
+      onConfirm: () => {
+        closeModal();
+      },
     });
   };
 
@@ -264,21 +281,37 @@ const SubscriberManageEdit = () => {
                         />
                       ) : key === KEYS.DID_CONFIG ? (
                         <div className="rowBox">
-                          <label>
-                            {LABELS.CURRENT}
+                          {/* {LABELS.CURRENT}
                             <span>{value.length}</span>
-                            {LABELS.DID_VALUE}
-                          </label>
-                          <Button
-                            type={BUTTON_CANCEL}
-                            label={LABELS.SETTING}
-                            onClick={clickDidSetting}
-                          />
-                          <Button
-                            type={BUTTON_CANCEL}
-                            label={"개인용-임시"}
-                            onClick={clickDidSettingPersonal}
-                          />
+                            {LABELS.DID_VALUE} */}
+                          {formData[KEYS.SUB_TYPE] === // 임시
+                          SUBSRIBERS_TYPES[0].value ? (
+                            <label>
+                              {LABELS.CURRENT}
+                              <span>1</span>
+                              {LABELS.DID_VALUE}
+                            </label>
+                          ) : (
+                            <label>
+                              {LABELS.CURRENT}
+                              <span>{value.length}</span>
+                              {LABELS.DID_VALUE}
+                            </label>
+                          )}
+                          {formData[KEYS.SUB_TYPE] ===
+                          SUBSRIBERS_TYPES[0].value ? (
+                            <Button
+                              type={BUTTON_CANCEL}
+                              label={LABELS.SETTING}
+                              onClick={clickDidSettingPersonal}
+                            />
+                          ) : (
+                            <Button
+                              type={BUTTON_CANCEL}
+                              label={LABELS.SETTING}
+                              onClick={clickDidSetting}
+                            />
+                          )}
                         </div>
                       ) : fields ? (
                         <div className="dflex">

@@ -4,19 +4,23 @@ import Table from "../Table";
 import { DID_PERSONAL_SETTING_COLUMNS } from "../../config/DataConfig";
 import Input, { INPUT_SIZE_SM } from "../Input";
 import { KEYS } from "../../constants/Keys";
+import { useDispatch } from "react-redux";
+import { setPersonalData } from "../../features/didPersonalSlice";
 
 const DidSettingPersonal = ({ userInfo }) => {
   const tableRef = useRef();
+  const dispatch = useDispatch();
+
 
   const [data, setData] = useState([]);
 
   useEffect(() => {
     setData(userInfo.did_personal);
-  }, [userInfo]);
+  }, [userInfo]); 
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  useEffect(()=>{
+    dispatch(setPersonalData(data));
+  },[data])
 
   return (
     <div>
@@ -25,7 +29,7 @@ const DidSettingPersonal = ({ userInfo }) => {
           <div className="popSubTit">{LABELS.DID}</div>
           <form className="popSchBox">
             <label className="schTxtL1">{LABELS.MAIN_NUMBER}</label>
-            <Input value={userInfo[KEYS.SUB_NO]} />
+            <Input value={userInfo[KEYS.SUB_NO]} disabled />
             <div className="mlAuto"></div>
           </form>
           <Table
@@ -44,8 +48,16 @@ const DidSettingPersonal = ({ userInfo }) => {
           <div className="popSubTit">{LABELS.ADDITIONAL_SERVICE_SETTING}</div>
           <form className="popSchBox">
             <label className="schTxtL1">{LABELS.DEFAULT_RING}</label>
-            <Input value={userInfo[KEYS.RBT_ID]} size={INPUT_SIZE_SM} disabled />
-            <Input value={userInfo[KEYS.RBT_ID]} size={INPUT_SIZE_SM} disabled />
+            <Input
+              value={userInfo[KEYS.RBT_ID]}
+              size={INPUT_SIZE_SM}
+              disabled
+            />
+            <Input
+              value={userInfo[KEYS.RBT_ID]}
+              size={INPUT_SIZE_SM}
+              disabled
+            />
           </form>
         </div>
       </div>

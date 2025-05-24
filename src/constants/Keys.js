@@ -69,5 +69,6 @@ export const KEYS = {
   CALLING_NUMBER: "callingNUmber",
   GROUP_ID: "groupId",
   DESCRIPT : "descript",
-  DID_CONFIG : "didConfig"
+  DID_CONFIG : "didConfig", // did 회선(법인)
+  DID_PERSONAL_CONFIG : "didPersonalConfig", // did 회선(개인)
 };
