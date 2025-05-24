@@ -4,7 +4,12 @@ import { PROFILE_EDIT_FIELDS } from "../config/FieldsConfig";
 import Button, { BUTTON_CANCEL, BUTTON_SAVE } from "../components/Button";
 import Input from "../components/Input";
 import { ROUTES } from "../constants/routes";
-import { isValidEmail, isValidPhone } from "../utils/FormValidation";
+import {
+  hasEmptyValue,
+  isValidEmail,
+  isValidPassword,
+  isValidPhone,
+} from "../utils/FormValidation";
 import {
   ErrorMessages,
   InfoMessages,
@@ -19,11 +24,15 @@ import { useDispatch } from "react-redux";
 import { logout } from "../features/authSlice";
 import { MODAL_SM } from "../components/modals/ModalRenderer";
 import PhoneNumberInput from "../components/PhoneNumberInput";
+import Form from "../components/Form";
+import { resetPasswordFields } from "../features/passwordSlice";
+import { store } from "../store";
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { showDialog, showAlert, showModal, closeModal } = useModal();
+
   const [formData, setFormData] = useState({});
 
   const adminId = "";
@@ -89,46 +98,47 @@ const ProfileEdit = () => {
 
   const clickChangePassword = () => {
     showModal({
-      content: <PasswordChange info={formData} />,
+      content: <PasswordChange />,
       header: LABELS.PASSWORD_CHANGE,
-      onConfirm: changePassword,
+      onConfirm: () => changePassword(),
+      onClose : () =>  dispatch(resetPasswordFields()),
       size: MODAL_SM,
     });
   };
 
-  const changePassword = (newPassword) => {
-    console.log("newPassword", newPassword);
+  const changePassword = () => {
+    const passwordData = store.getState().password;
     // 1. 빈 값 확인
-    // if (hasEmptyValue(formData)) {
-    //   showAlert({
-    //     message: ErrorMessages.emptyValue,
-    //   });
-    //   return;
-    // }
+    if (hasEmptyValue(passwordData)) {
+      showAlert({
+        message: ErrorMessages.emptyValue,
+      });
+      return;
+    }
 
-    // // 2. 현재 비밀번호 확인
-    // if (info.password !== formData.currentPassword) {
-    //   showAlert({
-    //     message: ErrorMessages.confirmCurrentPassword,
-    //   });
-    //   return;
-    // }
+    // 2. 현재 비밀번호 확인
+    if (passwordData[KEYS.PASSWORD] !== formData[KEYS.PASSWORD]) {
+      showAlert({
+        message: ErrorMessages.confirmCurrentPassword,
+      });
+      return;
+    }
 
     // // 3. 변경 비밀번호 validation
-    // if (!isValidPassword(formData.changePassword)) {
-    //   showAlert({
-    //     message: ErrorMessages.invalidPassword,
-    //   });
-    //   return;
-    // }
+    if (!isValidPassword(passwordData[KEYS.NEW_PASSWORD1])) {
+      showAlert({
+        message: ErrorMessages.invalidPassword,
+      });
+      return;
+    }
 
     // // 4. 변경 비밀번호 재확인
-    // if (formData.changePassword !== formData.changeConfirmPassword) {
-    //   showAlert({
-    //     message: ErrorMessages.confirmPassword,
-    //   });
-    //   return;
-    // }
+    if (passwordData[KEYS.NEW_PASSWORD1] !== passwordData[KEYS.NEW_PASSWORD2]) {
+      showAlert({
+        message: ErrorMessages.confirmPassword,
+      });
+      return;
+    }
 
     // axios.put(ROUTES.PROFILE_EDIT(adminId), formData).then((res) => {
     //   showAlert({
@@ -140,6 +150,7 @@ const ProfileEdit = () => {
     //   });
     // });
 
+    closeModal();
     setTimeout(() => {
       showAlert({
         message: ProfileMessages.successPasswordChange,
@@ -149,12 +160,15 @@ const ProfileEdit = () => {
         },
       });
     }, 100);
+
+    // 완료 후 초기화
+    dispatch(resetPasswordFields());
   };
 
   return (
     <>
-      <span className="ft13">{ProfileMessages.info1}</span>
-      <form className="tbl-view" onSubmit={(e) => e.preventDefault()}>
+      <span>{ProfileMessages.info1}</span>
+      <Form className="tbl-view">
         <table>
           <colgroup>
             <col className="w250"></col>
@@ -162,7 +176,7 @@ const ProfileEdit = () => {
           </colgroup>
           <tbody>
             {PROFILE_EDIT_FIELDS.map((field) => {
-              const { key, disabled, type, required } = field;
+              const { key, disabled, type } = field;
 
               const value = formData[key] || "";
 
@@ -173,7 +187,7 @@ const ProfileEdit = () => {
               return (
                 <tr key={key}>
                   <th className="Labels">
-                    <label required={required}>{field.label}</label>
+                    <label>{field.label}</label>
                   </th>
                   <td className="value">
                     {key === KEYS.PASSWORD ? (
@@ -191,10 +205,7 @@ const ProfileEdit = () => {
                         />
                       </div>
                     ) : key === KEYS.MOBILE ? (
-                      <PhoneNumberInput
-                        value={value}
-                        onChange={handleChange}
-                      />
+                      <PhoneNumberInput value={value} onChange={handleChange} />
                     ) : (
                       <>
                         <Input
@@ -212,7 +223,7 @@ const ProfileEdit = () => {
             })}
           </tbody>
         </table>
-      </form>
+      </Form>
       <div className="btn-wrap">
         <div>
           <Button type={BUTTON_CANCEL} onClick={cancelEdit} />

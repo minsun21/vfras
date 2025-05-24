@@ -1,35 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 import Input from "../Input";
-import { passwordChange } from "../../config/FieldsConfig";
+import { PASSWORD_CHANGE_FIELDS } from "../../config/FieldsConfig";
 import { LABELS } from "../../constants/Labels";
+import { useSelector, useDispatch } from "react-redux";
+import { setPasswordField } from "../../features/passwordSlice";
 
 const PasswordChange = () => {
+  const passwordData = useSelector((state) => state.password);
+  const dispatch = useDispatch();
 
-  const [formData, setFormData] = useState(
-    passwordChange.reduce((acc, field) => {
-      acc[field.key] = "";
-      return acc;
-    }, {})
-  );
+  const handleChange = (key, value) => {
+    dispatch(setPasswordField({ key, value }));
+  };
 
   return (
     <div className="vFlex">
-      {passwordChange.map((field) => {
-        const { key, placeholder } = field;
-
-        const handleChange = (val) => {
-          setFormData((prev) => ({ ...prev, [key]: val }));
-        };
-
-        return (
-          <Input size="fl"
-            key={key}
-            value={formData[key] || ""}
-            placeholder={placeholder}
-            onChange={(e) => handleChange(e.target.value)}
-          />
-        );
-      })}
+      {PASSWORD_CHANGE_FIELDS.map(({ key, placeholder }) => (
+        <Input
+          key={key}
+          size="fl"
+          type="password"
+          value={passwordData[key] || ""}
+          placeholder={placeholder}
+          onChange={(e) => handleChange(key, e.target.value)}
+        />
+      ))}
       <span>{LABELS.PASSWORD_CHECK2}</span>
     </div>
   );
