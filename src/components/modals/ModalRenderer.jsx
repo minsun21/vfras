@@ -75,7 +75,7 @@ const ModalRenderer = () => {
             </div>
           ) : (
             <div className="layer-popup open">
-              <div className={`md-content ${props.size}`}>
+              <div className={`md-content ${props.size || MODAL_LG}`}>
                 <div className="pop-header">
                   <h3>{props.header}</h3>
                   <div className="pop-header-close">
