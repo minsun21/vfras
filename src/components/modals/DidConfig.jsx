@@ -5,23 +5,38 @@ import Input from "../Input";
 import Select from "../Select";
 import Table from "../Table";
 
-const DidConfig = ({ config, initChekced, addDid }) => {
+const DidConfig = ({
+  config,
+  addDid,
+  didInfo,
+  addDidConfig,
+  deleteDidConfig,
+}) => {
   const [inputs, setInputs] = useState({});
-  const parentRef = useRef(null);
+  const parentRef = useRef();
+  const [selectRows, setSelectRows] = useState([]);
 
-  // const handleAdd = () => {
-  //   const nextId = data.length ? Math.max(...data.map((d) => d.id)) + 1 : 1;
-  //   setData([...data, { id: nextId, ...inputs }]);
-  //   setInputs({});
-  // };
+  useEffect(() => {
+    const initialInputs = {};
 
-  // const handleDelete = () => {
-  //   setData(data.slice(0, -1));
-  // };
+    config.forms.forEach((form) => {
+      if (form.fields) {
+        form.fields.forEach((sub) => {
+          if (initialInputs[sub.key] === undefined) {
+            initialInputs[sub.key] = "";
+          }
+        });
+      } else if (form.type === "select") {
+        // select 초기화
+        initialInputs[form.key] = form.options?.[0]?.key ?? "";
+      } else {
+        // 일반 input 초기화
+        initialInputs[form.key] = "";
+      }
+    });
 
-  // const handleDeleteAll = () => {
-  //   setData([]);
-  // };
+    setInputs(initialInputs);
+  }, [config.forms]);
 
   const openAccordion = (e) => {
     if (parentRef.current) {
@@ -35,13 +50,17 @@ const DidConfig = ({ config, initChekced, addDid }) => {
         <div className="lvTitleBox">
           <div className="lvTitle">{config.title}</div>
           <div className="lvSummary">
-            {LABELS.DID_CONFIG_LENGH(config.data.length, config.max)}
+            {config.max &&
+              LABELS.DID_CONFIG_LENGH(
+                didInfo[config.dataKey].length,
+                config.max
+              )}
           </div>
         </div>
         <label className="lvSwitch">
           <input
             type="checkbox"
-            defaultChecked={initChekced}
+            checked={didInfo[config.key]}
             onChange={() => addDid(config.key)}
           />
           <span className="slider"></span>
@@ -58,7 +77,6 @@ const DidConfig = ({ config, initChekced, addDid }) => {
               type = "text",
               options = [],
               placeholder,
-              multi,
               fields,
             } = item;
 
@@ -78,8 +96,12 @@ const DidConfig = ({ config, initChekced, addDid }) => {
                     nonEmpty={true}
                   />
                 ) : type === "textarea" ? (
-                  <textarea />
-                ) : multi ? (
+                  <textarea
+                    value={inputs[key] || ""}
+                    placeholder={placeholder}
+                    onChange={(e) => handleChange(e.target.value)}
+                  />
+                ) : fields ? (
                   <div>
                     {fields.map((subField, idx) => (
                       <div key={subField.key}>
@@ -117,16 +139,30 @@ const DidConfig = ({ config, initChekced, addDid }) => {
           <Button
             type={BUTTON_CANCEL}
             label={LABELS.ADD}
-            // onClick={handleAdd}
+            onClick={() => addDidConfig(config, didInfo, inputs)}
           />
           <Button
             type={BUTTON_DELETE}
-            // onClick={handleDelete}
+            onClick={() => {
+              if (selectRows.length === 0) return;
+
+              const newList = didInfo[config.dataKey].filter(
+                (item) => !selectRows.some((s) => s === item)
+              );
+              deleteDidConfig(config, newList);
+            }}
           />
           <Button
             type={BUTTON_CANCEL}
             label={LABELS.ALL_DELETE}
-            // onClick={handleDeleteAll}
+            onClick={() => {
+              const confirmed = window.confirm(
+                "정말 모든 항목을 삭제하시겠습니까?"
+              );
+              if (confirmed) {
+                deleteDidConfig(config, []);
+              }
+            }}
           />
           <div className="svcBoxCTxt">{LABELS.MAIN_NUMBER}</div>
           <Button
@@ -143,14 +179,17 @@ const DidConfig = ({ config, initChekced, addDid }) => {
 
         {/* 테이블 영역 */}
         <div className="svcBoxR">
-          <Table
-            columns={config.columns}
-            data={config.data}
-            paginationEnabled={false}
-            maxHeight = {300}
-            resultLabel={false}
-            pageSelect={false}
-          />
+          {config.columns && (
+            <Table
+              columns={config.columns}
+              data={didInfo[config.dataKey]}
+              paginationEnabled={false}
+              maxHeight={300}
+              resultLabel={false}
+              pageSelect={false}
+              onRowSelectionChange={setSelectRows}
+            />
+          )}
         </div>
       </div>
     </div>

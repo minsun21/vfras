@@ -15,7 +15,6 @@ export const KEYS = {
   CONTENT: "content",
   SOUND_CODE: "soundCode",
   CIRCULATION_RING: "circulationRing",
-  TIME_SLOT: "timeslot",
   DAY_OF_WEEKEND: "dayOfWeekend",
   CALLER_AREA: "callerArea",
   CALLER_NUMBER: "callerNumber",
@@ -49,11 +48,28 @@ export const KEYS = {
   DEPARTMENT_PERMISSIONS: "departmentPermissions", // 부서 권한
   MODIFY: "modifyPermissions",
   RBT_ID_VALUE: "rbtIdValue", // 통화 연결음 제목
-  IS_INTERRUPT : "isInterrupt", // 일시정지(임시)
+  IS_INTERRUPT: "isInterrupt", // 일시정지(임시)
   IS_CIRCULR_JOINED: "isCircularJoined", // 순환형 가입여부
   IS_WEEK_JOINED: "isWeekJoined", // 요일별 가입여부
   IS_TIME_JOINED: "isTimeJoined", // 시간대별 가입여부
   IS_ORGN_JOINED: "isOrgnJoined", // 지역별 가입여부
   IS_GROUP_JOINED: "isGroupJoined", // 그룹별 가입여부
   IS_DURA_JOINED: "isDuraJoined", // 기간별 가입여부
+
+  CIRCULARS_DATA_KEY: "circulars", // 순환형 가입여부의 데이터 키
+  TIMES_DATA_KEY: "times", // 시간대별 가입여부의 데이터 키
+  WEEKS_DATA_KEY: "weeks", // 요일별 가입여부의 데이터 키
+  ORGNS_DATA_KEY: "orgns", // 지역별 가입여부의 데이터 키
+  GROUPS_DATA_KEY: "groups", // 그룹별 가입여부의 데이터 키
+  DURAS_DATA_KEY: "duras", // 기간별 가입여부의 데이터 키
+  START_DATE: "startDate",
+  END_DATE: "endDate",
+  DAY_TYPE: "dayType", // 요일
+  START_TIME: "startTime",
+  END_TIME: "endTime",
+  ORGN: "orgn",
+  GROUPS: "groups",
+  CALLING_NUMBER: "callingNUmber",
+  GROUP_ID: "groupId",
+  RBT_VALUE: "rbtValue",
 };

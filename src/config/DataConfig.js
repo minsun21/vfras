@@ -1,8 +1,9 @@
 import React from "react";
-import Button from "../components/Button";
 import { LABELS } from "../constants/Labels";
 import { KEYS } from "../constants/Keys";
 import { SUBSRIBERS_STATE } from "./FieldsConfig";
+import { DAY_TYPE, ORGNS } from "./OPTIONS";
+import { findMappedValue, getDayLabel } from "../utils/Util";
 
 export const sounds_source_columns = [
   {
@@ -450,11 +451,7 @@ export const DID_SETTING_COLUMNS = (handleInputChange) => [
             value={row.original[KEYS.TEL_FROM_NO]}
             onChange={(e) => {
               e.stopPropagation();
-              handleInputChange?.(
-                row.index,
-                KEYS.TEL_FROM_NO,
-                e.target.value
-              );
+              handleInputChange?.(row.index, KEYS.TEL_FROM_NO, e.target.value);
             }}
           />
           &nbsp;~&nbsp;
@@ -463,11 +460,7 @@ export const DID_SETTING_COLUMNS = (handleInputChange) => [
             value={row.original[KEYS.TEL_TO_NO]}
             onChange={(e) => {
               e.stopPropagation();
-              handleInputChange?.(
-                row.index,
-                KEYS.TEL_TO_NO,
-                e.target.value
-              );
+              handleInputChange?.(row.index, KEYS.TEL_TO_NO, e.target.value);
             }}
           />
         </>
@@ -589,116 +582,63 @@ export const DID_CONFIG_DATAS = [
   {
     key: KEYS.IS_INTERRUPT,
     title: LABELS.INTERRUPT,
-    max: 50,
+    dataKey: KEYS.IS_INTERRUPT,
     forms: [
       {
         key: "date",
         fields: [
           {
-            key: "startDate",
+            key: KEYS.START_DATE,
             type: "date",
           },
           {
-            key: "endDate",
+            key: KEYS.END_DATE,
             type: "date",
           },
         ],
       },
-      { key: "soundCode", type: "number", placeholder: "음원코드" },
-    ],
-    columns: [
-      {
-        accessorKey: KEYS.RBT_ID,
-        header: LABELS.SOUNDS_CODE,
-      },
-      {
-        accessorKey: "startDate",
-        header: "시작일",
-      },
-      {
-        accessorKey: "endDate",
-        header: "종료일",
-      },
-    ],
-    data: [
-      {
-        [KEYS.RBT_ID]: "11111",
-        startDate: "20250501",
-        endDate: "20250501",
-      },
-      {
-        [KEYS.RBT_ID]: "22222",
-        startDate: "20250501",
-        endDate: "20250501",
-      },
-      {
-        [KEYS.RBT_ID]: "33333",
-        startDate: "20250501",
-        endDate: "20250501",
-      },
-      {
-        [KEYS.RBT_ID]: "44444",
-        startDate: "20250501",
-        endDate: "20250501",
-      },
-      {
-        [KEYS.RBT_ID]: "55555",
-        startDate: "20250501",
-        endDate: "20250501",
-      },
+      { key: KEYS.RBT_ID, type: "number", placeholder: LABELS.RBT_ID },
     ],
   },
   {
     key: KEYS.IS_CIRCULR_JOINED,
     title: LABELS.CIRCULAR,
     max: 5,
-    forms: [{ key: "soundCode", type: "number", placeholder: "음원코드" }],
+    dataKey: KEYS.CIRCULARS_DATA_KEY,
+    forms: [{ key: KEYS.RBT_ID, type: "number", placeholder: LABELS.RBT_ID }],
     columns: [
       {
         accessorKey: KEYS.RBT_ID,
         header: LABELS.SOUNDS_CODE,
       },
-    ],
-    data: [
-      { [KEYS.RBT_ID]: "11111" },
-      { [KEYS.RBT_ID]: "12345" },
-      { [KEYS.RBT_ID]: "22222" },
-      { [KEYS.RBT_ID]: "44444" },
     ],
   },
   {
     key: KEYS.IS_TIME_JOINED,
     title: LABELS.BY_TIME_ZONE,
     max: 35,
+    dataKey: KEYS.TIMES_DATA_KEY,
     forms: [
       {
-        key: "dayType",
+        key: KEYS.DAY_TYPE,
         type: "select",
-        placeholder: "요일",
-        options: [
-          { key: "1", value: "월" },
-          { key: "2", value: "화" },
-          { key: "3", value: "수" },
-          { key: "4", value: "목" },
-          { key: "5", value: "금" },
-          { key: "6", value: "토" },
-          { key: "0", value: "일" },
-        ],
+        placeholder: LABELS.DAY_TYPE,
+        options: DAY_TYPE,
       },
       {
         key: "time",
         fields: [
           {
-            key: "startTime",
+            key: KEYS.START_TIME,
             type: "time",
           },
           {
-            key: "endTime",
+            key: KEYS.END_TIME,
             type: "time",
           },
         ],
       },
-      { key: "soundCode", type: "number", placeholder: "음원코드" },
+      { key: KEYS.RBT_ID, type: "number", placeholder: LABELS.RBT_ID },
     ],
     columns: [
       {
@@ -706,60 +646,25 @@ export const DID_CONFIG_DATAS = [
         header: LABELS.SOUNDS_CODE,
       },
       {
-        accessorKey: "dayType",
-        header: "요일",
+        accessorKey: KEYS.DAY_TYPE,
+        header: LABELS.DAY_TYPE,
+        cell: ({ getValue }) => {
+          const value = getValue();
+          return findMappedValue(DAY_TYPE, value);
+        },
       },
       {
-        accessorKey: "startTime",
-        header: "시작시간",
-      },
-      {
-        accessorKey: "endTime",
-        header: "종료시간",
-      },
-    ],
-    data: [
-      {
-        [KEYS.RBT_ID]: "11111",
-        startTime: "0800",
-        endTime: "1100",
-        dayType: "월",
-      },
-      {
-        [KEYS.RBT_ID]: "12345",
-        startTime: "0800",
-        endTime: "1100",
-        dayType: "월",
-      },
-      {
-        [KEYS.RBT_ID]: "22222",
-        startTime: "0800",
-        endTime: "1100",
-        dayType: "월",
-      },
-      {
-        [KEYS.RBT_ID]: "44444",
-        startTime: "0800",
-        endTime: "1100",
-        dayType: "월",
-      },
-      {
-        [KEYS.RBT_ID]: "33333",
-        startTime: "0800",
-        endTime: "1100",
-        dayType: "월",
-      },
-      {
-        [KEYS.RBT_ID]: "24343",
-        startTime: "0800",
-        endTime: "1100",
-        dayType: "월",
-      },
-      {
-        [KEYS.RBT_ID]: "65456",
-        startTime: "0800",
-        endTime: "1100",
-        dayType: "월",
+        accessorKey: KEYS.TIMES_DATA_KEY,
+        header: LABELS.TIME,
+        cell: ({ row }) => {
+          if (!row.original._isNew) {
+            return (
+              <span>
+                {row.original[KEYS.START_TIME]} ~ {row.original[KEYS.END_TIME]}
+              </span>
+            );
+          }
+        },
       },
     ],
   },
@@ -767,22 +672,15 @@ export const DID_CONFIG_DATAS = [
     key: KEYS.IS_WEEK_JOINED,
     title: LABELS.BY_DAY,
     max: 7,
+    dataKey: KEYS.WEEKS_DATA_KEY,
     forms: [
       {
-        key: "dayType",
+        key: KEYS.DAY_TYPE,
         type: "select",
-        placeholder: "요일",
-        options: [
-          { key: "1", value: "월" },
-          { key: "2", value: "화" },
-          { key: "3", value: "수" },
-          { key: "4", value: "목" },
-          { key: "5", value: "금" },
-          { key: "6", value: "토" },
-          { key: "0", value: "일" },
-        ],
+        placeholder: LABELS.DAY_TYPE,
+        options: DAY_TYPE,
       },
-      { key: "soundCode", type: "number", placeholder: "음원코드" },
+      { key: KEYS.RBT_ID, type: "number", placeholder: LABELS.RBT_ID },
     ],
     columns: [
       {
@@ -790,18 +688,12 @@ export const DID_CONFIG_DATAS = [
         header: LABELS.SOUNDS_CODE,
       },
       {
-        accessorKey: "dayType",
-        header: "요일",
-      },
-    ],
-    data: [
-      {
-        [KEYS.RBT_ID]: "11111",
-        dayType: "월",
-      },
-      {
-        [KEYS.RBT_ID]: "12345",
-        dayType: "월",
+        accessorKey: KEYS.DAY_TYPE,
+        header: LABELS.DAY_TYPE,
+        cell: ({ getValue }) => {
+          const value = getValue();
+          return findMappedValue(DAY_TYPE, value);
+        },
       },
     ],
   },
@@ -809,18 +701,15 @@ export const DID_CONFIG_DATAS = [
     key: KEYS.IS_ORGN_JOINED,
     title: LABELS.BY_SENDING_AREA,
     max: 17,
+    dataKey: KEYS.ORGNS_DATA_KEY,
     forms: [
       {
-        key: "areaCode",
+        key: KEYS.ORGN,
         type: "select",
-        placeholder: "지역",
-        options: [
-          { key: "02", value: "서울" },
-          { key: "031", value: "경기" },
-          { key: "052", value: "대구" },
-        ],
+        placeholder: LABELS.ORGN,
+        options: ORGNS,
       },
-      { key: "soundCode", type: "number", placeholder: "음원코드" },
+      { key: KEYS.RBT_ID, type: "number", placeholder: LABELS.RBT_ID },
     ],
     columns: [
       {
@@ -828,18 +717,12 @@ export const DID_CONFIG_DATAS = [
         header: LABELS.SOUNDS_CODE,
       },
       {
-        accessorKey: "areaCode",
-        header: "지역",
-      },
-    ],
-    data: [
-      {
-        [KEYS.RBT_ID]: "11111",
-        areaCode: "02(서울)",
-      },
-      {
-        [KEYS.RBT_ID]: "12345",
-        areaCode: "031(경기)",
+        accessorKey: KEYS.ORGN,
+        header: LABELS.ORGN,
+        cell: ({ getValue }) => {
+          const value = getValue();
+          return findMappedValue(ORGNS, value);
+        },
       },
     ],
   },
@@ -847,38 +730,27 @@ export const DID_CONFIG_DATAS = [
     key: KEYS.IS_GROUP_JOINED,
     title: LABELS.BY_CALLER_NUMBER,
     max: 3,
+    dataKey: KEYS.GROUPS_DATA_KEY,
     forms: [
       {
-        label: "발신번호(','구분, 최대 5개)",
-        key: "numbers",
+        label: LABELS.DID_CALLING_PLACEHOLDER,
+        key: KEYS.CALLING_NUMBER,
         type: "textarea",
       },
-      { key: "soundCode", type: "number", placeholder: "음원코드" },
+      { key: KEYS.RBT_ID, type: "number", placeholder: LABELS.RBT_ID },
     ],
     columns: [
       {
-        accessorKey: "groupId",
-        header: "그룹",
+        accessorKey: KEYS.GROUP_ID,
+        header: LABELS.GROUP,
       },
       {
         accessorKey: KEYS.RBT_ID,
         header: LABELS.SOUNDS_CODE,
       },
       {
-        accessorKey: "numbers",
-        header: "발신번호",
-      },
-    ],
-    data: [
-      {
-        groupId: "그룹1",
-        [KEYS.RBT_ID]: "11111",
-        numbers: "01012344444\n01033334444\n01099998888",
-      },
-      {
-        groupId: "그룹2",
-        [KEYS.RBT_ID]: "12345",
-        numbers: "01012344444\n01033334444\n01099998888",
+        accessorKey: KEYS.CALLING_NUMBER,
+        header: LABELS.CALLING_NUMBER,
       },
     ],
   },
@@ -886,21 +758,22 @@ export const DID_CONFIG_DATAS = [
     key: KEYS.IS_DURA_JOINED,
     title: LABELS.BY_ANNIVERSARY,
     max: 50,
+    dataKey: KEYS.DURAS_DATA_KEY,
     forms: [
       {
         key: "date",
         fields: [
           {
-            key: "startDate",
+            key: KEYS.START_DATE,
             type: "date",
           },
           {
-            key: "endDate",
+            key: KEYS.END_DATE,
             type: "date",
           },
         ],
       },
-      { key: "soundCode", type: "number", placeholder: "음원코드" },
+      { key: KEYS.RBT_ID, type: "number", placeholder: LABELS.RBT_ID },
     ],
     columns: [
       {
@@ -908,39 +781,17 @@ export const DID_CONFIG_DATAS = [
         header: LABELS.SOUNDS_CODE,
       },
       {
-        accessorKey: "startDate",
-        header: "시작일",
-      },
-      {
-        accessorKey: "endDate",
-        header: "종료일",
-      },
-    ],
-    data: [
-      {
-        [KEYS.RBT_ID]: "11111",
-        startDate: "20250501",
-        endDate: "20250501",
-      },
-      {
-        [KEYS.RBT_ID]: "22222",
-        startDate: "20250501",
-        endDate: "20250501",
-      },
-      {
-        [KEYS.RBT_ID]: "33333",
-        startDate: "20250501",
-        endDate: "20250501",
-      },
-      {
-        [KEYS.RBT_ID]: "44444",
-        startDate: "20250501",
-        endDate: "20250501",
-      },
-      {
-        [KEYS.RBT_ID]: "55555",
-        startDate: "20250501",
-        endDate: "20250501",
+        accessorKey: KEYS.ANNIVERSARY,
+        header: LABELS.ANNIVERSARY,
+        cell: ({ row }) => {
+          if (!row.original._isNew) {
+            return (
+              <span>
+                {row.original[KEYS.START_DATE]} ~ {row.original[KEYS.END_DATE]}
+              </span>
+            );
+          }
+        },
       },
     ],
   },
