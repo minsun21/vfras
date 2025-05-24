@@ -1,6 +1,4 @@
 export const KEYS = {
-  CODE: "code",
-  TITLE: "title",
   ADMIN_ID: "adminId", // 계정 ID
   ID: "id",
   NAME: "name", // 이름
@@ -13,7 +11,6 @@ export const KEYS = {
   MANAGE: "manage",
   APPLY_DATE: "applyDate", //신청 일자
   CONTENT: "content",
-  SOUND_CODE: "soundCode",
   CIRCULATION_RING: "circulationRing",
   DAY_OF_WEEKEND: "dayOfWeekend",
   CALLER_AREA: "callerArea",
@@ -72,4 +69,5 @@ export const KEYS = {
   CALLING_NUMBER: "callingNUmber",
   GROUP_ID: "groupId",
   RBT_VALUE: "rbtValue",
+  DESCRIPT : "descript"
 };

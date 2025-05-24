@@ -18,6 +18,7 @@ import { LABELS } from "../constants/Labels";
 import { useModal } from "../contexts/ModalContext";
 import axios from "../api/axios";
 import { KEYS } from "../constants/Keys";
+import Form from "../components/Form";
 
 const AccountManage = () => {
   const navigate = useNavigate();
@@ -115,7 +116,7 @@ const AccountManage = () => {
     navigate(ROUTES.ACCOUNT_EDIT, {
       state: {
         selectedId: selectRows[0].id,
-        selectedInfo : selectRows[0] // TOBE :: 삭제
+        selectedInfo: selectRows[0], // TOBE :: 삭제
       },
     });
   };
@@ -145,7 +146,10 @@ const AccountManage = () => {
 
     setData((prev) =>
       prev.filter(
-        (item) => !selectRows.some((selected) => selected[KEYS.ADMIN_ID] === item[KEYS.ADMIN_ID])
+        (item) =>
+          !selectRows.some(
+            (selected) => selected[KEYS.ADMIN_ID] === item[KEYS.ADMIN_ID]
+          )
       )
     );
 
@@ -161,13 +165,7 @@ const AccountManage = () => {
 
   return (
     <>
-      <form
-        className="search-box"
-        onSubmit={(e) => {
-          e.preventDefault();
-          search();
-        }}
-      >
+      <Form className="search-box" onSubmit={search}>
         <table className="tbl-input">
           <tbody>
             <tr>
@@ -179,7 +177,7 @@ const AccountManage = () => {
                     placeholder={accountMessages.searchPlaceHolder}
                     size={INPUT_SIZE_LG}
                   />
-                  <Button type={BUTTON_SEARCH} />
+                  <Button type={BUTTON_SEARCH} onClick={search} />
                   <Button
                     label={LABELS.USER_REGISTER}
                     onClick={() => navigate(ROUTES.ACCOUNT_REGISTER)}
@@ -189,7 +187,7 @@ const AccountManage = () => {
             </tr>
           </tbody>
         </table>
-      </form>
+      </Form>
       <Table
         ref={tableRef}
         columns={ACCOUNTS_COLUMNS}

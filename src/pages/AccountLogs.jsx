@@ -99,7 +99,7 @@ const AccountLogs = () => {
 
   return (
     <>
-      <Form className="search-box">
+      <Form className="search-box" onSubmit={search}>
         <table className="tbl-input">
           <colgroup></colgroup>
           <tbody>

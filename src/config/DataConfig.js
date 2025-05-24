@@ -3,58 +3,17 @@ import { LABELS } from "../constants/Labels";
 import { KEYS } from "../constants/Keys";
 import { SUBSRIBERS_STATE } from "./FieldsConfig";
 import { DAY_TYPE, ORGNS } from "./OPTIONS";
-import { findMappedValue, getDayLabel } from "../utils/Util";
+import { findMappedValue } from "../utils/Util";
 
-export const sounds_source_columns = [
+// 음원 조회 컬럼
+export const SOUND_SOURCE_COLUMNS = [
   {
-    accessorKey: KEYS.CODE,
+    accessorKey: KEYS.RBT_ID,
     header: LABELS.SOUNDS_CODE,
   },
   {
-    accessorKey: KEYS.TITLE,
+    accessorKey: KEYS.DESCRIPT,
     header: LABELS.TITLE_DESC,
-  },
-];
-export const sounds_source_data = [
-  {
-    [KEYS.CODE]: 3820472,
-    [KEYS.TITLE]: "편지",
-  },
-  {
-    [KEYS.CODE]: 1234523,
-    [KEYS.TITLE]: "모르시나요",
-  },
-  {
-    [KEYS.CODE]: 3457435,
-    [KEYS.TITLE]: "가끔 니가 생각나",
-  },
-  {
-    [KEYS.CODE]: 2653455,
-    [KEYS.TITLE]: "Period",
-  },
-  {
-    [KEYS.CODE]: 2477854,
-    [KEYS.TITLE]: "Again",
-  },
-  {
-    [KEYS.CODE]: 6799556,
-    [KEYS.TITLE]: "화",
-  },
-  {
-    [KEYS.CODE]: 8576833,
-    [KEYS.TITLE]: "슈퍼노바",
-  },
-  {
-    [KEYS.CODE]: 5799336,
-    [KEYS.TITLE]: "레블하트",
-  },
-  {
-    [KEYS.CODE]: 583594,
-    [KEYS.TITLE]: "Forever",
-  },
-  {
-    [KEYS.CODE]: 16690345,
-    [KEYS.TITLE]: "Like Water",
   },
 ];
 
