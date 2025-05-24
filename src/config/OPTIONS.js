@@ -70,7 +70,7 @@ export const SEARCH_SERVICE_TYPES = [
 // 가입자 조회 > 가입자 상태
 export const SEARCH_SUBSRIBERS_STATE = [
   { key: "", value: "전체" },
-  { key: "0", value: "요청중" },
+  { key: "0", value: "요청" },
   { key: "1", value: "가입" },
   { key: "2", value: "삭제" },
 ];

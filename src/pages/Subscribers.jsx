@@ -5,7 +5,7 @@ import Input from "../components/Input";
 import Select from "../components/Select";
 import Table from "../components/Table";
 import { ROUTES } from "../constants/routes";
-import { subscribe_columns, subscribe_data } from "../config/DataConfig";
+import { SUBSRIBES_COLUMNS } from "../config/DataConfig";
 import { LABELS } from "../constants/Labels";
 import {
   ErrorMessages,
@@ -15,29 +15,237 @@ import {
 import { useModal } from "../contexts/ModalContext";
 import { KEYS } from "../constants/Keys";
 import axios from "../api/axios";
-import { SEARCH_DIVISIONS, SEARCH_SERVICE_TYPES, SEARCH_SUBSRIBERS_STATE, SEARCH_SUBSRIBERS_TYPES } from "../config/OPTIONS";
+import {
+  SEARCH_DIVISIONS,
+  SEARCH_SERVICE_TYPES,
+  SEARCH_SUBSRIBERS_STATE,
+  SEARCH_SUBSRIBERS_TYPES,
+} from "../config/OPTIONS";
 import Form from "../components/Form";
 
 const Subscriber = () => {
   const tableRef = useRef();
   const navigate = useNavigate();
-  const { showAlert, showDialog, closeModal } = useModal();
+  const { showAlert, showDialog } = useModal();
 
-  const [searchInput, setSearchInput] = useState({});
+  const [searchInputs, setSearchInputs] = useState({});
+  const [filterInputs, setFilterInputs] = useState({});
   const [data, setData] = useState([]);
+  const [filterdData, setFilteredData] = useState([]);
 
   const [selectRows, setselectRows] = useState([]);
 
   useEffect(() => {
-
-
-    setSearchInput({
+    setSearchInputs({
       [KEYS.SEARCH_DIVISION]: SEARCH_DIVISIONS[0].key,
       [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[0].key,
     });
 
-    setData(subscribe_data);
+    initFilterInputs();
+
+    setData([
+      {
+        [KEYS.ADMIN_ID]: 1,
+        [KEYS.ID]: 1,
+        [KEYS.SUB_NO]: "0211112222",
+        [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.NAME]: "LGU+",
+        [KEYS.APPLY_DATE]: "2024.02.04",
+        [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[1].key,
+        [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[2].key,
+        [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[1].key,
+      },
+      {
+        [KEYS.ADMIN_ID]: 2,
+        [KEYS.ID]: 12,
+        [KEYS.SUB_NO]: "0211112222",
+        [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.NAME]: "LGU+",
+        [KEYS.APPLY_DATE]: "2024.02.04",
+        [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[1].key,
+        [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[1].key,
+        [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[3].key,
+      },
+      {
+        [KEYS.ADMIN_ID]: 3,
+        [KEYS.ID]: 13,
+        [KEYS.SUB_NO]: "0211112222",
+        [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.NAME]: "LGU+",
+        [KEYS.APPLY_DATE]: "2024.02.04",
+        [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[1].key,
+        [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[1].key,
+        [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[2].key,
+      },
+      {
+        [KEYS.ADMIN_ID]: 4,
+        [KEYS.SUB_NO]: "0211112222",
+        [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.NAME]: "LGU+",
+        [KEYS.APPLY_DATE]: "2024.02.04",
+        [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[2].key,
+        [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[1].key,
+        [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[1].key,
+      },
+      {
+        [KEYS.ADMIN_ID]: 5,
+        [KEYS.SUB_NO]: "0211112222",
+        [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.NAME]: "LGU+",
+        [KEYS.APPLY_DATE]: "2024.02.04",
+        [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[2].key,
+        [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[2].key,
+        [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[1].key,
+      },
+      {
+        [KEYS.ADMIN_ID]: 6,
+        [KEYS.SUB_NO]: "0211112222",
+        [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.NAME]: "LGU+",
+        [KEYS.APPLY_DATE]: "2024.02.04",
+        [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[3].key,
+        [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[2].key,
+        [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[3].key,
+      },
+      {
+        [KEYS.ADMIN_ID]: 7,
+        [KEYS.SUB_NO]: "0211112222",
+        [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.NAME]: "LGU+",
+        [KEYS.APPLY_DATE]: "2024.02.04",
+        [KEYS.SUB_STATUS]: "삭제",
+        [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[1].key,
+        [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[1].key,
+        [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[1].key,
+      },
+      {
+        [KEYS.ADMIN_ID]: 8,
+        [KEYS.SUB_NO]: "0211112222",
+        [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.NAME]: "LGU+",
+        [KEYS.APPLY_DATE]: "2024.02.04",
+        [KEYS.SUB_STATUS]: "가입",
+        [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[3].key,
+        [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[2].key,
+        [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[3].key,
+      },
+      {
+        [KEYS.ADMIN_ID]: 5449,
+        [KEYS.SUB_NO]: "0211112222",
+        [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.NAME]: "LGU+",
+        [KEYS.APPLY_DATE]: "2024.02.04",
+        [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[2].key,
+        [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[1].key,
+        [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[1].key,
+      },
+      {
+        [KEYS.ADMIN_ID]: 549,
+        [KEYS.SUB_NO]: "0211112222",
+        [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.NAME]: "LGU+",
+        [KEYS.APPLY_DATE]: "2024.02.04",
+        [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[2].key,
+        [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[1].key,
+        [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[1].key,
+      },
+      {
+        [KEYS.ADMIN_ID]: 1429,
+        [KEYS.SUB_NO]: "0211112222",
+        [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.NAME]: "LGU+",
+        [KEYS.APPLY_DATE]: "2024.02.04",
+        [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[1].key,
+        [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[1].key,
+        [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[1].key,
+      },
+      {
+        [KEYS.ADMIN_ID]: 329,
+        [KEYS.SUB_NO]: "0211112222",
+        [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.NAME]: "LGU+",
+        [KEYS.APPLY_DATE]: "2024.02.04",
+        [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[1].key,
+        [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[1].key,
+        [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[1].key,
+      },
+      {
+        [KEYS.ADMIN_ID]: 459,
+        [KEYS.SUB_NO]: "0211112222",
+        [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.NAME]: "LGU+",
+        [KEYS.APPLY_DATE]: "2024.02.04",
+        [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[1].key,
+        [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[1].key,
+        [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[2].key,
+      },
+      {
+        [KEYS.ADMIN_ID]: 449,
+        [KEYS.SUB_NO]: "0211112222",
+        [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.NAME]: "LGU+",
+        [KEYS.APPLY_DATE]: "2024.02.04",
+        [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[3].key,
+        [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[1].key,
+        [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[1].key,
+      },
+      {
+        [KEYS.ADMIN_ID]: 319,
+        [KEYS.SUB_NO]: "0211112222",
+        [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.NAME]: "LGU+",
+        [KEYS.APPLY_DATE]: "2024.02.04",
+        [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[2].key,
+        [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[1].key,
+        [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[1].key,
+      },
+      {
+        [KEYS.ADMIN_ID]: 219,
+        [KEYS.SUB_NO]: "0211112222",
+        [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.NAME]: "LGU+",
+        [KEYS.APPLY_DATE]: "2024.02.04",
+        [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[2].key,
+        [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[1].key,
+        [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[3].key,
+      },
+      {
+        [KEYS.ADMIN_ID]: 19,
+        [KEYS.SUB_NO]: "0211112222",
+        [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
+        [KEYS.NAME]: "LGU+",
+        [KEYS.APPLY_DATE]: "2024.02.04",
+        [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[2].key,
+        [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[2].key,
+        [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[1].key,
+      },
+    ]);
   }, []);
+
+  const initFilterInputs = () => {
+    setFilterInputs({
+      [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[0].key,
+      [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[0].key,
+      [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[0].key,
+    });
+  };
 
   const navigateManage = (row) => {
     navigate(ROUTES.SUBSCRIBERS_MANAGE, {
@@ -56,7 +264,7 @@ const Subscriber = () => {
     }
 
     for (const selectedRow of selectRows) {
-      if (selectedRow[KEYS.SUB_STATUS] === LABELS.SUBSCRIBE) {
+      if (selectedRow[KEYS.SUB_STATUS] !== SEARCH_SUBSRIBERS_STATE[1].key) {
         showAlert({
           message: subsriberMessages.approvedError,
         });
@@ -78,7 +286,7 @@ const Subscriber = () => {
     const selectedIds = tableRef.current.getSelectedRowIds();
     tableRef.current.updateRowsById(selectedIds, (row) => ({
       ...row,
-      [KEYS.SUB_STATUS]: LABELS.SUBSCRIBE,
+      [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[2].key,
     }));
     showAlert({
       message: InfoMessages.successEdit,
@@ -114,7 +322,6 @@ const Subscriber = () => {
     tableRef.current?.clearSelection();
 
     // closeModal();
-
     setTimeout(() => {
       showAlert({
         message: InfoMessages.successDelete,
@@ -123,12 +330,13 @@ const Subscriber = () => {
   };
 
   const search = () => {
-    console.log(searchInput);
+    initFilterInputs();
+
     showAlert({
       message: InfoMessages.noSearchResult,
     });
 
-    // axios.post(ROUTES.ACCOUNTS, searchInput).then((res) => {
+    // axios.post(ROUTES.ACCOUNTS, searchInputs).then((res) => {
     //   if (res.data.length === 0) {
     //     showAlert({
     //       message: InfoMessages.noSearchResult,
@@ -149,11 +357,30 @@ const Subscriber = () => {
   };
 
   const onChange = (e) => {
-    setSearchInput({
-      ...searchInput,
+    setSearchInputs({
+      ...searchInputs,
       [e.target.name]: e.target.value,
     });
   };
+
+  const filterData = (e) => {
+    const key = e.target.name;
+    const value = e.target.value;
+    setFilterInputs((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+  useEffect(() => {
+    const filtered = data.filter((item) => {
+      return Object.entries(filterInputs).every(([key, val]) => {
+        if (!val) return true;
+        return item[key] === val;
+      });
+    });
+
+    setFilteredData(filtered);
+  }, [filterInputs, data]);
 
   return (
     <div>
@@ -180,7 +407,7 @@ const Subscriber = () => {
               <td>
                 <div className="form-field dflex wrap gap10">
                   <Select
-                    value={searchInput[KEYS.SEARCH_DIVISION]}
+                    value={searchInputs[KEYS.SEARCH_DIVISION]}
                     options={SEARCH_DIVISIONS}
                     nonEmpty={true}
                     name={KEYS.SEARCH_DIVISION}
@@ -190,7 +417,7 @@ const Subscriber = () => {
                     type="text"
                     className="form-input"
                     name={KEYS.SEARCH_DIVISION_VALUE}
-                    value={searchInput[KEYS.SEARCH_DIVISION_VALUE] || ""}
+                    value={searchInputs[KEYS.SEARCH_DIVISION_VALUE] || ""}
                     placeholder={subsriberMessages.searchPlaceHolder}
                     onChange={onChange}
                   />
@@ -201,30 +428,33 @@ const Subscriber = () => {
               </td>
               <td>
                 <Select
-                  value={searchInput[KEYS.SUB_TYPE]}
+                  value={filterInputs[KEYS.SUB_TYPE]}
                   options={SEARCH_SUBSRIBERS_TYPES}
                   nonEmpty={true}
                   name={KEYS.SUB_TYPE}
-                  onChange={onChange}
+                  onChange={filterData}
                 />
               </td>
               <td>
                 <Select
-                  value={searchInput[KEYS.SERVICE_TYPE]}
+                  value={filterInputs[KEYS.SERVICE_TYPE]}
                   options={SEARCH_SERVICE_TYPES}
                   nonEmpty={true}
                   name={KEYS.SERVICE_TYPE}
-                  onChange={onChange}
+                  onChange={filterData}
                 />
               </td>
               <td>
                 <Select
-                  value={searchInput[KEYS.SUB_STATUS]}
+                  value={filterInputs[KEYS.SUB_STATUS]}
                   options={SEARCH_SUBSRIBERS_STATE}
                   nonEmpty={true}
                   name={KEYS.SUB_STATUS}
-                  onChange={onChange}
+                  onChange={filterData}
                 />
+              </td>
+              <td>
+                <Button onClick={initFilterInputs} label={LABELS.RESET} />
               </td>
             </tr>
           </tbody>
@@ -232,9 +462,9 @@ const Subscriber = () => {
       </Form>
       <Table
         ref={tableRef}
-        columns={subscribe_columns(navigateManage)}
-        data={data}
-        setTableData={setData}
+        columns={SUBSRIBES_COLUMNS(navigateManage)}
+        data={filterdData}
+        setTableData={setFilteredData}
         pageSize={10}
         onRowSelectionChange={setselectRows}
         topBtns={topBtns}

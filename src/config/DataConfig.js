@@ -2,7 +2,7 @@ import React from "react";
 import { LABELS } from "../constants/Labels";
 import { KEYS } from "../constants/Keys";
 import { SUBSRIBERS_STATE } from "./FieldsConfig";
-import { DAY_TYPE, ORGNS } from "./OPTIONS";
+import { DAY_TYPE, ORGNS, SEARCH_SUBSRIBERS_STATE } from "./OPTIONS";
 import { findMappedValue } from "../utils/Util";
 
 // 음원 조회 컬럼
@@ -80,7 +80,7 @@ const ManageButtonCell = React.memo(({ row, onNavigate }) => (
   </button>
 ));
 
-export const subscribe_columns = (navigateManage) => {
+export const SUBSRIBES_COLUMNS = (navigateManage) => {
   return [
     {
       accessorKey: KEYS.SUB_NO,
@@ -108,12 +108,12 @@ export const subscribe_columns = (navigateManage) => {
       cell: ({ row }) => (
         <div
           className={`${
-            row.original[KEYS.SUB_STATUS] === LABELS.SUBSCRIBE
+            row.original[KEYS.SUB_STATUS] !== SEARCH_SUBSRIBERS_STATE[1].key
               ? "stateNormal"
               : "stateArert"
           }`}
         >
-          {row.original[KEYS.SUB_STATUS]}
+          {findMappedValue(SEARCH_SUBSRIBERS_STATE, row.original[KEYS.SUB_STATUS])}
         </div>
       ),
     },
@@ -126,165 +126,6 @@ export const subscribe_columns = (navigateManage) => {
     },
   ];
 };
-
-export const subscribe_data = [
-  {
-    [KEYS.ADMIN_ID]: 1,
-    [KEYS.ID]: 1,
-    [KEYS.SUB_NO]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.NAME]: "LGU+",
-    [KEYS.APPLY_DATE]: "2024.02.04",
-    [KEYS.SUB_STATUS]: "요청",
-  },
-  {
-    [KEYS.ADMIN_ID]: 2,
-    [KEYS.ID]: 12,
-    [KEYS.SUB_NO]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.NAME]: "LGU+",
-    [KEYS.APPLY_DATE]: "2024.02.04",
-    [KEYS.SUB_STATUS]: "요청",
-  },
-  {
-    [KEYS.ADMIN_ID]: 3,
-    [KEYS.ID]: 13,
-    [KEYS.SUB_NO]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.NAME]: "LGU+",
-    [KEYS.APPLY_DATE]: "2024.02.04",
-    [KEYS.SUB_STATUS]: "가입",
-  },
-  {
-    [KEYS.ADMIN_ID]: 4,
-    [KEYS.SUB_NO]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.NAME]: "LGU+",
-    [KEYS.APPLY_DATE]: "2024.02.04",
-    [KEYS.SUB_STATUS]: "가입",
-  },
-  {
-    [KEYS.ADMIN_ID]: 5,
-    [KEYS.SUB_NO]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.NAME]: "LGU+",
-    [KEYS.APPLY_DATE]: "2024.02.04",
-    [KEYS.SUB_STATUS]: "가입",
-  },
-  {
-    [KEYS.ADMIN_ID]: 6,
-    [KEYS.SUB_NO]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.NAME]: "LGU+",
-    [KEYS.APPLY_DATE]: "2024.02.04",
-    [KEYS.SUB_STATUS]: "가입",
-  },
-  {
-    [KEYS.ADMIN_ID]: 7,
-    [KEYS.SUB_NO]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.NAME]: "LGU+",
-    [KEYS.APPLY_DATE]: "2024.02.04",
-    [KEYS.SUB_STATUS]: "가입",
-  },
-  {
-    [KEYS.ADMIN_ID]: 8,
-    [KEYS.SUB_NO]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.NAME]: "LGU+",
-    [KEYS.APPLY_DATE]: "2024.02.04",
-    [KEYS.SUB_STATUS]: "가입",
-  },
-  {
-    [KEYS.ADMIN_ID]: 9,
-    [KEYS.SUB_NO]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.NAME]: "LGU+",
-    [KEYS.APPLY_DATE]: "2024.02.04",
-    [KEYS.SUB_STATUS]: "가입",
-  },
-  {
-    [KEYS.ADMIN_ID]: 9,
-    [KEYS.SUB_NO]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.NAME]: "LGU+",
-    [KEYS.APPLY_DATE]: "2024.02.04",
-    [KEYS.SUB_STATUS]: "가입",
-  },
-  {
-    [KEYS.ADMIN_ID]: 9,
-    [KEYS.SUB_NO]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.NAME]: "LGU+",
-    [KEYS.APPLY_DATE]: "2024.02.04",
-    [KEYS.SUB_STATUS]: "가입",
-  },
-  {
-    [KEYS.ADMIN_ID]: 9,
-    [KEYS.SUB_NO]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.NAME]: "LGU+",
-    [KEYS.APPLY_DATE]: "2024.02.04",
-    [KEYS.SUB_STATUS]: "가입",
-  },
-  {
-    [KEYS.ADMIN_ID]: 9,
-    [KEYS.SUB_NO]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.NAME]: "LGU+",
-    [KEYS.APPLY_DATE]: "2024.02.04",
-    [KEYS.SUB_STATUS]: "가입",
-  },
-  {
-    [KEYS.ADMIN_ID]: 9,
-    [KEYS.SUB_NO]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.NAME]: "LGU+",
-    [KEYS.APPLY_DATE]: "2024.02.04",
-    [KEYS.SUB_STATUS]: "가입",
-  },
-  {
-    [KEYS.ADMIN_ID]: 9,
-    [KEYS.SUB_NO]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.NAME]: "LGU+",
-    [KEYS.APPLY_DATE]: "2024.02.04",
-    [KEYS.SUB_STATUS]: "가입",
-  },
-  {
-    [KEYS.ADMIN_ID]: 9,
-    [KEYS.SUB_NO]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.NAME]: "LGU+",
-    [KEYS.APPLY_DATE]: "2024.02.04",
-    [KEYS.SUB_STATUS]: "가입",
-  },
-  {
-    [KEYS.ADMIN_ID]: 9,
-    [KEYS.SUB_NO]: "0211112222",
-    [KEYS.USER_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.PBX_NUMBER]: "02111112222 ~ 0211112233",
-    [KEYS.NAME]: "LGU+",
-    [KEYS.APPLY_DATE]: "2024.02.04",
-    [KEYS.SUB_STATUS]: "가입",
-  },
-];
 
 export const access_detail_columns = [
   {

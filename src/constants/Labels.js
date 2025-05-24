@@ -130,5 +130,6 @@ export const LABELS = {
   GROUP: "그룹",
   CALLING_NUMBER: "발신번호",
   DID_CALLING_PLACEHOLDER: "발신번호(','구분, 최대 5개)",
-  TIME : "시간"
+  TIME : "시간",
+  RESET : "초기화"
 };
