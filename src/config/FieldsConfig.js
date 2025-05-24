@@ -1,3 +1,4 @@
+import { INPUT_SIZE_FL } from "../components/Input";
 import { KEYS } from "../constants/Keys";
 import { LABELS } from "../constants/Labels";
 
@@ -388,6 +389,7 @@ export const subscriberEditFields = [
     type: "text",
     value: "서울시 강남구",
     required: true,
+    size : INPUT_SIZE_FL
   },
   {
     key: KEYS.ADDRESS2,

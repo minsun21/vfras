@@ -147,7 +147,7 @@ const DidSetting = ({ userInfo }) => {
     setSelectDidInfo({
       ...selectDidInfo,
       [accessorKey]: !selectDidInfo[accessorKey],
-    })
+    });
   };
 
   const addDidRow = () => {
@@ -354,7 +354,7 @@ const DidSetting = ({ userInfo }) => {
       [config.key]: true,
     }));
 
-    if(selectDidInfo[config.key] === false){
+    if (selectDidInfo[config.key] === false) {
       const selectedIds = tableRef.current?.getSelectedRowIds?.();
       if (!selectedIds?.length) return;
       tableRef.current.updateRowsById(selectedIds, (row) => ({
@@ -387,7 +387,6 @@ const DidSetting = ({ userInfo }) => {
         ...row,
         [config.key]: !row[config.key],
       }));
-  
     } else {
       setSelectDidInfo((prev) => {
         const nextState = {

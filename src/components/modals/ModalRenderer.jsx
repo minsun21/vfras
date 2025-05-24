@@ -3,6 +3,10 @@ import { useModal } from "../../contexts/ModalContext";
 import Button, { BUTTON_CANCEL } from "../Button";
 import { LABELS } from "../../constants/Labels";
 
+export const MODAL_SM = "w400"; 
+export const MODAL_LG = "didPop"; 
+export const MODAL_MD = "w600"; 
+
 const ModalRenderer = () => {
   const { modals, closeModal } = useModal();
 
@@ -71,7 +75,7 @@ const ModalRenderer = () => {
             </div>
           ) : (
             <div className="layer-popup open">
-              <div className="md-content didPop">
+              <div className={`md-content ${props.size}`}>
                 <div className="pop-header">
                   <h3>{props.header}</h3>
                   <div className="pop-header-close">

@@ -19,6 +19,7 @@ import Form from "../components/Form";
 import PasswordReset from "../components/modals/PasswordReset";
 import { didPersonal, SUBSRIBERS_INFO_DUMMY } from "../config/DataConfig";
 import DidSettingPersonal from "../components/modals/DidSettingPersonal";
+import { MODAL_MD, MODAL_SM } from "../components/modals/ModalRenderer";
 
 const SubscriberManageEdit = () => {
   const navigate = useNavigate();
@@ -130,6 +131,7 @@ const SubscriberManageEdit = () => {
       content: <PasswordReset currentPassword={formData[KEYS.PASSWORD]} />,
       header: LABELS.PASSWORD_RESET,
       onConfirm: restPassword,
+      size : MODAL_SM
     });
   };
 
@@ -192,6 +194,7 @@ const SubscriberManageEdit = () => {
                   required,
                   disabled,
                   multi,
+                  size
                 } = field;
                 const value = formData[key] || "";
 
@@ -291,7 +294,7 @@ const SubscriberManageEdit = () => {
                         </div>
                       ) : (
                         <Input
-                          size="nm"
+                          size={size}
                           value={value}
                           type={type}
                           disabled={disabled}

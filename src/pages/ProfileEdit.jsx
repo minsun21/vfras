@@ -17,6 +17,7 @@ import axios from "../api/axios";
 import { KEYS } from "../constants/Keys";
 import { useDispatch } from "react-redux";
 import { logout } from "../features/authSlice";
+import { MODAL_SM } from "../components/modals/ModalRenderer";
 
 const ProfileEdit = () => {
   const navigate = useNavigate();
@@ -87,6 +88,7 @@ const ProfileEdit = () => {
       content: <PasswordChange info={formData} />,
       header: LABELS.PASSWORD_CHANGE,
       onConfirm: changePassword,
+      size: MODAL_SM,
     });
   };
 

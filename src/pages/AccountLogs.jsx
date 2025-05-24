@@ -11,6 +11,7 @@ import axios from "../api/axios";
 import { ROUTES } from "../constants/routes";
 import Form from "../components/Form";
 import { KEYS } from "../constants/Keys";
+import { MODAL_MD } from "../components/modals/ModalRenderer";
 
 const AccountLogs = () => {
   const tableRef = useRef();
@@ -36,6 +37,7 @@ const AccountLogs = () => {
     showModal({
       header: `${row[KEYS.ADMIN_ID]} ${LABELS.ACCOUNT_DETAIL_LOGS}`,
       content: <AccountDetailLog selectRow={row} />,
+      size : MODAL_MD
     });
   };
 
