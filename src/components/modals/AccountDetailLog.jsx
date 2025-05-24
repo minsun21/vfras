@@ -36,7 +36,6 @@ const AccountDetailLog = ({ selectRow }) => {
           rowSelectionEnabled={false}
           resultLabel={false}
           pageSelect={false}
-          paginationEnabled={false}
         />
       </div>
     </div>
