@@ -34,8 +34,6 @@ const Subscriber = () => {
     setSearchInput({
       [KEYS.SEARCH_DIVISION]: SEARCH_DIVISIONS[0].key,
       [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[0].key,
-      [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[0].key,
-      [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[0].key,
     });
 
     setData(subscribe_data);
