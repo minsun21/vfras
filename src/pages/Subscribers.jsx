@@ -14,8 +14,8 @@ import {
 } from "../config/FieldsConfig";
 import { LABELS } from "../constants/Labels";
 import {
-  errorMessages,
-  infoMessages,
+  ErrorMessages,
+  InfoMessages,
   subsriberMessages,
 } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
@@ -58,7 +58,7 @@ const Subscriber = () => {
   const approvedSub = () => {
     if (selectRows.length === 0) {
       showAlert({
-        message: errorMessages.nonSelect,
+        message: ErrorMessages.nonSelect,
       });
       return;
     }
@@ -79,7 +79,7 @@ const Subscriber = () => {
     //     state: LABELS.SUBSCRIBE,
     //   }));
     //   showAlert({
-    //     message: infoMessages.successEdit,
+    //     message: InfoMessages.successEdit,
     //   });
     // })
 
@@ -89,20 +89,20 @@ const Subscriber = () => {
       [KEYS.SUB_STATUS]: LABELS.SUBSCRIBE,
     }));
     showAlert({
-      message: infoMessages.successEdit,
+      message: InfoMessages.successEdit,
     });
   };
 
   const clickDelete = () => {
     if (selectRows.length === 0) {
       showAlert({
-        message: errorMessages.nonSelect,
+        message: ErrorMessages.nonSelect,
       });
       return;
     }
 
     showDialog({
-      message: infoMessages.confirmDelete(selectRows.length),
+      message: InfoMessages.confirmDelete(selectRows.length),
       onConfirm: deleteAccount,
     });
   };
@@ -110,7 +110,7 @@ const Subscriber = () => {
   const deleteAccount = () => {
     // axios.delete(ROUTES.SUBSCRIBERS, selectRows).then((res) => {
     //   showAlert({
-    //     message: infoMessages.successDelete,
+    //     message: InfoMessages.successDelete,
     //   });
     // });
 
@@ -125,7 +125,7 @@ const Subscriber = () => {
 
     setTimeout(() => {
       showAlert({
-        message: infoMessages.successDelete,
+        message: InfoMessages.successDelete,
       });
     }, 100);
   };
@@ -133,13 +133,13 @@ const Subscriber = () => {
   const search = () => {
     console.log(searchInput);
     showAlert({
-      message: infoMessages.noSearchResult,
+      message: InfoMessages.noSearchResult,
     });
 
     // axios.post(ROUTES.ACCOUNTS, searchInput).then((res) => {
     //   if (res.data.length === 0) {
     //     showAlert({
-    //       message: infoMessages.noSearchResult,
+    //       message: InfoMessages.noSearchResult,
     //     });
     //     return;
     //   }

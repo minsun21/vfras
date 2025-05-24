@@ -6,7 +6,7 @@ import Input from "../components/Input";
 import Select from "../components/Select";
 import RadioGroup from "../components/RadioGroup";
 import { ROUTES } from "../constants/routes";
-import { infoMessages } from "../constants/Message";
+import { InfoMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 import axios from "../api/axios";
 
@@ -31,7 +31,7 @@ const SubscriberRegister = () => {
 
   const cancelEdit = () => {
     showDialog({
-      message: infoMessages.confirmCancel,
+      message: InfoMessages.confirmCancel,
       onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
     });
   };
@@ -41,13 +41,13 @@ const SubscriberRegister = () => {
 
     // axios.post(ROUTES.ACCOUNTS, formData).then(res=>{
     //   showAlert({
-    //     message: infoMessages.successAccountSave,
+    //     message: InfoMessages.successAccountSave,
     //     onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
     //   });
     // })
 
     showAlert({
-      message: infoMessages.successAccountSave,
+      message: InfoMessages.successAccountSave,
       onConfirm: () => navigate(ROUTES.ACCOUNTS),
     });
   };
@@ -65,13 +65,13 @@ const SubscriberRegister = () => {
 
     // axios.post(ROUTES.SUBSCRIBERS, formData).then(res=>{
     //   showAlert({
-    //     message: infoMessages.successAccountSave,
+    //     message: InfoMessages.successAccountSave,
     //     onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
     //   });
     // })
 
     showAlert({
-      message: infoMessages.successAccountSave,
+      message: InfoMessages.successAccountSave,
       onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
     });
   };

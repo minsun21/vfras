@@ -6,7 +6,7 @@ import {
   SOUND_SOURCE_COLUMNS,
   sounds_source_columns,
 } from "../config/DataConfig";
-import { infoMessages, soundSourceMessages } from "../constants/Message";
+import { InfoMessages, SoundSourceMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 import { ROUTES } from "../constants/routes";
 import axios from "../api/axios";
@@ -66,7 +66,7 @@ const SoundSource = () => {
     // axios.get(ROUTES.CONTENTS, keyword).then((res) => {
     //   if (res.data.length === 0) {
     //     showAlert({
-    //       message: infoMessages.noSearchResult,
+    //       message: InfoMessages.noSearchResult,
     //     });
     //     return;
     //   }
@@ -76,12 +76,12 @@ const SoundSource = () => {
 
   const search = () => {
     showAlert({
-      message: infoMessages.noSearchResult,
+      message: InfoMessages.noSearchResult,
     });
     // axios.get(ROUTES.CONTENTS, keyword).then((res) => {
     //   if (res.data.length === 0) {
     //     showAlert({
-    //       message: infoMessages.noSearchResult,
+    //       message: InfoMessages.noSearchResult,
     //     });
     //     return;
     //   }
@@ -104,7 +104,7 @@ const SoundSource = () => {
                   <Input
                     value={keyword}
                     onChange={(e) => setKeyword(e.target.value)}
-                    placeholder={soundSourceMessages.searchPlaceHolder}
+                    placeholder={SoundSourceMessages.searchPlaceHolder}
                     size={INPUT_SIZE_LG}
                   />
                   <Button type={BUTTON_SEARCH} onClick={search} />

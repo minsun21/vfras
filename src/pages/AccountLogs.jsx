@@ -3,7 +3,7 @@ import Button, { BUTTON_SEARCH } from "../components/Button";
 import Input, { INPUT_SIZE_LG } from "../components/Input";
 import Table from "../components/Table";
 import { ACCOUNTS_LOGS_COLUMNS } from "../config/DataConfig";
-import { accountMessages, infoMessages } from "../constants/Message";
+import { AccountMessages, InfoMessages } from "../constants/Message";
 import { LABELS } from "../constants/Labels";
 import AccountDetailLog from "../components/modals/AccountDetailLog";
 import { useModal } from "../contexts/ModalContext";
@@ -66,7 +66,7 @@ const AccountLogs = () => {
     // axios.get(ROUTES.HISTORY, keyword).then((res) => {
     //   if (res.data.length === 0) {
     //     showAlert({
-    //       message: infoMessages.noSearchResult,
+    //       message: InfoMessages.noSearchResult,
     //     });
     //     return;
     //   }
@@ -84,12 +84,12 @@ const AccountLogs = () => {
 
   const search = () => {
     showAlert({
-      message: infoMessages.noSearchResult,
+      message: InfoMessages.noSearchResult,
     });
     // axios.get(ROUTES.HISTORY, keyword).then((res) => {
     //   if (res.data.length === 0) {
     //     showAlert({
-    //       message: infoMessages.noSearchResult,
+    //       message: InfoMessages.noSearchResult,
     //     });
     //     return;
     //   }
@@ -109,7 +109,7 @@ const AccountLogs = () => {
                   <Input
                     value={keyword}
                     onChange={(e) => setKeyword(e.target.value)}
-                    placeholder={accountMessages.searchPlaceHolder}
+                    placeholder={AccountMessages.searchPlaceHolder}
                     size={INPUT_SIZE_LG}
                   />
                   <Button type={BUTTON_SEARCH} onClick={search} />

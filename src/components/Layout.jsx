@@ -8,8 +8,8 @@ import { MenusConfig, NonMenuConfig } from "../config/MenusConfig";
 import { ROUTES } from "../constants/routes";
 import { LABELS } from "../constants/Labels";
 import { useModal } from "../contexts/ModalContext";
-import { infoMessages } from "../constants/Message";
 import axios from "../api/axios";
+import { InfoMessages } from "../constants/Message";
 
 const getCurrentSubMenuTitle = (currentPath) => {
   for (const group of MenusConfig) {
@@ -39,7 +39,7 @@ const Layout = () => {
 
   const handleLogout = () => {
     showDialog({
-      message: infoMessages.confirmLogout,
+      message: InfoMessages.confirmLogout,
       onConfirm: () => {
         // axios.put(ROUTES.LOGOUT).then((res)=>{
         //   dispatch(logout());

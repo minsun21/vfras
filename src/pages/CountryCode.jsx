@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button, { BUTTON_CANCEL } from "../components/Button";
 import { LABELS } from "../constants/Labels";
 import { countryNumbers } from "../config/FieldsConfig";
-import { countryNumberMessages } from "../constants/Message";
+import { LvMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 import { ROUTES } from "../constants/routes";
 import axios from "../api/axios";
@@ -55,13 +55,13 @@ const CountryCode = () => {
   const clickAllChange = () => {
     if (!validation()) {
       showAlert({
-        message: countryNumberMessages.errorChange,
+        message: LvMessages.errorChange,
       });
       return;
     }
 
     showDialog({
-      message: countryNumberMessages.allChange,
+      message: LvMessages.allChange,
       onConfirm: allChange,
     });
   };
@@ -85,7 +85,7 @@ const CountryCode = () => {
     // 성공
     setTimeout(() => {
       showAlert({
-        message: countryNumberMessages.successChange,
+        message: LvMessages.successChange,
       });
     }, 100);
   };
@@ -136,9 +136,9 @@ const CountryCode = () => {
         />
       </div>
       <div class="lvBoxBottom">
-        <span>{countryNumberMessages.info1}</span>
-        <span>{countryNumberMessages.info2}</span>
-        <span>{countryNumberMessages.info3}</span>
+        <span>{LvMessages.info1}</span>
+        <span>{LvMessages.info2}</span>
+        <span>{LvMessages.info3}</span>
       </div>
     </div>
   );

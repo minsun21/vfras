@@ -9,7 +9,7 @@ import Input from "../components/Input";
 import RadioGroup from "../components/RadioGroup";
 import { subscriberEditFields } from "../config/FieldsConfig";
 import { ROUTES } from "../constants/routes";
-import { infoMessages, subsriberMessages } from "../constants/Message";
+import { InfoMessages, subsriberMessages } from "../constants/Message";
 import { LABELS } from "../constants/Labels";
 import { useModal } from "../contexts/ModalContext";
 import DidSetting from "../components/modals/DidSetting";
@@ -53,7 +53,7 @@ const SubscriberManageEdit = () => {
     // axios.get(ROUTES.SUBSCRIBERS_DETAIL(searchSubNo)).then((res) => {
     //   if(!res.data){
     //     showAlert({
-    //       message: infoMessages.noSearchResult,
+    //       message: InfoMessages.noSearchResult,
     //     });
     //   }
     //   setFormData(res.data);
@@ -62,7 +62,7 @@ const SubscriberManageEdit = () => {
 
   const handleSave = () => {
     showDialog({
-      message: infoMessages.confirmSave,
+      message: InfoMessages.confirmSave,
       onConfirm: () => {
         closeModal();
 
@@ -84,19 +84,19 @@ const SubscriberManageEdit = () => {
   const save = () => {
     // axios.put(ROUTES.SUBSCRIBERS_DETAIL(formData[KEYS.SUB_NO]),formData ).then(res=>{
     //   showAlert({
-    //     message: infoMessages.successEdit,
+    //     message: InfoMessages.successEdit,
     //     onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
     //   });
     // })
     showAlert({
-      message: infoMessages.successEdit,
+      message: InfoMessages.successEdit,
       onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
     });
   };
 
   const cancelEdit = () => {
     showDialog({
-      message: infoMessages.confirmCancel,
+      message: InfoMessages.confirmCancel,
       onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
     });
   };
