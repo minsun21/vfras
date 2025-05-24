@@ -14,6 +14,7 @@ import axios from "../api/axios";
 import { KEYS } from "../constants/Keys";
 
 const SubscriberRegister = () => {
+  
   const navigate = useNavigate();
   const { showDialog, showAlert, showModal } = useModal();
 
@@ -40,7 +41,6 @@ const SubscriberRegister = () => {
   };
 
   const handleSave = () => {
-    console.log("저장할 데이터:", formData);
 
     const errValidate = fieldsValidate(SUBSRIBERS_REGISTER_FIELDS, formData);
     if (errValidate) {
@@ -49,6 +49,10 @@ const SubscriberRegister = () => {
       });
       return;
     }
+
+    // 비밀번호 자동 설정
+    formData[KEYS.PASSWORD] = formData[KEYS.SUB_NO].slice(-4)
+    console.log("저장할 데이터:", formData);
 
     // axios.post(ROUTES.SUBSCRIBERS, formData).then(res=>{
     //   showAlert({

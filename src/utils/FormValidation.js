@@ -56,8 +56,18 @@ export const fieldsValidate = (fields, formData) => {
     if (required && nestedFields?.length) {
       for (const subField of nestedFields) {
         const subValue = formData[subField.key];
+
+        // 2-1. 필수값
         if (subValue === undefined || subValue === "") {
           return ErrorMessages.required(`${label}`);
+        }
+
+        // 2-2. 길이 검사 (number 포함)
+        if (subField.length) {
+          const actualLength = String(subValue).length;
+          if (actualLength !== subField.length) {
+            return ErrorMessages.lengthMismatch2(`${label}`, subField.length);
+          }
         }
       }
     }
