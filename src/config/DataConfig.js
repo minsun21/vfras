@@ -106,7 +106,15 @@ export const subscribe_columns = (navigateManage) => {
       accessorKey: KEYS.SUB_STATUS,
       header: LABELS.STATE,
       cell: ({ row }) => (
-        <div className="stateArert">{row.original[KEYS.SUB_STATUS]}</div>
+        <div
+          className={`${
+            row.original[KEYS.SUB_STATUS] === LABELS.SUBSCRIBE
+              ? "stateNormal"
+              : "stateArert"
+          }`}
+        >
+          {row.original[KEYS.SUB_STATUS]}
+        </div>
       ),
     },
     {

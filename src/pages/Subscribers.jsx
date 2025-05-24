@@ -6,12 +6,6 @@ import Select from "../components/Select";
 import Table from "../components/Table";
 import { ROUTES } from "../constants/routes";
 import { subscribe_columns, subscribe_data } from "../config/DataConfig";
-import {
-  SEARCH_SUBSRIBERS_TYPES,
-  DIVISIONS,
-  SEARCH_SERVICE_TYPES,
-  SEARCH_SUBSRIBERS_STATE,
-} from "../config/FieldsConfig";
 import { LABELS } from "../constants/Labels";
 import {
   ErrorMessages,
@@ -21,6 +15,8 @@ import {
 import { useModal } from "../contexts/ModalContext";
 import { KEYS } from "../constants/Keys";
 import axios from "../api/axios";
+import { SEARCH_DIVISIONS, SEARCH_SERVICE_TYPES, SEARCH_SUBSRIBERS_STATE, SEARCH_SUBSRIBERS_TYPES } from "../config/OPTIONS";
+import Form from "../components/Form";
 
 const Subscriber = () => {
   const tableRef = useRef();
@@ -29,16 +25,14 @@ const Subscriber = () => {
 
   const [searchInput, setSearchInput] = useState({});
   const [data, setData] = useState([]);
-  const [allType, setAllType] = useState([]);
 
   const [selectRows, setselectRows] = useState([]);
 
   useEffect(() => {
-    setAllType(DIVISIONS);
+
 
     setSearchInput({
-      [KEYS.SEARCH_DIVISION_VALUE]: "",
-      [KEYS.SEARCH_DIVISION]: DIVISIONS[0].key,
+      [KEYS.SEARCH_DIVISION]: SEARCH_DIVISIONS[0].key,
       [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[0].key,
       [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[0].key,
       [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[0].key,
@@ -165,9 +159,8 @@ const Subscriber = () => {
 
   return (
     <div>
-      <form className="search-box" onSubmit={(e) => e.preventDefault()}>
+      <Form className="search-box">
         <table className="tbl-input">
-          <colgroup></colgroup>
           <thead>
             <tr>
               <th>
@@ -190,7 +183,7 @@ const Subscriber = () => {
                 <div className="form-field dflex wrap gap10">
                   <Select
                     value={searchInput[KEYS.SEARCH_DIVISION]}
-                    options={allType}
+                    options={SEARCH_DIVISIONS}
                     nonEmpty={true}
                     name={KEYS.SEARCH_DIVISION}
                     onChange={onChange}
@@ -238,7 +231,7 @@ const Subscriber = () => {
             </tr>
           </tbody>
         </table>
-      </form>
+      </Form>
       <Table
         ref={tableRef}
         columns={subscribe_columns(navigateManage)}
