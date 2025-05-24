@@ -1,7 +1,12 @@
 import { INPUT_SIZE_FL } from "../components/Input";
 import { KEYS } from "../constants/Keys";
 import { LABELS } from "../constants/Labels";
-import { ADMIN_TYPES } from "./OPTIONS";
+import {
+  ADMIN_TYPES,
+  SERVICE_TYPES,
+  SUBSRIBERS_TYPES,
+  USER_STATES,
+} from "./OPTIONS";
 
 export const DIVISIONS = [
   { key: "", value: LABELS.ALL },
@@ -10,10 +15,6 @@ export const DIVISIONS = [
   { key: KEYS.PBX_NUMBER, value: LABELS.PBX_NUMBER },
   { key: KEYS.USER_NUMBER, value: LABELS.USER_NUMBER_F },
 ];
-export const SUBSRIBERS_TYPES = [
-  { key: "0", value: "개인" },
-  { key: "1", value: "법인" },
-];
 
 export const SEARCH_SUBSRIBERS_TYPES = [
   { key: "", value: "전체" },
@@ -21,22 +22,11 @@ export const SEARCH_SUBSRIBERS_TYPES = [
   { key: "1", value: "법인" },
 ];
 
-export const SERVICE_TYPES = [
-  { key: "0", value: "개인" },
-  { key: "1", value: "개인DJ" },
-  { key: "2", value: "기업" },
-];
-
 export const SEARCH_SERVICE_TYPES = [
   { key: "", value: "전체" },
   { key: "0", value: "개인" },
   { key: "1", value: "개인DJ" },
   { key: "2", value: "기업" },
-];
-
-export const USER_STATES = [
-  { key: "0", value: "가입" },
-  { key: "1", value: "요청중" },
 ];
 
 export const SUBSRIBERS_STATE = [
@@ -162,31 +152,34 @@ export const PROFILE_EDIT_FIELDS = [
   },
 ];
 
-export const subsriberResigerFields = [
+export const SUBSRIBERS_REGISTER_FIELDS = [
   {
     key: KEYS.SUB_NO,
     label: LABELS.MAIN_NUMBER,
-    type: "text",
+    type: "number",
     required: true,
-    requiredLength: 11,
+    length: 10,
   },
   {
     key: KEYS.SUB_STATUS,
     label: LABELS.USER_STATE,
     type: "radio",
     options: USER_STATES,
+    required: true,
   },
   {
     key: KEYS.SUB_TYPE,
     label: LABELS.SUBSCRIBE_TYPE,
     type: "radio",
     options: SUBSRIBERS_TYPES,
+    required: true,
   },
   {
     key: KEYS.SERVICE_TYPE,
     label: LABELS.SERVICE_TYPE,
     type: "radio",
     options: SERVICE_TYPES,
+    required: true,
   },
   {
     key: KEYS.NAME,
@@ -198,8 +191,9 @@ export const subsriberResigerFields = [
     key: KEYS.PASSWORD,
     label: LABELS.PASSWORD,
     type: "text",
+    disabled : true,
     required: true,
-    requiredLength: 4,
+    length: 4,
     comment: LABELS.PASSWORD_CHECK3,
   },
   {
@@ -207,17 +201,19 @@ export const subsriberResigerFields = [
     label: LABELS.ADDRESS1,
     type: "text",
     required: true,
+    size: INPUT_SIZE_FL,
   },
   {
     key: KEYS.ADDRESS2,
     label: LABELS.ADDRESS2_OPTION,
     type: "text",
     placeholder: "OPTION",
+    size: INPUT_SIZE_FL,
   },
   {
     key: KEYS.PBX_NUMBER,
     label: LABELS.PBX_NUMBER_COL,
-    multi: true,
+    required: true,
     fields: [
       { key: KEYS.FROM_NO, type: "number" },
       { key: KEYS.TO_NO, type: "number" },
@@ -226,7 +222,7 @@ export const subsriberResigerFields = [
   {
     key: KEYS.USER_NUMBER,
     label: LABELS.USER_NUMBER,
-    multi: true,
+    required: true,
     fields: [
       { key: KEYS.TEL_FROM_NO, type: "number" },
       { key: KEYS.TEL_TO_NO, type: "number" },
@@ -237,7 +233,7 @@ export const subsriberResigerFields = [
     label: LABELS.DEFAULT_CALLRING,
     type: "number",
     required: true,
-    requiredLength: 6,
+    length: 6,
   },
 ];
 
@@ -378,7 +374,7 @@ export const subscriberEditFields = [
     type: "text",
     value: "서울시 강남구",
     required: true,
-    size : INPUT_SIZE_FL
+    size: INPUT_SIZE_FL,
   },
   {
     key: KEYS.ADDRESS2,
@@ -402,8 +398,13 @@ export const subscriberEditFields = [
     multi: true,
     disabled: true,
     fields: [
-      { key: KEYS.TEL_FROM_NO, type: "number", value: "0240050045", size: "sm" },
-      { key: KEYS.TEL_TO_NO, type: "number", value: "0240050045" , size: "sm"},
+      {
+        key: KEYS.TEL_FROM_NO,
+        type: "number",
+        value: "0240050045",
+        size: "sm",
+      },
+      { key: KEYS.TEL_TO_NO, type: "number", value: "0240050045", size: "sm" },
     ],
   },
   {

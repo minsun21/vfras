@@ -96,7 +96,6 @@ const DidConfig = ({
                     value={value}
                     options={options}
                     onChange={(e) => handleChange(e.target.value)}
-                    nonEmpty={true}
                   />
                 ) : type === "textarea" ? (
                   <textarea

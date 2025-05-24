@@ -120,7 +120,6 @@ const AccountEdit = () => {
                   <td className="value">
                     {type === "select" ? (
                       <Select
-                        nonEmpty={true}
                         value={value}
                         options={options}
                         onChange={handleChange}

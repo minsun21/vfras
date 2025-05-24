@@ -13,6 +13,13 @@ const Input = ({
   size = "nm",
   name,
 }) => {
+
+  const blockNegative = (e) => {
+    if (type === "number" && (e.key === '-' || e.key === 'e')) {
+      e.preventDefault();
+    }
+  };
+
   return (
       <input className={`form-input ${size}`}
         name={name}
@@ -22,6 +29,7 @@ const Input = ({
         onChange={onChange}
         placeholder={placeholder}
         min="0"
+        onKeyDown={blockNegative}
       />
   );
 };

@@ -31,39 +31,67 @@ export const hasEmptyValue = (obj) => {
 
 export const fieldsValidate = (fields, formData) => {
   for (const field of fields) {
-    const { key, label, required, type, min, max } = field;
-    // 1. 필수값인지 확인
-    if (required && !formData[key]) {
+    const {
+      key,
+      label,
+      required,
+      type,
+      min,
+      max,
+      length,
+      disabled,
+      fields: nestedFields,
+    } = field;
+
+    if (disabled) continue;
+
+    const value = formData[key];
+
+    // ✅ 1. 기본 필수값 검사
+    if (required && !value && !nestedFields) {
       return ErrorMessages.required(label);
     }
 
-    // 2. 타입에 따라 validation 체크(email, phone...)
-    if (key === KEYS.MOBILE && !isValidPhone(formData[key])) {
+    // ✅ 2. 중첩 필드가 있는 경우
+    if (required && nestedFields?.length) {
+      for (const subField of nestedFields) {
+        const subValue = formData[subField.key];
+        if (subValue === undefined || subValue === "") {
+          return ErrorMessages.required(`${label}`);
+        }
+      }
+    }
+
+    // ✅ 3. 타입별 validation
+    if (key === KEYS.MOBILE && !isValidPhone(value)) {
       return ErrorMessages.invalidPhone;
     }
 
-    if (type === "email" && !isValidEmail(formData[key])) {
+    if (type === "email" && !isValidEmail(value)) {
       return ErrorMessages.invalidEmail;
     }
 
-    // 3. 길이 체크
-    if (
-      min &&
-      max &&
-      (formData[key].length < min || formData[key].length > max)
-    ) {
-      return ErrorMessages.lengthMismatch(label, min, max);
-    }
-
-    // 비밀번호 체크
-    if (type === "password") {
-      if (!isValidPassword(formData[key])) {
-        return ErrorMessages.invalidPassword;
+    // ✅ 4. 길이 검사 (string)
+    if (typeof value === "string") {
+      if (min && max && (value.length < min || value.length > max)) {
+        return ErrorMessages.lengthMismatch(label, min, max);
       }
 
-      if (formData[key] !== formData[KEYS.PASSWORD_CONFIRM]) {
+      if (length && value.length !== length) {
+        return ErrorMessages.lengthMismatch2(label, length);
+      }
+    }
+
+    // ✅ 5. 비밀번호 검사
+    if (type === "password") {
+      if (!isValidPassword(value)) {
+        return ErrorMessages.invalidPassword;
+      }
+      if (value !== formData[KEYS.PASSWORD_CONFIRM]) {
         return ErrorMessages.correctPassword;
       }
     }
   }
+
+  return;
 };

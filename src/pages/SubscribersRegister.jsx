@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { subsriberResigerFields } from "../config/FieldsConfig";
+import { SUBSRIBERS_REGISTER_FIELDS } from "../config/FieldsConfig";
 import Button, { BUTTON_CANCEL } from "../components/Button";
 import Input from "../components/Input";
 import Select from "../components/Select";
 import RadioGroup from "../components/RadioGroup";
+import Form from "../components/Form";
 import { ROUTES } from "../constants/routes";
 import { InfoMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
+import { fieldsValidate } from "../utils/FormValidation";
 import axios from "../api/axios";
+import { KEYS } from "../constants/Keys";
 
 const SubscriberRegister = () => {
   const navigate = useNavigate();
@@ -21,7 +24,7 @@ const SubscriberRegister = () => {
     //   setData(prev => ({ ...prev, ...res.data }));
     // });
     let data = {};
-    for (const field of subsriberResigerFields) {
+    for (const field of SUBSRIBERS_REGISTER_FIELDS) {
       if (field.type === "radio") {
         data[field.key] = field.options[0].value;
       }
@@ -36,32 +39,16 @@ const SubscriberRegister = () => {
     });
   };
 
-  const save = () => {
-    console.log("저장할 데이터:", formData);
-
-    // axios.post(ROUTES.ACCOUNTS, formData).then(res=>{
-    //   showAlert({
-    //     message: InfoMessages.successAccountSave,
-    //     onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
-    //   });
-    // })
-
-    showAlert({
-      message: InfoMessages.successAccountSave,
-      onConfirm: () => navigate(ROUTES.ACCOUNTS),
-    });
-  };
-
   const handleSave = () => {
     console.log("저장할 데이터:", formData);
 
-    // const errValidate = fieldsValidate(subsriberResigerFields, formData);
-    // if (errValidate) {
-    //   showAlert({
-    //     message: errValidate,
-    //     onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
-    //   });
-    // }
+    const errValidate = fieldsValidate(SUBSRIBERS_REGISTER_FIELDS, formData);
+    if (errValidate) {
+      showAlert({
+        message: errValidate,
+      });
+      return;
+    }
 
     // axios.post(ROUTES.SUBSCRIBERS, formData).then(res=>{
     //   showAlert({
@@ -78,14 +65,14 @@ const SubscriberRegister = () => {
 
   return (
     <>
-      <form className="tbl-view">
+      <Form className="tbl-view">
         <table>
           <colgroup>
             <col className="w250"></col>
             <col></col>
           </colgroup>
           <tbody>
-            {subsriberResigerFields.map((field, idx) => {
+            {SUBSRIBERS_REGISTER_FIELDS.map((field, idx) => {
               const {
                 key,
                 label,
@@ -95,33 +82,27 @@ const SubscriberRegister = () => {
                 placeholder,
                 comment,
                 disabled,
-                multi,
+                size,
                 fields,
               } = field;
               const value = formData[key] || "";
 
-              const handleChange = (val) => {
-                setFormData((prev) => ({ ...prev, [key]: val }));
+              const handleChange = (e) => {
+                setFormData((prev) => ({ ...prev, [key]: e.target.value }));
               };
 
               return (
                 <tr key={idx}>
                   <th className="Labels" required={required}>
                     {label}
+                    {required && <em>*</em>}
                   </th>
                   <td className="value">
-                    {type === "select" ? (
-                      <Select
-                        value={value}
-                        options={options}
-                        onChange={(e) => handleChange(e.target.value)}
-                        nonEmpty={true}
-                      />
-                    ) : type === "radio" ? (
+                    {type === "radio" ? (
                       <RadioGroup
                         value={value}
                         options={options}
-                        onChange={(e) => handleChange(e.target.value)}
+                        onChange={handleChange}
                       />
                     ) : comment ? (
                       <div className="rowBox">
@@ -129,16 +110,17 @@ const SubscriberRegister = () => {
                           value={value}
                           type={type}
                           placeholder={placeholder}
-                          onChange={(e) => handleChange(e.target.value)}
+                          onChange={handleChange}
                           disabled={disabled}
                         />
                         <span className="comment">{comment}</span>
                       </div>
-                    ) : multi ? (
+                    ) : fields ? (
                       <div className="dflex">
                         {fields.map((subField, idx) => (
                           <div key={subField.key} className="rowBox">
-                            <Input size="sm"
+                            <Input
+                              size="sm"
                               type={subField.type}
                               value={formData[subField.key] || ""}
                               onChange={(e) =>
@@ -149,7 +131,9 @@ const SubscriberRegister = () => {
                               }
                               disabled={disabled}
                             />
-                            {idx === 0 && <span className="dashCenter">{"-"}</span>}
+                            {idx === 0 && (
+                              <span className="dashCenter">{"-"}</span>
+                            )}
                           </div>
                         ))}
                       </div>
@@ -158,7 +142,8 @@ const SubscriberRegister = () => {
                         value={value}
                         type={type}
                         placeholder={placeholder}
-                        onChange={(e) => handleChange(e.target.value)}
+                        onChange={handleChange}
+                        size={size}
                       />
                     )}
                   </td>
@@ -167,7 +152,7 @@ const SubscriberRegister = () => {
             })}
           </tbody>
         </table>
-      </form>
+      </Form>
       <div className="btn-wrap">
         <div>
           <Button type={BUTTON_CANCEL} onClick={cancelEdit} />

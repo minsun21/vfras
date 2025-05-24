@@ -110,7 +110,6 @@ const AccountRegister = () => {
                         value={value}
                         options={options}
                         onChange={handleChange}
-                        nonEmpty={true}
                       />
                     ) : comment ? (
                       <div>

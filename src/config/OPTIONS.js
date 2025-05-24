@@ -20,3 +20,22 @@ export const ADMIN_TYPES = [
   { key: "user", value: "User" },
   { key: "guest", value: "Guest" },
 ];
+
+// 사용자 상태
+export const USER_STATES = [
+  { key: "0", value: "가입" },
+  { key: "1", value: "요청중" },
+];
+
+// 가입자 유형
+export const SUBSRIBERS_TYPES = [
+  { key: "0", value: "개인" },
+  { key: "1", value: "법인" },
+];
+
+// 서비스 유형
+export const SERVICE_TYPES = [
+  { key: "0", value: "개인" },
+  { key: "1", value: "개인DJ" },
+  { key: "2", value: "기업" },
+];

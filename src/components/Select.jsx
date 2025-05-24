@@ -1,6 +1,6 @@
 import React from "react";
 
-const Select = ({ value, options, onChange, nonEmpty = false, name, id }) => (
+const Select = ({ value, options, onChange, nonEmpty = true, name, id }) => (
   <div className="select-box">
     <select name={name} id={id} value={value} onChange={onChange}>
       {!nonEmpty && <option value=""></option>}
