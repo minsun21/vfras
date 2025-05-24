@@ -5,9 +5,11 @@ import Input from "../Input";
 const PasswordReset = ({ currentPassword }) => {
 
   return (
-    <div>
-      <span>{subsriberMessages.resetPasswordConfirm}</span>
-      <Input value={currentPassword} disabled />
+    <div className="vFlex">
+      <span className="mt40 mb20">{subsriberMessages.resetPasswordConfirm}</span>
+      <div className="tac">
+      <Input size="fl" value={currentPassword} disabled />
+      </div>
     </div>
   );
 };

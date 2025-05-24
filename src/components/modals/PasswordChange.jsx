@@ -13,7 +13,7 @@ const PasswordChange = () => {
   );
 
   return (
-    <div>
+    <div className="vFlex">
       {passwordChange.map((field) => {
         const { key, placeholder } = field;
 
@@ -22,7 +22,7 @@ const PasswordChange = () => {
         };
 
         return (
-          <Input
+          <Input size="fl"
             key={key}
             value={formData[key] || ""}
             placeholder={placeholder}

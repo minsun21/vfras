@@ -84,10 +84,11 @@ i.hot { display:inline-block; width:1.4rem; height:1.8rem; background:url("../im
 /* 접속이력 */
 .col-clickable { color: #cb001d; font-weight: 500; text-decoration: underline; display: block; cursor: pointer; }
 .col-clickable:hover { text-decoration: underline; }
+.hFlex { display: flex; flex-direction: row; gap: 10px; }
+.vFlex { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
 
-
-
-
+/* password 확인 */
+.password-confirm { color: #cb001d; }
 
 
 

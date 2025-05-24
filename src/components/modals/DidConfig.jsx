@@ -66,7 +66,10 @@ const DidConfig = ({
           <span className="slider"></span>
         </label>
       </div>
-
+      {/* 시작, 일시정지 */}
+      <div>
+        
+      </div>
       {/* 본문: 오픈 시에만 표시 */}
       <div className="lvContent">
         {/* 왼쪽 */}
