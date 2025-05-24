@@ -111,7 +111,12 @@ caption, legend, .hidden, .visually-hidden, hr { position: absolute !important; 
 .w300 { width:30rem !important; } 
 .w400 { width:40rem !important; } 
 .w500 { width:50rem !important; } 
+.w600 { width:60rem !important; } 
+.w700 { width:70rem !important; } 
 .w800 { width:80rem !important; } 
+.w900 { width:90rem !important; } 
+.w1000 { width:100rem !important; } 
+.w1200 { width:120rem !important; } 
 .w1400 { width:140rem !important; } 
 .w1600 { width:160rem !important; }
 .w20p { width:20% !important; } 
