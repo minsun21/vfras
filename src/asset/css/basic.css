@@ -81,7 +81,9 @@ i.new { display:inline-block; width:2.2rem; height:2.2rem; background:url("../im
 /* hot 아이콘 */
 i.hot { display:inline-block; width:1.4rem; height:1.8rem; background:url("../img/hot.png") no-repeat center; background-size:contain; font-size:0; vertical-align:middle; margin:0 0.2rem; } 
 
-
+/* 접속이력 */
+.col-clickable { color: #cb001d; font-weight: 500; text-decoration: underline; display: block; cursor: pointer; }
+.col-clickable:hover { text-decoration: underline; }
 
 
 
