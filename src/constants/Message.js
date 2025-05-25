@@ -9,7 +9,8 @@ export const InfoMessages = {
   confirmRegister: `등록 하시겠습니까?`,
   confirmSave : "저장 하시겠습니까?",
   confirmAdd : "추가 하시겠습니까?",
-  mobile : "숫자만 입력해주세요."
+  mobile : "숫자만 입력해주세요.",
+  successAdd : "추가 되었습니다."
 };
 
 export const ProfileMessages = {

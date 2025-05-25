@@ -43,11 +43,15 @@ const DidSetting = ({ userInfo }) => {
           });
           return;
         }
-        
+
         const newRow = { ...didFormData, id: Math.floor(Math.random() * 100) + 1 };
         setDidData((prev) => [...prev, newRow]);
         dispatch(resetFormData());
         closeModal();
+       
+        setTimeout(() => {
+          showAlert({ message: InfoMessages.successAdd });
+        }, 0);
       },
     });
   };
