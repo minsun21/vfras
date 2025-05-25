@@ -172,7 +172,7 @@ export const DID_SETTING_COLUMNS = [
     header: LABELS.USER_NUMBER_MULTI,
     cell: ({ row }) => (
       <span>
-        {row.original[KEYS.TEL_FROM_NO]} ~ {row.original[KEYS.TEL_TO_NO]}
+        {row.original[KEYS.TEL_FROM_NO]} ~ <br />{row.original[KEYS.TEL_TO_NO]}
       </span>
     ),
   },
@@ -181,7 +181,7 @@ export const DID_SETTING_COLUMNS = [
     header: LABELS.PBX_NUMBER_COL_MULTI,
     cell: ({ row }) => (
       <span>
-        {row.original[KEYS.FROM_NO]} ~ {row.original[KEYS.TO_NO]}
+        {row.original[KEYS.FROM_NO]} ~ <br />{row.original[KEYS.TO_NO]}
       </span>
     ),
   },
@@ -246,27 +246,27 @@ export const DID_SETTING_COLUMNS = [
 ];
 
 export const DID_CONFIG_DATAS = [
-  {
-    key: KEYS.IS_INTERRUPT,
-    title: LABELS.INTERRUPT,
-    dataKey: KEYS.IS_INTERRUPT,
-    forms: [
-      {
-        key: "date",
-        fields: [
-          {
-            key: KEYS.START_DATE,
-            type: "date",
-          },
-          {
-            key: KEYS.END_DATE,
-            type: "date",
-          },
-        ],
-      },
-      { key: KEYS.RBT_ID, type: "number", placeholder: LABELS.RBT_ID },
-    ],
-  },
+  // {
+  //   key: KEYS.IS_INTERRUPT,
+  //   title: LABELS.INTERRUPT,
+  //   dataKey: KEYS.IS_INTERRUPT,
+  //   forms: [
+  //     {
+  //       key: "date",
+  //       fields: [
+  //         {
+  //           key: KEYS.START_DATE,
+  //           type: "date",
+  //         },
+  //         {
+  //           key: KEYS.END_DATE,
+  //           type: "date",
+  //         },
+  //       ],
+  //     },
+  //     { key: KEYS.RBT_ID, type: "number", placeholder: LABELS.RBT_ID },
+  //   ],
+  // },
   {
     key: KEYS.IS_CIRCULR_JOINED,
     title: LABELS.CIRCULAR,
@@ -555,10 +555,10 @@ export const SUBSRIBERS_INFO_DUMMY = {
     {
       [KEYS.ID]: 1222,
       [KEYS.ADMIN_ID]: 1,
-      [KEYS.TEL_FROM_NO]: "02111112222",
-      [KEYS.TEL_TO_NO]: "02111112222",
-      [KEYS.FROM_NO]: "02111112222",
-      [KEYS.TO_NO]: "02111112222",
+      [KEYS.TEL_FROM_NO]: "021113333332",
+      [KEYS.TEL_TO_NO]: "0211114444422",
+      [KEYS.FROM_NO]: "0211166666622",
+      [KEYS.TO_NO]: "02114444442",
       [KEYS.RBT_ID]: "599145",
       [KEYS.RBT_ID_VALUE]: "사랑을 했다",
       [KEYS.IS_INTERRUPT]: true,
@@ -594,7 +594,7 @@ export const SUBSRIBERS_INFO_DUMMY = {
       [KEYS.FROM_NO]: "0211113332222",
       [KEYS.TO_NO]: "02111544222",
       [KEYS.RBT_ID]: "1111211",
-      [KEYS.RBT_ID]: "323232",
+      [KEYS.RBT_ID]: "835133",
       [KEYS.RBT_ID_VALUE]: "네모의 꿈",
       [KEYS.IS_INTERRUPT]: true,
       [KEYS.IS_CIRCULR_JOINED]: false,
@@ -611,7 +611,7 @@ export const SUBSRIBERS_INFO_DUMMY = {
       [KEYS.TEL_TO_NO]: "0215432222",
       [KEYS.FROM_NO]: "021134512222",
       [KEYS.TO_NO]: "021564222",
-      [KEYS.RBT_ID]: "323232",
+      [KEYS.RBT_ID]: "885424",
       [KEYS.RBT_ID_VALUE]: "슈퍼노바",
       [KEYS.IS_INTERRUPT]: false,
       [KEYS.IS_CIRCULR_JOINED]: false,
@@ -628,7 +628,7 @@ export const SUBSRIBERS_INFO_DUMMY = {
       [KEYS.TEL_TO_NO]: "02165465422",
       [KEYS.FROM_NO]: "02111653342222",
       [KEYS.TO_NO]: "021243212222",
-      [KEYS.RBT_ID]: "323232",
+      [KEYS.RBT_ID]: "756352",
       [KEYS.RBT_ID_VALUE]: "레블 하트",
       [KEYS.IS_INTERRUPT]: false,
       [KEYS.IS_CIRCULR_JOINED]: false,

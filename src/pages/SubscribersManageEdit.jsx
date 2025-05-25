@@ -20,7 +20,7 @@ import PasswordReset from "../components/modals/PasswordReset";
 import { SUBSRIBERS_INFO_DUMMY } from "../config/DataConfig";
 import DidSettingPersonal from "../components/modals/DidSettingPersonal";
 import { MODAL_SM } from "../components/modals/ModalRenderer";
-import { SEARCH_SUBSRIBERS_TYPES, SUBSRIBERS_TYPES } from "../config/OPTIONS";
+import { SUBSRIBERS_TYPES } from "../config/OPTIONS";
 import { store } from "../store";
 
 const SubscriberManageEdit = () => {
@@ -128,6 +128,7 @@ const SubscriberManageEdit = () => {
     showModal({
       content: <DidSetting userInfo={formData} />,
       header: LABELS.DID_TITLE,
+      onConfirm: saveDidSetting,
     });
   };
 
@@ -135,12 +136,25 @@ const SubscriberManageEdit = () => {
     showModal({
       content: <DidSettingPersonal userInfo={formData} />,
       header: LABELS.DID_TITLE_PERSONAL,
-      onConfirm: changeDidSettingPersonal,
+      onConfirm: saveDidSettingPersonal,
+    });
+  };
+  
+  // did 회선 설정 - 변경
+  const saveDidSetting= () => {
+    const didPersonalData = store.getState()[KEYS.DID_CONFIG][KEYS.DID_CONFIG];
+    console.log(didPersonalData);
+
+    showAlert({
+      message: InfoMessages.successEdit,
+      onConfirm: () => {
+        closeModal();
+      },
     });
   };
 
   // did 회선 설정 - 개인 변경
-  const changeDidSettingPersonal = () => {
+  const saveDidSettingPersonal = () => {
     const didPersonalData = store.getState()[KEYS.DID_CONFIG][KEYS.DID_CONFIG];
     console.log(didPersonalData);
 

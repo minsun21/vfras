@@ -89,6 +89,7 @@ export const LABELS = {
   DAY_OF_WEEKEND: "요일",
   CALLER_AREA: "발신지역",
   CALLER_NUMBER: "발신자번호",
+  TIME_SLOT : "시간대",
   ANNIVERSARY: "기념일",
   IS_OPEN: "가입여부",
   CIRCULAR: "순환형",
