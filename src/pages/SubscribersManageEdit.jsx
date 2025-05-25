@@ -20,7 +20,7 @@ import PasswordReset from "../components/modals/PasswordReset";
 import { SUBSRIBERS_INFO_DUMMY } from "../config/DataConfig";
 import DidSettingPersonal from "../components/modals/DidSettingPersonal";
 import { MODAL_SM } from "../components/modals/ModalRenderer";
-import { SUBSRIBERS_TYPES } from "../config/OPTIONS";
+import { SEARCH_SUBSRIBERS_TYPES, SUBSRIBERS_TYPES } from "../config/OPTIONS";
 import { store } from "../store";
 
 const SubscriberManageEdit = () => {
@@ -47,6 +47,10 @@ const SubscriberManageEdit = () => {
       ...SUBSRIBERS_INFO_DUMMY,
       ...selectRow,
       [KEYS.PASSWORD]: 1234,
+      [KEYS.DID_CONFIG]:
+        selectRow[KEYS.SUB_TYPE] === SUBSRIBERS_TYPES[0].value
+          ? SUBSRIBERS_INFO_DUMMY.did_personal
+          : SUBSRIBERS_INFO_DUMMY.dids,
     });
   }, [state]);
 
@@ -137,8 +141,7 @@ const SubscriberManageEdit = () => {
 
   // did 회선 설정 - 개인 변경
   const changeDidSettingPersonal = () => {
-    const didPersonalData =
-      store.getState()[KEYS.DID_PERSONAL_CONFIG][KEYS.DID_PERSONAL_CONFIG];
+    const didPersonalData = store.getState()[KEYS.DID_CONFIG][KEYS.DID_CONFIG];
     console.log(didPersonalData);
 
     showAlert({

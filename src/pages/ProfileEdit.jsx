@@ -107,7 +107,7 @@ const ProfileEdit = () => {
   };
 
   const changePassword = () => {
-    const passwordData = store.getState()[KEYS.PASSWORD];
+    const passwordData = store.getState().changePassword;
     console.log(passwordData)
     // 1. 빈 값 확인
     if (hasEmptyValue(passwordData)) {

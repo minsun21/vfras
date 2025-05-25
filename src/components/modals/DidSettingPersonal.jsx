@@ -5,21 +5,19 @@ import { DID_PERSONAL_SETTING_COLUMNS } from "../../config/DataConfig";
 import Input, { INPUT_SIZE_SM } from "../Input";
 import { KEYS } from "../../constants/Keys";
 import { useDispatch } from "react-redux";
-import { setPersonalData } from "../../features/didPersonalSlice";
+import { setConfigData } from "../../features/didConfigSlice";
 
 const DidSettingPersonal = ({ userInfo }) => {
   const tableRef = useRef();
   const dispatch = useDispatch();
-
-
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    setData(userInfo[KEYS.DID_PERSONAL_CONFIG]);
+    setData(userInfo[KEYS.DID_CONFIG]);
   }, [userInfo]); 
 
   useEffect(()=>{
-    dispatch(setPersonalData(data));
+    dispatch(setConfigData(data));
   },[data])
 
   return (

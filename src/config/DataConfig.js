@@ -166,96 +166,28 @@ export const access_detail_data = [
   },
 ];
 
-export const DID_SETTING_COLUMNS = (handleInputChange) => [
+export const DID_SETTING_COLUMNS = [
   {
     accessorKey: KEYS.USER_NUMBER,
     header: LABELS.USER_NUMBER_MULTI,
-    cell: ({ row }) => {
-      if (!row.original._isNew) {
-        return (
-          <span>
-            {row.original[KEYS.TEL_FROM_NO]} ~ {row.original[KEYS.TEL_TO_NO]}
-          </span>
-        );
-      }
-
-      return (
-        <>
-          <input
-            type="number"
-            value={row.original[KEYS.TEL_FROM_NO]}
-            onChange={(e) => {
-              e.stopPropagation();
-              handleInputChange?.(row.index, KEYS.TEL_FROM_NO, e.target.value);
-            }}
-          />
-          &nbsp;~&nbsp;
-          <input
-            type="number"
-            value={row.original[KEYS.TEL_TO_NO]}
-            onChange={(e) => {
-              e.stopPropagation();
-              handleInputChange?.(row.index, KEYS.TEL_TO_NO, e.target.value);
-            }}
-          />
-        </>
-      );
-    },
+    cell: ({ row }) => (
+      <span>
+        {row.original[KEYS.TEL_FROM_NO]} ~ {row.original[KEYS.TEL_TO_NO]}
+      </span>
+    ),
   },
   {
     accessorKey: KEYS.PBX_NUMBER,
     header: LABELS.PBX_NUMBER_COL_MULTI,
-    cell: ({ row }) => {
-      if (!row.original._isNew) {
-        return (
-          <span>
-            {row.original[KEYS.FROM_NO]} ~ {row.original[KEYS.TO_NO]}
-          </span>
-        );
-      }
-
-      return (
-        <>
-          <input
-            type="number"
-            value={row.original[KEYS.FROM_NO]}
-            onChange={(e) => {
-              e.stopPropagation();
-              handleInputChange?.(row.index, KEYS.FROM_NO, e.target.value);
-            }}
-          />
-          &nbsp;~&nbsp;
-          <input
-            type="number"
-            value={row.original[KEYS.TO_NO]}
-            onChange={(e) => {
-              e.stopPropagation();
-              handleInputChange?.(row.index, KEYS.TO_NO, e.target.value);
-            }}
-          />
-        </>
-      );
-    },
+    cell: ({ row }) => (
+      <span>
+        {row.original[KEYS.FROM_NO]} ~ {row.original[KEYS.TO_NO]}
+      </span>
+    ),
   },
   {
     accessorKey: KEYS.RBT_ID,
     header: LABELS.SOUND_CODE_COL_MULTI,
-    cell: ({ row }) => {
-      if (!row.original._isNew) {
-        return <span>{row.original[KEYS.RBT_ID]}</span>;
-      }
-
-      return (
-        <input
-          type="number"
-          value={row.original[KEYS.RBT_ID]}
-          onChange={(e) => {
-            e.stopPropagation();
-            handleInputChange(row.index, KEYS.RBT_ID, e.target.value);
-          }}
-        />
-      );
-    },
   },
   {
     header: LABELS.IS_ADDITIONAL_SERVICE,
@@ -605,7 +537,7 @@ export const SUBSRIBERS_INFO_DUMMY = {
   [KEYS.TEL_TO_NO]: "0240054232",
   [KEYS.RBT_ID]: "050125",
   [KEYS.RBT_ID_VALUE]: "사랑을 했다",
-  [KEYS.DID_PERSONAL_CONFIG]: [
+  did_personal: [
     {
       [KEYS.ADMIN_ID]: 1,
       [KEYS.TEL_FROM_NO]: "02111629222",
@@ -619,7 +551,7 @@ export const SUBSRIBERS_INFO_DUMMY = {
       [KEYS.MODIFY]: false,
     },
   ],
-  [KEYS.DID_CONFIG]: [
+  dids: [
     {
       [KEYS.ID]: 1222,
       [KEYS.ADMIN_ID]: 1,

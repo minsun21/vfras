@@ -3,7 +3,9 @@ import { LABELS } from "../../constants/Labels";
 import Button, { BUTTON_CANCEL, BUTTON_DELETE } from "../Button";
 import Input from "../Input";
 import Select from "../Select";
+import { useDispatch } from "react-redux";
 import Table from "../Table";
+import { setConfigData } from "../../features/didConfigSlice";
 
 const DidConfig = ({
   config,
@@ -12,9 +14,10 @@ const DidConfig = ({
   addDidConfig,
   deleteDidConfig,
 }) => {
-  const [inputs, setInputs] = useState({});
+  const dispatch = useDispatch();
   const parentRef = useRef();
   const [selectRows, setSelectRows] = useState([]);
+  const [inputs, setInputs] = useState({});
 
   useEffect(() => {
     const initialInputs = {};

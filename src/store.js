@@ -1,26 +1,26 @@
-import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './features/authSlice';
-import breadcrumbReducer from './features/breadcrumbSlice';
-import passwordReducer from './features/passwordSlice';
-import didPersonalReducer from './features/didPersonalSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./features/authSlice";
+import breadcrumbReducer from "./features/breadcrumbSlice";
+import passwordReducer from "./features/passwordSlice";
+import didPersonalReducer from "./features/didConfigSlice";
+import didAddReducer from "./features/didAddSlice";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage"; // 기본: localStorage
 
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // 기본: localStorage
-
-import { combineReducers } from 'redux';
-import { KEYS } from './constants/Keys';
+import { combineReducers } from "redux";
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
-  whitelist: ['auth'], // ✅ 유지할 슬라이스만 설정
+  whitelist: ["auth"], // ✅ 유지할 슬라이스만 설정
 };
 
 const rootReducer = combineReducers({
   auth: authReducer,
   breadcrumb: breadcrumbReducer,
-  [KEYS.PASSWORD]: passwordReducer,
-  [KEYS.DID_PERSONAL_CONFIG] : didPersonalReducer
+  changePassword: passwordReducer,
+  didConfig: didPersonalReducer,
+  didAdd: didAddReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
