@@ -8,13 +8,11 @@ import {
   USER_STATES,
 } from "./OPTIONS";
 
-
 export const SUBSRIBERS_STATE = [
   { key: "0", value: "요청중" },
   { key: "1", value: "가입" },
   { key: "2", value: "삭제" },
 ];
-
 
 export const option_userUseState = [
   { key: "notUsed", value: "사용안함" },
@@ -211,7 +209,7 @@ export const SUBSRIBERS_REGISTER_FIELDS = [
   },
 ];
 
-export const subsriberManageFields = [
+export const SUBSRIBERS_MANAGE_FILEDS = [
   {
     key: "mainNumber",
     label: LABELS.SUBSCRIBER_NUMBER,
@@ -299,12 +297,11 @@ export const subsriberManageFields = [
   },
 ];
 
-export const subscriberEditFields = [
+export const SUBSRIBERS_EDIT_FIELDS = [
   {
     key: KEYS.SUB_NO,
     label: LABELS.SUBSCRIBER_NUMBER,
     type: "text",
-    value: "0211112222",
     disabled: true,
   },
   {
@@ -312,41 +309,35 @@ export const subscriberEditFields = [
     label: LABELS.USER_STATE,
     type: "radio",
     options: SUBSRIBERS_STATE,
-    value: SUBSRIBERS_STATE[1].value,
   },
   {
     key: KEYS.SUB_TYPE,
     label: LABELS.SUBSCRIBE_TYPE,
     type: "text",
-    value: "법인",
     disabled: true,
   },
   {
     key: KEYS.SERVICE_TYPE,
     label: LABELS.SERVICE_TYPE,
     type: "text",
-    value: "기업",
     disabled: true,
   },
   {
     key: KEYS.NAME,
     label: LABELS.NAME,
     type: "text",
-    value: "홍길동",
     required: true,
   },
   {
     key: KEYS.PASSWORD,
     label: LABELS.PASSWORD,
     type: "text",
-    value: "0505",
-    required: true,
+    disabled: true,
   },
   {
     key: KEYS.ADDRESS1,
     label: LABELS.ADDRESS1,
     type: "text",
-    value: "서울시 강남구",
     required: true,
     size: INPUT_SIZE_FL,
   },
@@ -354,7 +345,7 @@ export const subscriberEditFields = [
     key: KEYS.ADDRESS2,
     label: LABELS.ADDRESS2_OPTION,
     type: "text",
-    value: "",
+    size: INPUT_SIZE_FL,
   },
   {
     key: KEYS.PBX_NUMBER,
@@ -362,43 +353,32 @@ export const subscriberEditFields = [
     multi: true,
     disabled: true,
     fields: [
-      { key: KEYS.FROM_NO, type: "number", value: "0240050045", size: "sm" },
-      { key: KEYS.TO_NO, type: "number", value: "0240050045", size: "sm" },
+      { key: KEYS.FROM_NO, type: "number", size: "sm" },
+      { key: KEYS.TO_NO, type: "number", size: "sm" },
     ],
   },
   {
     key: KEYS.USER_NUMBER,
     label: LABELS.USER_NUMBER,
-    multi: true,
     disabled: true,
     fields: [
       {
         key: KEYS.TEL_FROM_NO,
         type: "number",
-        value: "0240050045",
         size: "sm",
       },
-      { key: KEYS.TEL_TO_NO, type: "number", value: "0240050045", size: "sm" },
+      { key: KEYS.TEL_TO_NO, type: "number", size: "sm" },
     ],
   },
   {
     key: KEYS.RBT_ID,
     label: LABELS.DEFAULT_CALLRING,
     type: "number",
-    value: "050125",
     required: true,
   },
-  // {
-  //   key: "userUseState",
-  //   label: LABELS.USER_STATE,
-  //   type: "radio",
-  //   options: option_userUseState,
-  // },
   {
-    key: KEYS.DID,
+    key: KEYS.DID_CONFIG,
     label: LABELS.DID_TITLE,
-    type: "button",
-    value: 13,
   },
 ];
 
@@ -543,5 +523,33 @@ export const PASSWORD_CHANGE_FIELDS = [
     key: KEYS.NEW_PASSWORD2,
     placeholder: LABELS.CHANGE_PASSWORD_CONFIRM,
     type: "text",
+  },
+];
+
+export const DID_ADD_FIELDS = [
+  {
+    key: KEYS.PBX_NUMBER,
+    label: LABELS.PBX_NUMBER_COL,
+    required: true,
+    fields: [
+      { key: KEYS.FROM_NO, type: "number", length: 10 },
+      { key: KEYS.TO_NO, type: "number", length: 10 },
+    ],
+  },
+  {
+    key: KEYS.USER_NUMBER,
+    label: LABELS.USER_NUMBER,
+    required: true,
+    fields: [
+      { key: KEYS.TEL_FROM_NO, type: "number", length: 10 },
+      { key: KEYS.TEL_TO_NO, type: "number", length: 10 },
+    ],
+  },
+  {
+    key: KEYS.RBT_ID,
+    label: LABELS.DEFAULT_CALLRING,
+    type: "number",
+    required: true,
+    length: 6,
   },
 ];

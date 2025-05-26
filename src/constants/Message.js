@@ -9,7 +9,9 @@ export const InfoMessages = {
   confirmRegister: `등록 하시겠습니까?`,
   confirmSave : "저장 하시겠습니까?",
   confirmAdd : "추가 하시겠습니까?",
-  mobile : "숫자만 입력해주세요."
+  mobile : "숫자만 입력해주세요.",
+  successAdd : "추가 되었습니다.",
+  confirmAllDelete : "전체 삭제하시겠습니까?"
 };
 
 export const ProfileMessages = {
@@ -64,7 +66,7 @@ export const SoundSourceMessages = {
 
 export const subsriberMessages = {
   searchPlaceHolder: `가입자명, 번호를 입력해주세요.`,
-  approvedError: `이미 가입된 행은 선택할 수 없습니다.`,
+  approvedError: `이미 가입되었거나 삭제된 행은 선택할 수 없습니다.`,
   resetPasswordConfirm: `패스워드를 초기화 하시겠습니까?`,
   didPlaceHolder: `부가서비스 설정을 원하는 행을 선택하세요.`,
   searchPlaceHolder2 : `대표번호를 입력해주세요.`,

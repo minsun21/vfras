@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const passwordSlice = createSlice({
-  name: 'password',
+  name: [KEYS.PASSWORD],
   initialState,
   reducers: {
     setPasswordField: (state, action) => {

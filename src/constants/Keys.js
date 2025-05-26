@@ -40,7 +40,6 @@ export const KEYS = {
   SUB_NO: "subNo", // 가입자 대표 번호
   SEARCH_DIVISION: "searchDivision", // 검색 구분
   SEARCH_DIVISION_VALUE: "searchDivisionValue", // 검색 구분 text
-  DID: "did", // did회선(개수)
   GERNERAL_PERMISSIONS: "generalPermissions", // 일반 권한
   DEPARTMENT_PERMISSIONS: "departmentPermissions", // 부서 권한
   MODIFY: "modifyPermissions",
@@ -68,6 +67,6 @@ export const KEYS = {
   GROUPS: "groups",
   CALLING_NUMBER: "callingNUmber",
   GROUP_ID: "groupId",
-  RBT_VALUE: "rbtValue",
-  DESCRIPT : "descript"
+  DESCRIPT : "descript",
+  DID_CONFIG : "didConfig",
 };

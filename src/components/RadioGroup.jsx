@@ -1,18 +1,21 @@
 import React from "react";
 
-const RadioGroup = ({ value, options, onChange}) => (
+const RadioGroup = ({ name = "radio-group", value, options, onChange }) => (
   <div className="radio-box">
     {options.map((opt) => {
+      const id = `${name}-${opt.key}`;
       return (
-        <span className="items" key={opt.value}>
+        <span className="items" key={opt.key}>
           <input
             type="radio"
-            id={opt.value}
-            value={opt.value}
-            checked={value === opt.value}
+            id={id}
+            name={name}
+            value={opt.key}
+            checked={value === opt.key}
             onChange={onChange}
+            disabled={opt.disabled}
           />
-          <label htmlFor={opt.value}>{opt.label ?? opt.value}</label>
+          <label htmlFor={id}>{opt.value}</label>
         </span>
       );
     })}

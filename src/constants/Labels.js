@@ -89,6 +89,7 @@ export const LABELS = {
   DAY_OF_WEEKEND: "요일",
   CALLER_AREA: "발신지역",
   CALLER_NUMBER: "발신자번호",
+  TIME_SLOT : "시간대",
   ANNIVERSARY: "기념일",
   IS_OPEN: "가입여부",
   CIRCULAR: "순환형",
@@ -130,5 +131,6 @@ export const LABELS = {
   GROUP: "그룹",
   CALLING_NUMBER: "발신번호",
   DID_CALLING_PLACEHOLDER: "발신번호(','구분, 최대 5개)",
-  TIME : "시간"
+  TIME : "시간",
+  RESET : "초기화"
 };

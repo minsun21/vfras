@@ -4,17 +4,21 @@ import Button, { BUTTON_CANCEL, BUTTON_DELETE } from "../Button";
 import Input from "../Input";
 import Select from "../Select";
 import Table from "../Table";
+import { InfoMessages } from "../../constants/Message";
+import { useModal } from "../../contexts/ModalContext";
 
 const DidConfig = ({
   config,
-  addDid,
+  didToggle,
   didInfo,
   addDidConfig,
   deleteDidConfig,
 }) => {
-  const [inputs, setInputs] = useState({});
+  const { showAlert, showDialog } = useModal();
+
   const parentRef = useRef();
   const [selectRows, setSelectRows] = useState([]);
+  const [inputs, setInputs] = useState({});
 
   useEffect(() => {
     const initialInputs = {};
@@ -39,9 +43,48 @@ const DidConfig = ({
   }, [config.forms]);
 
   const openAccordion = (e) => {
-    if (parentRef.current) {
-      parentRef.current.classList.toggle("active");
+    const clickedEl = parentRef.current;
+
+    if (clickedEl.classList.contains("active")) {
+      document
+        .querySelectorAll(".lvItem")
+        .forEach((el) => el.classList.remove("active"));
+    } else {
+      document
+        .querySelectorAll(".lvItem")
+        .forEach((el) => el.classList.remove("active"));
+
+      clickedEl.classList.add("active");
     }
+  };
+
+  const deleteAction = () => {
+    if (selectRows.length === 0) return;
+
+    showDialog({
+      message: InfoMessages.confirmDelete(selectRows.length),
+      onConfirm: () => {
+        const newList = didInfo[config.dataKey].filter(
+          (item) => !selectRows.some((s) => s === item)
+        );
+        deleteDidConfig(config, newList);
+        setTimeout(() => {
+          showAlert({ message: InfoMessages.successDelete });
+        }, 0);
+      },
+    });
+  };
+
+  const allDeleteAction = () => {
+    showDialog({
+      message: InfoMessages.confirmAllDelete,
+      onConfirm: () => {
+        deleteDidConfig(config, []);
+        setTimeout(() => {
+          showAlert({ message: InfoMessages.successDelete });
+        }, 0);
+      },
+    });
   };
 
   return (
@@ -52,7 +95,7 @@ const DidConfig = ({
           <div className="lvSummary">
             {config.max &&
               LABELS.DID_CONFIG_LENGH(
-                didInfo[config.dataKey].length,
+                didInfo[config.dataKey].length || 0,
                 config.max
               )}
           </div>
@@ -61,7 +104,7 @@ const DidConfig = ({
           <input
             type="checkbox"
             checked={didInfo[config.key]}
-            onChange={() => addDid(config.key)}
+            onChange={() => didToggle(config.key)}
           />
           <span className="slider"></span>
         </label>
@@ -137,30 +180,13 @@ const DidConfig = ({
           <Button
             type={BUTTON_CANCEL}
             label={LABELS.ADD}
-            onClick={() => addDidConfig(config, didInfo, inputs)}
+            onClick={() => addDidConfig(config, inputs)}
           />
-          <Button
-            type={BUTTON_DELETE}
-            onClick={() => {
-              if (selectRows.length === 0) return;
-
-              const newList = didInfo[config.dataKey].filter(
-                (item) => !selectRows.some((s) => s === item)
-              );
-              deleteDidConfig(config, newList);
-            }}
-          />
+          <Button type={BUTTON_DELETE} onClick={deleteAction} />
           <Button
             type={BUTTON_CANCEL}
             label={LABELS.ALL_DELETE}
-            onClick={() => {
-              const confirmed = window.confirm(
-                "정말 모든 항목을 삭제하시겠습니까?"
-              );
-              if (confirmed) {
-                deleteDidConfig(config, []);
-              }
-            }}
+            onClick={allDeleteAction}
           />
           <div className="svcBoxCTxt">{LABELS.MAIN_NUMBER}</div>
           <Button
@@ -174,7 +200,6 @@ const DidConfig = ({
             // onClick={handleDeleteAll}
           />
         </div>
-
         {/* 테이블 영역 */}
         <div className="svcBoxR">
           {config.columns && (

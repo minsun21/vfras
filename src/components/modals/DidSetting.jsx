@@ -1,57 +1,67 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { useModal } from "../../contexts/ModalContext";
+import React, { useEffect, useRef, useState } from "react";
 import { LABELS } from "../../constants/Labels";
 import Table from "../Table";
 import { DID_CONFIG_DATAS, DID_SETTING_COLUMNS } from "../../config/DataConfig";
 import Button, { BUTTON_DELETE } from "../Button";
 import Input from "../Input";
+import { KEYS } from "../../constants/Keys";
+import Form from "../Form";
+import AddDidModal from "./AddDidModal";
+import { useModal } from "../../contexts/ModalContext";
 import {
   ErrorMessages,
   InfoMessages,
   subsriberMessages,
 } from "../../constants/Message";
+import { MODAL_MD } from "./ModalRenderer";
+import { useDispatch } from "react-redux";
+import { resetFormData } from "../../features/didAddSlice";
+import { fieldsValidate } from "../../utils/FormValidation";
+import { store } from "../../store";
+import { DID_ADD_FIELDS } from "../../config/FieldsConfig";
 import DidConfig from "./DidConfig";
-import { KEYS } from "../../constants/Keys";
-import Form from "../Form";
+import { setConfigData } from "../../features/didConfigSlice";
 
 const DidSetting = ({ userInfo }) => {
+  const dispatch = useDispatch();
   const tableRef = useRef();
-  const scrollRef = useRef();
-  const newRowRef = useRef(); // 새 행 외 div
-  const newRowRefData = useRef(); // 새 행
+  const { showModal, showAlert, showDialog, closeModal } = useModal();
 
-  const { showAlert, showDialog } = useModal();
-  const [data, setData] = useState([]);
-
-  const [isAddMode, setIsAddMode] = useState(false);
-  const [selectDidInfo, setSelectDidInfo] = useState();
+  const [tableData, setTableData] = useState([]);
   const [selectRows, setSelectRows] = useState([]);
+  const [didData, setDidData] = useState([]); // 전체 DID data
+  const [selectDid, setSelectDid] = useState({});
 
   useEffect(() => {
-    // console.log("id", userInfo);
-    setData(userInfo.did_config);
-  }, []);
+    setTableData(userInfo.dids);
+  }, [userInfo]);
+
+  useEffect(()=>{
+    dispatch(setConfigData(didData));
+  },[didData])
 
   useEffect(() => {
-    if (!selectRows || selectRows.length !== 1) {
-      setSelectDidInfo();
+    if (selectRows.length !== 1) {
+      setSelectDid();
       return;
     }
 
-    setSelectDidInfo({
-      ...selectRows[0],
-      subNo: "000226229300",
-      fromNo: "000226229300",
-      toNo: "000226229319",
-      [KEYS.RBT_ID]: selectRows[0][KEYS.RBT_ID],
-      rbtValue: "라일락",
-      [KEYS.IS_INTERRUPT]: [],
+    const selectRow = selectRows[0];
+    // 중복 검사
+    const exist = didData.find(
+      (item) =>
+        item[KEYS.SUB_NO] === selectRow[KEYS.SUB_NO] &&
+        item[KEYS.FROM_NO] === selectRow[KEYS.FROM_NO] &&
+        item[KEYS.TO_NO] === selectRow[KEYS.TO_NO]
+    );
+    if (exist) {
+      setSelectDid(exist);
+      return;
+    }
+
+    // axios로 detail 정보 가져옴
+    const newRow = {
+      ...selectRow,
       circulars: [
         {
           rbtId: "1071087",
@@ -84,175 +94,186 @@ const DidSetting = ({ userInfo }) => {
         },
       ],
       duras: [
-        // {
-        //   rbtId: "1071087",
-        //   startDate: "20250501",
-        //   endDate: "20250601",
-        // },
+        {
+          rbtId: "1071087",
+          startDate: "2025-05-01",
+          endDate: "2025-06-01",
+        },
       ],
-    });
+    };
+
+    // setDidData((prev) => [...prev, newRow]);
+    setSelectDid(newRow);
   }, [selectRows]);
 
-  const onSelectRows = (rows) => {
-    setSelectRows((prev) => {
-      const isSame =
-        prev.length === rows.length &&
-        prev.every((r, i) => r.id === rows[i]?.id);
-      return isSame ? prev : rows;
+  // did 회선 추가
+  const addDidRow = () => {
+    showModal({
+      header: LABELS.ADD_ITEM,
+      content: <AddDidModal />,
+      size: MODAL_MD,
+      onConfirm: () => {
+        const didFormData = store.getState().didAdd;
+        const errValidate = fieldsValidate(DID_ADD_FIELDS, didFormData);
+        if (errValidate) {
+          showAlert({
+            message: errValidate,
+          });
+          return;
+        }
+
+        const newRow = {
+          ...didFormData,
+          id: Math.floor(Math.random() * 100) + 1,
+        };
+        setTableData((prev) => [...prev, newRow]);
+        dispatch(resetFormData());
+        closeModal();
+
+        setTimeout(() => {
+          showAlert({ message: InfoMessages.successAdd });
+        }, 0);
+      },
     });
   };
 
-  const deleteData = () => {
+  // did회선 삭제
+  const deleteDidRows = () => {
     if (selectRows.length === 0) {
-      showAlert({
-        message: ErrorMessages.nonSelect,
-      });
-      return;
-    }
-
-    if (selectRows.length === data.length) {
-      showAlert({
-        message: ErrorMessages.deleteBulk,
-      });
+      showAlert({ message: ErrorMessages.nonSelect });
       return;
     }
 
     showDialog({
       message: InfoMessages.confirmDelete(selectRows.length),
       onConfirm: () => {
-        const filteredData = data.filter(
-          (item) =>
-            !selectRows.some((r) => r[KEYS.ADMIN_ID] === item[KEYS.ADMIN_ID])
+        const selectedIds = selectRows.map((row) => row.id);
+        const updated = tableData.filter(
+          (row) => !selectedIds.includes(row.id)
         );
-        setData(filteredData);
-        tableRef.current?.clearSelection();
+        setTableData(updated);
+
+        setSelectRows([]);
+        tableRef.current?.clearSelection?.();
 
         setTimeout(() => {
-          showAlert({
-            message: InfoMessages.successDelete,
-          });
-        }, 100);
+          showAlert({ message: InfoMessages.successDelete });
+        }, 0);
       },
     });
   };
 
-  const addDid = (accessorKey) => {
-    const selectedIds = tableRef.current?.getSelectedRowIds?.();
-    if (!selectedIds?.length) return;
-    tableRef.current.updateRowsById(selectedIds, (row) => ({
-      ...row,
-      [accessorKey]: !row[accessorKey],
-    }));
+  const getDidKey = (item) => `${item.subNo}_${item.fromNo}_${item.toNo}`;
 
-    setSelectDidInfo({
-      ...selectDidInfo,
-      [accessorKey]: !selectDidInfo[accessorKey],
+  // 사용 / 안함
+  const didToggle = (key) => {
+    const selectedKey = getDidKey(selectDid);
+    const currentValue = selectDid?.[key] ?? false;
+    const toggled = !currentValue;
+  
+    const updatedSelectDid = {
+      ...selectDid,
+      [key]: toggled,
+    };
+  
+    setSelectDid(updatedSelectDid);
+  
+    setTableData((prev) =>
+      prev.map((row) =>
+        getDidKey(row) === selectedKey ? { ...row, [key]: toggled } : row
+      )
+    );
+  
+    setDidData((prev) => {
+      const exists = prev.some((row) => getDidKey(row) === selectedKey);
+      if (exists) {
+        return prev.map((row) =>
+          getDidKey(row) === selectedKey
+            ? { ...row, [key]: toggled }
+            : row
+        );
+      } else {
+        return [...prev, { ...updatedSelectDid }];
+      }
     });
   };
 
-  const addDidRow = () => {
-    setTimeout(() => {
-      const newRow = {
-        id: Math.floor(Math.random() * 1_000_000),
-        [KEYS.ADMIN_ID]: 1,
-        [KEYS.TEL_FROM_NO]: "",
-        [KEYS.TEL_TO_NO]: "",
-        [KEYS.FROM_NO]: "",
-        [KEYS.TO_NO]: "",
-        [KEYS.RBT_ID]: "",
-        [KEYS.SOUND_CODE]: "",
-        [KEYS.IS_INTERRUPT]: false,
-        [KEYS.IS_CIRCULR_JOINED]: false,
-        [KEYS.IS_WEEK_JOINED]: false,
-        [KEYS.IS_TIME_JOINED]: false,
-        [KEYS.IS_ORGN_JOINED]: false,
-        [KEYS.IS_GROUP_JOINED]: false,
-        [KEYS.IS_DURA_JOINED]: false,
-        _isNew: true, // ✅ 새 행만 입력 가능
-        handleInputChange: (rowIndex, key, value) =>
-          handleInputChange(rowIndex, key, value),
-      };
-      setData((prev) => [
-        ...prev.map((r) => ({ ...r, _isNew: false })),
-        newRow,
-      ]);
-      newRowRefData.current = newRow;
-
-      scrollRef.current?.scrollTo({
-        top: scrollRef.current.scrollHeight,
-        behavior: "smooth",
-      });
-
-      setIsAddMode(true);
-    }, 0);
-  };
-
-  const handleConfirm = (rowIndex) => {
-    setData((prev) =>
-      prev.map((row, i) => (i === rowIndex ? { ...row, _isNew: false } : row))
-    );
-    setIsAddMode(false);
-  };
-
-  useEffect(() => {
-    console.log("데이터 변경됨:", data);
-  }, [data]);
-
-  const handleInputChange = useCallback((rowIndex, key, value) => {
-    setData((prev) =>
-      prev.map((row, i) => (i === rowIndex ? { ...row, [key]: value } : row))
-    );
-  }, []);
-
-  const columns = useMemo(
-    () => DID_SETTING_COLUMNS(handleInputChange),
-    [handleInputChange]
-  );
-
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (!isAddMode || !newRowRef.current) return;
-
-      if (!newRowRef.current.contains(e.target)) {
-        const newRow = data.find((row) => row._isNew);
-        const REQUIRED_FIELDS = [
-          KEYS.TEL_FROM_NO,
-          KEYS.TEL_TO_NO,
-          KEYS.FROM_NO,
-          KEYS.TO_NO,
-          KEYS.RBT_ID,
-        ];
-
-        const isValid = REQUIRED_FIELDS.every((key) => {
-          const value = newRow?.[key];
-          return (
-            value !== undefined &&
-            value !== null &&
-            value.toString().trim() !== ""
-          );
-        });
-
-        if (!isValid) {
-          return;
-        }
-
-        const confirmed = window.confirm("추가하시겠습니까?");
-        if (confirmed) {
-          setData((prev) =>
-            prev.map((row) => (row._isNew ? { ...row, _isNew: false } : row))
-          );
-          setIsAddMode(false);
-        } else {
-          setTimeout(() => {
-            newRowRef.current?.focus();
-          }, 0);
-        }
-      }
+  const deleteDidConfig = (config, newList) => {
+    const key = config.key;
+    const dataKey = config.dataKey;
+    const selectedKey = getDidKey(selectDid);
+  
+    const updatedSelectDid = {
+      ...selectDid,
+      [key]: newList.length > 0 ? selectDid[key] : false,
+      [dataKey]: newList,
     };
+  
+    setSelectDid(updatedSelectDid);
+  
+    setTableData((prev) =>
+      prev.map((row) =>
+        getDidKey(row) === selectedKey
+          ? { ...row, [key]: updatedSelectDid[key] }
+          : row
+      )
+    );
+  
+    setDidData((prev) => {
+      const exists = prev.some((row) => getDidKey(row) === selectedKey);
+      if (exists) {
+        return prev.map((row) =>
+          getDidKey(row) === selectedKey
+            ? {
+                ...row,
+                [key]: updatedSelectDid[key],
+                [dataKey]: updatedSelectDid[dataKey],
+              }
+            : row
+        );
+      } else {
+        return [...prev, { ...updatedSelectDid }];
+      }
+    });
+  };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isAddMode, data]);
+  const addDidConfig = (config, inputs) => {
+    const key = config.key;
+    const dataKey = config.dataKey;
+    const selectedKey = getDidKey(selectDid);
+    const currentList = selectDid[dataKey] || [];
+  
+    if (!addDidConfigValidation(config, inputs, currentList)) return;
+  
+    const newList = getNewAddList(config, inputs);
+  
+    const updatedSelectDid = {
+      ...selectDid,
+      [key]: true,
+      [dataKey]: newList,
+    };
+  
+    setSelectDid(updatedSelectDid);
+  
+    setTableData((prev) =>
+      prev.map((row) =>
+        getDidKey(row) === selectedKey ? { ...row, [key]: true } : row
+      )
+    );
+  
+    setDidData((prev) => {
+      const exists = prev.some((row) => getDidKey(row) === selectedKey);
+      if (exists) {
+        return prev.map((row) =>
+          getDidKey(row) === selectedKey
+            ? { ...row, [key]: true, [dataKey]: newList }
+            : row
+        );
+      } else {
+        return [...prev, { ...updatedSelectDid }];
+      }
+    });
+  };
 
   const addDidConfigValidation = (config, inputs, currentList) => {
     // 기본 입력값 체크
@@ -308,14 +329,7 @@ const DidSetting = ({ userInfo }) => {
     return true;
   };
 
-  const addDidConfig = (config, didInfo, inputs) => {
-    const key = config.dataKey;
-    const currentList = didInfo[key] || [];
-    if (!addDidConfigValidation(config, inputs, currentList)) {
-      return;
-    }
-
-    // 입력값 추출
+  const getNewAddList = (config, inputs) => {
     const extractValues = () => {
       const result = {};
       config.forms.forEach((form) => {
@@ -337,7 +351,7 @@ const DidSetting = ({ userInfo }) => {
 
     // 그룹인 경우
     if (config.key === KEYS.IS_GROUP_JOINED) {
-      const groupList = didInfo[config.dataKey] || [];
+      const groupList = selectDid[config.dataKey] || [];
       const nextGroupId = groupList.length
         ? Math.max(
             ...groupList.map((item) => parseInt(item.groupId || "0", 10))
@@ -346,61 +360,8 @@ const DidSetting = ({ userInfo }) => {
 
       newItem.groupId = String(nextGroupId);
     }
-    const newList = [...(selectDidInfo?.[key] ?? []), newItem];
 
-    setSelectDidInfo((prev) => ({
-      ...prev,
-      [key]: newList,
-      [config.key]: true,
-    }));
-
-    if (selectDidInfo[config.key] === false) {
-      const selectedIds = tableRef.current?.getSelectedRowIds?.();
-      if (!selectedIds?.length) return;
-      tableRef.current.updateRowsById(selectedIds, (row) => ({
-        ...row,
-        [config.key]: !row[config.key],
-      }));
-    }
-  };
-
-  const deleteDidConfig = (config, newList) => {
-    const key = config.dataKey;
-    if (newList.length === 0 && selectRows.length === 1) {
-      // 전체 삭제인 경우
-      setSelectDidInfo((prev) => {
-        const nextState = {
-          ...prev,
-          [key]: newList,
-          [config.key]: false,
-        };
-
-        if (newList.length === 0) {
-          nextState[config.key] = false;
-        }
-
-        return nextState;
-      });
-      const selectedIds = tableRef.current?.getSelectedRowIds?.();
-      if (!selectedIds?.length) return;
-      tableRef.current.updateRowsById(selectedIds, (row) => ({
-        ...row,
-        [config.key]: !row[config.key],
-      }));
-    } else {
-      setSelectDidInfo((prev) => {
-        const nextState = {
-          ...prev,
-          [key]: newList,
-        };
-
-        if (newList.length === 0) {
-          nextState[config.key] = false;
-        }
-
-        return nextState;
-      });
-    }
+    return [...(selectDid?.[config.dataKey] ?? []), newItem];
   };
 
   return (
@@ -421,7 +382,6 @@ const DidSetting = ({ userInfo }) => {
                 label={LABELS.ADD_ITEM}
                 className="sbtn black"
                 onClick={addDidRow}
-                disabled={isAddMode}
               />
             </div>
           </Form>
@@ -429,28 +389,21 @@ const DidSetting = ({ userInfo }) => {
             <div className="tbl-list-top mt20">
               <div className="top-button">
                 <span>
-                  <Button
-                    type={BUTTON_DELETE}
-                    onClick={deleteData}
-                    disabled={isAddMode}
-                  />
+                  <Button type={BUTTON_DELETE} onClick={deleteDidRows} />
                 </span>
               </div>
             </div>
           </Form>
           <Table
             ref={tableRef}
-            onRowSelectionChange={onSelectRows}
-            columns={columns}
-            data={data}
-            setTableData={setData}
+            columns={DID_SETTING_COLUMNS}
+            data={tableData}
             pageSize={10}
             resultLabel={false}
             pageSelect={false}
             paginationEnabled={false}
             maxHeight={400}
-            scrollRef={scrollRef}
-            newRowRef={newRowRef}
+            onRowSelectionChange={setSelectRows}
           />
         </div>
         <div className="w40p">
@@ -461,51 +414,65 @@ const DidSetting = ({ userInfo }) => {
               label={LABELS.DEFAULT_RING}
               size="sm"
               disabled
-              value={
-                !isAddMode && selectDidInfo ? selectDidInfo[KEYS.RBT_ID] : ""
-              }
+              value={selectDid ? selectDid[KEYS.RBT_ID] : ""}
             />
             <Input
               size="sm"
-              value={
-                !isAddMode && selectDidInfo ? selectDidInfo[KEYS.RBT_VALUE] : ""
-              }
+              value={selectDid ? selectDid[KEYS.RBT_ID_VALUE] : ""}
               disabled
             />
           </Form>
-           {/* 시작, 일시정지 */}
-          <div class="didStopBox">
-            <div class="radio-box">
-              <span class="items">
-                <input type="radio" name="rdDidS" id="rdDidStart" value="시작" checked/>
-                <label for="viewTime1">시작</label>
-              </span> 
-              <span class="items">
-                <input type="radio" name="rdDidS" id="rdDidStop" value="시작" checked/>
-                <label for="viewTime1">일시정지</label>
-              </span> 
-              <span class="items">
-                <input type="radio" name="rdDidS" id="rdDidStopRe" value="시작" checked/>
-                <label for="viewTime1">일시정지 예약</label>
-              </span> 
+          {/* 시작, 일시정지 */}
+          {selectDid && (
+            <div class="didStopBox">
+              <div class="radio-box">
+                <span class="items">
+                  <input
+                    type="radio"
+                    name="rdDidS"
+                    id="rdDidStart"
+                    value="시작"
+                    defaultChecked
+                  />
+                  <label for="viewTime1">시작</label>
+                </span>
+                <span class="items">
+                  <input
+                    type="radio"
+                    name="rdDidS"
+                    id="rdDidStop"
+                    value="시작"
+                  />
+                  <label for="viewTime1">일시정지</label>
+                </span>
+                <span class="items">
+                  <input
+                    type="radio"
+                    name="rdDidS"
+                    id="rdDidStopRe"
+                    value="시작"
+                  />
+                  <label for="viewTime1">일시정지 예약</label>
+                </span>
+              </div>
+              <div>
+                <Input type="date" size="w140" />
+              </div>
             </div>
-            <div>
-                <Input type="date" size="w140"/>
-            </div>
-          </div>    
+          )}
           <div className="configBox">
-            {!isAddMode && selectRows.length === 0 ? (
+            {selectRows.length === 0 ? (
               <div className="configAlertTxt">
                 {subsriberMessages.didPlaceHolder}
               </div>
-            ) : !isAddMode && selectRows.length === 1 && selectDidInfo ? (
+            ) : selectRows.length === 1 && selectDid ? (
               <div className="lvAccordion">
                 {DID_CONFIG_DATAS.map((config, idx) => (
                   <DidConfig
                     key={idx}
                     config={config}
-                    didInfo={selectDidInfo}
-                    addDid={addDid}
+                    didInfo={selectDid}
+                    didToggle={didToggle}
                     addDidConfig={addDidConfig}
                     deleteDidConfig={deleteDidConfig}
                   />

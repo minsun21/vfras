@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { SUBSRIBERS_REGISTER_FIELDS } from "../config/FieldsConfig";
 import Button, { BUTTON_CANCEL } from "../components/Button";
 import Input from "../components/Input";
-import Select from "../components/Select";
 import RadioGroup from "../components/RadioGroup";
 import Form from "../components/Form";
 import { ROUTES } from "../constants/routes";
@@ -12,9 +11,9 @@ import { useModal } from "../contexts/ModalContext";
 import { fieldsValidate } from "../utils/FormValidation";
 import axios from "../api/axios";
 import { KEYS } from "../constants/Keys";
+import { SERVICE_TYPES } from "../config/OPTIONS";
 
 const SubscriberRegister = () => {
-  
   const navigate = useNavigate();
   const { showDialog, showAlert, showModal } = useModal();
 
@@ -24,14 +23,27 @@ const SubscriberRegister = () => {
     // axios.get("/api/user/profile").then(res => {
     //   setData(prev => ({ ...prev, ...res.data }));
     // });
+
+    initFormData();
+  }, []);
+
+  // formdata 초기화
+  const initFormData = () => {
     let data = {};
     for (const field of SUBSRIBERS_REGISTER_FIELDS) {
       if (field.type === "radio") {
-        data[field.key] = field.options[0].value;
+        data[field.key] = field.options[0].key;
+        continue;
       }
+      if (field.fields) {
+        for (const subField of field.fields) {
+          data[subField.key] = "";
+        }
+      }
+      data[field.key] = "";
     }
     setFormData({ ...formData, ...data });
-  }, []);
+  };
 
   const cancelEdit = () => {
     showDialog({
@@ -41,6 +53,7 @@ const SubscriberRegister = () => {
   };
 
   const handleSave = () => {
+    console.log("저장할 데이터:", formData);
 
     const errValidate = fieldsValidate(SUBSRIBERS_REGISTER_FIELDS, formData);
     if (errValidate) {
@@ -51,7 +64,7 @@ const SubscriberRegister = () => {
     }
 
     // 비밀번호 자동 설정
-    formData[KEYS.PASSWORD] = formData[KEYS.SUB_NO].slice(-4)
+    formData[KEYS.PASSWORD] = formData[KEYS.SUB_NO].slice(-4);
     console.log("저장할 데이터:", formData);
 
     // axios.post(ROUTES.SUBSCRIBERS, formData).then(res=>{
@@ -66,6 +79,40 @@ const SubscriberRegister = () => {
       onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
     });
   };
+
+  // 가입자 유형 - 개인이면 서비스 유형에서 기업 선택 불가
+  // 가입자 유형 - 법인이면 서비스 유형에서 기업만 선택
+  const serviceTypeOptions = useMemo(() => {
+    const subType = formData[KEYS.SUB_TYPE];
+
+    return SERVICE_TYPES.map((opt) => {
+      if (subType === "0") {
+        // 개인: 기업(2) 비활성화
+        return opt.key === "2" ? { ...opt, disabled: true } : opt;
+      } else if (subType === "1") {
+        // 법인: 기업(2)만 활성화
+        return opt.key === "2" ? { ...opt, disabled: false } : { ...opt, disabled: true };
+      }
+      return opt;
+    });
+  }, [formData[KEYS.SUB_TYPE]]);
+
+  useEffect(() => {
+    const subType = formData[KEYS.SUB_TYPE];
+
+    if (subType === "1") {
+      // 법인: 기업(2) 강제 선택
+      setFormData((prev) => ({
+        ...prev,
+        [KEYS.SERVICE_TYPE]: "2",
+      }));
+    } else if (subType === "0") {
+      setFormData((prev) => ({
+        ...prev,
+        [KEYS.SERVICE_TYPE]: "0",
+      }));
+    }
+  }, [formData[KEYS.SUB_TYPE]]);
 
   return (
     <>
@@ -89,7 +136,7 @@ const SubscriberRegister = () => {
                 size,
                 fields,
               } = field;
-              const value = formData[key] || "";
+              const value = formData[key] ?? "";
 
               const handleChange = (e) => {
                 setFormData((prev) => ({ ...prev, [key]: e.target.value }));
@@ -104,8 +151,13 @@ const SubscriberRegister = () => {
                   <td className="value">
                     {type === "radio" ? (
                       <RadioGroup
+                        name={key}
                         value={value}
-                        options={options}
+                        options={
+                          key === KEYS.SERVICE_TYPE
+                            ? serviceTypeOptions
+                            : options
+                        }
                         onChange={handleChange}
                       />
                     ) : comment ? (
