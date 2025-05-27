@@ -455,8 +455,10 @@ const DidSetting = ({ userInfo }) => {
                   <label for="viewTime1">일시정지 예약</label>
                 </span>
               </div>
-              <div>
-                <Input type="date" size="w140" />
+              <div className="hFlex">
+                <Input type="date" size="w130" />
+                <span>{"~"}</span>
+                <Input type="date" size="w130" />
               </div>
             </div>
           )}

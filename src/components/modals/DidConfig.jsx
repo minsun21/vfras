@@ -143,11 +143,11 @@ const DidConfig = ({
                     onChange={(e) => handleChange(e.target.value)}
                   />
                 ) : fields ? (
-                  <div>
+                  <div className="vFlex">
                     {fields.map((subField, idx) => (
                       <div key={subField.key}>
                         <Input
-                          size="w120"
+                          size="w130"
                           type={subField.type}
                           value={inputs[subField.key] || ""}
                           onChange={(e) =>
@@ -157,13 +157,13 @@ const DidConfig = ({
                             }))
                           }
                         />
-                        {idx === 0 && <span>{"~"}</span>}
+                        {idx === 0 && <span className="vFlex gap5">{"~"}</span>}
                       </div>
                     ))}
                   </div>
                 ) : (
                   <Input
-                    size="w120"
+                    size="w130"
                     value={value}
                     type={type}
                     placeholder={placeholder}

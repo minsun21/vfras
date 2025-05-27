@@ -3,15 +3,10 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 
 /* placeholder style */
 input::placeholder { color: #999; opacity: 1; font-size: 1.4rem; line-height: normal !important; } 
-
 input::-webkit-input-placeholder { color: #999; line-height: normal !important; } 
-
 input:-ms-input-placeholder { color: #999; line-height: normal !important; } 
-
 textarea::placeholder { color: #999; opacity: 1; font-size: 1.4rem; font-weight: 400; line-height: 1.6 !important; } 
-
 textarea::-webkit-input-placeholder { color: #999; font-weight: 400; line-height: 1.6 !important; } 
-
 textarea:-ms-input-placeholder { color: #999; font-weight: 400; line-height: 1.6 !important; } 
 
 /** 폼필드 **/
@@ -20,6 +15,10 @@ textarea:-ms-input-placeholder { color: #999; font-weight: 400; line-height: 1.6
 /** input **/
 .form-field .form-input,
 .form-input { width: 350px; height: 4rem; line-height: 4rem; padding: 0 1.5rem; font-size: 1.5rem; color: #333; border-radius: 0.8rem; border: solid 1px #ddd; background: #fff; transition: all 0.35s; } 
+input[type='date'].form-input,
+input[type='time'].form-input { padding: 0 1rem; font-size: 1.4rem; color: #333; } 
+
+
 .form-input.sm { width: 160px; }
 .form-input.lg { width: 400px; }
 .form-input.fl { width: 100%; }
