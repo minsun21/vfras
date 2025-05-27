@@ -391,6 +391,8 @@ const DidSetting = ({ userInfo }) => {
                 <span>
                   <Button type={BUTTON_DELETE} onClick={deleteDidRows} />
                 </span>
+                <span className="cellDidOn"></span>
+                <span className="cellDidOff"></span>
               </div>
             </div>
           </Form>
