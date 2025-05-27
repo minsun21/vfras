@@ -86,6 +86,7 @@ export const NonMenuConfig = [
   {
     title: LABELS.SUBSCRIBER_MANAGE,
     path: ROUTES.SUBSCRIBERS_MANAGE,
+    parent : LABELS.SUBSCRIBER,
     component: lazy(() => import("../pages/SubscribersManageEdit")),
   },
 ];
