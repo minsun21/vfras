@@ -18,7 +18,7 @@ export const ORGNS = [
 ];
 
 // 사용자 구분
-export const ADMIN_TYPES = [ 
+export const ADMIN_TYPES = [
   { key: "admin", value: "Admin" },
   { key: "user", value: "User" },
   { key: "guest", value: "Guest" },
@@ -74,3 +74,11 @@ export const SEARCH_SUBSRIBERS_STATE = [
   { key: "1", value: "가입" },
   { key: "2", value: "삭제" },
 ];
+
+// 세션 시간 관리
+export const SESSION_TIMEOUT = {
+  HOUR_1: 3600, //1 시간
+  HOUR_6: 21600, // 6시간
+  DAY_1: 86400, // 하루
+  DAY_7: 604800, // 일주일
+};
