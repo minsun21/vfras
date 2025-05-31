@@ -18,6 +18,7 @@ import Select from "./Select";
 const Table = forwardRef(
   (
     {
+      className ="",
       columns,
       data: tableData,
       setTableData,
@@ -271,7 +272,7 @@ const Table = forwardRef(
                 }
           }
         >
-          <table>
+          <table className={className}>
             <thead>
               <tr>
                 {rowSelectionEnabled && (

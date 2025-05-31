@@ -14,11 +14,11 @@ const DidSettingPersonal = ({ userInfo }) => {
 
   useEffect(() => {
     setData(userInfo[KEYS.DID_CONFIG]);
-  }, [userInfo]); 
+  }, [userInfo]);
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(setConfigData(data));
-  },[data])
+  }, [data]);
 
   return (
     <div>
@@ -31,6 +31,7 @@ const DidSettingPersonal = ({ userInfo }) => {
             <div className="mlAuto"></div>
           </form>
           <Table
+            className="did-table"
             ref={tableRef}
             columns={DID_PERSONAL_SETTING_COLUMNS}
             data={data}

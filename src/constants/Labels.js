@@ -132,5 +132,7 @@ export const LABELS = {
   CALLING_NUMBER: "발신번호",
   DID_CALLING_PLACEHOLDER: "발신번호(','구분, 최대 5개)",
   TIME : "시간",
-  RESET : "초기화"
+  RESET : "초기화",
+  START : "시작",
+  INTERRUPT_RESERVATION : "일시정지 예약"
 };

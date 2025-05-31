@@ -6,7 +6,7 @@ export const INPUT_SIZE_FL = "fl"; // 100%
 
 const Input = ({
   type = "text",
-  value,
+  value = "",
   disabled = false,
   onChange,
   placeholder = "",

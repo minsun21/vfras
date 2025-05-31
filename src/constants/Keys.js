@@ -45,6 +45,8 @@ export const KEYS = {
   MODIFY: "modifyPermissions",
   RBT_ID_VALUE: "rbtIdValue", // 통화 연결음 제목
   IS_INTERRUPT: "isInterrupt", // 일시정지(임시)
+  INTERRUPT_RESERVATION_FROM : "interruptReservationFrom",// 일시정지 예약 날짜 시작 (임시)
+  INTERRUPT_RESERVATION_TO : "interruptReservationTo",// 일시정지 예약 날짜 시작 (임시)
   IS_CIRCULR_JOINED: "isCircularJoined", // 순환형 가입여부
   IS_WEEK_JOINED: "isWeekJoined", // 요일별 가입여부
   IS_TIME_JOINED: "isTimeJoined", // 시간대별 가입여부

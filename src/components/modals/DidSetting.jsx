@@ -31,14 +31,15 @@ const DidSetting = ({ userInfo }) => {
   const [selectRows, setSelectRows] = useState([]);
   const [didData, setDidData] = useState([]); // 전체 DID data
   const [selectDid, setSelectDid] = useState({});
+  const [interruptSelect, setInterruptSelect] = useState("");
 
   useEffect(() => {
     setTableData(userInfo.dids);
   }, [userInfo]);
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(setConfigData(didData));
-  },[didData])
+  }, [didData]);
 
   useEffect(() => {
     if (selectRows.length !== 1) {
@@ -170,27 +171,25 @@ const DidSetting = ({ userInfo }) => {
     const selectedKey = getDidKey(selectDid);
     const currentValue = selectDid?.[key] ?? false;
     const toggled = !currentValue;
-  
+
     const updatedSelectDid = {
       ...selectDid,
       [key]: toggled,
     };
-  
+
     setSelectDid(updatedSelectDid);
-  
+
     setTableData((prev) =>
       prev.map((row) =>
         getDidKey(row) === selectedKey ? { ...row, [key]: toggled } : row
       )
     );
-  
+
     setDidData((prev) => {
       const exists = prev.some((row) => getDidKey(row) === selectedKey);
       if (exists) {
         return prev.map((row) =>
-          getDidKey(row) === selectedKey
-            ? { ...row, [key]: toggled }
-            : row
+          getDidKey(row) === selectedKey ? { ...row, [key]: toggled } : row
         );
       } else {
         return [...prev, { ...updatedSelectDid }];
@@ -202,15 +201,15 @@ const DidSetting = ({ userInfo }) => {
     const key = config.key;
     const dataKey = config.dataKey;
     const selectedKey = getDidKey(selectDid);
-  
+
     const updatedSelectDid = {
       ...selectDid,
       [key]: newList.length > 0 ? selectDid[key] : false,
       [dataKey]: newList,
     };
-  
+
     setSelectDid(updatedSelectDid);
-  
+
     setTableData((prev) =>
       prev.map((row) =>
         getDidKey(row) === selectedKey
@@ -218,7 +217,7 @@ const DidSetting = ({ userInfo }) => {
           : row
       )
     );
-  
+
     setDidData((prev) => {
       const exists = prev.some((row) => getDidKey(row) === selectedKey);
       if (exists) {
@@ -242,25 +241,25 @@ const DidSetting = ({ userInfo }) => {
     const dataKey = config.dataKey;
     const selectedKey = getDidKey(selectDid);
     const currentList = selectDid[dataKey] || [];
-  
+
     if (!addDidConfigValidation(config, inputs, currentList)) return;
-  
+
     const newList = getNewAddList(config, inputs);
-  
+
     const updatedSelectDid = {
       ...selectDid,
       [key]: true,
       [dataKey]: newList,
     };
-  
+
     setSelectDid(updatedSelectDid);
-  
+
     setTableData((prev) =>
       prev.map((row) =>
         getDidKey(row) === selectedKey ? { ...row, [key]: true } : row
       )
     );
-  
+
     setDidData((prev) => {
       const exists = prev.some((row) => getDidKey(row) === selectedKey);
       if (exists) {
@@ -364,6 +363,48 @@ const DidSetting = ({ userInfo }) => {
     return [...(selectDid?.[config.dataKey] ?? []), newItem];
   };
 
+  const handleInterruptChange = (e) => {
+    const selectedKey = getDidKey(selectDid);
+
+    const name = e.target.name;
+    if (name === LABELS.START) {
+      setSelectDid({
+        ...selectDid,
+        [KEYS.IS_INTERRUPT]: false,
+        [KEYS.INTERRUPT_RESERVATION_FROM]: "",
+        [KEYS.INTERRUPT_RESERVATION_TO]: "",
+      });
+      setTableData((prev) =>
+        prev.map((row) =>
+          getDidKey(row) === selectedKey
+            ? { ...row, [KEYS.IS_INTERRUPT]: false }
+            : row
+        )
+      );
+    } else if (name === LABELS.INTERRUPT) {
+      setSelectDid({
+        ...selectDid,
+        [KEYS.IS_INTERRUPT]: true,
+      });
+      setTableData((prev) =>
+        prev.map((row) =>
+          getDidKey(row) === selectedKey
+            ? { ...row, [KEYS.IS_INTERRUPT]: true }
+            : row
+        )
+      );
+    }
+  };
+
+  const handleInterruptDateChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setSelectDid({
+      ...selectDid,
+      [name]: value,
+    });
+  };
+
   return (
     <div>
       <div className="didLayout">
@@ -397,6 +438,7 @@ const DidSetting = ({ userInfo }) => {
             </div>
           </Form>
           <Table
+            className="did-table"
             ref={tableRef}
             columns={DID_SETTING_COLUMNS}
             data={tableData}
@@ -426,41 +468,65 @@ const DidSetting = ({ userInfo }) => {
           </Form>
           {/* 시작, 일시정지 */}
           {selectDid && (
-            <div class="didStopBox">
-              <div class="radio-box">
-                <span class="items">
+            <div className="didStopBox">
+              <div className="radio-box">
+                <span className="items">
                   <input
                     type="radio"
-                    name="rdDidS"
+                    name={LABELS.START}
                     id="rdDidStart"
-                    value="시작"
-                    defaultChecked
+                    onChange={handleInterruptChange}
+                    value="rdDidStart"
+                    checked={selectDid[KEYS.IS_INTERRUPT] === false}
                   />
-                  <label for="viewTime1">시작</label>
+                  <label htmlFor="rdDidStart">{LABELS.START}</label>
                 </span>
-                <span class="items">
+                <span className="items">
                   <input
                     type="radio"
-                    name="rdDidS"
+                    name={LABELS.INTERRUPT}
                     id="rdDidStop"
-                    value="시작"
+                    onChange={handleInterruptChange}
+                    value="rdDidStop"
+                    checked={selectDid[KEYS.IS_INTERRUPT] === true}
                   />
-                  <label for="viewTime1">일시정지</label>
+                  <label htmlFor="rdDidStop">{LABELS.INTERRUPT}</label>
                 </span>
-                <span class="items">
+                {/* <span className="items">
                   <input
                     type="radio"
-                    name="rdDidS"
+                    name={LABELS.INTERRUPT_RESERVATION}
                     id="rdDidStopRe"
-                    value="시작"
+                    onChange={handleInterruptChange}
+                    value="rdDidStopRe"
+                    checked={
+                      selectDid[KEYS.IS_INTERRUPT] === false &&
+                      selectDid[KEYS.INTERRUPT_RESERVATION_FROM]
+                    }
                   />
-                  <label for="viewTime1">일시정지 예약</label>
-                </span>
+                  <label htmlFor="rdDidStopRe">
+                    {LABELS.INTERRUPT_RESERVATION}
+                  </label>
+                </span> */}
               </div>
               <div className="hFlex">
-                <Input type="date" size="w130" />
+                <Input
+                  type="date"
+                  size="w130"
+                  name={KEYS.INTERRUPT_RESERVATION_FROM}
+                  value={selectDid[KEYS.INTERRUPT_RESERVATION_FROM]}
+                  onChange={handleInterruptDateChange}
+                  disabled={!selectDid[KEYS.IS_INTERRUPT]}
+                />
                 <span>{"~"}</span>
-                <Input type="date" size="w130" />
+                <Input
+                  type="date"
+                  size="w130"
+                  name={KEYS.INTERRUPT_RESERVATION_TO}
+                  value={selectDid[KEYS.INTERRUPT_RESERVATION_TO]}
+                  onChange={handleInterruptDateChange}
+                  disabled={!selectDid[KEYS.IS_INTERRUPT]}
+                />
               </div>
             </div>
           )}

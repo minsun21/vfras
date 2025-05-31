@@ -172,7 +172,8 @@ export const DID_SETTING_COLUMNS = [
     header: LABELS.USER_NUMBER_MULTI,
     cell: ({ row }) => (
       <span>
-        {row.original[KEYS.TEL_FROM_NO]} ~ <br />{row.original[KEYS.TEL_TO_NO]}
+        {row.original[KEYS.TEL_FROM_NO]} ~ <br />
+        {row.original[KEYS.TEL_TO_NO]}
       </span>
     ),
   },
@@ -181,7 +182,8 @@ export const DID_SETTING_COLUMNS = [
     header: LABELS.PBX_NUMBER_COL_MULTI,
     cell: ({ row }) => (
       <span>
-        {row.original[KEYS.FROM_NO]} ~ <br />{row.original[KEYS.TO_NO]}
+        {row.original[KEYS.FROM_NO]} ~ <br />
+        {row.original[KEYS.TO_NO]}
       </span>
     ),
   },
@@ -196,7 +198,13 @@ export const DID_SETTING_COLUMNS = [
         accessorKey: KEYS.IS_INTERRUPT,
         header: LABELS.INTERRUPT,
         cell: ({ row, getValue }) => (
-          <input type="checkbox" checked={!!getValue()} disabled readOnly />
+          <input
+            type="checkbox"
+            span="did-check"
+            checked={!!getValue()}
+            disabled
+            readOnly
+          />
         ),
       },
       {
@@ -549,6 +557,7 @@ export const SUBSRIBERS_INFO_DUMMY = {
       [KEYS.GERNERAL_PERMISSIONS]: true,
       [KEYS.DEPARTMENT_PERMISSIONS]: false,
       [KEYS.MODIFY]: false,
+      [KEYS.IS_INTERRUPT]: false,
     },
   ],
   dids: [
@@ -568,6 +577,7 @@ export const SUBSRIBERS_INFO_DUMMY = {
       [KEYS.IS_ORGN_JOINED]: false,
       [KEYS.IS_GROUP_JOINED]: true,
       [KEYS.IS_DURA_JOINED]: false,
+      [KEYS.IS_INTERRUPT]: false,
     },
     {
       [KEYS.ID]: 28,
@@ -585,6 +595,7 @@ export const SUBSRIBERS_INFO_DUMMY = {
       [KEYS.IS_ORGN_JOINED]: false,
       [KEYS.IS_GROUP_JOINED]: true,
       [KEYS.IS_DURA_JOINED]: false,
+      [KEYS.IS_INTERRUPT]: false,
     },
     {
       [KEYS.ID]: 27,
@@ -603,6 +614,9 @@ export const SUBSRIBERS_INFO_DUMMY = {
       [KEYS.IS_ORGN_JOINED]: false,
       [KEYS.IS_GROUP_JOINED]: true,
       [KEYS.IS_DURA_JOINED]: false,
+      [KEYS.IS_INTERRUPT]: true,
+      [KEYS.INTERRUPT_RESERVATION_FROM]: "2025-05-30",
+      [KEYS.INTERRUPT_RESERVATION_TO]: "2025-06-30",
     },
     {
       [KEYS.ID]: 26,
@@ -620,6 +634,7 @@ export const SUBSRIBERS_INFO_DUMMY = {
       [KEYS.IS_ORGN_JOINED]: false,
       [KEYS.IS_GROUP_JOINED]: true,
       [KEYS.IS_DURA_JOINED]: false,
+      [KEYS.IS_INTERRUPT]: false,
     },
     {
       [KEYS.ID]: 25,
@@ -637,6 +652,9 @@ export const SUBSRIBERS_INFO_DUMMY = {
       [KEYS.IS_ORGN_JOINED]: true,
       [KEYS.IS_GROUP_JOINED]: true,
       [KEYS.IS_DURA_JOINED]: true,
+      [KEYS.IS_INTERRUPT]: true,
+      [KEYS.INTERRUPT_RESERVATION_FROM]: "2025-04-30",
+      [KEYS.INTERRUPT_RESERVATION_TO]: "2025-12-30",
     },
   ],
 };
