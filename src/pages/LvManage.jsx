@@ -5,19 +5,22 @@ import { LvMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 import { ROUTES } from "../constants/routes";
 import axios from "../api/axios";
+import { useSelector } from "react-redux";
+import { KEYS } from "../constants/Keys";
 
 const LvManage = () => {
+  const role = useSelector((state) => state.auth.user?.role);
   const { showDialog, showAlert, closeModal } = useModal();
   const [changeValue, setChangeValue] = useState("");
   const [currentValue, setCurrentValue] = useState("");
   const [changeLineCount, setChangeLineCount] = useState(0);
   const [currentLineCount, setCurrentLineCount] = useState(0);
 
-  const lvNumbers =[
-    7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
-    7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
-    7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
-  ]
+  const lvNumbers = [
+    7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
+    7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
+    7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
+  ];
 
   useEffect(() => {
     const initData = lvNumbers.join("\n");
@@ -97,29 +100,31 @@ const LvManage = () => {
 
   return (
     <div className="lvBoxLayout">
-
       <div className="lvBox">
-          <h4 className="page-title">{LABELS.STATION_CHANGE_NUMBER}</h4>
-          <div className="tbl-list-top">
-            <div className="top-button">
-              <span className="total mr0">
-                {LABELS.COUNT_RESULT(changeLineCount)}
-              </span>
-            </div>
-            <Button
-                type={BUTTON_CANCEL}
-                label={LABELS.ALL_CHANGE}
-                onClick={clickAllChange}
-              />
+        <h4 className="page-title">{LABELS.STATION_CHANGE_NUMBER}</h4>
+        <div className="tbl-list-top">
+          <div className="top-button">
+            <span className="total mr0">
+              {LABELS.COUNT_RESULT(changeLineCount)}
+            </span>
           </div>
+          {role === KEYS.ADMIN && (
+            <Button
+              type={BUTTON_CANCEL}
+              label={LABELS.ALL_CHANGE}
+              onClick={clickAllChange}
+            />
+          )}
+        </div>
 
-          <textarea
-            value={changeValue}
-            onChange={handleChange}
-            type="number"
-            rows={5}
-            cols={5}
-          />
+        <textarea
+          value={changeValue}
+          onChange={handleChange}
+          type="number"
+          rows={5}
+          cols={5}
+          disabled={role !== KEYS.ADMIN}
+        />
       </div>
 
       <div className="lvBox">
@@ -127,10 +132,10 @@ const LvManage = () => {
         <div className="tbl-list-top">
           <div className="top-button">
             <span className="total mr0">
-                {LABELS.COUNT_RESULT(currentLineCount)}
-              </span>
+              {LABELS.COUNT_RESULT(currentLineCount)}
+            </span>
           </div>
-          <Button type={BUTTON_CANCEL} label={LABELS.VIEW} />
+          {/* <Button type={BUTTON_CANCEL} label={LABELS.VIEW} /> */}
         </div>
         <textarea
           value={currentValue}
@@ -138,6 +143,7 @@ const LvManage = () => {
           type="number"
           rows={5}
           cols={5}
+          disabled
         />
       </div>
       <div className="lvBoxBottom">

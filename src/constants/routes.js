@@ -17,6 +17,7 @@ export const ROUTES = {
   PROFILE: "/my", // 내 정보 조회
   LOGOUT: "/logout",
   LOGIN: "/login",
+  UNAUTHORIZED: "/unauthorized",
   ROOT: "/",
   ALL: "*",
 };

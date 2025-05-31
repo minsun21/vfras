@@ -22,7 +22,7 @@ const Login = () => {
   const from = location.state?.from?.pathname || ROUTES.SUBSCRIBERS;
 
   const handleLogin = () => {
-    dispatch(login({ userId: "test", username: "testUser" }));
+    dispatch(login({ userId: "test", username: "testUser", role: "admin" }));
     navigate(from, { replace: true });
 
     // axios

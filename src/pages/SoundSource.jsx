@@ -4,7 +4,6 @@ import Input, { INPUT_SIZE_LG } from "../components/Input";
 import Table from "../components/Table";
 import {
   SOUND_SOURCE_COLUMNS,
-  sounds_source_columns,
 } from "../config/DataConfig";
 import { InfoMessages, SoundSourceMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";

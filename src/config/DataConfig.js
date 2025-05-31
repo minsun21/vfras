@@ -140,6 +140,57 @@ export const SUBSRIBES_COLUMNS = (navigateManage) => {
   ];
 };
 
+export const SUBSRIBES_COLUMNS_USER = [
+  {
+    accessorKey: KEYS.SUB_NO,
+    header: LABELS.MAIN_NUMBER,
+  },
+  {
+    accessorKey: KEYS.USER_NUMBER,
+    header: LABELS.USER_NUMBER,
+    cell: ({ row }) => (
+      <span>
+        {row.original[KEYS.TEL_FROM_NO]} ~ {row.original[KEYS.TEL_TO_NO]}
+      </span>
+    ),
+  },
+  {
+    accessorKey: KEYS.PBX_NUMBER,
+    header: LABELS.PBX_NUMBER_COL,
+    cell: ({ row }) => (
+      <span>
+        {row.original[KEYS.FROM_NO]} ~ {row.original[KEYS.TO_NO]}
+      </span>
+    ),
+  },
+  {
+    accessorKey: KEYS.NAME,
+    header: LABELS.SUBSCRIBER_NAME,
+  },
+  {
+    accessorKey: KEYS.APPLY_DATE,
+    header: LABELS.APPLY_DATE,
+  },
+  {
+    accessorKey: KEYS.SUB_STATUS,
+    header: LABELS.STATE,
+    cell: ({ row }) => (
+      <div
+        className={`${
+          row.original[KEYS.SUB_STATUS] !== SEARCH_SUBSRIBERS_STATE[1].key
+            ? "stateNormal"
+            : "stateArert"
+        }`}
+      >
+        {findMappedValue(
+          SEARCH_SUBSRIBERS_STATE,
+          row.original[KEYS.SUB_STATUS]
+        )}
+      </div>
+    ),
+  },
+];
+
 export const access_detail_columns = [
   {
     accessorKey: KEYS.ACCESS_TIME,
@@ -496,13 +547,11 @@ export const DID_PERSONAL_SETTING_COLUMNS = [
         accessorKey: KEYS.GERNERAL_PERMISSIONS,
         header: LABELS.GERNERAL_PERMISSIONS,
         type: "checkbox",
-
       },
       {
         accessorKey: KEYS.DEPARTMENT_PERMISSIONS,
         header: LABELS.DEPARTMENT_PERMISSIONS,
         type: "checkbox",
-
       },
       {
         accessorKey: KEYS.MODIFY,

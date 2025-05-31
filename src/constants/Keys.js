@@ -71,4 +71,5 @@ export const KEYS = {
   GROUP_ID: "groupId",
   DESCRIPT : "descript",
   DID_CONFIG : "didConfig",
+  ADMIN : "admin",
 };

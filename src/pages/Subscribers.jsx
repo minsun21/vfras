@@ -5,7 +5,10 @@ import Input from "../components/Input";
 import Select from "../components/Select";
 import Table from "../components/Table";
 import { ROUTES } from "../constants/routes";
-import { SUBSRIBES_COLUMNS } from "../config/DataConfig";
+import {
+  SUBSRIBES_COLUMNS,
+  SUBSRIBES_COLUMNS_USER,
+} from "../config/DataConfig";
 import { LABELS } from "../constants/Labels";
 import {
   ErrorMessages,
@@ -23,10 +26,12 @@ import {
 } from "../config/OPTIONS";
 import Form from "../components/Form";
 import { findMappedValue } from "../utils/Util";
+import { useSelector } from "react-redux";
 
 const Subscriber = () => {
   const tableRef = useRef();
   const navigate = useNavigate();
+  const role = useSelector((state) => state.auth.user?.role);
   const { showAlert, showDialog } = useModal();
 
   const [searchInputs, setSearchInputs] = useState({});
@@ -625,6 +630,7 @@ const Subscriber = () => {
   };
 
   const topBtns = () => {
+    if (role !== KEYS.ADMIN) return null;
     return (
       <>
         <Button label={LABELS.APPROVE} onClick={approvedSub} />
@@ -739,7 +745,11 @@ const Subscriber = () => {
       </Form>
       <Table
         ref={tableRef}
-        columns={SUBSRIBES_COLUMNS(navigateManage)}
+        columns={
+          role === KEYS.ADMIN
+            ? SUBSRIBES_COLUMNS(navigateManage)
+            : SUBSRIBES_COLUMNS_USER
+        }
         data={filterdData}
         setTableData={setFilteredData}
         pageSize={10}
