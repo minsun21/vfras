@@ -9,7 +9,11 @@ import Input from "../components/Input";
 import RadioGroup from "../components/RadioGroup";
 import { SUBSRIBERS_EDIT_FIELDS } from "../config/FieldsConfig";
 import { ROUTES } from "../constants/routes";
-import { InfoMessages, subsriberMessages } from "../constants/Message";
+import {
+  ErrorMessages,
+  InfoMessages,
+  subsriberMessages,
+} from "../constants/Message";
 import { LABELS } from "../constants/Labels";
 import { useModal } from "../contexts/ModalContext";
 import DidSetting from "../components/modals/DidSetting";
@@ -139,9 +143,9 @@ const SubscriberManageEdit = () => {
       onConfirm: saveDidSettingPersonal,
     });
   };
-  
+
   // did 회선 설정 - 변경
-  const saveDidSetting= () => {
+  const saveDidSetting = () => {
     const didPersonalData = store.getState()[KEYS.DID_CONFIG][KEYS.DID_CONFIG];
     console.log(didPersonalData);
 
@@ -155,8 +159,8 @@ const SubscriberManageEdit = () => {
 
   // did 회선 설정 - 개인 변경
   const saveDidSettingPersonal = () => {
-    const didPersonalData = store.getState()[KEYS.DID_CONFIG][KEYS.DID_CONFIG];
-    console.log(didPersonalData);
+    const didData = store.getState()[KEYS.DID_CONFIG][KEYS.DID_CONFIG];
+    console.log(didData);
 
     showAlert({
       message: InfoMessages.successEdit,
@@ -165,6 +169,7 @@ const SubscriberManageEdit = () => {
       },
     });
   };
+
 
   const clickResetPassword = () => {
     showModal({

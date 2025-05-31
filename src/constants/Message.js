@@ -7,11 +7,11 @@ export const InfoMessages = {
   successAccountSave: `해당 계정이 등록되었습니다.`,
   confirmLogout: `로그아웃 하시겠습니까?`,
   confirmRegister: `등록 하시겠습니까?`,
-  confirmSave : "저장 하시겠습니까?",
-  confirmAdd : "추가 하시겠습니까?",
-  mobile : "숫자만 입력해주세요.",
-  successAdd : "추가 되었습니다.",
-  confirmAllDelete : "전체 삭제하시겠습니까?"
+  confirmSave: "저장 하시겠습니까?",
+  confirmAdd: "추가 하시겠습니까?",
+  mobile: "숫자만 입력해주세요.",
+  successAdd: "추가 되었습니다.",
+  confirmAllDelete: "전체 삭제하시겠습니까?",
 };
 
 export const ProfileMessages = {
@@ -26,7 +26,8 @@ export const ErrorMessages = {
   invalidPhone: `전화번호 형식이 올바르지 않습니다.`,
   lengthMismatch: (label, min, max) =>
     `${label}은(는) ${min} ~ ${max}자리여야 합니다.`,
-  lengthMismatch2 : (label, length) =>    `${label}은(는) ${length}자리여야 합니다.`,
+  lengthMismatch2: (label, length) =>
+    `${label}은(는) ${length}자리여야 합니다.`,
   invalidPassword: `비밀번호는 8~20자의 영문, 숫자, 특수문자를 모두 포함해야 합니다.`,
   confirmPassword: `비밀번호 확인이 맞지 않습니다.`,
   confirmCurrentPassword: `현재 비밀번호가 맞지 않습니다.`,
@@ -37,7 +38,11 @@ export const ErrorMessages = {
   noObject: `요청한 리소스를 찾을 수 없습니다.`,
   server: `서버 내부 오류입니다.`,
   correctPassword: `비밀번호가 일치하지 않습니다. 다시 확인해주세요.`,
-  deleteBulk : "전체 삭제는 할 수 없습니다."
+  deleteBulk: "전체 삭제는 할 수 없습니다.",
+  date: "시작 날짜는 종료 날짜보다 빠르거나 같아야 합니다.",
+  time: "시작 시간은 종료 시간보다 빠르거나 같아야 합니다.",
+  max: (title, max) => `${title} 항목은 최대 ${max}개까지 등록할 수 있습니다.`,
+  dateStart : "시작일을 먼저 지정해주세요."
 };
 
 export const LoginMessages = {
@@ -69,8 +74,8 @@ export const subsriberMessages = {
   approvedError: `이미 가입되었거나 삭제된 행은 선택할 수 없습니다.`,
   resetPasswordConfirm: `패스워드를 초기화 하시겠습니까?`,
   didPlaceHolder: `부가서비스 설정을 원하는 행을 선택하세요.`,
-  searchPlaceHolder2 : `대표번호를 입력해주세요.`,
-  resetPassword : `초기화 되었습니다.`
+  searchPlaceHolder2: `대표번호를 입력해주세요.`,
+  resetPassword: `초기화 되었습니다.`,
 };
 
 export const LvMessages = {

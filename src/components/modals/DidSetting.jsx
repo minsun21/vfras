@@ -302,7 +302,7 @@ const DidSetting = ({ userInfo }) => {
     const endDate = inputs.endDate;
     if (startDate && endDate && startDate > endDate) {
       showAlert({
-        message: "시작 날짜는 종료 날짜보다 빠르거나 같아야 합니다.",
+        message: ErrorMessages.date,
       });
       return;
     }
@@ -312,7 +312,7 @@ const DidSetting = ({ userInfo }) => {
     const endTime = inputs.endTime;
     if (startTime && endTime && startTime > endTime) {
       showAlert({
-        message: "시작 시간은 종료 시간보다 빠르거나 같아야 합니다.",
+        message: ErrorMessages.time,
       });
       return;
     }
@@ -320,7 +320,7 @@ const DidSetting = ({ userInfo }) => {
     // 최대 갯수 초과 검사
     if (config.max && currentList.length >= config.max) {
       showAlert({
-        message: `${config.title} 항목은 최대 ${config.max}개까지 등록할 수 있습니다.`,
+        message: ErrorMessages.max(config.title, config.max),
       });
       return;
     }
@@ -365,43 +365,76 @@ const DidSetting = ({ userInfo }) => {
 
   const handleInterruptChange = (e) => {
     const selectedKey = getDidKey(selectDid);
-
     const name = e.target.name;
-    if (name === LABELS.START) {
-      setSelectDid({
-        ...selectDid,
-        [KEYS.IS_INTERRUPT]: false,
-        [KEYS.INTERRUPT_RESERVATION_FROM]: "",
-        [KEYS.INTERRUPT_RESERVATION_TO]: "",
-      });
-      setTableData((prev) =>
-        prev.map((row) =>
+
+    const isInterrupt = name === LABELS.START ? false : true;
+
+    setSelectDid({
+      ...selectDid,
+      [KEYS.IS_INTERRUPT]: isInterrupt,
+      [KEYS.INTERRUPT_RESERVATION_FROM]: "",
+      [KEYS.INTERRUPT_RESERVATION_TO]: "",
+    });
+
+    setTableData((prev) =>
+      prev.map((row) =>
+        getDidKey(row) === selectedKey
+          ? { ...row, [KEYS.IS_INTERRUPT]: isInterrupt }
+          : row
+      )
+    );
+
+    setDidData((prev) => {
+      const exists = prev.some((row) => getDidKey(row) === selectedKey);
+      if (exists) {
+        return prev.map((row) =>
           getDidKey(row) === selectedKey
-            ? { ...row, [KEYS.IS_INTERRUPT]: false }
+            ? { ...row, [KEYS.IS_INTERRUPT]: isInterrupt }
             : row
-        )
-      );
-    } else if (name === LABELS.INTERRUPT) {
-      setSelectDid({
-        ...selectDid,
-        [KEYS.IS_INTERRUPT]: true,
-      });
-      setTableData((prev) =>
-        prev.map((row) =>
-          getDidKey(row) === selectedKey
-            ? { ...row, [KEYS.IS_INTERRUPT]: true }
-            : row
-        )
-      );
-    }
+        );
+      } else {
+        return [...prev, { ...selectDid, [KEYS.IS_INTERRUPT]: isInterrupt }];
+      }
+    });
   };
 
   const handleInterruptDateChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
+    
+    if(name === KEYS.INTERRUPT_RESERVATION_TO){ // 종료일을 지정할 때
+      if(!selectDid[KEYS.INTERRUPT_RESERVATION_FROM]){
+        showAlert({
+          message: ErrorMessages.dateStart,
+        });
+        return;
+      }
+
+      if(selectDid[KEYS.INTERRUPT_RESERVATION_FROM] > value){
+        showAlert({
+          message: ErrorMessages.date,
+        });
+        return;
+      }
+    }
+
     setSelectDid({
       ...selectDid,
       [name]: value,
+      // 종료일도 자동으로 넣어줌
+      [KEYS.INTERRUPT_RESERVATION_TO] : value
+    });
+
+    const selectedKey = getDidKey(selectDid);
+    setDidData((prev) => {
+      const exists = prev.some((row) => getDidKey(row) === selectedKey);
+      if (exists) {
+        return prev.map((row) =>
+          getDidKey(row) === selectedKey ? { ...row, [name]: value } : row
+        );
+      } else {
+        return [...prev, { ...selectDid, [name]: value }];
+      }
     });
   };
 
