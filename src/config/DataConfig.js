@@ -198,91 +198,49 @@ export const DID_SETTING_COLUMNS = [
         accessorKey: KEYS.IS_INTERRUPT,
         header: LABELS.INTERRUPT,
         cell: ({ row, getValue }) => (
-          <input
-            type="checkbox"
-            className="did-check"
-            checked={!!getValue()}
-            disabled
-            readOnly
-          />
+          <span className={!!getValue() ? "cellDidOn" : "cellDidOff"} />
         ),
       },
       {
         accessorKey: KEYS.IS_CIRCULR_JOINED,
         header: LABELS.CIRCULATION_RING,
         cell: ({ row, getValue }) => (
-          <input
-            type="checkbox"
-            className="did-check"
-            checked={!!getValue()}
-            disabled
-            readOnly
-          />
+          <span className={!!getValue() ? "cellDidOn" : "cellDidOff"} />
         ),
       },
       {
         accessorKey: KEYS.IS_TIME_JOINED,
         header: LABELS.TIME_SLOT,
         cell: ({ row, getValue }) => (
-          <input
-            type="checkbox"
-            className="did-check"
-            checked={!!getValue()}
-            disabled
-            readOnly
-          />
+          <span className={!!getValue() ? "cellDidOn" : "cellDidOff"} />
         ),
       },
       {
         accessorKey: KEYS.IS_WEEK_JOINED,
         header: LABELS.DAY_OF_WEEKEND,
         cell: ({ row, getValue }) => (
-          <input
-            type="checkbox"
-            className="did-check"
-            checked={!!getValue()}
-            disabled
-            readOnly
-          />
+          <span className={!!getValue() ? "cellDidOn" : "cellDidOff"} />
         ),
       },
       {
         accessorKey: KEYS.IS_ORGN_JOINED,
         header: LABELS.CALLER_AREA,
         cell: ({ row, getValue }) => (
-          <input
-            type="checkbox"
-            className="did-check"
-            checked={!!getValue()}
-            disabled
-            readOnly
-          />
+          <span className={!!getValue() ? "cellDidOn" : "cellDidOff"} />
         ),
       },
       {
         accessorKey: KEYS.IS_GROUP_JOINED,
         header: LABELS.CALLER_NUMBER,
         cell: ({ row, getValue }) => (
-          <input
-            type="checkbox"
-            className="did-check"
-            checked={!!getValue()}
-            disabled
-            readOnly
-          />
+          <span className={!!getValue() ? "cellDidOn" : "cellDidOff"} />
         ),
       },
       {
         accessorKey: KEYS.IS_DURA_JOINED,
         header: LABELS.ANNIVERSARY,
         cell: ({ row, getValue }) => (
-          <input
-            type="checkbox"
-            className="did-check"
-            checked={!!getValue()}
-            disabled
-            readOnly
-          />
+          <span className={!!getValue() ? "cellDidOn" : "cellDidOff"} />
         ),
       },
     ],
@@ -508,73 +466,52 @@ export const DID_CONFIG_DATAS = [
   },
 ];
 
-export const DID_PERSONAL_SETTING_COLUMNS = (onChangeDid) => {
-  return [
-    {
-      accessorKey: KEYS.USER_NUMBER,
-      header: LABELS.USER_NUMBER,
-      cell: ({ row }) => (
-        <span>
-          {row.original[KEYS.TEL_FROM_NO]} ~ {row.original[KEYS.TEL_TO_NO]}
-        </span>
-      ),
-    },
-    {
-      accessorKey: KEYS.PBX_NUMBER,
-      header: LABELS.PBX_NUMBER_COL,
-      cell: ({ row }) => (
-        <span>
-          {row.original[KEYS.FROM_NO]} ~ {row.original[KEYS.TO_NO]}
-        </span>
-      ),
-    },
-    {
-      accessorKey: KEYS.RBT_ID,
-      header: LABELS.SOUND_CODE_COL_MULTI,
-    },
-    {
-      header: LABELS.IS_ADDITIONAL_SERVICE,
-      columns: [
-        {
-          accessorKey: KEYS.GERNERAL_PERMISSIONS,
-          header: LABELS.GERNERAL_PERMISSIONS,
-          cell: ({ getValue, column }) => (
-            <input
-              type="checkbox"
-              className="did-check"
-              checked={!!getValue()}
-              onChange={(e) => onChangeDid(column.id, e)}
-            />
-          ),
-        },
-        {
-          accessorKey: KEYS.DEPARTMENT_PERMISSIONS,
-          header: LABELS.DEPARTMENT_PERMISSIONS,
-          cell: ({ getValue, column }) => (
-            <input
-              type="checkbox"
-              className="did-check"
-              checked={!!getValue()}
-              onChange={(e) => onChangeDid(column.id, e)}
-            />
-          ),
-        },
-        {
-          accessorKey: KEYS.MODIFY,
-          header: LABELS.MODIFY,
-          cell: ({ getValue, column }) => (
-            <input
-              type="checkbox"
-              className="did-check"
-              checked={!!getValue()}
-              onChange={(e) => onChangeDid(column.id, e)}
-            />
-          ),
-        },
-      ],
-    },
-  ];
-};
+export const DID_PERSONAL_SETTING_COLUMNS = [
+  {
+    accessorKey: KEYS.USER_NUMBER,
+    header: LABELS.USER_NUMBER,
+    cell: ({ row }) => (
+      <span>
+        {row.original[KEYS.TEL_FROM_NO]} ~ {row.original[KEYS.TEL_TO_NO]}
+      </span>
+    ),
+  },
+  {
+    accessorKey: KEYS.PBX_NUMBER,
+    header: LABELS.PBX_NUMBER_COL,
+    cell: ({ row }) => (
+      <span>
+        {row.original[KEYS.FROM_NO]} ~ {row.original[KEYS.TO_NO]}
+      </span>
+    ),
+  },
+  {
+    accessorKey: KEYS.RBT_ID,
+    header: LABELS.SOUND_CODE_COL_MULTI,
+  },
+  {
+    header: LABELS.IS_ADDITIONAL_SERVICE,
+    columns: [
+      {
+        accessorKey: KEYS.GERNERAL_PERMISSIONS,
+        header: LABELS.GERNERAL_PERMISSIONS,
+        type: "checkbox",
+
+      },
+      {
+        accessorKey: KEYS.DEPARTMENT_PERMISSIONS,
+        header: LABELS.DEPARTMENT_PERMISSIONS,
+        type: "checkbox",
+
+      },
+      {
+        accessorKey: KEYS.MODIFY,
+        header: LABELS.MODIFY,
+        type: "checkbox",
+      },
+    ],
+  },
+];
 
 export const did_personal_setting_data = [
   {
