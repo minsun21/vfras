@@ -98,8 +98,8 @@ const LvManage = () => {
   return (
     <div className="lvBoxLayout">
 
-      <div class="lvBox">
-          <h4 class="page-title">{LABELS.STATION_CHANGE_NUMBER}</h4>
+      <div className="lvBox">
+          <h4 className="page-title">{LABELS.STATION_CHANGE_NUMBER}</h4>
           <div className="tbl-list-top">
             <div className="top-button">
               <span className="total mr0">
@@ -122,8 +122,8 @@ const LvManage = () => {
           />
       </div>
 
-      <div class="lvBox">
-        <h4 class="page-title">{LABELS.STATION_CURRENT_NUMBER}</h4>
+      <div className="lvBox">
+        <h4 className="page-title">{LABELS.STATION_CURRENT_NUMBER}</h4>
         <div className="tbl-list-top">
           <div className="top-button">
             <span className="total mr0">
@@ -140,7 +140,7 @@ const LvManage = () => {
           cols={5}
         />
       </div>
-      <div class="lvBoxBottom">
+      <div className="lvBoxBottom">
         <span>{LvMessages.info1}</span>
         <span>{LvMessages.info2}</span>
         <span>{LvMessages.info3}</span>
