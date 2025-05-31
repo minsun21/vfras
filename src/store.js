@@ -4,6 +4,7 @@ import breadcrumbReducer from "./features/breadcrumbSlice";
 import passwordReducer from "./features/passwordSlice";
 import didPersonalReducer from "./features/didConfigSlice";
 import didAddReducer from "./features/didAddSlice";
+import loadingReducer from "./features/loadingSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // 기본: localStorage
 
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   changePassword: passwordReducer,
   didConfig: didPersonalReducer,
   didAdd: didAddReducer,
+  loading : loadingReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

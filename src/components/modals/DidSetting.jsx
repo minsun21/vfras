@@ -401,16 +401,17 @@ const DidSetting = ({ userInfo }) => {
   const handleInterruptDateChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    
-    if(name === KEYS.INTERRUPT_RESERVATION_TO){ // 종료일을 지정할 때
-      if(!selectDid[KEYS.INTERRUPT_RESERVATION_FROM]){
+
+    if (name === KEYS.INTERRUPT_RESERVATION_TO) {
+      // 종료일을 지정할 때
+      if (!selectDid[KEYS.INTERRUPT_RESERVATION_FROM]) {
         showAlert({
           message: ErrorMessages.dateStart,
         });
         return;
       }
 
-      if(selectDid[KEYS.INTERRUPT_RESERVATION_FROM] > value){
+      if (selectDid[KEYS.INTERRUPT_RESERVATION_FROM] > value) {
         showAlert({
           message: ErrorMessages.date,
         });
@@ -422,7 +423,7 @@ const DidSetting = ({ userInfo }) => {
       ...selectDid,
       [name]: value,
       // 종료일도 자동으로 넣어줌
-      [KEYS.INTERRUPT_RESERVATION_TO] : value
+      [KEYS.INTERRUPT_RESERVATION_TO]: value,
     });
 
     const selectedKey = getDidKey(selectDid);

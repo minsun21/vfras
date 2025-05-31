@@ -21,6 +21,7 @@ export const ProfileMessages = {
 };
 
 export const ErrorMessages = {
+  expired: "세션이 만료되었습니다.\n다시 로그인해주세요.",
   required: (label) => `${label}을(를) 입력해주세요.`,
   invalidEmail: `이메일 형식이 올바르지 않습니다.`,
   invalidPhone: `전화번호 형식이 올바르지 않습니다.`,
@@ -42,7 +43,7 @@ export const ErrorMessages = {
   date: "시작 날짜는 종료 날짜보다 빠르거나 같아야 합니다.",
   time: "시작 시간은 종료 시간보다 빠르거나 같아야 합니다.",
   max: (title, max) => `${title} 항목은 최대 ${max}개까지 등록할 수 있습니다.`,
-  dateStart : "시작일을 먼저 지정해주세요."
+  dateStart: "시작일을 먼저 지정해주세요.",
 };
 
 export const LoginMessages = {

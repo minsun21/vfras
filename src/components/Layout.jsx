@@ -31,7 +31,6 @@ const getCurrentSubMenuTitle = (currentPath) => {
 
 const Layout = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const location = useLocation();
   const { showDialog } = useModal();
 

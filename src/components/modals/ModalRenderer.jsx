@@ -31,7 +31,14 @@ const ModalRenderer = () => {
                   <h3>{LABELS.ALERT_MSG}</h3>
                 </div>
                 <div className="msg-body">
-                  <p>{props.message}</p>
+                  <p>
+                    {props.message.split("\n").map((line, index) => (
+                      <span key={index}>
+                        {line}
+                        <br />
+                      </span>
+                    ))}
+                  </p>
                 </div>
                 <div className="msg-footer">
                   <div className="btn-wrap center">

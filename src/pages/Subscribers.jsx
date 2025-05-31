@@ -26,6 +26,7 @@ import {
 import Form from "../components/Form";
 import { findMappedValue } from "../utils/Util";
 import { useSelector } from "react-redux";
+import axios from "../api/axios";
 
 const Subscriber = () => {
   const tableRef = useRef();
@@ -666,6 +667,20 @@ const Subscriber = () => {
 
   return (
     <div>
+      <button onClick={() => axios.get("https://httpstat.us/200?sleep=1000")}>
+        로딩 테스트
+      </button>
+      <button
+        onClick={async () => {
+          try {
+            await axios.get("https://httpstat.us/401");
+          } catch (e) {
+            // 에러는 인터셉터에서 처리하므로 아무것도 하지 않음
+          }
+        }}
+      >
+        세션 테스트
+      </button>
       <Form className="search-box">
         <table className="tbl-input">
           <thead>
