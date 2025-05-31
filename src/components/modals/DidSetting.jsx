@@ -20,6 +20,7 @@ import { fieldsValidate } from "../../utils/FormValidation";
 import { store } from "../../store";
 import { DID_ADD_FIELDS } from "../../config/FieldsConfig";
 import DidConfig from "./DidConfig";
+import axios from "../../api/axios";
 import { setConfigData } from "../../features/didConfigSlice";
 
 const DidSetting = ({ userInfo }) => {
@@ -31,7 +32,6 @@ const DidSetting = ({ userInfo }) => {
   const [selectRows, setSelectRows] = useState([]);
   const [didData, setDidData] = useState([]); // 전체 DID data
   const [selectDid, setSelectDid] = useState({});
-  const [interruptSelect, setInterruptSelect] = useState("");
 
   useEffect(() => {
     setTableData(userInfo.dids);

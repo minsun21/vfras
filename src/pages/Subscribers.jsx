@@ -17,7 +17,6 @@ import {
 } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 import { KEYS } from "../constants/Keys";
-import axios from "../api/axios";
 import {
   SEARCH_DIVISIONS,
   SEARCH_SERVICE_TYPES,

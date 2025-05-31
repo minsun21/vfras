@@ -30,7 +30,7 @@ const Login = () => {
     //   .then((res) => {
     // if(checkSaveId){
     //   // 아이디 저장은 로컬 스토리지로
-    //   localStorage.setItem("userInfo", JSON.stringify(res.data));
+    //   localStorage.setItem("userInfo", JSON.stringify(reszp.data));
     // }
     //     dispatch(
     // login({ userId: res.data.userId, userName: res.data.userName })
