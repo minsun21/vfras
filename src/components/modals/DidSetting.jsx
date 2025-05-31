@@ -465,8 +465,6 @@ const DidSetting = ({ userInfo }) => {
                 <span>
                   <Button type={BUTTON_DELETE} onClick={deleteDidRows} />
                 </span>
-                <span className="cellDidOn"></span>
-                <span className="cellDidOff"></span>
               </div>
             </div>
           </Form>
@@ -524,22 +522,6 @@ const DidSetting = ({ userInfo }) => {
                   />
                   <label htmlFor="rdDidStop">{LABELS.INTERRUPT}</label>
                 </span>
-                {/* <span className="items">
-                  <input
-                    type="radio"
-                    name={LABELS.INTERRUPT_RESERVATION}
-                    id="rdDidStopRe"
-                    onChange={handleInterruptChange}
-                    value="rdDidStopRe"
-                    checked={
-                      selectDid[KEYS.IS_INTERRUPT] === false &&
-                      selectDid[KEYS.INTERRUPT_RESERVATION_FROM]
-                    }
-                  />
-                  <label htmlFor="rdDidStopRe">
-                    {LABELS.INTERRUPT_RESERVATION}
-                  </label>
-                </span> */}
               </div>
               <div className="hFlex">
                 <Input

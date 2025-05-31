@@ -170,7 +170,6 @@ const SubscriberManageEdit = () => {
     });
   };
 
-
   const clickResetPassword = () => {
     showModal({
       content: <PasswordReset currentPassword={formData[KEYS.PASSWORD]} />,
