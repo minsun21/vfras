@@ -48,10 +48,7 @@ instance.interceptors.response.use(
     if (alertHandler) {
       switch (status) {
         case 401:
-          // ✅ 토큰/상태 제거
           localStorage.removeItem("accessToken");
-
-          // ✅ 메시지 표시
           alertHandler({
             message: ErrorMessages.expired,
             onConfirm: () => {
