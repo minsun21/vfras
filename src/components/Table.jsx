@@ -18,7 +18,6 @@ import Select from "./Select";
 const Table = forwardRef(
   (
     {
-      className ="",
       columns,
       data: tableData,
       setTableData,
@@ -61,6 +60,7 @@ const Table = forwardRef(
     }, [pageInfo.pageIndex, pageInfo.pageSize]);
 
     const handleCheckBox = (rowIndex, columnId) => {
+      console.log('dlrj?')
       const updated = tableData.map((row, i) => {
         if (i === rowIndex) {
           return { ...row, [columnId]: !row[columnId] };
@@ -272,7 +272,7 @@ const Table = forwardRef(
                 }
           }
         >
-          <table className={className}>
+          <table>
             <thead>
               <tr>
                 {rowSelectionEnabled && (

@@ -20,6 +20,15 @@ const DidSettingPersonal = ({ userInfo }) => {
     dispatch(setConfigData(data));
   }, [data]);
 
+  const onChangeDid = (accessorKey, e) => {
+    const checked = e.target.checked;
+    setData((prev) =>
+      prev.map((row, index) =>
+        index === 0 ? { ...row, [accessorKey]: checked } : row
+      )
+    );
+  };
+
   return (
     <div>
       <div className="dflex gap10">
@@ -31,9 +40,8 @@ const DidSettingPersonal = ({ userInfo }) => {
             <div className="mlAuto"></div>
           </form>
           <Table
-            className="did-table"
             ref={tableRef}
-            columns={DID_PERSONAL_SETTING_COLUMNS}
+            columns={DID_PERSONAL_SETTING_COLUMNS(onChangeDid)}
             data={data}
             setTableData={setData}
             resultLabel={false}

@@ -471,7 +471,6 @@ const DidSetting = ({ userInfo }) => {
             </div>
           </Form>
           <Table
-            className="did-table"
             ref={tableRef}
             columns={DID_SETTING_COLUMNS}
             data={tableData}
