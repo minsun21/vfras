@@ -23,7 +23,9 @@ const Table = forwardRef(
       setTableData,
       pageSize = 5,
       rowSelectionEnabled = true,
+      rowClickSelect = false,
       onRowSelectionChange,
+      onCheckboxSelectionChange,
       showIndex = true,
       resultLabel = true,
       pageSelect = true,
@@ -33,11 +35,12 @@ const Table = forwardRef(
       fetchData,
       maxHeight,
       scrollRef,
-      newRowRef
+      newRowRef,
     },
     ref
   ) => {
-    const [rowSelection, setRowSelection] = useState({});
+    const [clickSelection, setClickSelection] = useState({});
+    const [checkboxSelection, setCheckboxSelection] = useState({});
     const [currentPageSize, setCurrentPageSize] = useState(pageSize);
     const [pageInfo, setPageInfo] = useState({
       pageIndex: 0,
@@ -45,6 +48,8 @@ const Table = forwardRef(
       totalPages: 0,
       totalElements: 0,
     });
+
+    const isSplit = rowClickSelect === true;
 
     useEffect(() => {
       if (manualPagination && typeof fetchData === "function") {
@@ -59,14 +64,25 @@ const Table = forwardRef(
       }
     }, [pageInfo.pageIndex, pageInfo.pageSize]);
 
-    const handleCheckBox = (rowIndex, columnId) => {
-      const updated = tableData.map((row, i) => {
-        if (i === rowIndex) {
-          return { ...row, [columnId]: !row[columnId] };
-        }
-        return row;
-      });
-      setTableData(updated);
+    const handleCheckBox = (row) => {
+      const newSelection = {
+        ...(isSplit ? checkboxSelection : { ...checkboxSelection }),
+        [row.id]: !checkboxSelection[row.id],
+      };
+      setCheckboxSelection(newSelection);
+      if (!isSplit && typeof onRowSelectionChange === "function") {
+        const rows = table
+          .getCoreRowModel()
+          .rows.filter((r) => newSelection[r.id])
+          .map((r) => r.original);
+        onRowSelectionChange(rows);
+      } else if (isSplit && typeof onCheckboxSelectionChange === "function") {
+        const rows = table
+          .getCoreRowModel()
+          .rows.filter((r) => newSelection[r.id])
+          .map((r) => r.original);
+        onCheckboxSelectionChange(rows);
+      }
     };
 
     const processedColumns = useMemo(() => {
@@ -85,11 +101,17 @@ const Table = forwardRef(
                   type="checkbox"
                   className="check-style"
                   checked={!!row.original[columnId]}
-                  onChange={() => handleCheckBox(row.index, columnId)}
+                  onChange={() => {
+                    const updated = tableData.map((r) =>
+                      r === row.original ? { ...r, [columnId]: !r[columnId] } : r
+                    );
+                    setTableData(updated);
+                  }}
                 />
               ),
             };
           }
+
           if (typeof col.clickable === "function") {
             return {
               ...col,
@@ -110,8 +132,10 @@ const Table = forwardRef(
               ),
             };
           }
+
           return col;
         });
+
       return enhanceColumns(columns);
     }, [columns, tableData]);
 
@@ -122,22 +146,12 @@ const Table = forwardRef(
           ? [
               {
                 id: "select",
-                header: ({ table }) => (
-                  <input
-                    type="checkbox"
-                    checked={table.getIsAllPageRowsSelected()}
-                    onChange={(e) => {
-                      table.getToggleAllPageRowsSelectedHandler()(e);
-                    }}
-                  />
-                ),
+                header: () => <></>,
                 cell: ({ row }) => (
                   <input
                     type="checkbox"
-                    checked={row.getIsSelected()}
-                    onChange={(e) => {
-                      row.getToggleSelectedHandler()(e);
-                    }}
+                    checked={checkboxSelection[row.id] || false}
+                    onChange={() => handleCheckBox(row)}
                     onClick={(e) => e.stopPropagation()}
                   />
                 ),
@@ -155,22 +169,28 @@ const Table = forwardRef(
           : []),
         ...processedColumns,
       ],
-      state: { rowSelection },
-      onRowSelectionChange: setRowSelection,
+      state: isSplit ? { rowSelection: clickSelection } : {},
+      onRowSelectionChange: isSplit
+        ? (updater) => {
+            const next =
+              typeof updater === "function" ? updater(clickSelection) : updater;
+            const single = Object.keys(next).length
+              ? { [Object.keys(next)[0]]: true }
+              : {};
+            setClickSelection(single);
+          }
+        : undefined,
       getCoreRowModel: getCoreRowModel(),
-      ...(paginationEnabled
-        ? { getPaginationRowModel: getPaginationRowModel() }
-        : {}),
-      enableRowSelection: true,
+      ...(paginationEnabled ? { getPaginationRowModel: getPaginationRowModel() } : {}),
+      enableRowSelection: isSplit,
     });
 
     useImperativeHandle(
       ref,
       () => ({
         getUpdatedData: () => tableData,
-        getSelectedRowIds: () => {
-          return table.getSelectedRowModel().rows.map((row) => row.original.id);
-        },
+        getSelectedRowIds: () =>
+          table.getSelectedRowModel().rows.map((r) => r.original.id),
         updateRowsById: (ids, updater) => {
           const updated = tableData.map((row) =>
             ids.includes(row.id) ? updater(row) : row
@@ -178,11 +198,45 @@ const Table = forwardRef(
           setTableData(updated);
         },
         clearSelection: () => {
-          setRowSelection({});
+          setClickSelection({});
+          setCheckboxSelection({});
         },
       }),
       [tableData, table]
     );
+
+    useEffect(() => {
+      const selectedIds = Object.keys(clickSelection).filter((id) => clickSelection[id]);
+      const selectedRows = table
+        .getCoreRowModel()
+        .rows.filter((r) => selectedIds.includes(r.id))
+        .map((r) => r.original);
+
+      if (isSplit && typeof onRowSelectionChange === "function") {
+        onRowSelectionChange(selectedRows);
+      }
+    }, [clickSelection]);
+
+
+    const handleAllCheckbox = () => {
+      const allSelected = table.getCoreRowModel().rows.every((r) => checkboxSelection[r.id]);
+      const newSelection = {};
+      table.getCoreRowModel().rows.forEach((row) => {
+        newSelection[row.id] = !allSelected;
+      });
+      setCheckboxSelection(newSelection);
+
+      const selectedRows = table
+        .getCoreRowModel()
+        .rows.filter((r) => newSelection[r.id])
+        .map((r) => r.original);
+
+      if (isSplit && typeof onCheckboxSelectionChange === "function") {
+        onCheckboxSelectionChange(selectedRows);
+      } else if (!isSplit && typeof onRowSelectionChange === "function") {
+        onRowSelectionChange(selectedRows);
+      }
+    };
 
     useEffect(() => {
       if (paginationEnabled) {
@@ -190,28 +244,21 @@ const Table = forwardRef(
       }
     }, [currentPageSize, table, paginationEnabled]);
 
-    useEffect(() => {
-      if (typeof onRowSelectionChange === "function") {
-        const selectRows = table
-          .getSelectedRowModel()
-          .rows.map((row) => row.original);
-        onRowSelectionChange(selectRows);
-      }
-    }, [rowSelection, table, onRowSelectionChange]);
-
     const pageCount = table.getPageCount();
     const pageIndex = table.getState().pagination.pageIndex;
     const pageNumbers = Array.from({ length: pageCount }, (_, i) => i);
 
     const renderCell = (cell) => {
-      const rendered = flexRender(
-        cell.column.columnDef.cell,
-        cell.getContext()
-      );
+      const rendered = flexRender(cell.column.columnDef.cell, cell.getContext());
       if (typeof rendered === "string") {
         return rendered.split("\n").map((line, i) => <div key={i}>{line}</div>);
       }
       return <div>{rendered}</div>;
+    };
+
+    const renderMultiLine = (value) => {
+      if (typeof value !== "string") return value;
+      return value.split("\n").map((line, i) => <div key={i}>{line}</div>);
     };
 
     const pageSizeOptions = useMemo(() => {
@@ -221,12 +268,6 @@ const Table = forwardRef(
       if (!options.includes(nextRounded)) options.push(nextRounded);
       return options;
     }, [tableData]);
-
-    const renderMultiLine = (value) => {
-      if (typeof value !== "string") return value;
-
-      return value.split("\n").map((line, i) => <div key={i}>{line}</div>);
-    };
 
     return (
       <>
@@ -244,10 +285,7 @@ const Table = forwardRef(
               <div className="top-button fRight">
                 <div className="select-box">
                   <Select
-                    options={pageSizeOptions.map((n) => ({
-                      key: n,
-                      value: n,
-                    }))}
+                    options={pageSizeOptions.map((n) => ({ key: n, value: n }))}
                     nonEmpty={true}
                     value={currentPageSize}
                     onChange={(e) => setCurrentPageSize(Number(e.target.value))}
@@ -262,13 +300,8 @@ const Table = forwardRef(
           ref={scrollRef}
           style={
             maxHeight
-              ? {
-                  maxHeight: `${maxHeight}px`,
-                  overflowY: "auto",
-                }
-              : {
-                  overflowY: "visible",
-                }
+              ? { maxHeight: `${maxHeight}px`, overflowY: "auto" }
+              : { overflowY: "visible" }
           }
         >
           <table>
@@ -278,9 +311,18 @@ const Table = forwardRef(
                   <th rowSpan={2}>
                     <input
                       type="checkbox"
-                      checked={table.getIsAllPageRowsSelected()}
-                      onChange={(e) => {
-                        table.getToggleAllPageRowsSelectedHandler()(e);
+                      onChange={handleAllCheckbox}
+                      checked={
+                        table.getCoreRowModel().rows.length > 0 &&
+                        table.getCoreRowModel().rows.every((r) => checkboxSelection[r.id])
+                      }
+                      ref={(input) => {
+                        if (input) {
+                          const all = table.getCoreRowModel().rows;
+                          const someSelected = all.some((r) => checkboxSelection[r.id]);
+                          const allSelected = all.every((r) => checkboxSelection[r.id]);
+                          input.indeterminate = someSelected && !allSelected;
+                        }
                       }}
                     />
                   </th>
@@ -316,10 +358,19 @@ const Table = forwardRef(
                 <tr
                   key={row.id}
                   ref={row.original?._isNew ? newRowRef : null}
-                  className={row.getIsSelected() ? "selected" : ""}
-                  onClick={() => {
+                  className={
+                    isSplit
+                      ? clickSelection[row.id] ? "selected" : ""
+                      : checkboxSelection[row.id] ? "selected" : ""
+                  }
+                  onClick={(e) => {
                     if (row.original._isNew) return;
-                    if (rowSelectionEnabled) row.toggleSelected();
+                    if (e.target.tagName === "INPUT") return;
+                    if (isSplit) {
+                      setClickSelection({ [row.id]: true });
+                    } else {
+                      handleCheckBox(row);
+                    }
                   }}
                 >
                   {row.getVisibleCells().map((cell) => (
@@ -349,7 +400,6 @@ const Table = forwardRef(
                 <li key={num}>
                   <button
                     className={`${num === pageIndex ? "active" : ""}`}
-                    key={num}
                     onClick={() => table.setPageIndex(num)}
                   >
                     {num + 1}

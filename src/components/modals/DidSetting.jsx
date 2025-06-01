@@ -32,6 +32,7 @@ const DidSetting = ({ userInfo }) => {
   const [selectRows, setSelectRows] = useState([]);
   const [didData, setDidData] = useState([]); // 전체 DID data
   const [selectDid, setSelectDid] = useState({});
+  const [checkboxSelected, setCheckboxSelected] = useState([]); // 체크박스 선택
 
   useEffect(() => {
     setTableData(userInfo.dids);
@@ -140,20 +141,27 @@ const DidSetting = ({ userInfo }) => {
 
   // did회선 삭제
   const deleteDidRows = () => {
-    if (selectRows.length === 0) {
+    if (checkboxSelected.length === 0) {
       showAlert({ message: ErrorMessages.nonSelect });
       return;
     }
 
+    if(checkboxSelected.length === tableData.length){
+      showAlert({ message: ErrorMessages.deleteBulk });
+      return;
+    }
+
     showDialog({
-      message: InfoMessages.confirmDelete(selectRows.length),
+      message: InfoMessages.confirmDelete(checkboxSelected.length),
       onConfirm: () => {
-        const selectedIds = selectRows.map((row) => row.id);
+        const selectedIds = checkboxSelected.map((row) => row.id);
         const updated = tableData.filter(
           (row) => !selectedIds.includes(row.id)
         );
         setTableData(updated);
 
+        setCheckboxSelected([]);
+        setSelectDid();
         setSelectRows([]);
         tableRef.current?.clearSelection?.();
 
@@ -479,6 +487,8 @@ const DidSetting = ({ userInfo }) => {
             paginationEnabled={false}
             maxHeight={400}
             onRowSelectionChange={setSelectRows}
+            rowClickSelect={true}
+            onCheckboxSelectionChange={setCheckboxSelected}
           />
         </div>
         <div className="w40p">

@@ -15,10 +15,14 @@ const DidConfig = ({
   deleteDidConfig,
 }) => {
   const { showAlert, showDialog } = useModal();
-
+  const tableRef = useRef();
   const parentRef = useRef();
   const [selectRows, setSelectRows] = useState([]);
   const [inputs, setInputs] = useState({});
+
+  useEffect(() => {
+    setInputs({});
+  }, [didInfo]);
 
   useEffect(() => {
     const initialInputs = {};
@@ -68,6 +72,7 @@ const DidConfig = ({
           (item) => !selectRows.some((s) => s === item)
         );
         deleteDidConfig(config, newList);
+        resetSelectRows();
         setTimeout(() => {
           showAlert({ message: InfoMessages.successDelete });
         }, 0);
@@ -80,11 +85,23 @@ const DidConfig = ({
       message: InfoMessages.confirmAllDelete,
       onConfirm: () => {
         deleteDidConfig(config, []);
+        resetSelectRows();
         setTimeout(() => {
           showAlert({ message: InfoMessages.successDelete });
         }, 0);
       },
     });
+  };
+
+  const addDidConfigAction = () => {
+    addDidConfig(config, inputs);
+    resetSelectRows();
+    setInputs({});
+  };
+
+  const resetSelectRows = () => {
+    setSelectRows([]);
+    tableRef.current?.clearSelection?.();
   };
 
   return (
@@ -180,7 +197,7 @@ const DidConfig = ({
           <Button
             type={BUTTON_CANCEL}
             label={LABELS.ADD}
-            onClick={() => addDidConfig(config, inputs)}
+            onClick={addDidConfigAction}
           />
           <Button type={BUTTON_DELETE} onClick={deleteAction} />
           <Button
@@ -204,6 +221,7 @@ const DidConfig = ({
         <div className="svcBoxR">
           {config.columns && (
             <Table
+              ref={tableRef}
               columns={config.columns}
               data={didInfo[config.dataKey]}
               paginationEnabled={false}
