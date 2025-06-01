@@ -1,11 +1,13 @@
 import React from "react";
 import Input from "../Input";
 import { DID_ADD_FIELDS } from "../../config/FieldsConfig";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setDidFormData } from "../../features/didAddSlice";
+import { KEYS } from "../../constants/Keys";
 
 const AddDidModal = () => {
   const dispatch = useDispatch();
+  const formData = useSelector((state) => state.didAdd);
 
   return (
     <div>
@@ -40,6 +42,7 @@ const AddDidModal = () => {
                           <Input
                             size="sm"
                             type={subField.type}
+                            value={formData[subField.key]}
                             onChange={(e) =>
                               handleSubChange(subField.key, e.target.value)
                             }
@@ -51,7 +54,12 @@ const AddDidModal = () => {
                       ))}
                     </div>
                   ) : (
-                    <Input type={type} onChange={handleChange} size={size} />
+                    <Input
+                      type={type}
+                      value={formData[KEYS.RBT_ID]}
+                      onChange={handleChange}
+                      size={size}
+                    />
                   )}
                 </td>
               </tr>

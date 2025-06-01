@@ -96,7 +96,6 @@ const DidConfig = ({
   const addDidConfigAction = () => {
     addDidConfig(config, inputs);
     resetSelectRows();
-    setInputs({});
   };
 
   const resetSelectRows = () => {
