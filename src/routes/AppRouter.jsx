@@ -20,6 +20,16 @@ const AppRouter = () => {
     <BrowserRouter>
       <PageTracker />
       <Routes>
+      <Route
+          path="/vfras"
+          element={
+            isAuthenticated ? (
+              <Navigate to={ROUTES.SUBSCRIBERS} replace />
+            ) : (
+              <Navigate to={ROUTES.LOGIN} replace />
+            )
+          }
+        />
         <Route
           path={ROUTES.ROOT}
           element={
