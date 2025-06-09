@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/vfras/static/css/main.bae84a80.css",
-    "main.js": "/vfras/static/js/main.2c8a977e.js",
+    "main.js": "/vfras/static/js/main.a6cd33ac.js",
     "static/js/800.572d5b6a.chunk.js": "/vfras/static/js/800.572d5b6a.chunk.js",
     "static/js/168.b501ab93.chunk.js": "/vfras/static/js/168.b501ab93.chunk.js",
     "static/js/747.48ae9b84.chunk.js": "/vfras/static/js/747.48ae9b84.chunk.js",
@@ -20,7 +20,7 @@
     "static/media/Pretendard-Regular.subset.woff2": "/vfras/static/media/Pretendard-Regular.subset.876e22b04ee52b4523d3.woff2",
     "index.html": "/vfras/index.html",
     "main.bae84a80.css.map": "/vfras/static/css/main.bae84a80.css.map",
-    "main.2c8a977e.js.map": "/vfras/static/js/main.2c8a977e.js.map",
+    "main.a6cd33ac.js.map": "/vfras/static/js/main.a6cd33ac.js.map",
     "800.572d5b6a.chunk.js.map": "/vfras/static/js/800.572d5b6a.chunk.js.map",
     "168.b501ab93.chunk.js.map": "/vfras/static/js/168.b501ab93.chunk.js.map",
     "747.48ae9b84.chunk.js.map": "/vfras/static/js/747.48ae9b84.chunk.js.map",
@@ -36,6 +36,6 @@
   },
   "entrypoints": [
     "static/css/main.bae84a80.css",
-    "static/js/main.2c8a977e.js"
+    "static/js/main.a6cd33ac.js"
   ]
 }
