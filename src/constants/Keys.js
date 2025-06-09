@@ -72,4 +72,5 @@ export const KEYS = {
   DESCRIPT : "descript",
   DID_CONFIG : "didConfig",
   ADMIN : "admin",
+  ROLE : "role"
 };

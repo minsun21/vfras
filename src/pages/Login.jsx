@@ -8,6 +8,7 @@ import { KEYS } from "../constants/Keys";
 import { LoginMessages } from "../constants/Message";
 import axios from "../api/axios";
 import { useModal } from "../contexts/ModalContext";
+import { ADMIN_TYPES } from "../config/OPTIONS";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -16,13 +17,54 @@ const Login = () => {
   const { showAlert } = useModal();
 
   const [errMsg, setErrMsg] = useState("");
-  const [data, setData] = useState({});
+  const [formData, setFormData] = useState({});
   const [checkSaveId, setCheckSaveId] = useState(true);
 
   const from = location.state?.from?.pathname || ROUTES.SUBSCRIBERS;
 
   const handleLogin = () => {
-    dispatch(login({ userId: "test", username: "testUser", role: "admin" }));
+    if (!formData[KEYS.ID]) {
+      showAlert({ message: LoginMessages.infoId });
+      return;
+    }
+    if (!formData[KEYS.PASSWORD]) {
+      showAlert({ message: LoginMessages.infoPassword });
+      return;
+    }
+    if (formData[KEYS.ID] === "admin") {
+      dispatch(
+        login({
+          [KEYS.ID]: "admin",
+          [KEYS.NAME]: "admin",
+          [KEYS.ROLE]: ADMIN_TYPES[0].key,
+        })
+      );
+    } else if (formData[KEYS.ID] === "user") {
+      dispatch(
+        login({
+          [KEYS.ID]: "user",
+          [KEYS.NAME]: "user",
+          [KEYS.ROLE]: ADMIN_TYPES[1].key,
+        })
+      );
+    } else if (formData[KEYS.ID] === "guest") {
+      dispatch(
+        login({
+          [KEYS.ID]: "guest",
+          [KEYS.NAME]: "guest",
+          [KEYS.ROLE]: ADMIN_TYPES[2].key,
+        })
+      );
+    } else {
+      dispatch(
+        login({
+          [KEYS.ID]: "admin",
+          [KEYS.NAME]: "admin",
+          [KEYS.ROLE]: ADMIN_TYPES[0].key,
+        })
+      );
+    }
+
     navigate(from, { replace: true });
 
     // axios
@@ -50,6 +92,19 @@ const Login = () => {
     //   });
   };
 
+  const onChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleLogin();
+    }
+  };
+
   return (
     <>
       <section className="loginPage">
@@ -65,21 +120,26 @@ const Login = () => {
               <span>{errMsg}</span>
             </div>
             <div className="loginTit">{LABELS.ADMIN_LOGIN}</div>
+            <span>admin, user, geust로 로그인할 수 있습니다.(비밀번호 : 1)</span>
             <div className="form-field">
               <input
                 type="text"
                 id="inputId"
-                name={KEYS.ADMIN_ID}
-                value={data[KEYS.ADMIN_ID]}
+                name={KEYS.ID}
+                value={formData[KEYS.ID] || ""}
                 className="form-input w100p"
+                onChange={onChange}
+                onKeyDown={handleKeyDown}
                 placeholder={LoginMessages.infoId}
               />
               <input
                 type="password"
                 id="inputPass"
                 name={KEYS.PASSWORD}
-                value={data[KEYS.PASSWORD]}
+                value={formData[KEYS.PASSWORD] || ""}
                 className="form-input w100p"
+                onChange={onChange}
+                onKeyDown={handleKeyDown}
                 placeholder={LoginMessages.infoPassword}
               />
             </div>

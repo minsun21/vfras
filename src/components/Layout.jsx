@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, Outlet, useLocation, Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/authSlice";
 import Breadcrumb from "./Breadcrumb";
 import SideBar from "./SideBar";
@@ -10,6 +10,7 @@ import { LABELS } from "../constants/Labels";
 import { useModal } from "../contexts/ModalContext";
 import axios from "../api/axios";
 import { InfoMessages } from "../constants/Message";
+import { KEYS } from "../constants/Keys";
 
 const getCurrentSubMenuTitle = (currentPath) => {
   for (const group of MenusConfig) {
@@ -32,6 +33,7 @@ const getCurrentSubMenuTitle = (currentPath) => {
 const Layout = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const userInfo = useSelector((state) => state.auth.user);
   const { showDialog } = useModal();
 
   const title = getCurrentSubMenuTitle(location.pathname);
@@ -57,7 +59,7 @@ const Layout = () => {
           <div className="header-right">
             <div className="log">
               <span className="adminInfo">
-                <label>관리자(admin)</label>
+                <label>{`${userInfo[KEYS.NAME]}(${userInfo[KEYS.ID]})`}</label>
                 {LABELS.GREETING}
               </span>
               <Link to={ROUTES.PROFILE}>
