@@ -1,4 +1,4 @@
-import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import "../asset/css/basic.css";
@@ -17,20 +17,14 @@ const AppRouter = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return (
-    <Router>
+    <BrowserRouter>
       <PageTracker />
       <Routes>
-      <Route
-          path="/vfras"
-          element={
-            isAuthenticated ? (
-              <Navigate to={ROUTES.SUBSCRIBERS} replace />
-            ) : (
-              <Navigate to={ROUTES.LOGIN} replace />
-            )
-          }
-        />
         <Route
+          path={ROUTES.ROOT}
+          element={<Navigate to={ROUTES.LOGIN} replace />}
+        />
+        {/* <Route
           path={ROUTES.ROOT}
           element={
             isAuthenticated ? (
@@ -39,7 +33,7 @@ const AppRouter = () => {
               <Navigate to={ROUTES.LOGIN} replace />
             )
           }
-        />
+        /> */}
 
         <Route
           element={
@@ -85,7 +79,7 @@ const AppRouter = () => {
         <Route path={ROUTES.UNAUTHORIZED} element={<Unauthorized />} />
         <Route path={ROUTES.ALL} element={<NotFound />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 };
 
