@@ -18,7 +18,7 @@ export const setLoadingHandler = (handler) => {
 };
 
 const instance = axios.create({
-  baseURL: "/api",
+  baseURL: "/web",
   timeout: 10000,
 });
 

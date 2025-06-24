@@ -23,6 +23,14 @@ const Login = () => {
   const from = location.state?.from?.pathname || ROUTES.SUBSCRIBERS;
 
   const handleLogin = () => {
+
+    // axios.put('/login', {
+    //   "adminId": "test",
+    //   "password": 1234
+    // }).then(res =>{
+    //   console.log('logn', res)
+    // })
+
     if (!formData[KEYS.ID]) {
       showAlert({ message: LoginMessages.infoId });
       return;
