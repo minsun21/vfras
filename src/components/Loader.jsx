@@ -23,15 +23,15 @@ const Loader = () => {
     >
       <div
         style={{
-          padding: "20px 30px",
-          backgroundColor: "#fff",
-          borderRadius: "8px",
-          boxShadow: "0 0 10px rgba(0,0,0,0.2)",
-          fontSize: "18px",
+          padding: "25px 40px",
+          backgroundColor: " rgba(255, 255, 255, 0.7)",
+          borderRadius: "20px",
+          boxShadow: "0 0 10px rgba(255, 255, 255, 0.32)",
+          fontSize: "20px",
           fontWeight: "bold",
         }}
       >
-        ⏳ 로딩 중...
+        ⏳ loading ...
       </div>
     </div>
   );

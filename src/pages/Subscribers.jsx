@@ -667,10 +667,11 @@ const Subscriber = () => {
 
   return (
     <div>
+     
       <button onClick={() => axios.get("https://httpstat.us/200?sleep=1000")}>
-        로딩 테스트
+        임시 로딩
       </button>
-      <button
+      <button className="ml20"
         onClick={async () => {
           try {
             await axios.get("https://httpstat.us/401");
@@ -679,7 +680,7 @@ const Subscriber = () => {
           }
         }}
       >
-        세션 테스트
+        임시 세션종료
       </button>
       <Form className="search-box">
         <table className="tbl-input">
