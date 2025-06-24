@@ -119,8 +119,9 @@ const Login = () => {
               ))}
               <span>{errMsg}</span>
             </div>
-            <div className="loginTit">{LABELS.ADMIN_LOGIN}</div>
-            <span>admin, user, geust로 로그인할 수 있습니다.(비밀번호 : 1)</span>
+            <div className="loginTit">{LABELS.ADMIN_LOGIN}
+              <div className="fRight ft13 fw300 tar lh15">admin, user, geust 로 로그인<br/>(비밀번호 : 1)</div>
+            </div>
             <div className="form-field">
               <input
                 type="text"
