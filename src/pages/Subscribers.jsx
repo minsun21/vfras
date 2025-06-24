@@ -667,7 +667,7 @@ const Subscriber = () => {
 
   return (
     <div>
-     
+     {/* 
       <button onClick={() => axios.get("https://httpstat.us/200?sleep=1000")}>
         임시 로딩
       </button>
@@ -682,6 +682,7 @@ const Subscriber = () => {
       >
         임시 세션종료
       </button>
+      */}
       <Form className="search-box">
         <table className="tbl-input">
           <thead>
