@@ -9,6 +9,7 @@ import { LoginMessages } from "../constants/Message";
 import axios from "../api/axios";
 import { useModal } from "../contexts/ModalContext";
 import { persistor } from "../store";
+import { setCookie } from "../utils/cookies";
 
 // persistor.purge().then(() => {
 //   window.location.reload(); // ✅ 저장소 비운 후 새로고침
@@ -55,7 +56,7 @@ const Login = () => {
         const { adminId, adminType, permissions, token } = res.data.resultData;
 
         // 1. token저장
-        localStorage.setItem(KEYS.TOKEN, token);
+        setCookie(token);
 
         // 2. 리덕스 저장
         dispatch(
@@ -65,7 +66,7 @@ const Login = () => {
             [KEYS.PERMISSIONS]: permissions,
           })
         );
-
+        
         // 3. 아이디 저장
         if (checkSaveId) {
           localStorage.setItem(KEYS.SAVED_ID, formData[KEYS.ADMIN_ID]);

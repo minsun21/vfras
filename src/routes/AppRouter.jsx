@@ -22,10 +22,6 @@ const AppRouter = () => {
       <Routes>
         <Route
           path={ROUTES.ROOT}
-          element={<Navigate to={ROUTES.LOGIN} replace />}
-        />
-        {/* <Route
-          path={ROUTES.ROOT}
           element={
             isAuthenticated ? (
               <Navigate to={ROUTES.SUBSCRIBERS} replace />
@@ -33,7 +29,7 @@ const AppRouter = () => {
               <Navigate to={ROUTES.LOGIN} replace />
             )
           }
-        /> */}
+        />
 
         <Route
           element={

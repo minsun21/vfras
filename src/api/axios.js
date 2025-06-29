@@ -3,6 +3,7 @@ import { store } from "../store";
 import { logout } from "../features/authSlice"; // 반드시 정의되어 있어야 함
 import { ErrorMessages } from "../constants/Message";
 import { ROUTES } from "../constants/routes";
+import { deleteCookie, getCookie, setCookie } from "../utils/cookies";
 
 let alertHandler = null;
 let setLoading = null;
@@ -24,12 +25,10 @@ const instance = axios.create({
 
 // 요청 인터셉터
 instance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("accessToken");
+  const token = getCookie();
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
-
-  setLoading?.(true);
   return config;
 });
 
@@ -39,36 +38,56 @@ instance.interceptors.response.use(
     setLoading?.(false);
     return res;
   },
-  (error) => {
+  async (error) => {
     setLoading?.(false);
 
     const status = error.response?.status;
     const message = error.response?.data?.message || error.message;
+    const originalRequest = error.config;
 
+    // ✅ Access Token 만료 시 재발급 시도
+    if (status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const res = await axios.post("/auth/refresh", null, {
+          withCredentials: true, // 🔑 HttpOnly 쿠키 자동 포함
+        });
+
+        const newToken = res.data.token;
+
+        // ✅ 새 토큰 쿠키에 저장
+        setCookie(newToken);
+
+        // ✅ 요청 헤더에 새 토큰 추가
+        originalRequest.headers.Authorization = `Bearer ${newToken}`;
+
+        // ✅ 실패했던 요청 재시도
+        return instance(originalRequest);
+      } catch (refreshError) {
+        // refresh 실패 → 로그아웃 처리
+        deleteCookie("accessToken");
+        store.dispatch(logout());
+
+        alertHandler?.({
+          message: ErrorMessages.expired,
+        });
+
+        return Promise.reject(refreshError);
+      }
+    }
+
+    // ✅ 기타 오류 처리
     if (alertHandler) {
       switch (status) {
-        case 401:
-          localStorage.removeItem("accessToken");
-          alertHandler({
-            message: ErrorMessages.expired,
-            onConfirm: () => {
-              store.dispatch(logout());
-            },
-          });
-          break;
-
         case 403:
           alertHandler({ message: ErrorMessages.noPermission });
           break;
-
         case 404:
           alertHandler({ message: ErrorMessages.noObject });
           break;
-
         case 500:
           alertHandler({ message: ErrorMessages.server });
           break;
-
         default:
           alertHandler({ message });
       }

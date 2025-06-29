@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 const SideBar = () => {
   const location = useLocation();
-  const role = useSelector((state) => state.auth.user?.role); // 예: 'admin'
+  const permissions = useSelector((state) => state.auth.user.permissions);
 
   return (
     <>
@@ -20,7 +20,7 @@ const SideBar = () => {
           <ul className="nav-links">
             {MenusConfig.map((group) => {
               const visibleItems = group.items.filter((item) =>
-                item.roles.includes(role)
+                permissions.includes(item.permission)
               );
               if (visibleItems.length === 0) return null;
 
@@ -32,8 +32,7 @@ const SideBar = () => {
                       <span>{group.title}</span>
                     </Link>
                     {group.items.map((item) => {
-                      if (!item.roles.includes(role)) return null;
-
+                      
                       const activeKey = group.items
                         .filter(
                           (item) =>

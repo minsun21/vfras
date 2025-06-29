@@ -4,14 +4,14 @@ import { ROUTES } from "../../constants/routes";
 
 const PrivateRoute = ({ children, roles = [] }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const role = useSelector((state) => state.auth.user?.role);
+  const permissions = useSelector((state) => state.auth.user.permissions);
   const location = useLocation();
 
   if (!isAuthenticated) {
     return <Navigate to={ROUTES.LOGIN} replace state={{ from: location }} />;
   }
 
-  if (roles.length > 0 && !roles.includes(role)) {
+  if (roles.length > 0 && !roles.some((required) => permissions.includes(required))) {
     return <Navigate to={ROUTES.UNAUTHORIZED} replace />;
   }
 

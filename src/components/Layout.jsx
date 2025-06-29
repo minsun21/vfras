@@ -11,6 +11,7 @@ import { useModal } from "../contexts/ModalContext";
 import axios from "../api/axios";
 import { InfoMessages } from "../constants/Message";
 import { KEYS } from "../constants/Keys";
+import { deleteCookie } from "../utils/cookies";
 
 const getCurrentSubMenuTitle = (currentPath) => {
   for (const group of MenusConfig) {
@@ -42,10 +43,11 @@ const Layout = () => {
     showDialog({
       message: InfoMessages.confirmLogout,
       onConfirm: () => {
-        // axios.put(ROUTES.LOGOUT).then((res)=>{
-        //   dispatch(logout());
-        // })
-        dispatch(logout());
+        axios.put(ROUTES.LOGOUT).then((res)=>{
+          console.log('res', res)
+          deleteCookie();
+          dispatch(logout());
+        })
       },
     });
   };
@@ -59,7 +61,7 @@ const Layout = () => {
           <div className="header-right">
             <div className="log">
               <span className="adminInfo">
-                <label>{`${userInfo[KEYS.NAME]}(${userInfo[KEYS.ID]})`}</label>
+                <label>{`${userInfo[KEYS.ADMIN_ID]}`}</label>
                 {LABELS.GREETING}
               </span>
               <Link to={ROUTES.PROFILE}>
