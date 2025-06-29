@@ -20,7 +20,7 @@ import { useModal } from "../contexts/ModalContext";
 import PasswordChange from "../components/modals/PasswordChange";
 import axios from "../api/axios";
 import { KEYS } from "../constants/Keys";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/authSlice";
 import { MODAL_SM } from "../components/modals/ModalRenderer";
 import PhoneNumberInput from "../components/PhoneNumberInput";
@@ -29,28 +29,26 @@ import { resetPasswordFields } from "../features/passwordSlice";
 import { store } from "../store";
 
 const ProfileEdit = () => {
+  const adminId = useSelector((state) => state.auth.user[KEYS.ADMIN_ID]);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { showDialog, showAlert, showModal, closeModal } = useModal();
 
   const [formData, setFormData] = useState({});
 
-  const adminId = "";
-
   useEffect(() => {
-    setFormData({
-      [KEYS.ADMIN_TYPE]: "Admin",
-      [KEYS.DEPARTMENT]: "운영팀",
-      [KEYS.ADMIN_ID]: "vFRAS",
-      [KEYS.PASSWORD]: "!sdf423",
-      [KEYS.NAME]: "홍길동",
-      [KEYS.MOBILE]: "010-1234-5678",
-      [KEYS.EMAIL]: "test@lguplus.co.kr",
-    });
-
-    // axios.get(ROUTES.PROFILE, adminId).then((res) => {
-    //   setFormData((prev) => ({ ...prev, ...res.data }));
-    // });
+    axios
+      .get(ROUTES.PROFILE, {
+        params: {
+          adminId: "test",
+        },
+      })
+      .then((res) => {
+        // res.data =>{ key1: value1, key2: value2 } 형태여야 함
+        console.log("res, res");
+        // setData(prev => ({ ...prev, ...res.data }));
+      });
   }, []);
 
   const validate = () => {
@@ -101,14 +99,14 @@ const ProfileEdit = () => {
       content: <PasswordChange />,
       header: LABELS.PASSWORD_CHANGE,
       onConfirm: () => changePassword(),
-      onClose : () =>  dispatch(resetPasswordFields()),
+      onClose: () => dispatch(resetPasswordFields()),
       size: MODAL_SM,
     });
   };
 
   const changePassword = () => {
     const passwordData = store.getState().changePassword;
-    console.log(passwordData)
+    console.log(passwordData);
     // 1. 빈 값 확인
     if (hasEmptyValue(passwordData)) {
       showAlert({

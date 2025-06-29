@@ -31,15 +31,15 @@ export const KEYS = {
   ADDRESS2: "address2",
   FROM_NO: "fromNo", // 교환기번호 시작
   TO_NO: "toNo", //교환기번호 끝
-  RBT_ID: "rbtId", // 기본 통화연결음 ID
+  RBT_ID: "defRbtType", // 기본 통화연결음 ID
   TEL_FROM_NO: "telFromNo", // 사용자번호 시작
   TEL_TO_NO: "telToNo", // 사용자번호 끝
   SERVICE_TYPE: "serviceType", // 서비스 유형
   SUB_TYPE: "subType", // 가입자 유형
-  SUB_STATUS: "subStatus", // 사용자(가입자) 상태
+  SUB_STATUS: "status", // 사용자(가입자) 상태
   SUB_NO: "subNo", // 가입자 대표 번호
-  SEARCH_DIVISION: "searchDivision", // 검색 구분
-  SEARCH_DIVISION_VALUE: "searchDivisionValue", // 검색 구분 text
+  SEARCH_TYPE: "searchType", // 검색 구분
+  SEARCH_TYPE_VALUE: "searchDivisionValue", // 검색 구분 text
   GERNERAL_PERMISSIONS: "generalPermissions", // 일반 권한
   DEPARTMENT_PERMISSIONS: "departmentPermissions", // 부서 권한
   MODIFY: "modifyPermissions",
@@ -76,4 +76,5 @@ export const KEYS = {
   PERMISSIONS: "permissions",
   TOKEN: "token",
   SAVED_ID: "savedLoginId",
+  KEYWORD : "keyword"
 };

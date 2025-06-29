@@ -44,12 +44,12 @@ export const SERVICE_TYPES = [
 ];
 
 // 검색 구분
-export const SEARCH_DIVISIONS = [
+export const SEARCH_TYPES = [
   { key: "", value: LABELS.ALL },
-  { key: KEYS.NAME, value: LABELS.SUBSCRIBER_NAME },
-  { key: KEYS.SUB_NO, value: LABELS.MAIN_NUMBER },
-  { key: KEYS.PBX_NUMBER, value: LABELS.PBX_NUMBER },
-  { key: KEYS.USER_NUMBER, value: LABELS.USER_NUMBER_F },
+  { key: "NAME", value: LABELS.SUBSCRIBER_NAME },
+  { key: "SUBSRIBER_NO", value: LABELS.MAIN_NUMBER },
+  { key: "RANGE_TEL", value: LABELS.PBX_NUMBER },
+  { key: "TEL_NO", value: LABELS.USER_NUMBER_F },
 ];
 
 // 가입자 조회 > 가입자 유형
@@ -70,9 +70,9 @@ export const SEARCH_SERVICE_TYPES = [
 // 가입자 조회 > 가입자 상태
 export const SEARCH_SUBSRIBERS_STATE = [
   { key: "", value: "전체" },
-  { key: "0", value: "요청" },
+  { key: "0", value: "요청중" },
   { key: "1", value: "가입" },
-  { key: "2", value: "삭제" },
+  { key: "2", value: "삭제대기" },
 ];
 
 // 세션 시간 관리

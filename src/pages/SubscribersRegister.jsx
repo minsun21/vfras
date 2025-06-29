@@ -15,15 +15,11 @@ import { SERVICE_TYPES } from "../config/OPTIONS";
 
 const SubscriberRegister = () => {
   const navigate = useNavigate();
-  const { showDialog, showAlert, showModal } = useModal();
+  const { showDialog, showAlert } = useModal();
 
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
-    // axios.get("/api/user/profile").then(res => {
-    //   setData(prev => ({ ...prev, ...res.data }));
-    // });
-
     initFormData();
   }, []);
 
@@ -67,17 +63,18 @@ const SubscriberRegister = () => {
     formData[KEYS.PASSWORD] = formData[KEYS.SUB_NO].slice(-4);
     console.log("저장할 데이터:", formData);
 
-    // axios.post(ROUTES.SUBSCRIBERS, formData).then(res=>{
-    //   showAlert({
-    //     message: InfoMessages.successAccountSave,
-    //     onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
-    //   });
-    // })
+    axios.post(ROUTES.SUBSCRIBERS, formData).then(res=>{
+      console.log('res' , res)
+      // showAlert({
+      //   message: InfoMessages.successAccountSave,
+      //   onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
+      // });
+    })
 
-    showAlert({
-      message: InfoMessages.successAccountSave,
-      onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
-    });
+    // showAlert({
+    //   message: InfoMessages.successAccountSave,
+    //   onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
+    // });
   };
 
   // 가입자 유형 - 개인이면 서비스 유형에서 기업 선택 불가

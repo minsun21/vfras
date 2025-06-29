@@ -2,7 +2,6 @@ import axios from "axios";
 import { store } from "../store";
 import { logout } from "../features/authSlice"; // 반드시 정의되어 있어야 함
 import { ErrorMessages } from "../constants/Message";
-import { ROUTES } from "../constants/routes";
 import { deleteCookie, getCookie, setCookie } from "../utils/cookies";
 
 let alertHandler = null;

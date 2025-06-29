@@ -4,29 +4,34 @@ import Button from "../components/Button";
 import { profileFields } from "../config/FieldsConfig";
 import { ROUTES } from "../constants/routes";
 import { LABELS } from "../constants/Labels";
+import axios from "../api/axios";
+import { useSelector } from "react-redux";
+import { KEYS } from "../constants/Keys";
 
 const Profile = () => {
-  
+  const adminId = useSelector((state) => state.auth.user[KEYS.ADMIN_ID]);
+
   const navigate = useNavigate();
 
-  const [data, setData] = useState(() =>
-    profileFields.reduce((acc, field) => {
-      acc[field.key] = field.value || "";
-      return acc;
-    }, {})
-  );
+  const [data, setData] = useState({});
 
   useEffect(() => {
-    // axios.get("/api/user/profile").then(res => {
-    // res.data ==> { key1: value1, key2: value2 } 형태여야 함
-    //   setData(prev => ({ ...prev, ...res.data }));
-    // });
+    axios.get(`${ROUTES.PROFILE}/${adminId}`).then((res) => {
+      const resultData = res.data.resultData;
+      // res.data =>{ key1: value1, key2: value2 } 형태여야 함
+      console.log("res, res");
+      // setData(prev => ({ ...prev, ...res.data }));
+    });
   }, []);
 
   return (
     <div>
       <div>
-        <Button label={LABELS.EDIT} onClick={() => navigate(ROUTES.PROFILE_EDIT)} />
+        ddd
+        <Button
+          label={LABELS.EDIT}
+          onClick={() => navigate(ROUTES.PROFILE_EDIT)}
+        />
       </div>
       <table className="info-table">
         <tbody>

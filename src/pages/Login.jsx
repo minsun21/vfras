@@ -9,10 +9,11 @@ import { LoginMessages } from "../constants/Message";
 import axios from "../api/axios";
 import { useModal } from "../contexts/ModalContext";
 import { persistor } from "../store";
-import { setCookie } from "../utils/cookies";
+import { deleteCookie, setCookie } from "../utils/cookies";
 
 // persistor.purge().then(() => {
 //   window.location.reload(); // ✅ 저장소 비운 후 새로고침
+//   deleteCookie();
 // });
 
 const Login = () => {
