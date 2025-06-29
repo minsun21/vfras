@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../features/authSlice";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -8,7 +8,11 @@ import { KEYS } from "../constants/Keys";
 import { LoginMessages } from "../constants/Message";
 import axios from "../api/axios";
 import { useModal } from "../contexts/ModalContext";
-import { ADMIN_TYPES } from "../config/OPTIONS";
+import { persistor } from "../store";
+
+// persistor.purge().then(() => {
+//   window.location.reload(); // ✅ 저장소 비운 후 새로고침
+// });
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -19,85 +23,65 @@ const Login = () => {
   const [errMsg, setErrMsg] = useState("");
   const [formData, setFormData] = useState({});
   const [checkSaveId, setCheckSaveId] = useState(true);
+ 
+  useEffect(() => {
+    const savedId = localStorage.getItem(KEYS.SAVED_ID);
+    if (savedId) {
+      setFormData((prev) => ({
+        ...prev,
+        [KEYS.ADMIN_ID]: savedId,
+      }));
+    }
+  }, []);
 
   const from = location.state?.from?.pathname || ROUTES.SUBSCRIBERS;
 
   const handleLogin = () => {
-
-    // axios.put('/login', {
-    //   "adminId": "test",
-    //   "password": 1234
-    // }).then(res =>{
-    //   console.log('logn', res)
-    // })
-
-    if (!formData[KEYS.ID]) {
-      showAlert({ message: LoginMessages.infoId });
+    if (!formData[KEYS.ADMIN_ID]) {
+      showAlert({ message: LoginMessages.errorId });
       return;
     }
     if (!formData[KEYS.PASSWORD]) {
-      showAlert({ message: LoginMessages.infoPassword });
+      showAlert({ message: LoginMessages.errorPassword });
       return;
     }
-    if (formData[KEYS.ID] === "admin") {
-      dispatch(
-        login({
-          [KEYS.ID]: "admin",
-          [KEYS.NAME]: "admin",
-          [KEYS.ROLE]: ADMIN_TYPES[0].key,
-        })
-      );
-    } else if (formData[KEYS.ID] === "user") {
-      dispatch(
-        login({
-          [KEYS.ID]: "user",
-          [KEYS.NAME]: "user",
-          [KEYS.ROLE]: ADMIN_TYPES[1].key,
-        })
-      );
-    } else if (formData[KEYS.ID] === "guest") {
-      dispatch(
-        login({
-          [KEYS.ID]: "guest",
-          [KEYS.NAME]: "guest",
-          [KEYS.ROLE]: ADMIN_TYPES[2].key,
-        })
-      );
-    } else {
-      dispatch(
-        login({
-          [KEYS.ID]: "admin",
-          [KEYS.NAME]: "admin",
-          [KEYS.ROLE]: ADMIN_TYPES[0].key,
-        })
-      );
-    }
 
-    navigate(from, { replace: true });
+    axios
+      .put(ROUTES.LOGIN, {
+        [KEYS.ADMIN_ID]: formData[KEYS.ADMIN_ID],
+        [KEYS.PASSWORD]: formData[KEYS.PASSWORD],
+      })
+      .then((res) => {
+        const { adminId, adminType, permissions, token } = res.data.resultData;
 
-    // axios
-    //   .put(ROUTES.LOGIN, data)
-    //   .then((res) => {
-    // if(checkSaveId){
-    //   // 아이디 저장은 로컬 스토리지로
-    //   localStorage.setItem("userInfo", JSON.stringify(reszp.data));
-    // }
-    //     dispatch(
-    // login({ userId: res.data.userId, userName: res.data.userName })
-    //     );
-    //     navigate(from, { replace: true });
-    //   })
-    //   .catch((err) => {
-    //     setErrMsg(LoginMessages.errorId);
-    //     setErrMsg(LoginMessages.errorPassword);
-    //     setErrMsg(LoginMessages.errorIdConfirm);
-    //     setErrMsg(LoginMessages.errorUsing);
-    //     setErrMsg(LoginMessages.errorPasswordAgreement);
-    // 5회 이상 로그인 실패
-    // showAlert({
-    //   message: LoginMessages.errorStopUser,
-    // });
-    //   });
+        // 1. token저장
+        localStorage.setItem(KEYS.TOKEN, token);
+
+        // 2. 리덕스 저장
+        dispatch(
+          login({
+            [KEYS.ADMIN_ID]: adminId,
+            [KEYS.ADMIN_TYPE]: adminType,
+            [KEYS.PERMISSIONS]: permissions,
+          })
+        );
+
+        // 3. 아이디 저장
+        if (checkSaveId) {
+          localStorage.setItem(KEYS.SAVED_ID, formData[KEYS.ADMIN_ID]);
+        } else {
+          localStorage.removeItem(KEYS.SAVED_ID);
+        }
+        
+        navigate(from, { replace: true });
+      })
+      .catch((err) => {
+        console.log(err);
+        let status = err.status;
+        // if (status === 404) {
+        // }
+        // setErrMsg(LoginMessages.errorId);
+      });
   };
 
   const onChange = (e) => {
@@ -127,15 +111,12 @@ const Login = () => {
               ))}
               <span>{errMsg}</span>
             </div>
-            <div className="loginTit">{LABELS.ADMIN_LOGIN}
-              <div className="fRight ft13 fw300 tar lh15">admin, user, geust 로 로그인<br/>(비밀번호 : 1)</div>
-            </div>
             <div className="form-field">
               <input
                 type="text"
                 id="inputId"
-                name={KEYS.ID}
-                value={formData[KEYS.ID] || ""}
+                name={KEYS.ADMIN_ID}
+                value={formData[KEYS.ADMIN_ID] || ""}
                 className="form-input w100p"
                 onChange={onChange}
                 onKeyDown={handleKeyDown}
