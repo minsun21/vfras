@@ -22,10 +22,9 @@ const Login = () => {
   const location = useLocation();
   const { showAlert } = useModal();
 
-  const [errMsg, setErrMsg] = useState("");
   const [formData, setFormData] = useState({});
   const [checkSaveId, setCheckSaveId] = useState(true);
- 
+
   useEffect(() => {
     const savedId = localStorage.getItem(KEYS.SAVED_ID);
     if (savedId) {
@@ -67,22 +66,20 @@ const Login = () => {
             [KEYS.PERMISSIONS]: permissions,
           })
         );
-        
+
         // 3. 아이디 저장
         if (checkSaveId) {
           localStorage.setItem(KEYS.SAVED_ID, formData[KEYS.ADMIN_ID]);
         } else {
           localStorage.removeItem(KEYS.SAVED_ID);
         }
-        
+
         navigate(from, { replace: true });
       })
       .catch((err) => {
-        console.log(err);
-        let status = err.status;
-        // if (status === 404) {
-        // }
-        // setErrMsg(LoginMessages.errorId);
+        if (err.response.data.result === 401) {
+          showAlert({ message: LoginMessages.errorUsing });
+        }
       });
   };
 
@@ -107,12 +104,12 @@ const Login = () => {
             <div className="logoTxt">{LABELS.HOME_TITLE}</div>
           </div>
           <div className="loginBox">
-            <div className="loginMsg">
+            {/* <div className="loginMsg">
               {errMsg.split("\n").map((line, idx) => (
                 <div key={idx}>{line}</div>
               ))}
               <span>{errMsg}</span>
-            </div>
+            </div> */}
             <div className="form-field">
               <input
                 type="text"

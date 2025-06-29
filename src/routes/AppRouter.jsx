@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import "../asset/css/basic.css";
@@ -11,14 +11,12 @@ import PrivateRoute from "../components/routes/PrivateRoute";
 import PublicRoute from "../components/routes/PublicRoute";
 import { MenusConfig, NonMenuConfig } from "../config/MenusConfig";
 import { ROUTES } from "../constants/routes";
-import PageTracker from "../components/PageTracker";
 
 const AppRouter = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return (
-    <HashRouter>
-      <PageTracker />
+    <BrowserRouter>
       <Routes>
         <Route
           path={ROUTES.ROOT}
@@ -75,7 +73,7 @@ const AppRouter = () => {
         <Route path={ROUTES.UNAUTHORIZED} element={<Unauthorized />} />
         <Route path={ROUTES.ALL} element={<NotFound />} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 };
 

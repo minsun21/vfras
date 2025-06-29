@@ -29,12 +29,12 @@ const LvManage = () => {
     setChangeLineCount(lvNumbers.length);
     setCurrentLineCount(lvNumbers.length);
 
-    // axios.get(ROUTES.LV).then(res=>{
-    //   setChangeValue(res.data);
-    //   setCurrentValue(res.data);
-    //   setChangeLineCount(res.data.length);
-    //   setCurrentLineCount(res.data.length);
-    // })
+    axios.get(ROUTES.LV).then(res=>{
+      // setChangeValue(res.data);
+      // setCurrentValue(res.data);
+      // setChangeLineCount(res.data.length);
+      // setCurrentLineCount(res.data.length);
+    })
   }, []);
 
   const handleChange = (e) => {

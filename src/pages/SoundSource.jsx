@@ -117,7 +117,7 @@ const SoundSource = () => {
         ref={tableRef}
         columns={SOUND_SOURCE_COLUMNS}
         data={data}
-        pageSize={10}
+        pageSize={5}
         rowSelectionEnabled={false}
       />
     </>

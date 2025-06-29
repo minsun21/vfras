@@ -45,52 +45,52 @@ instance.interceptors.response.use(
     const originalRequest = error.config;
 
     // ✅ Access Token 만료 시 재발급 시도
-    if (status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const res = await axios.post("/auth/refresh", null, {
-          withCredentials: true, // 🔑 HttpOnly 쿠키 자동 포함
-        });
+    // if (status === 401 && !originalRequest._retry) {
+    //   originalRequest._retry = true;
+    //   try {
+    //     const res = await axios.post("/auth/refresh", null, {
+    //       withCredentials: true, // 🔑 HttpOnly 쿠키 자동 포함
+    //     });
 
-        const newToken = res.data.token;
+    //     const newToken = res.data.token;
 
-        // ✅ 새 토큰 쿠키에 저장
-        setCookie(newToken);
+    //     // ✅ 새 토큰 쿠키에 저장
+    //     setCookie(newToken);
 
-        // ✅ 요청 헤더에 새 토큰 추가
-        originalRequest.headers.Authorization = `Bearer ${newToken}`;
+    //     // ✅ 요청 헤더에 새 토큰 추가
+    //     originalRequest.headers.Authorization = `Bearer ${newToken}`;
 
-        // ✅ 실패했던 요청 재시도
-        return instance(originalRequest);
-      } catch (refreshError) {
-        // refresh 실패 → 로그아웃 처리
-        deleteCookie("accessToken");
-        store.dispatch(logout());
+    //     // ✅ 실패했던 요청 재시도
+    //     return instance(originalRequest);
+    //   } catch (refreshError) {
+    //     // refresh 실패 → 로그아웃 처리
+    //     deleteCookie("accessToken");
+    //     store.dispatch(logout());
 
-        alertHandler?.({
-          message: ErrorMessages.expired,
-        });
+    //     alertHandler?.({
+    //       message: ErrorMessages.expired,
+    //     });
 
-        return Promise.reject(refreshError);
-      }
-    }
+    //     return Promise.reject(refreshError);
+    //   }
+    // }
 
     // ✅ 기타 오류 처리
-    if (alertHandler) {
-      switch (status) {
-        case 403:
-          alertHandler({ message: ErrorMessages.noPermission });
-          break;
-        case 404:
-          alertHandler({ message: ErrorMessages.noObject });
-          break;
-        case 500:
-          alertHandler({ message: ErrorMessages.server });
-          break;
-        default:
-          alertHandler({ message });
-      }
-    }
+    // if (alertHandler) {
+    //   switch (status) {
+    //     case 403:
+    //       alertHandler({ message: ErrorMessages.noPermission });
+    //       break;
+    //     case 404:
+    //       alertHandler({ message: ErrorMessages.noObject });
+    //       break;
+    //     case 500:
+    //       alertHandler({ message: ErrorMessages.server });
+    //       break;
+    //     default:
+    //       alertHandler({ message });
+    //   }
+    // }
 
     return Promise.reject(error);
   }

@@ -55,7 +55,7 @@ export const LoginMessages = {
   errorId: `올바른 아이디를 입력해주세요`,
   errorPassword: `올바른 비밀번호를 입력해주세요`,
   errorIdConfirm: `아이디를 확인할 수 없습니다`,
-  errorUsing: `이용중지 처리된 계정입니다. 시스템 관리자에게 문의하세요`,
+  errorUsing: `이용중지 처리된 계정입니다.\n시스템 관리자에게 문의하세요`,
   errorNetwork: `일시적인 시스템 장애로 로그인할 수 없습니다`,
   errorPasswordAgreement: `비밀번호가 일치하지 않습니다\n비밀번호 검증 5회 실패 시 \n계정이 자동중지 처리되오니 주의하세요`,
   errorStopUser:

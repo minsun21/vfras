@@ -4,7 +4,7 @@ export const ROUTES = {
   SUBSCRIBERS_MANAGE: "/subscriber/manage", // 가입자 관리
   SUBSCRIBERS_APPROVE: "/subscriber/status/approve", // 가입자 승인
   SUBSCRIBERS_DETAIL: (subNo) => `/subscriber/${subNo}`, // 가입자 상세
-  LV: "/lv", // 국번 관리
+  LV: "/lvs", // 국번 관리
   CONTENTS: "/contents", // 음원 조회
   ACCOUNTS: "/accounts", // 관리자 계정 관리
   ACCOUNT_REGISTER: "/accounts/register", // 관리자 계정 등록
