@@ -12,7 +12,7 @@ import { ROUTES } from "../constants/routes";
 import {
   ErrorMessages,
   InfoMessages,
-  subsriberMessages,
+  SubsriberMessages,
 } from "../constants/Message";
 import { LABELS } from "../constants/Labels";
 import { useModal } from "../contexts/ModalContext";
@@ -65,7 +65,7 @@ const SubscriberManageEdit = () => {
         if (err) {
           let message = err.response.data.resultData;
           if (message.includes("Subscriber No Not Found")) {
-            showAlert({ message: subsriberMessages.noSearchSubsriber });
+            showAlert({ message: SubsriberMessages.noSearchSubsriber });
           } else {
             showAlert({ message: ErrorMessages.server });
           }
@@ -76,7 +76,7 @@ const SubscriberManageEdit = () => {
   const search = () => {
     if (!searchSubNo) {
       showAlert({
-        message: subsriberMessages.searchPlaceHolder2,
+        message: SubsriberMessages.searchPlaceHolder2,
       });
       return;
     }
@@ -197,7 +197,7 @@ const SubscriberManageEdit = () => {
 
         setTimeout(() => {
           showAlert({
-            message: subsriberMessages.resetPassword,
+            message: SubsriberMessages.resetPassword,
           });
         }, 100);
       });

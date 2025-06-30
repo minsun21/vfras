@@ -10,7 +10,7 @@ export const isValidPhone = (phone) => {
   //   const cleaned = phone.replace(/[^0-9]/g, "");
   // const regex = /^01[016789]-?\d{3,4}-?\d{4}$/;
   // return regex.test(phone);
-  return phone.length > 11;
+  return phone.length >= 11;
 };
 
 export const isValidPassword = (password) => {
@@ -94,11 +94,11 @@ export const fieldsValidate = (fields, formData) => {
     }
 
     // ✅ 5. 비밀번호 검사
-    if (type === "password") {
+    if (key === KEYS.PASSWORD1) {
       if (!isValidPassword(value)) {
         return ErrorMessages.invalidPassword;
       }
-      if (value !== formData[KEYS.PASSWORD_CONFIRM]) {
+      if (value !== formData[KEYS.PASSWORD2]) {
         return ErrorMessages.correctPassword;
       }
     }

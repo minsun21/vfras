@@ -429,7 +429,7 @@ export const ACCOUNTS_REGISTER_FIELDS = [
     type: "text",
   },
   {
-    key: KEYS.PASSWORD,
+    key: KEYS.PASSWORD1,
     label: LABELS.PASSWORD,
     type: "password",
     required: true,
@@ -438,7 +438,7 @@ export const ACCOUNTS_REGISTER_FIELDS = [
     max: 20,
   },
   {
-    key: KEYS.PASSWORD_CONFIRM,
+    key: KEYS.PASSWORD2,
     label: LABELS.PASSWORD_CONFIRM,
     type: "password",
     required: true,

@@ -11,7 +11,7 @@ import { useModal } from "../../contexts/ModalContext";
 import {
   ErrorMessages,
   InfoMessages,
-  subsriberMessages,
+  SubsriberMessages,
 } from "../../constants/Message";
 import { MODAL_MD } from "./ModalRenderer";
 import { useDispatch } from "react-redux";
@@ -558,7 +558,7 @@ const DidSetting = ({ userInfo }) => {
           <div className="configBox">
             {selectRows.length === 0 ? (
               <div className="configAlertTxt">
-                {subsriberMessages.didPlaceHolder}
+                {SubsriberMessages.didPlaceHolder}
               </div>
             ) : selectRows.length === 1 && selectDid ? (
               <div className="lvAccordion">

@@ -64,21 +64,22 @@ export const LoginMessages = {
 
 export const AccountMessages = {
   searchPlaceHolder: `아이디, 이름, 부서를 입력해주세요.`,
+  adminIdPresent: "해당 아이디가 이미 존재합니다.",
 };
 
 export const SoundSourceMessages = {
   searchPlaceHolder: `음원코드, 제목/설명을 입력해주세요.`,
 };
 
-export const subsriberMessages = {
+export const SubsriberMessages = {
   searchPlaceHolder: `가입자명, 번호를 입력해주세요.`,
   approvedError: `이미 가입되었거나 삭제된 행은 선택할 수 없습니다.`,
   resetPasswordConfirm: `패스워드를 초기화 하시겠습니까?`,
   didPlaceHolder: `부가서비스 설정을 원하는 행을 선택하세요.`,
   searchPlaceHolder2: `대표번호를 입력해주세요.`,
   resetPassword: `초기화 되었습니다.`,
-  noSearchSubsriber : "가입자를 찾을 수 없습니다.",
-  subsriberPresent : "해당 대표번호가 이미 존재합니다."
+  noSearchSubsriber: "가입자를 찾을 수 없습니다.",
+  subsriberPresent: "해당 대표번호가 이미 존재합니다.",
 };
 
 export const LvMessages = {

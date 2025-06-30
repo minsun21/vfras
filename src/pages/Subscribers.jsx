@@ -13,7 +13,7 @@ import { LABELS } from "../constants/Labels";
 import {
   ErrorMessages,
   InfoMessages,
-  subsriberMessages,
+  SubsriberMessages,
 } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 import { KEYS } from "../constants/Keys";
@@ -46,7 +46,6 @@ const Subscriber = () => {
   useEffect(() => {
     // search();
   }, []);
-
 
   const navigateManage = (row) => {
     navigate(ROUTES.SUBSCRIBERS_MANAGE, {
@@ -85,7 +84,7 @@ const Subscriber = () => {
     for (const selectedRow of selectRows) {
       if (selectedRow[KEYS.SUB_STATUS] !== SEARCH_SUBSRIBERS_STATE[1].key) {
         showAlert({
-          message: subsriberMessages.approvedError,
+          message: SubsriberMessages.approvedError,
         });
         return;
       }
@@ -125,8 +124,8 @@ const Subscriber = () => {
       return row[KEYS.SUB_NO];
     });
     const inputs = {
-      data: subNos
-    }
+      data: subNos,
+    };
     axios.delete(ROUTES.SUBSCRIBERS, inputs).then((res) => {
       search();
       showAlert({
@@ -197,7 +196,7 @@ const Subscriber = () => {
                     className="form-input"
                     name={KEYS.KEYWORD}
                     value={searchInputs[KEYS.KEYWORD] || ""}
-                    placeholder={subsriberMessages.searchPlaceHolder}
+                    placeholder={SubsriberMessages.searchPlaceHolder}
                     onChange={onChange}
                   />
                   <span>

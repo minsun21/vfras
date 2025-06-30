@@ -6,7 +6,7 @@ import Input from "../components/Input";
 import Select from "../components/Select";
 import { ROUTES } from "../constants/routes";
 import { useModal } from "../contexts/ModalContext";
-import { ErrorMessages, InfoMessages } from "../constants/Message";
+import { AccountMessages, ErrorMessages, InfoMessages } from "../constants/Message";
 import axios from "../api/axios";
 import { fieldsValidate } from "../utils/FormValidation";
 import { KEYS } from "../constants/Keys";
@@ -31,7 +31,6 @@ const AccountRegister = () => {
       message: InfoMessages.confirmRegister,
       onConfirm: () => {
         closeModal();
-
         setTimeout(() => {
           const errValidate = fieldsValidate(
             ACCOUNTS_REGISTER_FIELDS,
@@ -50,19 +49,22 @@ const AccountRegister = () => {
   };
 
   const save = () => {
-    console.log("저장할 데이터:", formData);
-
-    // axios.post(ROUTES.ACCOUNTS, formData).then(res=>{
-    //   showAlert({
-    //     message: InfoMessages.successAccountSave,
-    //     onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
-    //   });
-    // })
-
-    showAlert({
-      message: InfoMessages.successAccountSave,
-      onConfirm: () => navigate(ROUTES.ACCOUNTS),
-    });
+    axios
+      .post(ROUTES.ACCOUNTS, formData)
+      .then((res) => {
+        showAlert({
+          message: InfoMessages.successAccountSave,
+          onConfirm: () => navigate(ROUTES.ACCOUNTS),
+        });
+      })
+      .catch((err) => {
+        let message = err.response.data.resultData;
+        if (message.includes("Admin is Present")) {
+          showAlert({ message: AccountMessages.adminIdPresent });
+        } else {
+          showAlert({ message: ErrorMessages.server });
+        }
+      });
   };
 
   const cancel = () => {
@@ -122,11 +124,8 @@ const AccountRegister = () => {
                         />
                         <span className="comment">{comment}</span>
                       </div>
-                    ) : key === KEYS.MOBILE ? (
-                      <PhoneNumberInput
-                        value={value}
-                        onChange={handleChange}
-                      />
+                    // ) : key === KEYS.MOBILE ? (
+                    //   <PhoneNumberInput value={value} onChange={handleChange} />
                     ) : key === KEYS.PASSWORD_CONFIRM ? (
                       <div>
                         <Input

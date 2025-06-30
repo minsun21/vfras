@@ -9,7 +9,7 @@ import { ROUTES } from "../constants/routes";
 import {
   ErrorMessages,
   InfoMessages,
-  subsriberMessages,
+  SubsriberMessages,
 } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 import { fieldsValidate } from "../utils/FormValidation";
@@ -75,7 +75,7 @@ const SubscriberRegister = () => {
       .catch((err) => {
         let message = err.response.data.resultData;
         if (message.includes("Subscriber is Present")) {
-          showAlert({ message: subsriberMessages.subsriberPresent });
+          showAlert({ message: SubsriberMessages.subsriberPresent });
         } else {
           showAlert({ message: ErrorMessages.server });
         }
