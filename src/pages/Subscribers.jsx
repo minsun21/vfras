@@ -158,7 +158,7 @@ const Subscriber = () => {
       params: {
         ...searchInputs,
         page: page,
-        size: 4,
+        size: size,
       },
     });
   };

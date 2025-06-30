@@ -6,7 +6,11 @@ import Input from "../components/Input";
 import RadioGroup from "../components/RadioGroup";
 import Form from "../components/Form";
 import { ROUTES } from "../constants/routes";
-import { InfoMessages } from "../constants/Message";
+import {
+  ErrorMessages,
+  InfoMessages,
+  subsriberMessages,
+} from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 import { fieldsValidate } from "../utils/FormValidation";
 import axios from "../api/axios";
@@ -49,8 +53,6 @@ const SubscriberRegister = () => {
   };
 
   const handleSave = () => {
-    console.log("저장할 데이터:", formData);
-
     const errValidate = fieldsValidate(SUBSRIBERS_REGISTER_FIELDS, formData);
     if (errValidate) {
       showAlert({
@@ -61,20 +63,23 @@ const SubscriberRegister = () => {
 
     // 비밀번호 자동 설정
     formData[KEYS.PASSWORD] = formData[KEYS.SUB_NO].slice(-4);
-    console.log("저장할 데이터:", formData);
 
-    axios.post(ROUTES.SUBSCRIBERS, formData).then(res=>{
-      console.log('res' , res)
-      // showAlert({
-      //   message: InfoMessages.successAccountSave,
-      //   onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
-      // });
-    })
-
-    // showAlert({
-    //   message: InfoMessages.successAccountSave,
-    //   onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
-    // });
+    axios
+      .post(ROUTES.SUBSCRIBERS, formData)
+      .then((res) => {
+        showAlert({
+          message: InfoMessages.successAccountSave,
+          onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
+        });
+      })
+      .catch((err) => {
+        let message = err.response.data.resultData;
+        if (message.includes("Subscriber is Present")) {
+          showAlert({ message: subsriberMessages.subsriberPresent });
+        } else {
+          showAlert({ message: ErrorMessages.server });
+        }
+      });
   };
 
   // 가입자 유형 - 개인이면 서비스 유형에서 기업 선택 불가
@@ -88,7 +93,9 @@ const SubscriberRegister = () => {
         return opt.key === "2" ? { ...opt, disabled: true } : opt;
       } else if (subType === "1") {
         // 법인: 기업(2)만 활성화
-        return opt.key === "2" ? { ...opt, disabled: false } : { ...opt, disabled: true };
+        return opt.key === "2"
+          ? { ...opt, disabled: false }
+          : { ...opt, disabled: true };
       }
       return opt;
     });
