@@ -30,10 +30,10 @@ const AccountManage = () => {
 
   const search = () => {
     axios.get(ROUTES.ACCOUNTS, { params: { keyword } }).then((res) => {
-      const result = res.data.resultData.map(data => {
+      const result = res.data.resultData.map((data) => {
         data[KEYS.LAST_ACCESS_TIME] = data.loginInfo[KEYS.LAST_ACCESS_TIME];
         return data;
-      })
+      });
       if (result.length === 0) {
         showAlert({
           message: InfoMessages.noSearchResult,
@@ -81,31 +81,16 @@ const AccountManage = () => {
   };
 
   const deleteAccount = () => {
-    // for (const selectedRow of selectRows) {
-    //   axios.delete(ROUTES.ACCOUNTS_MANAGE(selectedRow.adminId)).then(res => {
-    //     showAlert({
-    //       message: InfoMessages.successDelete,
-    //     });
-    //   })
-    // }
-
-    setData((prev) =>
-      prev.filter(
-        (item) =>
-          !selectRows.some(
-            (selected) => selected[KEYS.ADMIN_ID] === item[KEYS.ADMIN_ID]
-          )
-      )
-    );
-
-    tableRef.current?.clearSelection();
-    setselectRows([]); // 선택 초기화
-
-    setTimeout(() => {
-      showAlert({
-        message: InfoMessages.successDelete,
+    console.log()
+    axios
+      .delete(ROUTES.ACCOUNTS_MANAGE(selectRows[0][KEYS.ADMIN_ID]))
+      .then((res) => {
+        search();
+        setselectRows([]); // 선택 초기화
+        showAlert({
+          message: InfoMessages.successDelete,
+        });
       });
-    }, 100);
   };
 
   const topBtns = () => {
@@ -148,6 +133,8 @@ const AccountManage = () => {
         data={data}
         onRowSelectionChange={setselectRows}
         topBtns={topBtns}
+        rowSelectionEnabled={false}
+        rowClickSelect={true}
       />
     </>
   );
