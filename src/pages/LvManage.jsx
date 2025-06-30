@@ -72,16 +72,6 @@ const LvManage = () => {
       .map((line) => line.trim()) // 공백 제거
       .filter((line) => line !== ""); // 빈 줄 제거
 
-    // const result = cleanedLines.join("\n");
-
-    // setChangeValue(result);
-    // setCurrentValue(result);
-    // setChangeLineCount(cleanedLines.length);
-    // setCurrentLineCount(cleanedLines.length);
-
-    // 안되면 닫고 alert날려
-    // closeModal();
-
     axios
       .put(ROUTES.LV, cleanedLines)
       .then((res) => {

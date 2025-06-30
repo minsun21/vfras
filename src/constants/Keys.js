@@ -21,6 +21,7 @@ export const KEYS = {
   MOBILE: "mobile", // 전화번호
   EMAIL: "email",
   PASSWORD: "password",
+  NEW_PASSWORD: "newPassword",
   OLD_PASSWORD: "oldPassword", // 기존 비밀번호
   NEW_PASSWORD1: "newPassword1", // 신규 비밀번호1
   NEW_PASSWORD2: "newPassword2", // 신규 비밀번호2(확인))

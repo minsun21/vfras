@@ -21,7 +21,6 @@ import { KEYS } from "../constants/Keys";
 import axios from "../api/axios";
 import Form from "../components/Form";
 import PasswordReset from "../components/modals/PasswordReset";
-import { SUBSRIBERS_INFO_DUMMY } from "../config/DataConfig";
 import DidSettingPersonal from "../components/modals/DidSettingPersonal";
 import { MODAL_SM } from "../components/modals/ModalRenderer";
 import { SERVICE_TYPES, SUBSRIBERS_TYPES } from "../config/OPTIONS";
@@ -50,7 +49,7 @@ const SubscriberManageEdit = () => {
       .get(ROUTES.SUBSCRIBERS_DETAIL(subNo))
       .then((res) => {
         const result = res.data.resultData;
-        result[KEYS.PASSWORD] = "********";
+        result[KEYS.PASSWORD] = "****";
         result[KEYS.SERVICE_TYPE] = findMappedValue(
           SERVICE_TYPES,
           result[KEYS.SERVICE_TYPE]
@@ -186,20 +185,24 @@ const SubscriberManageEdit = () => {
     });
   };
 
+  // 비밀번호 초기화 (대표번호 뒷자리)
   const restPassword = () => {
-    // 대표번호 뒷자리로 초기화
-    setFormData({
-      ...formData,
-      [KEYS.PASSWORD]: formData[KEYS.SUB_NO].slice(-4),
-    });
+    axios
+      .put(ROUTES.RESET_SUBSCRIBER_PASSWORD(formData[KEYS.SUB_NO]), null, {
+        params: {
+          [KEYS.SUB_NO]: formData[KEYS.SUB_NO],
+          [KEYS.NEW_PASSWORD]: formData[KEYS.SUB_NO].slice(-4),
+        },
+      })
+      .then((res) => {
+        closeModal();
 
-    closeModal();
-
-    setTimeout(() => {
-      showAlert({
-        message: subsriberMessages.resetPassword,
+        setTimeout(() => {
+          showAlert({
+            message: subsriberMessages.resetPassword,
+          });
+        }, 100);
       });
-    }, 100);
   };
 
   return (
