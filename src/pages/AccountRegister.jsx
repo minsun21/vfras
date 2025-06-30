@@ -59,11 +59,11 @@ const AccountRegister = () => {
       })
       .catch((err) => {
         let message = err.response.data.resultData;
-        if (message.includes("Admin is Present")) {
-          showAlert({ message: AccountMessages.adminIdPresent });
-        } else {
-          showAlert({ message: ErrorMessages.server });
-        }
+        // if (message.includes("Admin is Present")) {
+        //   showAlert({ message: AccountMessages.adminIdPresent });
+        // } else {
+        //   showAlert({ message: ErrorMessages.server });
+        // }
       });
   };
 
@@ -126,7 +126,7 @@ const AccountRegister = () => {
                       </div>
                     // ) : key === KEYS.MOBILE ? (
                     //   <PhoneNumberInput value={value} onChange={handleChange} />
-                    ) : key === KEYS.PASSWORD_CONFIRM ? (
+                    ) : key === KEYS.PASSWORD2 ? (
                       <div>
                         <Input
                           value={value}
@@ -136,8 +136,8 @@ const AccountRegister = () => {
                           disabled={disabled}
                         />
                         <span className="password-confirm">
-                          {formData[KEYS.PASSWORD] !==
-                            formData[KEYS.PASSWORD_CONFIRM] &&
+                          {formData[KEYS.PASSWORD1] !==
+                            formData[KEYS.PASSWORD2] &&
                             ErrorMessages.correctPassword}
                         </span>
                       </div>

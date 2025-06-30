@@ -434,8 +434,6 @@ export const ACCOUNTS_REGISTER_FIELDS = [
     type: "password",
     required: true,
     comment: LABELS.PASSWORD_CHECK,
-    min: 8,
-    max: 20,
   },
   {
     key: KEYS.PASSWORD2,
