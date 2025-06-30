@@ -31,10 +31,15 @@ import axios from "../api/axios";
 const Subscriber = () => {
   const tableRef = useRef();
   const navigate = useNavigate();
-  const role = useSelector((state) => state.auth.user?.role);
   const { showAlert, showDialog } = useModal();
 
-  const [searchInputs, setSearchInputs] = useState({});
+  const [searchInputs, setSearchInputs] = useState({
+    [KEYS.KEYWORD]: "",
+    [KEYS.SEARCH_TYPE]: SEARCH_TYPES[0].key,
+    [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[0].key,
+    [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[0].key,
+    [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[0].key,
+  });
   const [filterInputs, setFilterInputs] = useState({});
   const [data, setData] = useState([]);
   const [filterdData, setFilteredData] = useState([]);
@@ -42,30 +47,9 @@ const Subscriber = () => {
   const [selectRows, setselectRows] = useState([]);
 
   useEffect(() => {
-    setSearchInputs({
-      [KEYS.SEARCH_TYPE]: SEARCH_TYPES[0].key,
-      [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[0].key,
-      [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[0].key,
-      [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[0].key,
-    });
-
     initFilterInputs();
 
-    // axios 
-    //   .get(ROUTES.SUBSCRIBERS, {
-    //     params: {
-    //       [KEYS.KEYWORD]: "",
-    //       page: 0,
-    //       [KEYS.SEARCH_TYPE]: "",
-    //       [KEYS.SERVICE_TYPE]: "",
-    //       size: 20,
-    //       [KEYS.SUB_STATUS]: "",
-    //       [KEYS.SUB_TYPE]: "",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.log("res", res);
-    //   });
+    search();
   }, []);
 
   const initFilterInputs = () => {
@@ -176,30 +160,17 @@ const Subscriber = () => {
     }, 100);
   };
 
-  const search = () => {
-    initFilterInputs();
-
-    // showAlert({
-    //   message: InfoMessages.noSearchResult,
-    // });
-
-    console.log('searchInputs', searchInputs);
-
-    axios
-    .get(ROUTES.SUBSCRIBERS, {
+  const search = (page = 0, size = 20) => {
+    return axios.get(ROUTES.SUBSCRIBERS, {
       params: {
         ...searchInputs,
-        page: 1,
-        size: 20,
+        page: page,
+        size: 4,
       },
-    })
-    .then((res) => {
-      console.log("res", res);
     });
   };
 
   const topBtns = () => {
-    if (role !== KEYS.ADMIN) return null;
     return (
       <>
         <Button label={LABELS.APPROVE} onClick={approvedSub} />
@@ -303,16 +274,13 @@ const Subscriber = () => {
       </Form>
       <Table
         ref={tableRef}
-        columns={
-          role === KEYS.ADMIN
-            ? SUBSRIBES_COLUMNS(navigateManage)
-            : SUBSRIBES_COLUMNS_USER
-        }
+        columns={SUBSRIBES_COLUMNS(navigateManage)}
         data={filterdData}
         setTableData={setFilteredData}
-        // pageSize={10}
         onRowSelectionChange={setselectRows}
         topBtns={topBtns}
+        manualPagination={true}
+        fetchData={search}
       />
     </div>
   );

@@ -78,5 +78,7 @@ export const KEYS = {
   SAVED_ID: "savedLoginId",
   KEYWORD : "keyword",
   LOG_ACTION : "logAction",
-  LOG_TIME : "logTime"
+  LOG_TIME : "logTime",
+  DEF_RBT_TYPE : "defRbtType",
+  DID_COUNT : "didCount"
 };

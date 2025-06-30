@@ -24,8 +24,9 @@ import PasswordReset from "../components/modals/PasswordReset";
 import { SUBSRIBERS_INFO_DUMMY } from "../config/DataConfig";
 import DidSettingPersonal from "../components/modals/DidSettingPersonal";
 import { MODAL_SM } from "../components/modals/ModalRenderer";
-import { SUBSRIBERS_TYPES } from "../config/OPTIONS";
+import { SERVICE_TYPES, SUBSRIBERS_TYPES } from "../config/OPTIONS";
 import { store } from "../store";
+import { findMappedValue } from "../utils/Util";
 
 const SubscriberManageEdit = () => {
   const navigate = useNavigate();
@@ -38,25 +39,39 @@ const SubscriberManageEdit = () => {
   useEffect(() => {
     // userid로 정보 검색
     if (!state) return;
-    // const subNo = state[KEYS.SUB_NO];
-    // setSearchSubNo(subNo);
+    const subNo = state[KEYS.SUB_NO];
+    setSearchSubNo(subNo);
 
-    // 초기화
-    // axios.get(ROUTES.SUBSCRIBERS_DETAIL(subNo)).then(res=>{
-    //   setFormData(res.data);
-    // })
-    // 임시
-    const selectRow = state.selectRow;
-    setFormData({
-      ...SUBSRIBERS_INFO_DUMMY,
-      ...selectRow,
-      [KEYS.PASSWORD]: 1234,
-      [KEYS.DID_CONFIG]:
-        selectRow[KEYS.SUB_TYPE] === SUBSRIBERS_TYPES[0].value
-          ? SUBSRIBERS_INFO_DUMMY.did_personal
-          : SUBSRIBERS_INFO_DUMMY.dids,
-    });
+    getData(subNo);
   }, [state]);
+
+  const getData = (subNo) => {
+    axios
+      .get(ROUTES.SUBSCRIBERS_DETAIL(subNo))
+      .then((res) => {
+        const result = res.data.resultData;
+        result[KEYS.PASSWORD] = "********";
+        result[KEYS.SERVICE_TYPE] = findMappedValue(
+          SERVICE_TYPES,
+          result[KEYS.SERVICE_TYPE]
+        );
+        result[KEYS.SUB_TYPE] = findMappedValue(
+          SUBSRIBERS_TYPES,
+          result[KEYS.SUB_TYPE]
+        );
+        setFormData(result);
+      })
+      .catch((err) => {
+        if (err) {
+          let message = err.response.data.resultData;
+          if (message.includes("Subscriber No Not Found")) {
+            showAlert({ message: subsriberMessages.noSearchSubsriber });
+          } else {
+            showAlert({ message: ErrorMessages.server });
+          }
+        }
+      });
+  };
 
   const search = () => {
     if (!searchSubNo) {
@@ -65,15 +80,7 @@ const SubscriberManageEdit = () => {
       });
       return;
     }
-    setFormData(SUBSRIBERS_INFO_DUMMY);
-    // axios.get(ROUTES.SUBSCRIBERS_DETAIL(searchSubNo)).then((res) => {
-    //   if(!res.data){
-    //     showAlert({
-    //       message: InfoMessages.noSearchResult,
-    //     });
-    //   }
-    //   setFormData(res.data);
-    // });
+    getData(searchSubNo);
   };
 
   const handleSave = () => {
@@ -302,9 +309,6 @@ const SubscriberManageEdit = () => {
                         />
                       ) : key === KEYS.DID_CONFIG ? (
                         <div className="rowBox">
-                          {/* {LABELS.CURRENT}
-                            <span>{value.length}</span>
-                            {LABELS.DID_VALUE} */}
                           {formData[KEYS.SUB_TYPE] === // 임시
                           SUBSRIBERS_TYPES[0].value ? (
                             <label>
@@ -315,7 +319,7 @@ const SubscriberManageEdit = () => {
                           ) : (
                             <label>
                               {LABELS.CURRENT}
-                              <span>{value.length}</span>
+                              <span>{formData[KEYS.DID_COUNT]}</span>
                               {LABELS.DID_VALUE}
                             </label>
                           )}

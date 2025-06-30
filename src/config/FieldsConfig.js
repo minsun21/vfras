@@ -371,7 +371,7 @@ export const SUBSRIBERS_EDIT_FIELDS = [
     ],
   },
   {
-    key: KEYS.RBT_ID,
+    key: KEYS.DEF_RBT_TYPE,
     label: LABELS.DEFAULT_CALLRING,
     type: "number",
     required: true,

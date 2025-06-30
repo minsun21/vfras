@@ -54,13 +54,16 @@ const Table = forwardRef(
     useEffect(() => {
       if (manualPagination && typeof fetchData === "function") {
         fetchData(pageInfo.pageIndex, pageInfo.pageSize).then((res) => {
-          setTableData(res.content || []);
+          const resultData = res.data.resultData;
+          console.log(resultData);
+          setTableData(resultData.subscribers || []);
           setPageInfo((prev) => ({
             ...prev,
-            totalPages: res.totalPages,
-            totalElements: res.totalElements,
+            totalPages: resultData.totalPages,
+            totalElements: resultData.totalElements,
           }));
         });
+        
       }
     }, [pageInfo.pageIndex, pageInfo.pageSize]);
 
@@ -103,7 +106,9 @@ const Table = forwardRef(
                   checked={!!row.original[columnId]}
                   onChange={() => {
                     const updated = tableData.map((r) =>
-                      r === row.original ? { ...r, [columnId]: !r[columnId] } : r
+                      r === row.original
+                        ? { ...r, [columnId]: !r[columnId] }
+                        : r
                     );
                     setTableData(updated);
                   }}
@@ -181,7 +186,9 @@ const Table = forwardRef(
           }
         : undefined,
       getCoreRowModel: getCoreRowModel(),
-      ...(paginationEnabled ? { getPaginationRowModel: getPaginationRowModel() } : {}),
+      ...(paginationEnabled
+        ? { getPaginationRowModel: getPaginationRowModel() }
+        : {}),
       enableRowSelection: isSplit,
     });
 
@@ -206,7 +213,9 @@ const Table = forwardRef(
     );
 
     useEffect(() => {
-      const selectedIds = Object.keys(clickSelection).filter((id) => clickSelection[id]);
+      const selectedIds = Object.keys(clickSelection).filter(
+        (id) => clickSelection[id]
+      );
       const selectedRows = table
         .getCoreRowModel()
         .rows.filter((r) => selectedIds.includes(r.id))
@@ -217,9 +226,10 @@ const Table = forwardRef(
       }
     }, [clickSelection]);
 
-
     const handleAllCheckbox = () => {
-      const allSelected = table.getCoreRowModel().rows.every((r) => checkboxSelection[r.id]);
+      const allSelected = table
+        .getCoreRowModel()
+        .rows.every((r) => checkboxSelection[r.id]);
       const newSelection = {};
       table.getCoreRowModel().rows.forEach((row) => {
         newSelection[row.id] = !allSelected;
@@ -249,7 +259,10 @@ const Table = forwardRef(
     const pageNumbers = Array.from({ length: pageCount }, (_, i) => i);
 
     const renderCell = (cell) => {
-      const rendered = flexRender(cell.column.columnDef.cell, cell.getContext());
+      const rendered = flexRender(
+        cell.column.columnDef.cell,
+        cell.getContext()
+      );
       if (typeof rendered === "string") {
         return rendered.split("\n").map((line, i) => <div key={i}>{line}</div>);
       }
@@ -314,13 +327,19 @@ const Table = forwardRef(
                       onChange={handleAllCheckbox}
                       checked={
                         table.getCoreRowModel().rows.length > 0 &&
-                        table.getCoreRowModel().rows.every((r) => checkboxSelection[r.id])
+                        table
+                          .getCoreRowModel()
+                          .rows.every((r) => checkboxSelection[r.id])
                       }
                       ref={(input) => {
                         if (input) {
                           const all = table.getCoreRowModel().rows;
-                          const someSelected = all.some((r) => checkboxSelection[r.id]);
-                          const allSelected = all.every((r) => checkboxSelection[r.id]);
+                          const someSelected = all.some(
+                            (r) => checkboxSelection[r.id]
+                          );
+                          const allSelected = all.every(
+                            (r) => checkboxSelection[r.id]
+                          );
                           input.indeterminate = someSelected && !allSelected;
                         }
                       }}
@@ -360,8 +379,12 @@ const Table = forwardRef(
                   ref={row.original?._isNew ? newRowRef : null}
                   className={
                     isSplit
-                      ? clickSelection[row.id] ? "selected" : ""
-                      : checkboxSelection[row.id] ? "selected" : ""
+                      ? clickSelection[row.id]
+                        ? "selected"
+                        : ""
+                      : checkboxSelection[row.id]
+                      ? "selected"
+                      : ""
                   }
                   onClick={(e) => {
                     if (row.original._isNew) return;
