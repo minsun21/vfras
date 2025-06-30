@@ -55,7 +55,6 @@ const Table = forwardRef(
       if (manualPagination && typeof fetchData === "function") {
         fetchData(pageInfo.pageIndex, pageInfo.pageSize).then((res) => {
           const resultData = res.data.resultData;
-          console.log(resultData);
           setTableData(resultData.subscribers || []);
           setPageInfo((prev) => ({
             ...prev,

@@ -25,7 +25,6 @@ import {
 } from "../config/OPTIONS";
 import Form from "../components/Form";
 import { findMappedValue } from "../utils/Util";
-import { useSelector } from "react-redux";
 import axios from "../api/axios";
 
 const Subscriber = () => {
@@ -40,24 +39,14 @@ const Subscriber = () => {
     [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[0].key,
     [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[0].key,
   });
-  const [filterInputs, setFilterInputs] = useState({});
   const [data, setData] = useState([]);
 
   const [selectRows, setselectRows] = useState([]);
 
   useEffect(() => {
-    initFilterInputs();
-
-    search();
+    // search();
   }, []);
 
-  const initFilterInputs = () => {
-    setFilterInputs({
-      [KEYS.SUB_TYPE]: SEARCH_SUBSRIBERS_TYPES[0].key,
-      [KEYS.SERVICE_TYPE]: SEARCH_SERVICE_TYPES[0].key,
-      [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[0].key,
-    });
-  };
 
   const navigateManage = (row) => {
     navigate(ROUTES.SUBSCRIBERS_MANAGE, {
@@ -132,25 +121,18 @@ const Subscriber = () => {
   };
 
   const deleteAccount = () => {
-    // axios.delete(ROUTES.SUBSCRIBERS, selectRows).then((res) => {
-    //   showAlert({
-    //     message: InfoMessages.successDelete,
-    //   });
-    // });
-
-    const filteredData = data.filter(
-      (item) =>
-        !selectRows.some((r) => r[KEYS.ADMIN_ID] === item[KEYS.ADMIN_ID])
-    );
-    setData(filteredData);
-    tableRef.current?.clearSelection();
-
-    // closeModal();
-    setTimeout(() => {
+    const subNos = selectRows.map((row) => {
+      return row[KEYS.SUB_NO];
+    });
+    const inputs = {
+      data: subNos
+    }
+    axios.delete(ROUTES.SUBSCRIBERS, inputs).then((res) => {
+      search();
       showAlert({
         message: InfoMessages.successDelete,
       });
-    }, 100);
+    });
   };
 
   const search = (page = 0, size = 20) => {
