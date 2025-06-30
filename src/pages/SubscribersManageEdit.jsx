@@ -26,6 +26,7 @@ import { MODAL_SM } from "../components/modals/ModalRenderer";
 import { SERVICE_TYPES, SUBSRIBERS_TYPES } from "../config/OPTIONS";
 import { store } from "../store";
 import { findMappedValue } from "../utils/Util";
+import { fieldsValidate } from "../utils/FormValidation";
 
 const SubscriberManageEdit = () => {
   const navigate = useNavigate();
@@ -89,13 +90,13 @@ const SubscriberManageEdit = () => {
         closeModal();
 
         setTimeout(() => {
-          // const errValidate = fieldsValidate(SUBSRIBERS_EDIT_FIELDS, formData);
-          // if (errValidate) {
-          //   showAlert({
-          //     message: errValidate,
-          //     onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
-          //   });
-          // }
+          const errValidate = fieldsValidate(SUBSRIBERS_EDIT_FIELDS, formData);
+          if (errValidate) {
+            showAlert({
+              message: errValidate,
+            });
+            return;
+          }
 
           save();
         }, 50);
@@ -104,16 +105,13 @@ const SubscriberManageEdit = () => {
   };
 
   const save = () => {
-    // axios.put(ROUTES.SUBSCRIBERS_DETAIL(formData[KEYS.SUB_NO]),formData ).then(res=>{
-    //   showAlert({
-    //     message: InfoMessages.successEdit,
-    //     onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
-    //   });
-    // })
-    showAlert({
-      message: InfoMessages.successEdit,
-      onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
-    });
+    axios
+      .put(ROUTES.SUBSCRIBERS_DETAIL(formData[KEYS.SUB_NO]), formData)
+      .then((res) => {
+        showAlert({
+          message: InfoMessages.successEdit,
+        });
+      });
   };
 
   const cancelEdit = () => {
