@@ -5,37 +5,30 @@ import { LvMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 import { ROUTES } from "../constants/routes";
 import axios from "../api/axios";
-import { useSelector } from "react-redux";
-import { KEYS } from "../constants/Keys";
 
 const LvManage = () => {
-  const role = useSelector((state) => state.auth.user?.role);
-  const { showDialog, showAlert, closeModal } = useModal();
+  const { showDialog, showAlert } = useModal();
   const [changeValue, setChangeValue] = useState("");
   const [currentValue, setCurrentValue] = useState("");
   const [changeLineCount, setChangeLineCount] = useState(0);
   const [currentLineCount, setCurrentLineCount] = useState(0);
 
-  const lvNumbers = [
-    7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
-    7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
-    7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654, 7654,
-  ];
-
   useEffect(() => {
-    const initData = lvNumbers.join("\n");
-    setChangeValue(initData);
-    setCurrentValue(initData);
-    setChangeLineCount(lvNumbers.length);
-    setCurrentLineCount(lvNumbers.length);
-
-    axios.get(ROUTES.LV).then(res=>{
-      // setChangeValue(res.data);
-      // setCurrentValue(res.data);
-      // setChangeLineCount(res.data.length);
-      // setCurrentLineCount(res.data.length);
-    })
+    getInitData();
   }, []);
+
+  const getInitData = () => {
+    axios.get(ROUTES.LV).then((res) => {
+      console.log('res', res)
+      const resultData = res.data.resultData.lvs;
+      const lvs = resultData.join("\n");
+
+      setChangeValue(lvs);
+      setCurrentValue(lvs);
+      setChangeLineCount(resultData.length);
+      setCurrentLineCount(resultData.length);
+    });
+  };
 
   const handleChange = (e) => {
     const input = e.target.value;
@@ -80,22 +73,31 @@ const LvManage = () => {
       .map((line) => line.trim()) // 공백 제거
       .filter((line) => line !== ""); // 빈 줄 제거
 
-    const result = cleanedLines.join("\n");
+    // const result = cleanedLines.join("\n");
 
-    setChangeValue(result);
-    setCurrentValue(result);
-    setChangeLineCount(cleanedLines.length);
-    setCurrentLineCount(cleanedLines.length);
+    // setChangeValue(result);
+    // setCurrentValue(result);
+    // setChangeLineCount(cleanedLines.length);
+    // setCurrentLineCount(cleanedLines.length);
 
     // 안되면 닫고 alert날려
-    closeModal();
+    // closeModal();
 
-    // 성공
-    setTimeout(() => {
-      showAlert({
-        message: LvMessages.successChange,
+    axios
+      .put(ROUTES.LV, cleanedLines)
+      .then((res) => {
+        setTimeout(() => {
+          showAlert({
+            message: LvMessages.successChange,
+          });
+          getInitData();
+        }, 100);
+      })
+      .catch((err) => {
+        if (err.response.data.result === 500) {
+          showAlert({ message: err.response.data.resultData });
+        }
       });
-    }, 100);
   };
 
   return (
@@ -108,13 +110,11 @@ const LvManage = () => {
               {LABELS.COUNT_RESULT(changeLineCount)}
             </span>
           </div>
-          {role === KEYS.ADMIN && (
-            <Button
-              type={BUTTON_CANCEL}
-              label={LABELS.ALL_CHANGE}
-              onClick={clickAllChange}
-            />
-          )}
+          <Button
+            type={BUTTON_CANCEL}
+            label={LABELS.ALL_CHANGE}
+            onClick={clickAllChange}
+          />
         </div>
 
         <textarea
@@ -123,7 +123,6 @@ const LvManage = () => {
           type="number"
           rows={5}
           cols={5}
-          disabled={role !== KEYS.ADMIN}
         />
       </div>
 

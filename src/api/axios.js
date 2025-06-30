@@ -24,10 +24,13 @@ const instance = axios.create({
 
 // 요청 인터셉터
 instance.interceptors.request.use((config) => {
+  config.headers['Content-Type'] = 'application/json';
+
   const token = getCookie();
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers['x-authentication'] = token;
   }
+
   return config;
 });
 
@@ -78,12 +81,12 @@ instance.interceptors.response.use(
     // ✅ 기타 오류 처리
     // if (alertHandler) {
     //   switch (status) {
-    //     case 403:
-    //       alertHandler({ message: ErrorMessages.noPermission });
-    //       break;
-    //     case 404:
-    //       alertHandler({ message: ErrorMessages.noObject });
-    //       break;
+    //     // case 403:
+    //     //   alertHandler({ message: ErrorMessages.noPermission });
+    //     //   break;
+    //     // case 404:
+    //     //   alertHandler({ message: ErrorMessages.noObject });
+    //     //   break;
     //     case 500:
     //       alertHandler({ message: ErrorMessages.server });
     //       break;
