@@ -38,18 +38,15 @@ const ProfileEdit = () => {
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
-    axios
-      .get(ROUTES.PROFILE, {
-        params: {
-          adminId: "test",
-        },
-      })
-      .then((res) => {
-        // res.data =>{ key1: value1, key2: value2 } 형태여야 함
-        console.log("res, res");
-        // setData(prev => ({ ...prev, ...res.data }));
-      });
+    initData();
   }, []);
+
+  const initData=()=>{
+    axios.get(`${ROUTES.PROFILE}/${adminId}`).then((res) => {
+      const result = res.data.resultData;
+      setFormData(result);
+    });
+  }
 
   const validate = () => {
     const newErrors = {};
@@ -73,17 +70,16 @@ const ProfileEdit = () => {
     if (!validate()) {
       return;
     }
-    console.log("저장할 데이터:", formData);
-    // axios.put(ROUTES.PASSWORD_CHANGE(adminId), formData).then((res) => {
-    //   showAlert({
-    //     message: ProfileMessages.successUserEdit,
-    //     onConfirm: () => navigate(ROUTES.PROFILE),
-    //   });
-    // });
+    const data = {
+      [KEYS.EMAIL]: formData[KEYS.EMAIL],
+      [KEYS.MOBILE]: formData[KEYS.MOBILE].replaceAll("-", ""),
+    };
 
-    showAlert({
-      message: ProfileMessages.successUserEdit,
-      onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
+    axios.put(ROUTES.PASSWORD_CHANGE(adminId), data).then((res) => {
+      showAlert({
+        message: ProfileMessages.successUserEdit, 
+        onConfirm: () => initData(),
+      });
     });
   };
 
@@ -104,6 +100,7 @@ const ProfileEdit = () => {
     });
   };
 
+  // 비밀번호 변경
   const changePassword = () => {
     const passwordData = store.getState().changePassword;
     console.log(passwordData);
@@ -203,8 +200,8 @@ const ProfileEdit = () => {
                           onClick={clickChangePassword}
                         />
                       </div>
-                    ) : key === KEYS.MOBILE ? (
-                      <PhoneNumberInput value={value} onChange={handleChange} />
+                    // ) : key === KEYS.MOBILE ? (
+                    //   <PhoneNumberInput value={value} onChange={handleChange} />
                     ) : (
                       <>
                         <Input

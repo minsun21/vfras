@@ -26,7 +26,6 @@ const SoundSource = () => {
         params: { [KEYS.KEYWORD]: keyword },
       })
       .then((res) => {
-        console.log('res', res)
         const result = res.data.resultData;
         if (result.length === 0) {
           showAlert({

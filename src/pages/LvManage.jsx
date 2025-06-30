@@ -19,7 +19,6 @@ const LvManage = () => {
 
   const getInitData = () => {
     axios.get(ROUTES.LV).then((res) => {
-      console.log('res', res)
       const resultData = res.data.resultData.lvs;
       const lvs = resultData.join("\n");
 

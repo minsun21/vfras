@@ -14,6 +14,7 @@ import { deleteCookie, setCookie } from "../utils/cookies";
 // persistor.purge().then(() => {
 //   window.location.reload(); // ✅ 저장소 비운 후 새로고침
 //   deleteCookie();
+//    window.location.href = '/login';
 // });
 
 const Login = () => {

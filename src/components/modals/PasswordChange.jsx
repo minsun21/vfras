@@ -2,10 +2,13 @@ import React from "react";
 import Input from "../Input";
 import { PASSWORD_CHANGE_FIELDS } from "../../config/FieldsConfig";
 import { LABELS } from "../../constants/Labels";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setPasswordField } from "../../features/passwordSlice";
 
 const PasswordChange = () => {
+
+  const changePassword = useSelector((state) => state.changePassword);
+
   const dispatch = useDispatch();
 
   const handleChange = (key, value) => {
