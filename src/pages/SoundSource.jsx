@@ -13,7 +13,7 @@ import Form from "../components/Form";
 const SoundSource = () => {
   const tableRef = useRef();
   const { showAlert } = useModal();
-  const [keyword, setKeyword] = useState("10");
+  const [keyword, setKeyword] = useState("");
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -26,13 +26,15 @@ const SoundSource = () => {
         params: { [KEYS.KEYWORD]: keyword },
       })
       .then((res) => {
-        if (res.data.length === 0) {
+        console.log('res', res)
+        const result = res.data.resultData;
+        if (result.length === 0) {
           showAlert({
             message: InfoMessages.noSearchResult,
           });
           return;
         }
-        setData(res.data);
+        setData(result);
       });
   };
 
@@ -62,7 +64,7 @@ const SoundSource = () => {
         ref={tableRef}
         columns={SOUND_SOURCE_COLUMNS}
         data={data}
-        pageSize={5}
+        pageSize={15}
         rowSelectionEnabled={false}
       />
     </>

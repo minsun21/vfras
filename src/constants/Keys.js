@@ -31,7 +31,7 @@ export const KEYS = {
   ADDRESS2: "address2",
   FROM_NO: "fromNo", // 교환기번호 시작
   TO_NO: "toNo", //교환기번호 끝
-  RBT_ID: "defRbtType", // 기본 통화연결음 ID
+  RBT_ID: "rbtId", // 기본 통화연결음 ID
   TEL_FROM_NO: "telFromNo", // 사용자번호 시작
   TEL_TO_NO: "telToNo", // 사용자번호 끝
   SERVICE_TYPE: "serviceType", // 서비스 유형
