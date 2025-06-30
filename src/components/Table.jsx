@@ -63,7 +63,6 @@ const Table = forwardRef(
             totalElements: resultData.totalElements,
           }));
         });
-        
       }
     }, [pageInfo.pageIndex, pageInfo.pageSize]);
 
@@ -199,9 +198,10 @@ const Table = forwardRef(
         getSelectedRowIds: () =>
           table.getSelectedRowModel().rows.map((r) => r.original.id),
         updateRowsById: (ids, updater) => {
-          const updated = tableData.map((row) =>
-            ids.includes(row.id) ? updater(row) : row
-          );
+          const updated = tableData.map((row) => {
+            return ids.includes(row.id || row.subNo) ? updater(row) : row;
+          });
+
           setTableData(updated);
         },
         clearSelection: () => {

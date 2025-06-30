@@ -42,7 +42,6 @@ const Subscriber = () => {
   });
   const [filterInputs, setFilterInputs] = useState({});
   const [data, setData] = useState([]);
-  const [filterdData, setFilteredData] = useState([]);
 
   const [selectRows, setselectRows] = useState([]);
 
@@ -103,24 +102,18 @@ const Subscriber = () => {
       }
     }
 
-    // axios.put(ROUTES.SUBSCRIBERS_APPROVE, selectRows).then(res=>{
-    //   const selectedIds = tableRef.current.getSelectedRowIds();
-    //   tableRef.current.updateRowsById(selectedIds, (row) => ({
-    //     ...row,
-    //     state: LABELS.SUBSCRIBE,
-    //   }));
-    //   showAlert({
-    //     message: InfoMessages.successEdit,
-    //   });
-    // })
+    const inputs = selectRows.map((row) => {
+      return row[KEYS.SUB_NO];
+    });
 
-    const selectedIds = tableRef.current.getSelectedRowIds();
-    tableRef.current.updateRowsById(selectedIds, (row) => ({
-      ...row,
-      [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[2].key,
-    }));
-    showAlert({
-      message: InfoMessages.successEdit,
+    axios.put(ROUTES.SUBSCRIBERS_APPROVE, inputs).then((res) => {
+      tableRef.current.updateRowsById(inputs, (row) => ({
+        ...row,
+        [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[2].key,
+      }));
+      showAlert({
+        message: InfoMessages.successEdit,
+      });
     });
   };
 
@@ -185,17 +178,6 @@ const Subscriber = () => {
       [e.target.name]: e.target.value,
     });
   };
-
-  useEffect(() => {
-    const filtered = data.filter((item) => {
-      return Object.entries(filterInputs).every(([key, val]) => {
-        if (!val) return true;
-        return item[key] === val;
-      });
-    });
-
-    setFilteredData(filtered);
-  }, [filterInputs, data]);
 
   return (
     <div>
@@ -275,8 +257,8 @@ const Subscriber = () => {
       <Table
         ref={tableRef}
         columns={SUBSRIBES_COLUMNS(navigateManage)}
-        data={filterdData}
-        setTableData={setFilteredData}
+        data={data}
+        setTableData={setData}
         onRowSelectionChange={setselectRows}
         topBtns={topBtns}
         manualPagination={true}
