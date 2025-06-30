@@ -33,7 +33,7 @@ export const ACCOUNTS_LOGS_COLUMNS = (func) => {
       header: LABELS.DEPARTMENT,
     },
     {
-      accessorKey: KEYS.USER_TYPE,
+      accessorKey: KEYS.ADMIN_TYPE,
       header: LABELS.CLASSIFICATION,
     },
     {
@@ -191,13 +191,13 @@ export const SUBSRIBES_COLUMNS_USER = [
   },
 ];
 
-export const access_detail_columns = [
+export const ACCESS_DETAIL_COLUMNS = [
   {
-    accessorKey: KEYS.ACCESS_TIME,
+    accessorKey: KEYS.LOG_TIME,
     header: LABELS.ACCESS_TIME,
   },
   {
-    accessorKey: KEYS.CONTENT,
+    accessorKey: KEYS.LOG_ACTION,
     header: LABELS.CONTENT,
   },
 ];

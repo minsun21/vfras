@@ -65,7 +65,7 @@ export const MenusConfig = [
         title: LABELS.HISTORY,
         path: ROUTES.HISTORY,
         component: lazy(() => import("../pages/AccountLogs")),
-        permission: "SUBS_R",
+        permission: "ACCNT_R",
       },
     ],
   },

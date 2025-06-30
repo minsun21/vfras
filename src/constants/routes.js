@@ -10,8 +10,8 @@ export const ROUTES = {
   ACCOUNT_REGISTER: "/accounts/register", // 관리자 계정 등록
   ACCOUNT_EDIT: "/accounts/manage", // 관리자 계정 상세
   ACCOUNTS_MANAGE: (adminId) => `/accounts/${adminId}`, // 관리자 계정 삭제 / 상세 조회
-  HISTORY: "/history", // 접속 계정 이력
-  HISTORY_DETAIL: (adminId) => `/history/${adminId}`, // 상세 이력
+  HISTORY: "/histories", // 접속 계정 이력
+  HISTORY_DETAIL: (adminId) => `/histories/${adminId}`, // 상세 이력
   PASSWORD_CHANGE: (adminId) => `/my/${adminId}/password`, // 비밀번호 변경
   PROFILE_EDIT: (adminId) => `/my/${adminId}`,
   PROFILE: "/my", // 내 정보 조회

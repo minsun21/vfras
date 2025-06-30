@@ -21,7 +21,7 @@ const Table = forwardRef(
       columns,
       data: tableData,
       setTableData,
-      pageSize = 5,
+      pageSize = 15,
       rowSelectionEnabled = true,
       rowClickSelect = false,
       onRowSelectionChange,

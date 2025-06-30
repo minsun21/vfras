@@ -3,7 +3,7 @@ export const KEYS = {
   ID: "id",
   NAME: "name", // 이름
   USER_TYPE: "userType",
-  ACCESS_TIME: "accessTime",
+  ACCESS_TIME: "loginDate",
   LAST_ACCESS_TIME: "lastAccessTime",
   CREATED_AT: "createdAt",
   USER_NUMBER: "userNumber", // 사용자번호
@@ -24,7 +24,7 @@ export const KEYS = {
   OLD_PASSWORD: "oldPassword", // 기존 비밀번호
   NEW_PASSWORD1: "newPassword1", // 신규 비밀번호1
   NEW_PASSWORD2: "newPassword2", // 신규 비밀번호2(확인))
-  IP: "ip", // 접속 IP
+  IP: "loginAddr", // 접속 IP
   REMARKS: "remarks", // 비고
   PASSWORD_CONFIRM: "passwordConfirm", //비밀번호 확인
   ADDRESS1: "address1",
@@ -76,5 +76,7 @@ export const KEYS = {
   PERMISSIONS: "permissions",
   TOKEN: "token",
   SAVED_ID: "savedLoginId",
-  KEYWORD : "keyword"
+  KEYWORD : "keyword",
+  LOG_ACTION : "logAction",
+  LOG_TIME : "logTime"
 };
