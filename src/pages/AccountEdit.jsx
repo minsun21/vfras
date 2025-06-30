@@ -39,13 +39,13 @@ const AccountEdit = () => {
         closeModal();
 
         setTimeout(() => {
-          const errValidate = fieldsValidate(ACCOUNTS_EDIT_FIELDS, formData);
-          if (errValidate) {
-            showAlert({
-              message: errValidate,
-            });
-            return;
-          }
+          // const errValidate = fieldsValidate(ACCOUNTS_EDIT_FIELDS, formData);
+          // if (errValidate) {
+          //   showAlert({
+          //     message: errValidate,
+          //   });
+          //   return;
+          // }
 
           save();
         }, 50);
