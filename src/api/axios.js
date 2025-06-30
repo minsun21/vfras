@@ -79,21 +79,21 @@ instance.interceptors.response.use(
     // }
 
     // ✅ 기타 오류 처리
-    // if (alertHandler) {
-    //   switch (status) {
-    //     // case 403:
-    //     //   alertHandler({ message: ErrorMessages.noPermission });
-    //     //   break;
-    //     // case 404:
-    //     //   alertHandler({ message: ErrorMessages.noObject });
-    //     //   break;
-    //     case 500:
-    //       alertHandler({ message: message });
-    //       break;
-    //     default:
-    //       alertHandler({ message });
-    //   }
-    // }
+    if (alertHandler) {
+      switch (status) {
+        case 403:
+          alertHandler({ message: ErrorMessages.noPermission });
+          break;
+        // case 404:
+        //   alertHandler({ message: ErrorMessages.noObject });
+        //   break;
+        // case 500:
+        //   alertHandler({ message: message });
+        //   break;
+        default:
+          alertHandler({ message });
+      }
+    }
 
     return Promise.reject(error);
   }

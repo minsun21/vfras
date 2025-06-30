@@ -79,7 +79,7 @@ const Login = () => {
       })
       .catch((err) => {
         if (err.response.data.result === 401) {
-          showAlert({ message: LoginMessages.errorUsing });
+          showAlert({ message: err.response.data.resultData });
         }
       });
   };
