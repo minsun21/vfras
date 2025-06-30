@@ -10,15 +10,11 @@ import { ErrorMessages, InfoMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 import axios from "../api/axios";
 import { KEYS } from "../constants/Keys";
-import { findMappedKey } from "../utils/Util";
-import { ADMIN_TYPES } from "../config/OPTIONS";
-import PhoneNumberInput from "../components/PhoneNumberInput";
 
 const AccountEdit = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const selectedId = state?.selectedId || [];
-  const selectRow = state?.selectedInfo || {}; // 삭제
+  const selectedId = state?.selectedInfo[KEYS.ADMIN_ID] || {}; // 삭제
 
   const { showDialog, showAlert, closeModal } = useModal();
   const [formData, setFormData] = useState({});
@@ -26,21 +22,15 @@ const AccountEdit = () => {
   useEffect(() => {
     // userid로 정보 검색
     if (!selectedId) return;
-    setFormData({
-      ...selectRow,
-      [KEYS.ADMIN_TYPE]: findMappedKey(ADMIN_TYPES, selectRow[KEYS.ADMIN_TYPE]),
-      [KEYS.MOBILE]: "010-1234-5678",
-      [KEYS.EMAIL]: "test@lguplus.co.kr",
-      [KEYS.REMARKS]: "협력사 요청",
-      [KEYS.EMAIL]: "test@lguplus.co.kr",
-      [KEYS.PASSWORD]: "aA12345678!",
-      [KEYS.PASSWORD_CONFIRM]: "aA12345678!",
-    });
+    initData();
+  }, [selectedId]);
 
-    // axios.get(ROUTES.ACCOUNTS_MANAGE(selectedId), formData).then((res) => {
-    //   setFormData(res.data);
-    // });
-  }, []);
+  const initData = () => {
+    axios.get(ROUTES.ACCOUNTS_MANAGE(selectedId), formData).then((res) => {
+      const result = res.data.resultData;
+      setFormData(result);
+    });
+  };
 
   const handleSave = () => {
     showDialog({
@@ -64,18 +54,11 @@ const AccountEdit = () => {
   };
 
   const save = () => {
-    console.log("저장할 데이터:", formData);
-
-    // axios.put(ROUTES.ACCOUNTS_MANAGE(selectedId), formData).then(res=>{
-    //   showAlert({
-    //     message: InfoMessages.successAccountSave,
-    //     onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
-    //   });
-    // })
-
-    showAlert({
-      message: InfoMessages.successEdit,
-      onConfirm: () => navigate(ROUTES.ACCOUNTS),
+    axios.put(ROUTES.ACCOUNTS_MANAGE(selectedId), formData).then((res) => {
+      showAlert({
+        message: InfoMessages.successAccountSave,
+        // onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
+      });
     });
   };
 
@@ -135,12 +118,9 @@ const AccountEdit = () => {
                         />
                         <span className="comment">{comment}</span>
                       </div>
-                    ) : key === KEYS.MOBILE ? (
-                      <PhoneNumberInput
-                        value={value}
-                        onChange={handleChange}
-                      />
-                    ) : key === KEYS.PASSWORD_CONFIRM ? (
+                    ) : // ) : key === KEYS.MOBILE ? (
+                    //   <PhoneNumberInput value={value} onChange={handleChange} />
+                    key === KEYS.PASSWORD_CONFIRM ? (
                       <div className="rowBox">
                         <Input
                           value={value}

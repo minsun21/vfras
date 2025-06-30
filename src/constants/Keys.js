@@ -4,8 +4,8 @@ export const KEYS = {
   NAME: "name", // 이름
   USER_TYPE: "userType",
   ACCESS_TIME: "loginDate",
-  LAST_ACCESS_TIME: "lastAccessTime",
-  CREATED_AT: "createdAt",
+  LAST_ACCESS_TIME: "lastLoginDate",
+  CREATED_AT: "createdDate",
   USER_NUMBER: "userNumber", // 사용자번호
   PBX_NUMBER: "pbxNumber", // 교환기 번호
   MANAGE: "manage",

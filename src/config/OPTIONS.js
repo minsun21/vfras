@@ -19,9 +19,9 @@ export const ORGNS = [
 
 // 사용자 구분
 export const ADMIN_TYPES = [
-  { key: "admin", value: "Admin" },
-  { key: "user", value: "User" },
-  { key: "guest", value: "Guest" },
+  { key: "Admin", value: "Admin" },
+  { key: "User", value: "User" },
+  { key: "Guest", value: "Guest" },
 ];
 
 // 사용자 상태

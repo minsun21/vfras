@@ -1,11 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Table from "../components/Table";
-import Button, {
-  BUTTON_CANCEL,
-  BUTTON_DELETE,
-  BUTTON_SEARCH,
-} from "../components/Button";
+import Button, { BUTTON_DELETE, BUTTON_SEARCH } from "../components/Button";
 import Input, { INPUT_SIZE_LG } from "../components/Input";
 import { ACCOUNTS_COLUMNS } from "../config/DataConfig";
 import { ROUTES } from "../constants/routes";
@@ -29,74 +25,23 @@ const AccountManage = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    setData([
-      {
-        [KEYS.ADMIN_ID]: "admin",
-        [KEYS.NAME]: "관리자",
-        [KEYS.DEPARTMENT]: "-",
-        [KEYS.ADMIN_TYPE]: "Admin",
-        [KEYS.CREATED_AT]: "2024.02.04 11:23:37",
-        [KEYS.LAST_ACCESS_TIME]: "2024.02.04 11:23:27",
-      },
-      {
-        [KEYS.ADMIN_ID]: "cwback",
-        [KEYS.NAME]: "백창우",
-        [KEYS.DEPARTMENT]: "고객만족팀",
-        [KEYS.ADMIN_TYPE]: "User",
-        [KEYS.CREATED_AT]: "2024.02.04 11:23:37",
-        [KEYS.LAST_ACCESS_TIME]: "2024.02.01 09:12:35",
-      },
-      {
-        [KEYS.ADMIN_ID]: "wooseok",
-        [KEYS.NAME]: "주우석",
-        [KEYS.DEPARTMENT]: "고객만족팀",
-        [KEYS.ADMIN_TYPE]: "User",
-        [KEYS.CREATED_AT]: "2024.02.04 11:23:37",
-        [KEYS.LAST_ACCESS_TIME]: "2024.02.02 12:03:04",
-      },
-      {
-        [KEYS.ADMIN_ID]: "hong",
-        [KEYS.NAME]: "홍길동",
-        [KEYS.DEPARTMENT]: "고객만족팀",
-        [KEYS.ADMIN_TYPE]: "User",
-        [KEYS.CREATED_AT]: "2024.04.23 10:55:45",
-        [KEYS.LAST_ACCESS_TIME]: "2024.04.23 11:55:01",
-      },
-      {
-        [KEYS.ADMIN_ID]: "kim",
-        [KEYS.NAME]: "김철수",
-        [KEYS.DEPARTMENT]: "고객만족팀",
-        [KEYS.ADMIN_TYPE]: "User",
-        [KEYS.CREATED_AT]: "2024.04.29 01:24:35",
-        [KEYS.LAST_ACCESS_TIME]: "2024.04.30 05:13:09",
-      },
-    ]);
-    // TODO :: 최초 로드는 전체 리스트 출력 하는지? , keywords를 빈값으로 보내면 되는건지?
-    // axios.get(ROUTES.ACCOUNTS, keyword).then((res) => {
-    //   if (res.data.length === 0) {
-    //     showAlert({
-    //       message: InfoMessages.noSearchResult,
-    //     });
-    //     return;
-    //   }
-    //   setData(res.data);
-    // });
+    search();
   }, []);
 
   const search = () => {
-    showAlert({
-      message: InfoMessages.noSearchResult,
+    axios.get(ROUTES.ACCOUNTS, { params: { keyword } }).then((res) => {
+      const result = res.data.resultData.map(data => {
+        data[KEYS.LAST_ACCESS_TIME] = data.loginInfo[KEYS.LAST_ACCESS_TIME];
+        return data;
+      })
+      if (result.length === 0) {
+        showAlert({
+          message: InfoMessages.noSearchResult,
+        });
+        return;
+      }
+      setData(result);
     });
-
-    // axios.get(ROUTES.ACCOUNTS, { params: { keyword } }).then((res) => {
-    //   if (res.data.length === 0) {
-    //     showAlert({
-    //       message: InfoMessages.noSearchResult,
-    //     });
-    //     return;
-    //   }
-    //   setData(res.data);
-    // });
   };
 
   const clickEdit = () => {
@@ -166,11 +111,8 @@ const AccountManage = () => {
   const topBtns = () => {
     return (
       <>
-        <Button
-            label={LABELS.USER_EDIT}
-            onClick={clickEdit}
-          />
-         <Button type={BUTTON_DELETE} onClick={clickDelete} />
+        <Button label={LABELS.USER_EDIT} onClick={clickEdit} />
+        <Button type={BUTTON_DELETE} onClick={clickDelete} />
       </>
     );
   };
@@ -204,7 +146,6 @@ const AccountManage = () => {
         ref={tableRef}
         columns={ACCOUNTS_COLUMNS}
         data={data}
-        pageSize={5}
         onRowSelectionChange={setselectRows}
         topBtns={topBtns}
       />
