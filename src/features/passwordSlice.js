@@ -1,10 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { KEYS } from '../constants/Keys';
+import { createSlice } from "@reduxjs/toolkit";
+import { KEYS } from "../constants/Keys";
 
 const initialState = {
-  [KEYS.PASSWORD]: '',
-  [KEYS.NEW_PASSWORD1]: '',
-  [KEYS.NEW_PASSWORD2]: '',
+  [KEYS.OLD_PASSWORD]: "",
+  [KEYS.NEW_PASSWORD1]: "",
+  [KEYS.NEW_PASSWORD2]: "",
 };
 
 const passwordSlice = createSlice({
@@ -15,7 +15,7 @@ const passwordSlice = createSlice({
       const { key, value } = action.payload;
       state[key] = value;
     },
-    resetPasswordFields: () => initialState,
+    resetPasswordFields: () => ({ ...initialState }),
   },
 });
 

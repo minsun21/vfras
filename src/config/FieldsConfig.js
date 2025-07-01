@@ -508,7 +508,7 @@ export const ACCOUNTS_EDIT_FIELDS = [
 // 내 정보 > 비밀번호 변경
 export const PASSWORD_CHANGE_FIELDS = [
   {
-    key: KEYS.PASSWORD,
+    key: KEYS.OLD_PASSWORD,
     placeholder: LABELS.CURRENT_PASSWORD,
     type: "text",
   },

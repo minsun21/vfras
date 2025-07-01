@@ -23,7 +23,6 @@ import { KEYS } from "../constants/Keys";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/authSlice";
 import { MODAL_SM } from "../components/modals/ModalRenderer";
-import PhoneNumberInput from "../components/PhoneNumberInput";
 import Form from "../components/Form";
 import { resetPasswordFields } from "../features/passwordSlice";
 import { store } from "../store";
@@ -41,12 +40,12 @@ const ProfileEdit = () => {
     initData();
   }, []);
 
-  const initData=()=>{
+  const initData = () => {
     axios.get(`${ROUTES.PROFILE}/${adminId}`).then((res) => {
       const result = res.data.resultData;
       setFormData(result);
     });
-  }
+  };
 
   const validate = () => {
     const newErrors = {};
@@ -77,7 +76,7 @@ const ProfileEdit = () => {
 
     axios.put(ROUTES.PASSWORD_CHANGE(adminId), data).then((res) => {
       showAlert({
-        message: ProfileMessages.successUserEdit, 
+        message: ProfileMessages.successUserEdit,
         onConfirm: () => initData(),
       });
     });
@@ -111,24 +110,14 @@ const ProfileEdit = () => {
       });
       return;
     }
-
-    // 2. 현재 비밀번호 확인
-    if (passwordData[KEYS.PASSWORD] !== formData[KEYS.PASSWORD]) {
-      showAlert({
-        message: ErrorMessages.confirmCurrentPassword,
-      });
-      return;
-    }
-
-    // // 3. 변경 비밀번호 validation
+    // 2. 변경 비밀번호 validation
     if (!isValidPassword(passwordData[KEYS.NEW_PASSWORD1])) {
       showAlert({
         message: ErrorMessages.invalidPassword,
       });
       return;
     }
-
-    // // 4. 변경 비밀번호 재확인
+    // 3. 변경 비밀번호 재확인
     if (passwordData[KEYS.NEW_PASSWORD1] !== passwordData[KEYS.NEW_PASSWORD2]) {
       showAlert({
         message: ErrorMessages.confirmPassword,
@@ -136,29 +125,23 @@ const ProfileEdit = () => {
       return;
     }
 
-    // axios.put(ROUTES.PROFILE_EDIT(adminId), formData).then((res) => {
-    //   showAlert({
-    //     message: ProfileMessages.successPasswordChange,
-    //     onConfirm: () => {
-    //       closeModal();
-    //       dispatch(logout());
-    //     },
-    //   });
-    // });
-
-    closeModal();
-    setTimeout(() => {
-      showAlert({
-        message: ProfileMessages.successPasswordChange,
-        onConfirm: () => {
-          closeModal();
-          dispatch(logout());
-        },
+    axios
+      .put(ROUTES.PASSWORD_CHANGE(adminId), formData)
+      .then((res) => {
+        showAlert({
+          message: ProfileMessages.successPasswordChange,
+          onConfirm: () => {
+            closeModal();
+            dispatch(resetPasswordFields());
+            dispatch(logout());
+          },
+        });
+      })
+      .catch((err) => {
+        // const message = err.response.data.resultData;
+        // if(message==="rawPassword cannot be null"){
+        // }
       });
-    }, 100);
-
-    // 완료 후 초기화
-    dispatch(resetPasswordFields());
   };
 
   return (
@@ -200,9 +183,9 @@ const ProfileEdit = () => {
                           onClick={clickChangePassword}
                         />
                       </div>
-                    // ) : key === KEYS.MOBILE ? (
-                    //   <PhoneNumberInput value={value} onChange={handleChange} />
                     ) : (
+                      // ) : key === KEYS.MOBILE ? (
+                      //   <PhoneNumberInput value={value} onChange={handleChange} />
                       <>
                         <Input
                           value={value}

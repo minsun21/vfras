@@ -89,7 +89,12 @@ const ModalRenderer = () => {
                 <div className="pop-header">
                   <h3>{props.header}</h3>
                   <div className="pop-header-close">
-                    <button onClick={closeModal} />
+                    <button
+                      onClick={() => {
+                        props.onClose?.();
+                        closeModal();
+                      }}
+                    />
                   </div>
                 </div>
                 <div className="pop-body">{props.content}</div>

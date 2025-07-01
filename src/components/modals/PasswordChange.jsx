@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Input from "../Input";
 import { PASSWORD_CHANGE_FIELDS } from "../../config/FieldsConfig";
 import { LABELS } from "../../constants/Labels";
@@ -6,9 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPasswordField } from "../../features/passwordSlice";
 
 const PasswordChange = () => {
-
-  const changePassword = useSelector((state) => state.changePassword);
-
+  
+  const passwordState = useSelector((state) => state.changePassword);
   const dispatch = useDispatch();
 
   const handleChange = (key, value) => {
@@ -23,6 +22,7 @@ const PasswordChange = () => {
           size="fl"
           type="password"
           placeholder={placeholder}
+          value={passwordState[key]}
           onChange={(e) => handleChange(key, e.target.value)}
         />
       ))}
