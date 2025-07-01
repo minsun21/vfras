@@ -537,7 +537,7 @@ export const DID_PERSONAL_SETTING_COLUMNS = [
     ),
   },
   {
-    accessorKey: KEYS.RBT_ID,
+    accessorKey: KEYS.DEF_RBT_TYPE,
     header: LABELS.SOUND_CODE_COL_MULTI,
   },
   {

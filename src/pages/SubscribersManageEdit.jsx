@@ -59,6 +59,7 @@ const SubscriberManageEdit = () => {
           SUBSRIBERS_TYPES,
           result[KEYS.SUB_TYPE]
         );
+        console.log('result', result)
         setFormData(result);
       })
       .catch((err) => {
@@ -122,17 +123,6 @@ const SubscriberManageEdit = () => {
   };
 
   const clickDidSetting = () => {
-    // if(formData[KEYS.SUB_TYPE] === LABELS.CORPORATION){
-    //   showModal({
-    //     content: <DidSetting userInfo={formData} />,
-    //     header: LABELS.DID_TITLE,
-    //   });
-    // }else {
-    //   showModal({
-    //     content: <DidSettingPersonal userInfo={formData} />,
-    //     header: LABELS.DID_TITLE_PERSONAL,
-    //   });
-    // }
     showModal({
       content: <DidSetting userInfo={formData} />,
       header: LABELS.DID_TITLE,

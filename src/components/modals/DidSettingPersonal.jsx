@@ -6,6 +6,8 @@ import Input, { INPUT_SIZE_SM } from "../Input";
 import { KEYS } from "../../constants/Keys";
 import { useDispatch } from "react-redux";
 import { setConfigData } from "../../features/didConfigSlice";
+import axios from "../../api/axios";
+import { ROUTES } from "../../constants/routes";
 
 const DidSettingPersonal = ({ userInfo }) => {
   const tableRef = useRef();
@@ -13,7 +15,12 @@ const DidSettingPersonal = ({ userInfo }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    setData(userInfo[KEYS.DID_CONFIG]);
+    console.log(userInfo)
+    axios.get(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO])).then(res=>{
+      const result = res.data.resultData;
+      setData(result);
+    })
+    // setData(userInfo[KEYS.DID_CONFIG]);
   }, [userInfo]);
 
   useEffect(() => {
@@ -43,11 +50,11 @@ const DidSettingPersonal = ({ userInfo }) => {
         </div>
 
         <div className="w40p">
-          <div className="popSubTit">{LABELS.ADDITIONAL_SERVICE_SETTING}</div>
+          {/* <div className="popSubTit">{LABELS.ADDITIONAL_SERVICE_SETTING}</div> */}
           <form className="popSchBox">
             <label className="schTxtL1">{LABELS.DEFAULT_RING}</label>
             <Input
-              value={userInfo[KEYS.RBT_ID]}
+              value={userInfo[KEYS.DEF_RBT_TYPE]}
               size={INPUT_SIZE_SM}
               disabled
             />
