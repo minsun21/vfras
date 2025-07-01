@@ -59,7 +59,6 @@ const SubscriberManageEdit = () => {
           SUBSRIBERS_TYPES,
           result[KEYS.SUB_TYPE]
         );
-        console.log('result', result)
         setFormData(result);
       })
       .catch((err) => {
@@ -138,9 +137,10 @@ const SubscriberManageEdit = () => {
     });
   };
 
-  // did 회선 설정 - 변경
+  // did 회선 설정 - 법인 변경
   const saveDidSetting = () => {
     const didPersonalData = store.getState()[KEYS.DID_CONFIG][KEYS.DID_CONFIG];
+    console.log(store.getState()[KEYS.DID_CONFIG])
     console.log(didPersonalData);
 
     showAlert({

@@ -25,9 +25,7 @@ const didAddSlice = createSlice({
       const { key, value } = action.payload;
       state[key] = value;
     },
-    resetFormData: (state) => {
-      state.didFormData = {};
-    },
+    resetFormData: () => initialState,
   },
 });
 

@@ -14,6 +14,7 @@ import {
 import { LABELS } from "../constants/Labels";
 import Form from "./Form";
 import Select from "./Select";
+import { KEYS } from "../constants/Keys";
 
 const Table = forwardRef(
   (
@@ -388,8 +389,18 @@ const Table = forwardRef(
                   onClick={(e) => {
                     if (row.original._isNew) return;
                     if (e.target.tagName === "INPUT") return;
+
                     if (isSplit) {
-                      setClickSelection({ [row.id]: true });
+                      setClickSelection((prev) => {
+                        const isAlreadySelected = prev[row.id];
+                        if (isAlreadySelected) {
+                          const newSelection = { ...prev };
+                          delete newSelection[row.id];
+                          return newSelection;
+                        } else {
+                          return { [row.id]: true };
+                        }
+                      });
                     } else {
                       handleCheckBox(row);
                     }

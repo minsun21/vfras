@@ -22,6 +22,7 @@ import { DID_ADD_FIELDS } from "../../config/FieldsConfig";
 import DidConfig from "./DidConfig";
 import axios from "../../api/axios";
 import { setConfigData } from "../../features/didConfigSlice";
+import { ROUTES } from "../../constants/routes";
 
 const DidSetting = ({ userInfo }) => {
   const dispatch = useDispatch();
@@ -35,7 +36,10 @@ const DidSetting = ({ userInfo }) => {
   const [checkboxSelected, setCheckboxSelected] = useState([]); // 체크박스 선택
 
   useEffect(() => {
-    setTableData(userInfo.dids);
+    axios.get(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO])).then((res) => {
+      const result = res.data.resultData;
+      setTableData(result);
+    });
   }, [userInfo]);
 
   useEffect(() => {
@@ -136,6 +140,9 @@ const DidSetting = ({ userInfo }) => {
           showAlert({ message: InfoMessages.successAdd });
         }, 0);
       },
+      onClose: () => {
+        dispatch(resetFormData());
+      },
     });
   };
 
@@ -146,7 +153,7 @@ const DidSetting = ({ userInfo }) => {
       return;
     }
 
-    if(checkboxSelected.length === tableData.length){
+    if (checkboxSelected.length === tableData.length) {
       showAlert({ message: ErrorMessages.deleteBulk });
       return;
     }

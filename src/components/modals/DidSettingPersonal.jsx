@@ -15,12 +15,10 @@ const DidSettingPersonal = ({ userInfo }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    console.log(userInfo)
     axios.get(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO])).then(res=>{
       const result = res.data.resultData;
       setData(result);
     })
-    // setData(userInfo[KEYS.DID_CONFIG]);
   }, [userInfo]);
 
   useEffect(() => {
