@@ -41,6 +41,8 @@ const AccountManage = () => {
         return;
       }
       setData(result);
+      tableRef.current?.clearSelection?.();
+      setselectRows([]); 
     });
   };
 
@@ -81,7 +83,6 @@ const AccountManage = () => {
   };
 
   const deleteAccount = () => {
-    console.log()
     axios
       .delete(ROUTES.ACCOUNTS_MANAGE(selectRows[0][KEYS.ADMIN_ID]))
       .then((res) => {

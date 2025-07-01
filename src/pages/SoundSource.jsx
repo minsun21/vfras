@@ -33,6 +33,7 @@ const SoundSource = () => {
           });
           return;
         }
+        tableRef.current?.clearSelection?.();
         setData(result);
       });
   };
@@ -51,6 +52,7 @@ const SoundSource = () => {
                     onChange={(e) => setKeyword(e.target.value)}
                     placeholder={SoundSourceMessages.searchPlaceHolder}
                     size={INPUT_SIZE_LG}
+                    type="number"
                   />
                   <Button type={BUTTON_SEARCH} onClick={search} />
                 </div>
