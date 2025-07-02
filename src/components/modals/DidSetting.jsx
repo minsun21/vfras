@@ -21,7 +21,12 @@ import { store } from "../../store";
 import { DID_ADD_FIELDS } from "../../config/FieldsConfig";
 import DidConfig from "./DidConfig";
 import axios from "../../api/axios";
-import { setConfigData, setDidList } from "../../features/didConfigSlice";
+import {
+  addDidItem,
+  deleteDidItem,
+  setConfigData,
+  setDidList,
+} from "../../features/didConfigSlice";
 import { ROUTES } from "../../constants/routes";
 
 const DidSetting = ({ userInfo }) => {
@@ -39,7 +44,7 @@ const DidSetting = ({ userInfo }) => {
     axios.get(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO])).then((res) => {
       const result = res.data.resultData;
       setTableData(result);
-      dispatch(setDidList);
+      dispatch(setDidList(result));
     });
   }, [userInfo]);
 
@@ -134,7 +139,8 @@ const DidSetting = ({ userInfo }) => {
           id: Math.floor(Math.random() * 100) + 1,
         };
         setTableData((prev) => [...prev, newRow]);
-        
+        dispatch(addDidItem(newRow));
+
         dispatch(resetFormData());
         closeModal();
 
@@ -173,6 +179,11 @@ const DidSetting = ({ userInfo }) => {
         setSelectDid();
         setSelectRows([]);
         tableRef.current?.clearSelection?.();
+
+        const deleteItems = tableData.filter((row) =>
+          selectedIds.includes(row.id)
+        );
+        dispatch(deleteDidItem(deleteItems));
 
         setTimeout(() => {
           showAlert({ message: InfoMessages.successDelete });

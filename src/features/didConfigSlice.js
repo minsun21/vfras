@@ -27,15 +27,38 @@ const didConfigSlice = createSlice({
       // 회선 초기화
       state.didList = action.payload;
     },
+    addDidItem: (state, action) => {
+      state.addDidList.push(action.payload);
+    },
     deleteDidItem: (state, action) => {
-      const { subNo, fromNo, toNo } = action.payload;
+      const itemsToDelete = action.payload; // 배열
+      console.log('itemsToDelete', itemsToDelete)
+
+      // didList에서 제거
       state.didList = state.didList.filter(
         (item) =>
-          !(item.subNo === subNo && item.fromNo === fromNo && item.toNo === toNo)
+          !itemsToDelete.some(
+            (del) =>
+              del.subNo === item.subNo &&
+              del.fromNo === item.fromNo &&
+              del.toNo === item.toNo
+          )
       );
-      state.deleteDidList.push(action.payload);
-    },
 
+      // deleteDidList에 추가 (중복 제거 없이 단순 누적)
+      state.deleteDidList.push(...itemsToDelete);
+
+      // 삭제 대상이 addDidList에 있었다면 제거 (즉, 추가 → 삭제된 항목은 전송하지 않음)
+      state.addDidList = state.addDidList.filter(
+        (item) =>
+          !itemsToDelete.some(
+            (del) =>
+              del.subNo === item.subNo &&
+              del.fromNo === item.fromNo &&
+              del.toNo === item.toNo
+          )
+      );
+    },
     addSubItemToList: (state, action) => {
       const { subNo, fromNo, toNo, subFieldKey, newItem } = action.payload;
       const didItem = state.didList.find(
@@ -74,7 +97,11 @@ const didConfigSlice = createSlice({
         (item) =>
           item.subNo === subNo && item.fromNo === fromNo && item.toNo === toNo
       );
-      if (!didItem || !didItem.subs || !Array.isArray(didItem.subs[subFieldKey])) {
+      if (
+        !didItem ||
+        !didItem.subs ||
+        !Array.isArray(didItem.subs[subFieldKey])
+      ) {
         return;
       }
       didItem.subs[subFieldKey] = didItem.subs[subFieldKey].filter(
