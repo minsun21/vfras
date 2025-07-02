@@ -53,10 +53,11 @@ const AccountEdit = () => {
   };
 
   const save = () => {
+    console.log("save formdata", formData);
     axios.put(ROUTES.ACCOUNTS_MANAGE(selectedId), formData).then((res) => {
       showAlert({
-        message: InfoMessages.successAccountSave,
-        // onConfirm: () => navigate(ROUTES.SUBSCRIBERS),
+        message: InfoMessages.successEdit,
+        onConfirm: () => navigate(ROUTES.ACCOUNTS),
       });
     });
   };
@@ -119,7 +120,7 @@ const AccountEdit = () => {
                       </div>
                     ) : // ) : key === KEYS.MOBILE ? (
                     //   <PhoneNumberInput value={value} onChange={handleChange} />
-                    key === KEYS.PASSWORD_CONFIRM ? (
+                    key === KEYS.PASSWORD2 ? (
                       <div className="rowBox">
                         <Input
                           value={value}
@@ -129,8 +130,8 @@ const AccountEdit = () => {
                           disabled={disabled}
                         />
                         <span className="password-confirm">
-                          {formData[KEYS.PASSWORD] !==
-                            formData[KEYS.PASSWORD_CONFIRM] &&
+                          {formData[KEYS.PASSWORD1] !==
+                            formData[KEYS.PASSWORD2] &&
                             ErrorMessages.correctPassword}
                         </span>
                       </div>

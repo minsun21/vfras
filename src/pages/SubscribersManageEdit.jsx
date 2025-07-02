@@ -66,6 +66,7 @@ const SubscriberManageEdit = () => {
           let message = err.response.data.resultData;
           if (message.includes("Subscriber No Not Found")) {
             showAlert({ message: SubsriberMessages.noSearchSubsriber });
+            return;
           } else {
             showAlert({ message: ErrorMessages.server });
           }
@@ -140,7 +141,7 @@ const SubscriberManageEdit = () => {
   // did 회선 설정 - 법인 변경
   const saveDidSetting = () => {
     const didPersonalData = store.getState()[KEYS.DID_CONFIG][KEYS.DID_CONFIG];
-    console.log(store.getState()[KEYS.DID_CONFIG])
+    console.log(store.getState()[KEYS.DID_CONFIG]);
     console.log(didPersonalData);
 
     showAlert({

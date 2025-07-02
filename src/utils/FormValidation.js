@@ -92,9 +92,8 @@ export const fieldsValidate = (fields, formData) => {
         return ErrorMessages.lengthMismatch2(label, length);
       }
     }
-
-    // ✅ 5. 비밀번호 검사
-    if (key === KEYS.PASSWORD1) {
+    // ✅ 5. 비밀번호 확인
+    if (key === KEYS.PASSWORD1 && value) {
       if (!isValidPassword(value)) {
         return ErrorMessages.invalidPassword;
       }

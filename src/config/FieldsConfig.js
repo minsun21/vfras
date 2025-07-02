@@ -493,13 +493,11 @@ export const ACCOUNTS_EDIT_FIELDS = [
     label: LABELS.PASSWORD,
     type: "password",
     comment: LABELS.PASSWORD_CHECK,
-    required: true,
   },
   {
     key: KEYS.PASSWORD2,
     label: LABELS.PASSWORD_CONFIRM,
     type: "password",
-    required: true,
   },
 ];
 
