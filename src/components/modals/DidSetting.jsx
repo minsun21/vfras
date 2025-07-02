@@ -138,6 +138,21 @@ const DidSetting = ({ userInfo }) => {
           ...didFormData,
           id: Math.floor(Math.random() * 100) + 1,
         };
+
+        const isDuplicate = tableData.some(
+          (item) =>
+            item.subNo === newRow.subNo &&
+            item.fromNo === newRow.fromNo &&
+            item.toNo === newRow.toNo
+        );
+
+        if (isDuplicate) {
+          showAlert({
+            message: ErrorMessages.duplicateSave,
+          });
+          return;
+        }
+
         setTableData((prev) => [...prev, newRow]);
         dispatch(addDidItem(newRow));
 

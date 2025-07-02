@@ -28,11 +28,26 @@ const didConfigSlice = createSlice({
       state.didList = action.payload;
     },
     addDidItem: (state, action) => {
-      state.addDidList.push(action.payload);
+      const newItem = action.payload;
+
+      const isDuplicate = state.didList.some(
+        (item) =>
+          item.subNo === newItem.subNo &&
+          item.fromNo === newItem.fromNo &&
+          item.toNo === newItem.toNo
+      );
+
+      // 이미 존재하면 무시
+      if (isDuplicate) return;
+
+      // UI용 목록에 추가
+      state.didList.push(newItem);
+
+      // 서버 전송용 추가 목록에 저장
+      state.addDidList.push(newItem);
     },
     deleteDidItem: (state, action) => {
       const itemsToDelete = action.payload; // 배열
-      console.log('itemsToDelete', itemsToDelete)
 
       // didList에서 제거
       state.didList = state.didList.filter(
