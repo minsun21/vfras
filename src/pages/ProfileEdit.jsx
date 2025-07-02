@@ -72,10 +72,10 @@ const ProfileEdit = () => {
     const data = {
       [KEYS.EMAIL]: formData[KEYS.EMAIL],
       [KEYS.MOBILE]: formData[KEYS.MOBILE].replaceAll("-", ""),
-      [KEYS.OLD_PASSWORD] : ""
+      [KEYS.OLD_PASSWORD] : formData[KEYS.OLD_PASSWORD]
     };
 
-    axios.put(ROUTES.PASSWORD_CHANGE(adminId), data).then((res) => {
+    axios.put(ROUTES.PROFILE_EDIT(adminId), data).then((res) => {
       showAlert({
         message: ProfileMessages.successUserEdit,
         onConfirm: () => initData(),
