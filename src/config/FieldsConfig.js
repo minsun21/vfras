@@ -489,18 +489,16 @@ export const ACCOUNTS_EDIT_FIELDS = [
     type: "text",
   },
   {
-    key: KEYS.PASSWORD,
+    key: KEYS.PASSWORD1,
     label: LABELS.PASSWORD,
-    placeholder: "1234abcd!@#$",
     type: "password",
     comment: LABELS.PASSWORD_CHECK,
     required: true,
   },
   {
-    key: KEYS.PASSWORD_CONFIRM,
+    key: KEYS.PASSWORD2,
     label: LABELS.PASSWORD_CONFIRM,
     type: "password",
-    placeholder: "1234abcd!@#$",
     required: true,
   },
 ];

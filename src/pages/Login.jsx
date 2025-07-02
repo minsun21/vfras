@@ -78,6 +78,7 @@ const Login = () => {
         navigate(from, { replace: true });
       })
       .catch((err) => {
+        console.log(err.response)
         if (err.response.data.result === 401) {
           showAlert({ message: err.response.data.resultData });
         }

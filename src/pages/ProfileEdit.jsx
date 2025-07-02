@@ -72,6 +72,7 @@ const ProfileEdit = () => {
     const data = {
       [KEYS.EMAIL]: formData[KEYS.EMAIL],
       [KEYS.MOBILE]: formData[KEYS.MOBILE].replaceAll("-", ""),
+      [KEYS.OLD_PASSWORD] : ""
     };
 
     axios.put(ROUTES.PASSWORD_CHANGE(adminId), data).then((res) => {
@@ -102,7 +103,6 @@ const ProfileEdit = () => {
   // 비밀번호 변경
   const changePassword = () => {
     const passwordData = store.getState().changePassword;
-    console.log(passwordData);
     // 1. 빈 값 확인
     if (hasEmptyValue(passwordData)) {
       showAlert({

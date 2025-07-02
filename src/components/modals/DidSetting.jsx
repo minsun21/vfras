@@ -21,7 +21,7 @@ import { store } from "../../store";
 import { DID_ADD_FIELDS } from "../../config/FieldsConfig";
 import DidConfig from "./DidConfig";
 import axios from "../../api/axios";
-import { setConfigData } from "../../features/didConfigSlice";
+import { setConfigData, setDidList } from "../../features/didConfigSlice";
 import { ROUTES } from "../../constants/routes";
 
 const DidSetting = ({ userInfo }) => {
@@ -29,7 +29,7 @@ const DidSetting = ({ userInfo }) => {
   const tableRef = useRef();
   const { showModal, showAlert, showDialog, closeModal } = useModal();
 
-  const [tableData, setTableData] = useState([]);
+  const [tableData, setTableData] = useState([]); // 회선 목록
   const [selectRows, setSelectRows] = useState([]);
   const [didData, setDidData] = useState([]); // 전체 DID data
   const [selectDid, setSelectDid] = useState({});
@@ -39,6 +39,7 @@ const DidSetting = ({ userInfo }) => {
     axios.get(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO])).then((res) => {
       const result = res.data.resultData;
       setTableData(result);
+      dispatch(setDidList);
     });
   }, [userInfo]);
 
@@ -133,6 +134,7 @@ const DidSetting = ({ userInfo }) => {
           id: Math.floor(Math.random() * 100) + 1,
         };
         setTableData((prev) => [...prev, newRow]);
+        
         dispatch(resetFormData());
         closeModal();
 

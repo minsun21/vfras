@@ -4,7 +4,7 @@ import { ROUTES } from "../../constants/routes";
 
 const PrivateRoute = ({ children, roles = [] }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const permissions = useSelector((state) => state.auth.user.permissions);
+  const permissions = useSelector((state) => state.auth.user?.permissions);
   const location = useLocation();
 
   if (!isAuthenticated) {

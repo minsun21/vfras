@@ -28,7 +28,7 @@ export const KEYS = {
   PASSWORD1 : "password1",
   PASSWORD2 : "password2",
   IP: "loginAddr", // 접속 IP
-  REMARKS: "remarks", // 비고
+  REMARKS: "description", // 비고
   PASSWORD_CONFIRM: "passwordConfirm", //비밀번호 확인
   ADDRESS1: "address1",
   ADDRESS2: "address2",
