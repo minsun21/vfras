@@ -91,7 +91,7 @@ instance.interceptors.response.use(
         //   alertHandler({ message: message });
         //   break;
         default:
-          alertHandler({ message });
+          // alertHandler({ message });
       }
     }
 
