@@ -165,66 +165,56 @@ const DidSetting = ({ userInfo }) => {
     });
   };
 
-  // 변경 - 사용 / 안함
-  const didToggle = (key) => {
-    const selectedKey = getDidKey(selectDid);
-    const currentValue = selectDid?.[key] ?? false;
-    const toggled = !currentValue;
+  // // 변경 - 사용 / 안함
+  // const didToggle = (key) => {
+  //   const selectedKey = getDidKey(selectDid);
+  //   const currentValue = selectDid?.[key] ?? false;
+  //   const toggled = !currentValue;
 
-    const updatedSelectDid = {
-      ...selectDid,
-      [key]: toggled,
-    };
+  //   const updatedSelectDid = {
+  //     ...selectDid,
+  //     [key]: toggled,
+  //   };
 
-    setSelectDid(updatedSelectDid);
+  //   setSelectDid(updatedSelectDid);
 
-    setTableData((prev) =>
-      prev.map((row) =>
-        getDidKey(row) === selectedKey ? { ...row, [key]: toggled } : row
-      )
-    );
-  };
+  //   setTableData((prev) =>
+  //     prev.map((row) =>
+  //       getDidKey(row) === selectedKey ? { ...row, [key]: toggled } : row
+  //     )
+  //   );
+  // };
 
-  const addAction = (config, inputs) => {
-    const dataKey = config.dataKey;
-    if (dataKey === "circulars") {
-      axios
-        .post(
-          ROUTES.CIRCULAR_ADD(
-            selectDid[KEYS.SUB_NO],
-            selectDid[KEYS.FROM_NO],
-            selectDid[KEYS.TO_NO]
-          ),
-          [inputs]
-        )
-        .then((res) => {
-          successSaveAction(config, inputs);
-        })
-        .catch((err) => {
-          console.log("err", err);
-        });
-    }
-  };
+  // const addAction = (config, inputs) => {
+  //   const dataKey = config.dataKey;
+  //   if (dataKey === "circulars") {
+  //     axios
+  //       .post(
+  //         ROUTES.CIRCULAR_ADD(
+  //           selectDid[KEYS.SUB_NO],
+  //           selectDid[KEYS.FROM_NO],
+  //           selectDid[KEYS.TO_NO]
+  //         ),
+  //         [inputs]
+  //       )
+  //       .then((res) => {
+  //         successSaveAction(config, inputs);
+  //       })
+  //       .catch((err) => {
+  //         console.log("err", err);
+  //       });
+  //   }
+  // };
 
-  const successSaveAction = (config, inputs) => {
+  // 부가서비스 저장
+  const addDidSubs = (config, inputs) => {
     const key = config.key;
     const dataKey = config.dataKey;
     const selectedKey = getDidKey(selectDid);
-
-    const newList = getNewAddList(config, inputs);
-
-    const updatedSelectDid = {
-      ...selectDid,
-      [key]: true,
-      [dataKey]: newList,
-    };
-
-    setSelectDid(updatedSelectDid);
+    const newList = [inputs];
     dispatch(
       addSubItemToList({
-        [KEYS.SUB_NO]: selectDid[KEYS.SUB_NO],
-        [KEYS.FROM_NO]: selectDid[KEYS.FROM_NO],
-        [KEYS.TO_NO]: selectDid[KEYS.TO_NO],
+        selectDid: selectDid,
         subFieldKey: dataKey,
         newItem: newList,
       })
@@ -235,17 +225,12 @@ const DidSetting = ({ userInfo }) => {
         getDidKey(row) === selectedKey ? { ...row, [key]: true } : row
       )
     );
-  };
 
-  // 부가서비스 저장
-  const addDidConfig = (config, inputs) => {
-    // const key = config.key;
-    const dataKey = config.dataKey;
-    const currentList = selectDid[dataKey] || [];
-
-    if (!addDidConfigValidation(config, inputs, currentList)) return;
-
-    addAction(config, inputs);
+    let newData = [...selectDid[dataKey], ...newList];
+    setSelectDid({
+      ...selectDid,
+      [dataKey]: newData,
+    });
   };
 
   // 부가서비스 삭제
@@ -254,10 +239,11 @@ const DidSetting = ({ userInfo }) => {
     const dataKey = config.dataKey;
     const selectedKey = getDidKey(selectDid);
 
+    let isAllDelete = newList.length > 0; // 전체 삭제 여부
     const updatedSelectDid = {
       ...selectDid,
-      [key]: newList.length > 0 ? selectDid[key] : false,
-      [dataKey]: newList,
+      [key]: isAllDelete ? selectDid[key] : false,
+      [dataKey]: isAllDelete ? newList : [],
     };
 
     setSelectDid(updatedSelectDid);
@@ -271,102 +257,11 @@ const DidSetting = ({ userInfo }) => {
     );
     dispatch(
       removeSubItemFromList({
-        [KEYS.SUB_NO]: selectDid[KEYS.SUB_NO],
-        [KEYS.FROM_NO]: selectDid[KEYS.FROM_NO],
-        [KEYS.TO_NO]: selectDid[KEYS.TO_NO],
+        selectDid,
         subFieldKey: dataKey,
         removeItem: newList,
       })
     );
-  };
-
-  const addDidConfigValidation = (config, inputs, currentList) => {
-    // 기본 입력값 체크
-    const isEmpty = config.forms.some((form) => {
-      if (form.fields) {
-        return form.fields.some((sub) => {
-          const val = inputs[sub.key];
-          return (
-            val === undefined || val === null || val.toString().trim() === ""
-          );
-        });
-      } else {
-        const val = inputs[form.key];
-        return (
-          val === undefined || val === null || val.toString().trim() === ""
-        );
-      }
-    });
-
-    if (isEmpty) {
-      showAlert({ message: "모든 항목을 입력해주세요." });
-      return;
-    }
-
-    // 날짜 유효성 검사
-    const startDate = inputs.startDate;
-    const endDate = inputs.endDate;
-    if (startDate && endDate && startDate > endDate) {
-      showAlert({
-        message: ErrorMessages.date,
-      });
-      return;
-    }
-
-    // 시간 유효성 검사
-    const startTime = inputs.startTime;
-    const endTime = inputs.endTime;
-    if (startTime && endTime && startTime > endTime) {
-      showAlert({
-        message: ErrorMessages.time,
-      });
-      return;
-    }
-
-    // 최대 갯수 초과 검사
-    if (config.max && currentList.length >= config.max) {
-      showAlert({
-        message: ErrorMessages.max(config.title, config.max),
-      });
-      return;
-    }
-
-    return true;
-  };
-
-  const getNewAddList = (config, inputs) => {
-    const extractValues = () => {
-      const result = {};
-      config.forms.forEach((form) => {
-        if (form.fields) {
-          form.fields.forEach((sub) => {
-            result[sub.key] = inputs[sub.key];
-          });
-        } else {
-          result[form.key] = inputs[form.key];
-        }
-      });
-      return result;
-    };
-
-    const newItem = {
-      ...extractValues(),
-      rbtId: inputs.rbtId || inputs[KEYS.RBT_ID],
-    };
-
-    // 그룹인 경우
-    if (config.key === KEYS.IS_GROUP_JOINED) {
-      const groupList = selectDid[config.dataKey] || [];
-      const nextGroupId = groupList.length
-        ? Math.max(
-            ...groupList.map((item) => parseInt(item.groupId || "0", 10))
-          ) + 1
-        : 1;
-
-      newItem.groupId = String(nextGroupId);
-    }
-
-    return [...(selectDid?.[config.dataKey] ?? []), newItem];
   };
 
   const handleInterruptChange = (e) => {
@@ -389,19 +284,6 @@ const DidSetting = ({ userInfo }) => {
           : row
       )
     );
-
-    // setDidData((prev) => {
-    //   const exists = prev.some((row) => getDidKey(row) === selectedKey);
-    //   if (exists) {
-    //     return prev.map((row) =>
-    //       getDidKey(row) === selectedKey
-    //         ? { ...row, [KEYS.IS_INTERRUPT]: isInterrupt }
-    //         : row
-    //     );
-    //   } else {
-    //     return [...prev, { ...selectDid, [KEYS.IS_INTERRUPT]: isInterrupt }];
-    //   }
-    // });
   };
 
   const handleInterruptDateChange = (e) => {
@@ -431,18 +313,6 @@ const DidSetting = ({ userInfo }) => {
       // 종료일도 자동으로 넣어줌
       [KEYS.INTERRUPT_RESERVATION_TO]: value,
     });
-
-    const selectedKey = getDidKey(selectDid);
-    // setDidData((prev) => {
-    //   const exists = prev.some((row) => getDidKey(row) === selectedKey);
-    //   if (exists) {
-    //     return prev.map((row) =>
-    //       getDidKey(row) === selectedKey ? { ...row, [name]: value } : row
-    //     );
-    //   } else {
-    //     return [...prev, { ...selectDid, [name]: value }];
-    //   }
-    // });
   };
 
   return (
@@ -493,7 +363,7 @@ const DidSetting = ({ userInfo }) => {
           <div className="popSubTit">{LABELS.ADDITIONAL_SERVICE_SETTING}</div>
           <Form className="popSchBox">
             {/* 기본 링 */}
-            <label className="schTxtL1">{LABELS.DEFAULT_RING}</label>  
+            <label className="schTxtL1">{LABELS.DEFAULT_RING}</label>
             <Input
               label={LABELS.DEFAULT_RING}
               size="sm"
@@ -565,9 +435,8 @@ const DidSetting = ({ userInfo }) => {
                   <DidConfig
                     key={idx}
                     config={config}
-                    didInfo={selectDid}
-                    didToggle={didToggle}
-                    addDidConfig={addDidConfig}
+                    selectDid={selectDid}
+                    addDidSubs={addDidSubs}
                     deleteDidConfig={deleteDidConfig}
                   />
                 ))}

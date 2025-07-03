@@ -4,16 +4,10 @@ import Button, { BUTTON_CANCEL, BUTTON_DELETE } from "../Button";
 import Input from "../Input";
 import Select from "../Select";
 import Table from "../Table";
-import { InfoMessages } from "../../constants/Message";
+import { ErrorMessages, InfoMessages } from "../../constants/Message";
 import { useModal } from "../../contexts/ModalContext";
 
-const DidConfig = ({
-  config,
-  didToggle,
-  didInfo,
-  addDidConfig,
-  deleteDidConfig,
-}) => {
+const DidConfig = ({ config, selectDid, addDidSubs, deleteDidConfig }) => {
   const { showAlert, showDialog } = useModal();
   const tableRef = useRef();
   const parentRef = useRef();
@@ -22,9 +16,10 @@ const DidConfig = ({
 
   useEffect(() => {
     setInputs({});
-  }, [didInfo]);
+  }, [selectDid]);
 
   useEffect(() => {
+    // 부가서비스 Form 초기화
     const initialInputs = {};
 
     config.forms.forEach((form) => {
@@ -62,13 +57,23 @@ const DidConfig = ({
     }
   };
 
+  // 부가서비스 저장
+  const addDidConfigAction = () => {
+    const dataKey = config.dataKey;
+    const currentList = selectDid[dataKey] || [];
+
+    if (!addDidConfigValidation(config, inputs, currentList)) return;
+    addDidSubs(config, inputs);
+    resetSelectRows();
+  };
+
   const deleteAction = () => {
     if (selectRows.length === 0) return;
 
     showDialog({
       message: InfoMessages.confirmDelete(selectRows.length),
       onConfirm: () => {
-        const newList = didInfo[config.dataKey].filter(
+        const newList = selectDid[config.dataKey].filter(
           (item) => !selectRows.some((s) => s === item)
         );
         deleteDidConfig(config, newList);
@@ -83,16 +88,62 @@ const DidConfig = ({
       onConfirm: () => {
         deleteDidConfig(config, []);
         resetSelectRows();
-        setTimeout(() => {
-          showAlert({ message: InfoMessages.successDelete });
-        }, 0);
       },
     });
   };
 
-  const addDidConfigAction = () => {
-    addDidConfig(config, inputs);
-    resetSelectRows();
+  const addDidConfigValidation = (config, inputs, currentList) => {
+    // 기본 입력값 체크
+    const isEmpty = config.forms.some((form) => {
+      if (form.fields) {
+        return form.fields.some((sub) => {
+          const val = inputs[sub.key];
+          return (
+            val === undefined || val === null || val.toString().trim() === ""
+          );
+        });
+      } else {
+        const val = inputs[form.key];
+        return (
+          val === undefined || val === null || val.toString().trim() === ""
+        );
+      }
+    });
+
+    if (isEmpty) {
+      showAlert({ message: "모든 항목을 입력해주세요." });
+      return;
+    }
+
+    // 날짜 유효성 검사
+    const startDate = inputs.startDate;
+    const endDate = inputs.endDate;
+    if (startDate && endDate && startDate > endDate) {
+      showAlert({
+        message: ErrorMessages.date,
+      });
+      return;
+    }
+
+    // 시간 유효성 검사
+    const startTime = inputs.startTime;
+    const endTime = inputs.endTime;
+    if (startTime && endTime && startTime > endTime) {
+      showAlert({
+        message: ErrorMessages.time,
+      });
+      return;
+    }
+
+    // 최대 갯수 초과 검사
+    if (config.max && currentList.length >= config.max) {
+      showAlert({
+        message: ErrorMessages.max(config.title, config.max),
+      });
+      return;
+    }
+
+    return true;
   };
 
   const resetSelectRows = () => {
@@ -108,7 +159,7 @@ const DidConfig = ({
           <div className="lvSummary">
             {config.max &&
               LABELS.DID_CONFIG_LENGH(
-                didInfo[config.dataKey].length || 0,
+                selectDid[config.dataKey].length || 0,
                 config.max
               )}
           </div>
@@ -116,9 +167,9 @@ const DidConfig = ({
         <label className="lvSwitch">
           <input
             type="checkbox"
-            checked={didInfo[config.key]}
-            onChange={() => didToggle(config.key)}
-              disabled
+            checked={selectDid[config.key]}
+            // onChange={() => didToggle(config.key)}
+            disabled
           />
           <span className="slider"></span>
         </label>
@@ -220,7 +271,7 @@ const DidConfig = ({
             <Table
               ref={tableRef}
               columns={config.columns}
-              data={didInfo[config.dataKey]}
+              data={selectDid[config.dataKey]}
               paginationEnabled={false}
               resultLabel={false}
               pageSelect={false}

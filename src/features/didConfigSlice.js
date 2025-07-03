@@ -56,14 +56,17 @@ const didConfigSlice = createSlice({
       );
     },
     addSubItemToList: (state, action) => {
-      const { subNo, fromNo, toNo, subFieldKey, newItem } = action.payload;
-      const didItem = state.didList.find(
-        (item) =>
-          item.subNo === subNo && item.fromNo === fromNo && item.toNo === toNo
-      );
+      const { selectDid, subFieldKey, newItem } = action.payload;
+      const { subNo, fromNo, toNo, telFromNo, telToNo } = selectDid;
 
+      const currentKey = getDidKey({ subNo, fromNo, toNo, telFromNo, telToNo });
+
+      const didItem = state.didList.find(
+        (item) => getDidKey(item) === currentKey
+      );
       if (!didItem) return;
 
+      // subs 초기화 및 대상 배열 준비
       if (!didItem.subs) didItem.subs = {};
       if (!Array.isArray(didItem.subs[subFieldKey])) {
         didItem.subs[subFieldKey] = [];
@@ -78,46 +81,50 @@ const didConfigSlice = createSlice({
       }
 
       const index = findSubChangeIndex(state, subNo, fromNo, toNo);
-
       if (index === -1) {
         state.subChanges.push({
           subNo,
           fromNo,
           toNo,
+          telFromNo,
+          telToNo,
           add: { [subFieldKey]: [newItem] },
           remove: {},
         });
-      } else {
-        const change = state.subChanges[index];
+        return;
+      }
 
-        // remove 쪽에 같은 항목이 있으면 제거 (취소 처리)
-        if (Array.isArray(change.remove[subFieldKey])) {
-          change.remove[subFieldKey] = change.remove[subFieldKey].filter(
-            (item) => JSON.stringify(item) !== JSON.stringify(newItem)
-          );
-        }
+      const change = state.subChanges[index];
 
-        // add에 push
-        if (!Array.isArray(change.add[subFieldKey])) {
-          change.add[subFieldKey] = [];
-        }
-
-        const alreadyAdded = change.add[subFieldKey].some(
-          (item) => JSON.stringify(item) === JSON.stringify(newItem)
+      // remove에 있던 항목이면 제거 (취소 개념)
+      if (Array.isArray(change.remove[subFieldKey])) {
+        change.remove[subFieldKey] = change.remove[subFieldKey].filter(
+          (item) => JSON.stringify(item) !== JSON.stringify(newItem)
         );
+      }
 
-        if (!alreadyAdded) {
-          change.add[subFieldKey].push(newItem);
-        }
+      // add에 없으면 추가
+      if (!Array.isArray(change.add[subFieldKey])) {
+        change.add[subFieldKey] = [];
+      }
+
+      const alreadyAdded = change.add[subFieldKey].some(
+        (item) => JSON.stringify(item) === JSON.stringify(newItem)
+      );
+      if (!alreadyAdded) {
+        change.add[subFieldKey].push(newItem);
       }
     },
     removeSubItemFromList: (state, action) => {
-      const { subNo, fromNo, toNo, subFieldKey, removeItem } = action.payload;
+      const { selectDid, subFieldKey, removeItem } = action.payload;
+      const { subNo, fromNo, toNo, telFromNo, telToNo } = selectDid;
+
+      const currentKey = getDidKey({ subNo, fromNo, toNo, telFromNo, telToNo });
 
       const didItem = state.didList.find(
-        (item) =>
-          item.subNo === subNo && item.fromNo === fromNo && item.toNo === toNo
+        (item) => getDidKey(item) === currentKey
       );
+
       if (
         !didItem ||
         !didItem.subs ||
@@ -126,54 +133,61 @@ const didConfigSlice = createSlice({
         return;
       }
 
-      // id 기준으로 삭제
+      // 🔸 모든 내용 비교하여 삭제
       didItem.subs[subFieldKey] = didItem.subs[subFieldKey].filter(
-        (item) => item.id !== removeItem.id
+        (item) => JSON.stringify(item) !== JSON.stringify(removeItem)
       );
 
       const index = findSubChangeIndex(state, subNo, fromNo, toNo);
+
       if (index === -1) {
         state.subChanges.push({
           subNo,
           fromNo,
           toNo,
+          telFromNo,
+          telToNo,
           add: {},
           remove: { [subFieldKey]: [removeItem] },
         });
       } else {
         const { add, remove } = state.subChanges[index];
 
-        // remove에 push
+        // 🔸 remove에 중복 없이 추가
         if (!Array.isArray(remove[subFieldKey])) {
           remove[subFieldKey] = [];
         }
-        remove[subFieldKey].push(removeItem);
+        const alreadyRemoved = remove[subFieldKey].some(
+          (item) => JSON.stringify(item) === JSON.stringify(removeItem)
+        );
+        if (!alreadyRemoved) {
+          remove[subFieldKey].push(removeItem);
+        }
 
-        // add에 이미 있었던 항목이면 제거
+        // 🔸 add에 있었으면 제거 (취소)
         if (Array.isArray(add[subFieldKey])) {
           add[subFieldKey] = add[subFieldKey].filter(
-            (item) => item.id !== removeItem.id
+            (item) => JSON.stringify(item) !== JSON.stringify(removeItem)
           );
 
-          // 빈 배열이 되면 키 제거(optional)
           if (add[subFieldKey].length === 0) {
             delete add[subFieldKey];
           }
         }
       }
     },
-  },
-  addBulkItem: (state, action) => {
-    state.bulkAddList.push(action.payload);
-  },
+    addBulkItem: (state, action) => {
+      state.bulkAddList.push(action.payload);
+    },
 
-  removeBulkItem: (state, action) => {
-    const index = state.bulkAddList.findIndex(
-      (item) => item.subNo === action.payload.subNo
-    );
-    if (index !== -1) {
-      state.bulkAddList.splice(index, 1);
-    }
+    removeBulkItem: (state, action) => {
+      const index = state.bulkAddList.findIndex(
+        (item) => item.subNo === action.payload.subNo
+      );
+      if (index !== -1) {
+        state.bulkAddList.splice(index, 1);
+      }
+    },
   },
 });
 

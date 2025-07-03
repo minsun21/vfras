@@ -299,27 +299,6 @@ export const DID_SETTING_COLUMNS = [
 ];
 
 export const DID_CONFIG_DATAS = [
-  // {
-  //   key: KEYS.IS_INTERRUPT,
-  //   title: LABELS.INTERRUPT,
-  //   dataKey: KEYS.IS_INTERRUPT,
-  //   forms: [
-  //     {
-  //       key: "date",
-  //       fields: [
-  //         {
-  //           key: KEYS.START_DATE,
-  //           type: "date",
-  //         },
-  //         {
-  //           key: KEYS.END_DATE,
-  //           type: "date",
-  //         },
-  //       ],
-  //     },
-  //     { key: KEYS.RBT_ID, type: "number", placeholder: LABELS.RBT_ID },
-  //   ],
-  // },
   {
     key: KEYS.IS_CIRCULR_JOINED,
     title: LABELS.CIRCULAR,
