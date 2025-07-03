@@ -99,16 +99,29 @@ const ModalRenderer = () => {
                 </div>
                 <div className="pop-body">{props.content}</div>
                 <div className="pop-footer">
-                  <div className="btn-wrap center">
-                    <Button
-                      type={BUTTON_CANCEL}
-                      onClick={() => {
-                        props.onClose?.();
-                        closeModal();
-                      }}
-                    />
-                    <Button onClick={() => props.onConfirm?.()} />
-                  </div>
+                  {!props.isOnlyClose ? (
+                    <div className="btn-wrap center">
+                      <Button
+                        type={BUTTON_CANCEL}
+                        onClick={() => {
+                          props.onClose?.();
+                          closeModal();
+                        }}
+                      />
+                      <Button onClick={() => props.onConfirm?.()} />
+                    </div>
+                  ) : (
+                    <div className="btn-wrap center">
+                      <Button
+                        type={BUTTON_CANCEL}
+                        label={LABELS.CLOSE}
+                        onClick={() => {
+                          props.onClose?.();
+                          closeModal();
+                        }}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

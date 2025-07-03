@@ -73,9 +73,6 @@ const DidConfig = ({
         );
         deleteDidConfig(config, newList);
         resetSelectRows();
-        setTimeout(() => {
-          showAlert({ message: InfoMessages.successDelete });
-        }, 0);
       },
     });
   };
@@ -121,6 +118,7 @@ const DidConfig = ({
             type="checkbox"
             checked={didInfo[config.key]}
             onChange={() => didToggle(config.key)}
+              disabled
           />
           <span className="slider"></span>
         </label>

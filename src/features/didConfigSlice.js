@@ -8,6 +8,7 @@ const initialState = {
   deleteDidList: [], // 삭제할 회선
   bulkAddList: [], // 일괄 저장
   bulkRemoveList: [], // 일괄 삭제
+  subChanges: [],
 };
 
 const findSubChangeIndex = (state, subNo, fromNo, toNo) =>
@@ -47,8 +48,7 @@ const didConfigSlice = createSlice({
       state.addDidList.push(newItem);
     },
     deleteDidItem: (state, action) => {
-      const itemsToDelete = action.payload; // 배열
-
+      const itemsToDelete = action.payload;
       // didList에서 제거
       state.didList = state.didList.filter(
         (item) =>
@@ -63,7 +63,7 @@ const didConfigSlice = createSlice({
       // deleteDidList에 추가 (중복 제거 없이 단순 누적)
       state.deleteDidList.push(...itemsToDelete);
 
-      // 삭제 대상이 addDidList에 있었다면 제거 (즉, 추가 → 삭제된 항목은 전송하지 않음)
+      // 삭제 대상이 addDidList에 있었다면 제거
       state.addDidList = state.addDidList.filter(
         (item) =>
           !itemsToDelete.some(
@@ -80,15 +80,24 @@ const didConfigSlice = createSlice({
         (item) =>
           item.subNo === subNo && item.fromNo === fromNo && item.toNo === toNo
       );
+
       if (!didItem) return;
 
       if (!didItem.subs) didItem.subs = {};
       if (!Array.isArray(didItem.subs[subFieldKey])) {
         didItem.subs[subFieldKey] = [];
       }
-      didItem.subs[subFieldKey].push(newItem);
+
+      // 중복 추가 방지
+      const exists = didItem.subs[subFieldKey].some(
+        (item) => JSON.stringify(item) === JSON.stringify(newItem)
+      );
+      if (!exists) {
+        didItem.subs[subFieldKey].push(newItem);
+      }
 
       const index = findSubChangeIndex(state, subNo, fromNo, toNo);
+
       if (index === -1) {
         state.subChanges.push({
           subNo,
@@ -98,16 +107,32 @@ const didConfigSlice = createSlice({
           remove: {},
         });
       } else {
-        const addList = state.subChanges[index].add;
-        if (!Array.isArray(addList[subFieldKey])) {
-          addList[subFieldKey] = [];
+        const change = state.subChanges[index];
+
+        // remove 쪽에 같은 항목이 있으면 제거 (취소 처리)
+        if (Array.isArray(change.remove[subFieldKey])) {
+          change.remove[subFieldKey] = change.remove[subFieldKey].filter(
+            (item) => JSON.stringify(item) !== JSON.stringify(newItem)
+          );
         }
-        addList[subFieldKey].push(newItem);
+
+        // add에 push
+        if (!Array.isArray(change.add[subFieldKey])) {
+          change.add[subFieldKey] = [];
+        }
+
+        const alreadyAdded = change.add[subFieldKey].some(
+          (item) => JSON.stringify(item) === JSON.stringify(newItem)
+        );
+
+        if (!alreadyAdded) {
+          change.add[subFieldKey].push(newItem);
+        }
       }
     },
-
     removeSubItemFromList: (state, action) => {
       const { subNo, fromNo, toNo, subFieldKey, removeItem } = action.payload;
+
       const didItem = state.didList.find(
         (item) =>
           item.subNo === subNo && item.fromNo === fromNo && item.toNo === toNo
@@ -119,8 +144,10 @@ const didConfigSlice = createSlice({
       ) {
         return;
       }
+
+      // id 기준으로 삭제
       didItem.subs[subFieldKey] = didItem.subs[subFieldKey].filter(
-        (item) => item.rbtId !== removeItem.rbtId
+        (item) => item.id !== removeItem.id
       );
 
       const index = findSubChangeIndex(state, subNo, fromNo, toNo);
@@ -133,11 +160,25 @@ const didConfigSlice = createSlice({
           remove: { [subFieldKey]: [removeItem] },
         });
       } else {
-        const removeList = state.subChanges[index].remove;
-        if (!Array.isArray(removeList[subFieldKey])) {
-          removeList[subFieldKey] = [];
+        const { add, remove } = state.subChanges[index];
+
+        // remove에 push
+        if (!Array.isArray(remove[subFieldKey])) {
+          remove[subFieldKey] = [];
         }
-        removeList[subFieldKey].push(removeItem);
+        remove[subFieldKey].push(removeItem);
+
+        // add에 이미 있었던 항목이면 제거
+        if (Array.isArray(add[subFieldKey])) {
+          add[subFieldKey] = add[subFieldKey].filter(
+            (item) => item.id !== removeItem.id
+          );
+
+          // 빈 배열이 되면 키 제거(optional)
+          if (add[subFieldKey].length === 0) {
+            delete add[subFieldKey];
+          }
+        }
       }
     },
   },

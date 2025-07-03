@@ -45,6 +45,7 @@ const SubscriberManageEdit = () => {
     getData(subNo);
   }, [state]);
 
+  // 가입자 정보 조회
   const getData = (subNo) => {
     axios
       .get(ROUTES.SUBSCRIBERS_DETAIL(subNo))
@@ -84,6 +85,7 @@ const SubscriberManageEdit = () => {
     getData(searchSubNo);
   };
 
+  // 가입자 - 수정
   const handleSave = () => {
     showDialog({
       message: InfoMessages.confirmSave,
@@ -99,13 +101,14 @@ const SubscriberManageEdit = () => {
             return;
           }
 
-          save();
+          subsriberSave();
         }, 50);
       },
     });
   };
 
-  const save = () => {
+  // 가입자 - 수정
+  const subsriberSave = () => {
     axios
       .put(ROUTES.SUBSCRIBERS_DETAIL(formData[KEYS.SUB_NO]), formData)
       .then((res) => {
@@ -126,6 +129,7 @@ const SubscriberManageEdit = () => {
     showModal({
       content: <DidSetting userInfo={formData} />,
       header: LABELS.DID_TITLE,
+      isOnlyClose : true,
       onConfirm: saveDidSetting,
     });
   };
@@ -134,22 +138,49 @@ const SubscriberManageEdit = () => {
     showModal({
       content: <DidSettingPersonal userInfo={formData} />,
       header: LABELS.DID_TITLE_PERSONAL,
+      isOnlyClose : true,
       onConfirm: saveDidSettingPersonal,
     });
   };
 
   // did 회선 설정 - 법인 변경
   const saveDidSetting = () => {
-    const didPersonalData = store.getState()[KEYS.DID_CONFIG][KEYS.DID_CONFIG];
-    console.log(store.getState()[KEYS.DID_CONFIG]);
-    console.log(didPersonalData);
+    // const didStore = store.getState()[KEYS.DID_CONFIG];
+    // const subNo = formData[KEYS.SUB_NO];
 
-    showAlert({
-      message: InfoMessages.successEdit,
-      onConfirm: () => {
-        closeModal();
-      },
-    });
+    // // 1. did 회선 추가
+    // let addDidList = didStore.addDidList;
+    // for (const addDidRow of addDidList) {
+    //   let inputs = {
+    //     [KEYS.FROM_NO]: addDidRow[KEYS.FROM_NO],
+    //     [KEYS.TO_NO]: addDidRow[KEYS.TO_NO],
+    //     [KEYS.TEL_FROM_NO]: addDidRow[KEYS.TEL_FROM_NO],
+    //     [KEYS.TEL_TO_NO]: addDidRow[KEYS.TEL_TO_NO],
+    //   };
+    //   axios.post(ROUTES.SUBSCRIBERS_RBT_ADD(subNo), inputs).catch((err) => {
+    //     console.log("err", err.response.resultData);
+    //   });
+    // }
+
+    // // 2. did 회선 삭제
+    // // 2-2. subNo 없는 경우 통신 x
+    // let deleteDidList = didStore.deleteDidList;
+    // for (const deleteDidRow of deleteDidList) {
+    //   let inputs = {
+    //     rangeEndTel: "string",
+    //     subscriberNo: "string",
+    //   };
+    //   axios.delete(ROUTES.SUBSCRIBERS_RBT_ADD(subNo), inputs).catch((err) => {
+    //     console.log("err", err.response.resultData);
+    //   });
+    // }
+
+    // showAlert({
+    //   message: InfoMessages.successEdit,
+    //   onConfirm: () => {
+    //     closeModal();
+    //   },
+    // });
   };
 
   // did 회선 설정 - 개인 변경

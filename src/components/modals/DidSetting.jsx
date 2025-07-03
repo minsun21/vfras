@@ -1,7 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { LABELS } from "../../constants/Labels";
 import Table from "../Table";
-import { DID_CONFIG_DATAS, DID_SETTING_COLUMNS } from "../../config/DataConfig";
+import {
+  DID_CONFIG_DATAS,
+  DID_SETTING_COLUMNS,
+  EMPTY_DID_DATA,
+} from "../../config/DataConfig";
 import Button, { BUTTON_DELETE } from "../Button";
 import Input from "../Input";
 import { KEYS } from "../../constants/Keys";
@@ -23,8 +27,9 @@ import DidConfig from "./DidConfig";
 import axios from "../../api/axios";
 import {
   addDidItem,
+  addSubItemToList,
   deleteDidItem,
-  setConfigData,
+  removeSubItemFromList,
   setDidList,
 } from "../../features/didConfigSlice";
 import { ROUTES } from "../../constants/routes";
@@ -36,22 +41,19 @@ const DidSetting = ({ userInfo }) => {
 
   const [tableData, setTableData] = useState([]); // 회선 목록
   const [selectRows, setSelectRows] = useState([]);
-  const [didData, setDidData] = useState([]); // 전체 DID data
   const [selectDid, setSelectDid] = useState({});
   const [checkboxSelected, setCheckboxSelected] = useState([]); // 체크박스 선택
 
   useEffect(() => {
     axios.get(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO])).then((res) => {
       const result = res.data.resultData;
+      console.log("result", result);
       setTableData(result);
       dispatch(setDidList(result));
     });
   }, [userInfo]);
 
-  useEffect(() => {
-    dispatch(setConfigData(didData));
-  }, [didData]);
-
+  // 로우 하나 클릭 했을 때.
   useEffect(() => {
     if (selectRows.length !== 1) {
       setSelectDid();
@@ -59,63 +61,48 @@ const DidSetting = ({ userInfo }) => {
     }
 
     const selectRow = selectRows[0];
-    // 중복 검사
-    const exist = didData.find(
-      (item) =>
-        item[KEYS.SUB_NO] === selectRow[KEYS.SUB_NO] &&
-        item[KEYS.FROM_NO] === selectRow[KEYS.FROM_NO] &&
-        item[KEYS.TO_NO] === selectRow[KEYS.TO_NO]
-    );
-    if (exist) {
-      setSelectDid(exist);
+    let subNo = selectRow[KEYS.SUB_NO];
+    if (!subNo) {
+      // 신규 회선은 subNo 없음
+      setSelectDid({
+        ...selectRow,
+        ...EMPTY_DID_DATA,
+      });
       return;
     }
+    let fromNo = selectRow[KEYS.FROM_NO];
+    let toNo = selectRow[KEYS.TO_NO];
+
+    // 중복 검사
+    // const exist = didData.find(
+    //   (item) =>
+    //     item[KEYS.SUB_NO] === selectRow[KEYS.SUB_NO] &&
+    //     item[KEYS.FROM_NO] === selectRow[KEYS.FROM_NO] &&
+    //     item[KEYS.TO_NO] === selectRow[KEYS.TO_NO]
+    // );
+
+    // if (exist) {
+    //   setSelectDid(exist);
+    //   return;
+    // }
 
     // axios로 detail 정보 가져옴
-    const newRow = {
-      ...selectRow,
-      circulars: [
-        {
-          rbtId: "1071087",
-        },
-      ],
-      times: [
-        {
-          rbtId: "1071087",
-          startTime: "0800",
-          endTime: "1800",
-          dayType: 0,
-        },
-      ],
-      weeks: [
-        {
-          rbtId: "1071087",
-          dayType: 0,
-        },
-      ],
-      orgns: [
-        {
-          rbtId: "1071087",
-          [KEYS.ORGN]: "02",
-        },
-      ],
-      groups: [
-        {
-          rbtId: "1071087",
-          groupId: "1",
-        },
-      ],
-      duras: [
-        {
-          rbtId: "1071087",
-          startDate: "2025-05-01",
-          endDate: "2025-06-01",
-        },
-      ],
-    };
-
-    // setDidData((prev) => [...prev, newRow]);
-    setSelectDid(newRow);
+    axios
+      .get(ROUTES.SUBSRIBER_RBT_DETAIL(subNo, fromNo, toNo))
+      .then((res) => {
+        console.log("SUBSRIBER_RBT_DETAIL", res);
+        const result = res.data.resultData;
+        setSelectDid({ ...selectRow, ...result });
+      })
+      .catch((err) => {
+        // 아직 부가서비스 없는 회선인 경우
+        if (err.response.statusText === "Not Found") {
+          setSelectDid({
+            ...selectRow,
+            ...EMPTY_DID_DATA,
+          });
+        }
+      });
   }, [selectRows]);
 
   // did 회선 추가
@@ -134,18 +121,17 @@ const DidSetting = ({ userInfo }) => {
           return;
         }
 
-        const newRow = {
-          ...didFormData,
-          id: Math.floor(Math.random() * 100) + 1,
-        };
-
+        console.log(tableData, didFormData);
         const isDuplicate = tableData.some(
           (item) =>
-            item.subNo === newRow.subNo &&
-            item.fromNo === newRow.fromNo &&
-            item.toNo === newRow.toNo
+            item[KEYS.FROM_NO] === didFormData[KEYS.FROM_NO] &&
+            item[KEYS.TO_NO] === didFormData[KEYS.TO_NO] &&
+            item[KEYS.TEL_FROM_NO] === didFormData[KEYS.TEL_FROM_NO] &&
+            item[KEYS.TEL_TO_NO] === didFormData[KEYS.TEL_TO_NO]
+          // &&
+          // item[KEYS.RBT_ID] === didFormData[KEYS.RBT_ID]
         );
-
+        console.log("isDuplicate", isDuplicate);
         if (isDuplicate) {
           showAlert({
             message: ErrorMessages.duplicateSave,
@@ -153,15 +139,22 @@ const DidSetting = ({ userInfo }) => {
           return;
         }
 
-        setTableData((prev) => [...prev, newRow]);
-        dispatch(addDidItem(newRow));
-
-        dispatch(resetFormData());
-        closeModal();
-
-        setTimeout(() => {
-          showAlert({ message: InfoMessages.successAdd });
-        }, 0);
+        let inputs = {
+          [KEYS.FROM_NO]: didFormData[KEYS.FROM_NO],
+          [KEYS.TO_NO]: didFormData[KEYS.TO_NO],
+          [KEYS.TEL_FROM_NO]: didFormData[KEYS.TEL_FROM_NO],
+          // [KEYS.TEL_TO_NO]: didFormData[KEYS.TEL_TO_NO],
+          tellToNo: didFormData[KEYS.TEL_TO_NO],
+        };
+        axios
+          .post(ROUTES.SUBSCRIBERS_RBT_ADD(userInfo[KEYS.SUB_NO]), inputs)
+          .then((err) => {
+            setTableData((prev) => [...prev, didFormData]);
+            dispatch(addDidItem(didFormData));
+            dispatch(resetFormData());
+            closeModal();
+            showAlert({ message: InfoMessages.successAdd });
+          });
       },
       onClose: () => {
         dispatch(resetFormData());
@@ -200,16 +193,16 @@ const DidSetting = ({ userInfo }) => {
         );
         dispatch(deleteDidItem(deleteItems));
 
-        setTimeout(() => {
-          showAlert({ message: InfoMessages.successDelete });
-        }, 0);
+        // setTimeout(() => {
+        //   showAlert({ message: InfoMessages.successDelete });
+        // }, 0);
       },
     });
   };
 
   const getDidKey = (item) => `${item.subNo}_${item.fromNo}_${item.toNo}`;
 
-  // 사용 / 안함
+  // 변경 - 사용 / 안함
   const didToggle = (key) => {
     const selectedKey = getDidKey(selectDid);
     const currentValue = selectDid?.[key] ?? false;
@@ -227,19 +220,72 @@ const DidSetting = ({ userInfo }) => {
         getDidKey(row) === selectedKey ? { ...row, [key]: toggled } : row
       )
     );
-
-    setDidData((prev) => {
-      const exists = prev.some((row) => getDidKey(row) === selectedKey);
-      if (exists) {
-        return prev.map((row) =>
-          getDidKey(row) === selectedKey ? { ...row, [key]: toggled } : row
-        );
-      } else {
-        return [...prev, { ...updatedSelectDid }];
-      }
-    });
   };
 
+  const addAction = (config, inputs) => {
+    const dataKey = config.dataKey;
+    if (dataKey === "circulars") {
+      axios
+        .post(
+          ROUTES.CIRCULAR_ADD(
+            selectDid[KEYS.SUB_NO],
+            selectDid[KEYS.FROM_NO],
+            selectDid[KEYS.TO_NO]
+          ),
+          [inputs]
+        )
+        .then((res) => {
+          successSaveAction(config, inputs);
+        })
+        .catch((err) => {
+          console.log("err", err);
+        });
+    }
+  };
+
+  const successSaveAction = (config, inputs) => {
+    const key = config.key;
+    const dataKey = config.dataKey;
+    const selectedKey = getDidKey(selectDid);
+
+    const newList = getNewAddList(config, inputs);
+
+    const updatedSelectDid = {
+      ...selectDid,
+      [key]: true,
+      [dataKey]: newList,
+    };
+
+    setSelectDid(updatedSelectDid);
+    dispatch(
+      addSubItemToList({
+        [KEYS.SUB_NO]: selectDid[KEYS.SUB_NO],
+        [KEYS.FROM_NO]: selectDid[KEYS.FROM_NO],
+        [KEYS.TO_NO]: selectDid[KEYS.TO_NO],
+        subFieldKey: dataKey,
+        newItem: newList,
+      })
+    );
+    // 사용으로 변경
+    setTableData((prev) =>
+      prev.map((row) =>
+        getDidKey(row) === selectedKey ? { ...row, [key]: true } : row
+      )
+    );
+  };
+
+  // 부가서비스 저장
+  const addDidConfig = (config, inputs) => {
+    // const key = config.key;
+    const dataKey = config.dataKey;
+    const currentList = selectDid[dataKey] || [];
+
+    if (!addDidConfigValidation(config, inputs, currentList)) return;
+
+    addAction(config, inputs);
+  };
+
+  // 부가서비스 삭제
   const deleteDidConfig = (config, newList) => {
     const key = config.key;
     const dataKey = config.dataKey;
@@ -260,61 +306,15 @@ const DidSetting = ({ userInfo }) => {
           : row
       )
     );
-
-    setDidData((prev) => {
-      const exists = prev.some((row) => getDidKey(row) === selectedKey);
-      if (exists) {
-        return prev.map((row) =>
-          getDidKey(row) === selectedKey
-            ? {
-                ...row,
-                [key]: updatedSelectDid[key],
-                [dataKey]: updatedSelectDid[dataKey],
-              }
-            : row
-        );
-      } else {
-        return [...prev, { ...updatedSelectDid }];
-      }
-    });
-  };
-
-  const addDidConfig = (config, inputs) => {
-    const key = config.key;
-    const dataKey = config.dataKey;
-    const selectedKey = getDidKey(selectDid);
-    const currentList = selectDid[dataKey] || [];
-
-    if (!addDidConfigValidation(config, inputs, currentList)) return;
-
-    const newList = getNewAddList(config, inputs);
-
-    const updatedSelectDid = {
-      ...selectDid,
-      [key]: true,
-      [dataKey]: newList,
-    };
-
-    setSelectDid(updatedSelectDid);
-
-    setTableData((prev) =>
-      prev.map((row) =>
-        getDidKey(row) === selectedKey ? { ...row, [key]: true } : row
-      )
+    dispatch(
+      removeSubItemFromList({
+        [KEYS.SUB_NO]: selectDid[KEYS.SUB_NO],
+        [KEYS.FROM_NO]: selectDid[KEYS.FROM_NO],
+        [KEYS.TO_NO]: selectDid[KEYS.TO_NO],
+        subFieldKey: dataKey,
+        removeItem: newList,
+      })
     );
-
-    setDidData((prev) => {
-      const exists = prev.some((row) => getDidKey(row) === selectedKey);
-      if (exists) {
-        return prev.map((row) =>
-          getDidKey(row) === selectedKey
-            ? { ...row, [key]: true, [dataKey]: newList }
-            : row
-        );
-      } else {
-        return [...prev, { ...updatedSelectDid }];
-      }
-    });
   };
 
   const addDidConfigValidation = (config, inputs, currentList) => {
@@ -427,18 +427,18 @@ const DidSetting = ({ userInfo }) => {
       )
     );
 
-    setDidData((prev) => {
-      const exists = prev.some((row) => getDidKey(row) === selectedKey);
-      if (exists) {
-        return prev.map((row) =>
-          getDidKey(row) === selectedKey
-            ? { ...row, [KEYS.IS_INTERRUPT]: isInterrupt }
-            : row
-        );
-      } else {
-        return [...prev, { ...selectDid, [KEYS.IS_INTERRUPT]: isInterrupt }];
-      }
-    });
+    // setDidData((prev) => {
+    //   const exists = prev.some((row) => getDidKey(row) === selectedKey);
+    //   if (exists) {
+    //     return prev.map((row) =>
+    //       getDidKey(row) === selectedKey
+    //         ? { ...row, [KEYS.IS_INTERRUPT]: isInterrupt }
+    //         : row
+    //     );
+    //   } else {
+    //     return [...prev, { ...selectDid, [KEYS.IS_INTERRUPT]: isInterrupt }];
+    //   }
+    // });
   };
 
   const handleInterruptDateChange = (e) => {
@@ -470,16 +470,16 @@ const DidSetting = ({ userInfo }) => {
     });
 
     const selectedKey = getDidKey(selectDid);
-    setDidData((prev) => {
-      const exists = prev.some((row) => getDidKey(row) === selectedKey);
-      if (exists) {
-        return prev.map((row) =>
-          getDidKey(row) === selectedKey ? { ...row, [name]: value } : row
-        );
-      } else {
-        return [...prev, { ...selectDid, [name]: value }];
-      }
-    });
+    // setDidData((prev) => {
+    //   const exists = prev.some((row) => getDidKey(row) === selectedKey);
+    //   if (exists) {
+    //     return prev.map((row) =>
+    //       getDidKey(row) === selectedKey ? { ...row, [name]: value } : row
+    //     );
+    //   } else {
+    //     return [...prev, { ...selectDid, [name]: value }];
+    //   }
+    // });
   };
 
   return (

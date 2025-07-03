@@ -135,4 +135,5 @@ export const LABELS = {
   RESET : "초기화",
   START : "시작",
   INTERRUPT_RESERVATION : "일시정지 예약",
+  CLOSE : "닫기"
 };

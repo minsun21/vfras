@@ -703,3 +703,12 @@ export const SUBSRIBERS_INFO_DUMMY = {
     },
   ],
 };
+
+export const EMPTY_DID_DATA = {
+  circulars: [],
+  times: [],
+  weeks: [],
+  orgns: [],
+  groups: [],
+  duras: [],
+};
