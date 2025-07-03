@@ -154,6 +154,7 @@ const SubscriberManageEdit = () => {
     const addedList = [];
     const addDidList = didStore.addDidList;
     const deleteDidList = didStore.deleteDidList;
+    const subChangeList = didStore.subChanges;
 
     const rollbackAddedItems = async () => {
       if (addedList.length === 0) return;
@@ -199,6 +200,11 @@ const SubscriberManageEdit = () => {
             data: deleteInputs,
           });
         }
+
+        // 3. 부가 서비스 추가
+        
+
+        // 4. 부가 서비스 삭제
 
         console.log("추가 및 삭제 작업 완료");
       } catch (error) {

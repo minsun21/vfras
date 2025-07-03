@@ -32,6 +32,7 @@ import {
   deleteDidItem,
   removeBulkItem,
   removeSubItemFromList,
+  resetDidConfig,
   setDidList,
 } from "../../features/didConfigSlice";
 import { ROUTES } from "../../constants/routes";
@@ -46,6 +47,12 @@ const DidSetting = ({ userInfo }) => {
   const [selectRows, setSelectRows] = useState([]);
   const [selectDid, setSelectDid] = useState({});
   const [checkboxSelected, setCheckboxSelected] = useState([]); // 체크박스 선택
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetDidConfig());
+    };
+  }, []);
 
   useEffect(() => {
     axios.get(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO])).then((res) => {
@@ -80,19 +87,86 @@ const DidSetting = ({ userInfo }) => {
       .get(ROUTES.SUBSRIBER_RBT_DETAIL(subNo, fromNo, toNo))
       .then((res) => {
         console.log("SUBSRIBER_RBT_DETAIL", res);
-        const result = res.data.resultData;
+        const resultData = res.data.resultData;
+        const result = addUiItems(resultData);
         setSelectDid({ ...selectRow, ...result });
       })
       .catch((err) => {
         // 아직 부가서비스 없는 회선인 경우
         if (err.response.statusText === "Not Found") {
-          setSelectDid({
+          const newRow = {
             ...selectRow,
             ...EMPTY_DID_DATA,
-          });
+          };
+          const result = addUiItems(newRow);
+          setSelectDid(result);
         }
       });
   }, [selectRows]);
+
+  const addUiItems = (existItems) => {
+    const didStore = store.getState()[KEYS.DID_CONFIG];
+    const subChanges = didStore.subChanges;
+    const addBulkList = didStore.bulkAddList;
+    let mergeAddItems = applySubChangesToDidList(existItems, subChanges);
+    let mergeBulkItemResult = mergeBulkItems(mergeAddItems, addBulkList);
+    return deduplicateByWholeObject(mergeBulkItemResult);
+  };
+
+  const deduplicateByWholeObject = (data) => {
+    const result = {};
+
+    for (const key in data) {
+      const items = data[key];
+      if (!Array.isArray(items)) {
+        result[key] = items;
+        continue;
+      }
+
+      const seen = new Set();
+      result[key] = items.filter((item) => {
+        const serialized = JSON.stringify(item);
+        if (seen.has(serialized)) return false;
+        seen.add(serialized);
+        return true;
+      });
+    }
+
+    return result;
+  };
+
+  const applySubChangesToDidList = (didItem, subChanges) => {
+    const didKey = getDidKey(didItem);
+
+    const matchedChanges = subChanges.filter(
+      (change) => getDidKey(change) === didKey && change.add
+    );
+
+    const result = { ...didItem };
+
+    for (const change of matchedChanges) {
+      const add = change.add;
+
+      for (const key in add) {
+        result[key] = [...result[key], ...add[key]];
+      }
+    }
+
+    return result;
+  };
+
+  const mergeBulkItems = (originalData, bulkAddList) => {
+    const updatedData = { ...originalData }; // 기존 객체 복사
+
+    bulkAddList.forEach(({ key, items }) => {
+      if (!Array.isArray(updatedData[key])) {
+        updatedData[key] = [];
+      }
+      updatedData[key] = [...updatedData[key], ...items]; // 단순 병합 (중복 허용)
+    });
+
+    return updatedData;
+  };
 
   // did 회선 추가
   const addDidRow = () => {
@@ -214,15 +288,21 @@ const DidSetting = ({ userInfo }) => {
   };
 
   // 부가서비스 일괄 저장
-  const bulkAdd = (dataKey) => {
+  const bulkAdd = (key, dataKey) => {
     let bulkInputs = {
       key: dataKey,
       items: selectDid[dataKey],
     };
     dispatch(addBulkItem(bulkInputs));
+
+    setTableData((prev) =>
+      prev.map((row) => {
+        return { ...row, [key]: true };
+      })
+    );
   };
 
-  const bulkDelete = (dataKey) => {
+  const bulkDelete = (key, dataKey) => {
     let bulkInputs = {
       key: dataKey,
       items: selectDid[dataKey],
@@ -231,16 +311,21 @@ const DidSetting = ({ userInfo }) => {
   };
 
   // 부가서비스 삭제
-  const deleteDidConfig = (config, newList) => {
+  const deleteDidConfig = (config, deleteList) => {
     const key = config.key;
     const dataKey = config.dataKey;
     const selectedKey = getDidKey(selectDid);
 
-    let isAllDelete = newList.length > 0; // 전체 삭제 여부
+    let isAllDelete = deleteList.length === selectDid[dataKey].length; // 전체 삭제 여부
+
+    const newList = selectDid[config.dataKey].filter(
+      (item) => !deleteList.some((s) => s === item)
+    ); // 삭제되지 않은 데이터
+
     const updatedSelectDid = {
       ...selectDid,
-      [key]: isAllDelete ? selectDid[key] : false,
-      [dataKey]: isAllDelete ? newList : [],
+      [key]: isAllDelete ? false : true,
+      [dataKey]: isAllDelete ? [] : newList,
     };
 
     setSelectDid(updatedSelectDid);
@@ -256,7 +341,7 @@ const DidSetting = ({ userInfo }) => {
       removeSubItemFromList({
         selectDid,
         subFieldKey: dataKey,
-        removeItem: newList,
+        removeItem: deleteList,
       })
     );
   };

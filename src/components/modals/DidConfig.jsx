@@ -75,13 +75,15 @@ const DidConfig = ({
   };
 
   const bulkAddAction = () => {
+    const key = config.key;
     const dataKey = config.dataKey;
-    bulkAdd(dataKey);
+    bulkAdd(key, dataKey);
   };
 
   const bulkDeleteAction = () => {
+    const key = config.key;
     const dataKey = config.dataKey;
-    bulkDelete(dataKey);
+    bulkDelete(key, dataKey);
   };
 
   // 삭제
@@ -91,10 +93,7 @@ const DidConfig = ({
     showDialog({
       message: InfoMessages.confirmDelete(selectRows.length),
       onConfirm: () => {
-        const newList = selectDid[config.dataKey].filter(
-          (item) => !selectRows.some((s) => s === item)
-        );
-        deleteDidConfig(config, newList);
+        deleteDidConfig(config, selectRows);
         resetSelectRows();
       },
     });
