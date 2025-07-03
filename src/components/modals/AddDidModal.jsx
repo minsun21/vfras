@@ -56,7 +56,7 @@ const AddDidModal = () => {
                   ) : (
                     <Input
                       type={type}
-                      value={formData[KEYS.RBT_ID]}
+                      value={formData[key]}
                       onChange={handleChange}
                       size={size}
                     />

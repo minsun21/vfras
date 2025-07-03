@@ -194,11 +194,23 @@ const DidSetting = ({ userInfo }) => {
           });
           return;
         }
-
-        setTableData((prev) => [...prev, didFormData]);
-        dispatch(addDidItem(didFormData));
-        dispatch(resetFormData());
-        closeModal();
+        // UI용
+        // setTableData((prev) => [...prev, didFormData]);
+        // dispatch(addDidItem(didFormData));
+        // dispatch(resetFormData());
+        // closeModal();
+        // ===============
+        axios
+          .post(ROUTES.SUBSCRIBERS_RBT_ADD(userInfo[KEYS.SUB_NO]), didFormData)
+          .then((res) => {
+            // rbt_id를 def로 변경해줘야 함 
+            let newTableRow = {...didFormData,
+              [KEYS.DEF_RBT_TYPE] : didFormData[KEYS.RBT_ID]
+            };
+            setTableData((prev) => [...prev, newTableRow]);
+            dispatch(resetFormData());
+            closeModal();
+          });
       },
       onClose: () => {
         dispatch(resetFormData());
@@ -235,7 +247,12 @@ const DidSetting = ({ userInfo }) => {
         const deleteItems = tableData.filter((row) =>
           selectedIds.includes(getDidKey(row))
         );
-        dispatch(deleteDidItem(deleteItems));
+
+        axios.delete(ROUTES.SUBSCRIBERS_RBT_ADD(userInfo[KEYS.SUB_NO]), {
+          data: deleteItems,
+        });
+       
+        // dispatch(deleteDidItem(deleteItems));
       },
     });
   };

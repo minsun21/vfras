@@ -133,6 +133,7 @@ const SubscriberManageEdit = () => {
     showModal({
       content: <DidSetting userInfo={formData} />,
       header: LABELS.DID_TITLE,
+      isOnlyClose : true,
       onConfirm: saveDidSetting,
     });
   };
