@@ -328,11 +328,11 @@ export const DID_CONFIG_DATAS = [
         key: "time",
         fields: [
           {
-            key: KEYS.START_TIME,
+            key: KEYS.S_TIME,
             type: "time",
           },
           {
-            key: KEYS.END_TIME,
+            key: KEYS.E_TIME,
             type: "time",
           },
         ],
@@ -359,7 +359,7 @@ export const DID_CONFIG_DATAS = [
           if (!row.original._isNew) {
             return (
               <span>
-                {row.original[KEYS.START_TIME]} ~ {row.original[KEYS.END_TIME]}
+                {row.original[KEYS.S_TIME]} ~ {row.original[KEYS.E_TIME]}
               </span>
             );
           }
@@ -463,11 +463,11 @@ export const DID_CONFIG_DATAS = [
         key: "date",
         fields: [
           {
-            key: KEYS.START_DATE,
+            key: KEYS.S_DATE,
             type: "date",
           },
           {
-            key: KEYS.END_DATE,
+            key: KEYS.E_DATE,
             type: "date",
           },
         ],
@@ -486,7 +486,7 @@ export const DID_CONFIG_DATAS = [
           if (!row.original._isNew) {
             return (
               <span>
-                {row.original[KEYS.START_DATE]} ~ {row.original[KEYS.END_DATE]}
+                {row.original[KEYS.S_DATE]} ~ {row.original[KEYS.E_DATE]}
               </span>
             );
           }

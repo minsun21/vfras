@@ -77,7 +77,7 @@ const DidConfig = ({
   const bulkAddAction = () => {
     const key = config.key;
     const dataKey = config.dataKey;
-    bulkAdd(key, dataKey);
+    bulkAdd(key, dataKey, inputs);
   };
 
   const bulkDeleteAction = () => {

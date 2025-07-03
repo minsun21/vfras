@@ -25,8 +25,8 @@ export const KEYS = {
   OLD_PASSWORD: "oldPassword", // 기존 비밀번호
   NEW_PASSWORD1: "newPassword1", // 신규 비밀번호1
   NEW_PASSWORD2: "newPassword2", // 신규 비밀번호2(확인)),
-  PASSWORD1 : "password1",
-  PASSWORD2 : "password2",
+  PASSWORD1: "password1",
+  PASSWORD2: "password2",
   IP: "loginAddr", // 접속 IP
   REMARKS: "description", // 비고
   PASSWORD_CONFIRM: "passwordConfirm", //비밀번호 확인
@@ -67,8 +67,10 @@ export const KEYS = {
   END_DATE: "endDate",
   DAY_TYPE: "dayType", // 요일
   START_TIME: "startTime",
+  S_TIME: "stime",
+  E_TIME: "etime",
   END_TIME: "endTime",
-  ORGN: "orgn",
+  ORGN: "areaCode",
   GROUPS: "groups",
   CALLING_NUMBER: "callingNUmber",
   GROUP_ID: "groupId",
@@ -79,9 +81,11 @@ export const KEYS = {
   PERMISSIONS: "permissions",
   TOKEN: "token",
   SAVED_ID: "savedLoginId",
-  KEYWORD : "keyword",
-  LOG_ACTION : "logAction",
-  LOG_TIME : "logTime",
-  DEF_RBT_TYPE : "defRbtType",
-  DID_COUNT : "didCount"
+  KEYWORD: "keyword",
+  LOG_ACTION: "logAction",
+  LOG_TIME: "logTime",
+  DEF_RBT_TYPE: "defRbtType",
+  DID_COUNT: "didCount",
+  S_DATE : "sdate",
+  E_DATE : "edate"
 };

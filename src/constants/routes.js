@@ -8,8 +8,18 @@ export const ROUTES = {
   SUBSRIBER_RBT_DETAIL: (subNo, fromNo, toNo) =>
     `/subscribers/${subNo}/rbt/${fromNo}/${toNo}`, // 부가서비스 상세 조회
   SUBSCRIBERS_RBT_ADD: (subNo) => `/subscriber/${subNo}/rbt`, // 회선 생성
-  CIRCULAR_ADD: (subNo, fromNo, toNo) =>
+  CIRCULAR: (subNo, fromNo, toNo) =>
     `/subscriber/${subNo}/rbt/${fromNo}/${toNo}/circular`, // 순환링 부가서비스 저장
+  CIRCULAR_BULK: (subNo) =>
+    `/subscriber/${subNo}/rbt/circular_blk`, // 순환링 부가서비스 일괄 저장
+  TIME: (subNo, fromNo, toNo) =>
+    `/subscriber/${subNo}/rbt/${fromNo}/${toNo}/time`, // 시간대별 부가서비스 저장
+  WEEK: (subNo, fromNo, toNo) =>
+    `/subscriber/${subNo}/rbt/${fromNo}/${toNo}/week`, // 요일별 부가서비스 저장
+  ORGN: (subNo, fromNo, toNo) =>
+    `/subscriber/${subNo}/rbt/${fromNo}/${toNo}/orgn`, // 지역별 부가서비스 저장
+  DURA: (subNo, fromNo, toNo) =>
+    `/subscriber/${subNo}/rbt/${fromNo}/${toNo}/dura`, // 기념일별 부가서비스 저장
   RESET_SUBSCRIBER_PASSWORD: (subNo) => `/subscribers/${subNo}/password`, // 비밀번호 초기화
   LV: "/lvs", // 국번 관리
   CONTENTS: "/contents", // 음원 조회

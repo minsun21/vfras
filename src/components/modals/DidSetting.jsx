@@ -57,6 +57,7 @@ const DidSetting = ({ userInfo }) => {
   useEffect(() => {
     axios.get(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO])).then((res) => {
       const result = res.data.resultData;
+      console.log("result", result);
       setTableData(result);
       dispatch(setDidList(result));
     });
@@ -88,8 +89,7 @@ const DidSetting = ({ userInfo }) => {
       .then((res) => {
         console.log("SUBSRIBER_RBT_DETAIL", res);
         const resultData = res.data.resultData;
-        const result = addUiItems(resultData);
-        setSelectDid({ ...selectRow, ...result });
+        setSelectDid({ ...selectRow, ...resultData });
       })
       .catch((err) => {
         // 아직 부가서비스 없는 회선인 경우
@@ -98,8 +98,8 @@ const DidSetting = ({ userInfo }) => {
             ...selectRow,
             ...EMPTY_DID_DATA,
           };
-          const result = addUiItems(newRow);
-          setSelectDid(result);
+          // const result = addUiItems(newRow);
+          setSelectDid(newRow);
         }
       });
   }, [selectRows]);
@@ -203,9 +203,10 @@ const DidSetting = ({ userInfo }) => {
         axios
           .post(ROUTES.SUBSCRIBERS_RBT_ADD(userInfo[KEYS.SUB_NO]), didFormData)
           .then((res) => {
-            // rbt_id를 def로 변경해줘야 함 
-            let newTableRow = {...didFormData,
-              [KEYS.DEF_RBT_TYPE] : didFormData[KEYS.RBT_ID]
+            // rbt_id를 def로 변경해줘야 함
+            let newTableRow = {
+              ...didFormData,
+              [KEYS.DEF_RBT_TYPE]: didFormData[KEYS.RBT_ID],
             };
             setTableData((prev) => [...prev, newTableRow]);
             dispatch(resetFormData());
@@ -251,7 +252,7 @@ const DidSetting = ({ userInfo }) => {
         axios.delete(ROUTES.SUBSCRIBERS_RBT_ADD(userInfo[KEYS.SUB_NO]), {
           data: deleteItems,
         });
-       
+
         // dispatch(deleteDidItem(deleteItems));
       },
     });
@@ -283,40 +284,117 @@ const DidSetting = ({ userInfo }) => {
     const dataKey = config.dataKey;
     const selectedKey = getDidKey(selectDid);
     const newList = [inputs];
-    dispatch(
-      addSubItemToList({
-        selectDid: selectDid,
-        subFieldKey: dataKey,
-        newItem: newList,
-      })
-    );
-    // 사용으로 변경
-    setTableData((prev) =>
-      prev.map((row) =>
-        getDidKey(row) === selectedKey ? { ...row, [key]: true } : row
-      )
-    );
+    // dispatch(
+    //   addSubItemToList({
+    //     selectDid: selectDid,
+    //     subFieldKey: dataKey,
+    //     newItem: newList,
+    //   })
+    // );
+    const uri = getAddUri(dataKey, newList);
+    const addItem = getAddItem(dataKey, newList);
+    axios.post(uri, addItem).then((res) => {
+      // 사용으로 변경
+      setTableData((prev) =>
+        prev.map((row) =>
+          getDidKey(row) === selectedKey ? { ...row, [key]: true } : row
+        )
+      );
 
-    let newData = [...selectDid[dataKey], ...newList];
-    setSelectDid({
-      ...selectDid,
-      [dataKey]: newData,
+      let newData = [...selectDid[dataKey], ...newList];
+      setSelectDid({
+        ...selectDid,
+        [dataKey]: newData,
+      });
     });
   };
 
-  // 부가서비스 일괄 저장
-  const bulkAdd = (key, dataKey) => {
-    let bulkInputs = {
-      key: dataKey,
-      items: selectDid[dataKey],
-    };
-    dispatch(addBulkItem(bulkInputs));
+  const getAddItem = (dataKey, newList) => {
+    if (dataKey === KEYS.TIMES_DATA_KEY) {
+      return [
+        {
+          ...newList[0],
+          [KEYS.S_TIME]: newList[0][KEYS.S_TIME].replace(":", ""),
+          [KEYS.E_TIME]: newList[0][KEYS.E_TIME].replace(":", ""),
+        },
+      ];
+    } else if (dataKey === KEYS.DURAS_DATA_KEY) {
+      return [
+        {
+          ...newList[0],
+          [KEYS.S_DATE]: newList[0][KEYS.S_DATE].replaceAll("-", ""),
+          [KEYS.E_DATE]: newList[0][KEYS.E_DATE].replaceAll("-", ""),
+        },
+      ];
+    }
 
-    setTableData((prev) =>
-      prev.map((row) => {
-        return { ...row, [key]: true };
-      })
-    );
+    return newList;
+  };
+
+  const getAddUri = (dataKey) => {
+    let subNo = selectDid[KEYS.SUB_NO];
+    let fromNo = selectDid[KEYS.FROM_NO];
+    let toNo = selectDid[KEYS.TO_NO];
+    console.log("dataKey", dataKey);
+    if (dataKey === KEYS.CIRCULARS_DATA_KEY) {
+      return ROUTES.CIRCULAR(subNo, fromNo, toNo);
+    } else if (dataKey === KEYS.TIMES_DATA_KEY) {
+      return ROUTES.TIME(subNo, fromNo, toNo);
+    } else if (dataKey === KEYS.WEEKS_DATA_KEY) {
+      return ROUTES.WEEK(subNo, fromNo, toNo);
+    } else if (dataKey === KEYS.ORGNS_DATA_KEY) {
+      return ROUTES.ORGN(subNo, fromNo, toNo);
+    } else if (dataKey === KEYS.DURAS_DATA_KEY) {
+      return ROUTES.DURA(subNo, fromNo, toNo);
+    }
+  };
+
+  // 부가서비스 일괄 저장
+  const bulkAdd = (key, dataKey, inputs) => {
+    // let bulkInputs = {
+    //   key: dataKey,
+    //   items: selectDid[dataKey],
+    // };
+    // dispatch(addBulkItem(bulkInputs));
+
+    const uri = getBulkUri(dataKey);
+    // const addItem = getAddItem(dataKey, bulkInputs);
+    axios.post(uri, inputs).then((res) => {
+      let newData = [...selectDid[dataKey], inputs];
+      setSelectDid({
+        ...selectDid,
+        [dataKey]: newData,
+      });
+      // 사용으로 변경
+      setTableData((prev) =>
+        prev.map((row) => {
+          return { ...row, [key]: true };
+        })
+      );
+    });
+
+    // setTableData((prev) =>
+    //   prev.map((row) => {
+    //     return { ...row, [key]: true };
+    //   })
+    // );
+  };
+
+  const getBulkUri = (dataKey) => {
+    let subNo = selectDid[KEYS.SUB_NO];
+    if (dataKey === KEYS.CIRCULARS_DATA_KEY) {
+      return ROUTES.CIRCULAR_BULK(subNo);
+    }
+    // else if (dataKey === KEYS.TIMES_DATA_KEY) {
+    //   return ROUTES.TIME(subNo, fromNo, toNo);
+    // }else if (dataKey === KEYS.WEEKS_DATA_KEY) {
+    //   return ROUTES.WEEK(subNo, fromNo, toNo);
+    // }else if (dataKey === KEYS.ORGNS_DATA_KEY) {
+    //   return ROUTES.ORGN(subNo, fromNo, toNo);
+    // }
+    // else if (dataKey === KEYS.DURAS_DATA_KEY) {
+    //   return ROUTES.DURA(subNo, fromNo, toNo);
+    // }
   };
 
   const bulkDelete = (key, dataKey) => {
