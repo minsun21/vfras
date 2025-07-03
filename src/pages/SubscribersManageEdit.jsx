@@ -27,10 +27,14 @@ import { SERVICE_TYPES, SUBSRIBERS_TYPES } from "../config/OPTIONS";
 import { store } from "../store";
 import { findMappedValue } from "../utils/Util";
 import { fieldsValidate } from "../utils/FormValidation";
+import { useDispatch } from "react-redux";
+import { endLoading, startLoading } from "../features/loadingSlice";
 
 const SubscriberManageEdit = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
+  const dispatch = useDispatch();
+
   const { showDialog, showAlert, showModal, closeModal } = useModal();
   const [searchSubNo, setSearchSubNo] = useState("");
 
@@ -145,45 +149,67 @@ const SubscriberManageEdit = () => {
   const saveDidSetting = () => {
     const didStore = store.getState()[KEYS.DID_CONFIG];
     const subNo = formData[KEYS.SUB_NO];
+    dispatch(startLoading());
 
-    // 1. did 회선 추가
-    let addDidList = didStore.addDidList;
-    for (const addDidRow of addDidList) {
-      let inputs = {
-        [KEYS.FROM_NO]: addDidRow[KEYS.FROM_NO],
-        [KEYS.TO_NO]: addDidRow[KEYS.TO_NO],
-        [KEYS.TEL_FROM_NO]: addDidRow[KEYS.TEL_FROM_NO],
-        [KEYS.TEL_TO_NO]: addDidRow[KEYS.TEL_TO_NO],
-        [KEYS.RBT_ID] : addDidRow[KEYS.RBT_ID],
-      };
-      axios.post(ROUTES.SUBSCRIBERS_RBT_ADD(subNo), inputs).catch((err) => {
-        console.log("err", err.response.resultData);
-      });
-    }
+    const addedList = [];
+    const addDidList = didStore.addDidList;
+    const deleteDidList = didStore.deleteDidList;
 
-    // 2. did 회선 삭제
-    // 2-2. subNo 없는 경우 통신 x
-    let deleteDidList = didStore.deleteDidList;
-    let deleteInputs = deleteDidList.map(deleteDidRow => {
-      return {
-        [KEYS.FROM_NO]: deleteDidRow[KEYS.FROM_NO],
-        [KEYS.TO_NO]: deleteDidRow[KEYS.TO_NO],
-      };
-    })
-    console.log('deleteInputs', deleteInputs)
-    if(deleteInputs.length > 0){
-      axios.delete(ROUTES.SUBSCRIBERS_RBT_ADD(subNo), deleteInputs).catch((err) => {
-        console.log("err", err.response.resultData);
-      });
-  
-    }
-   
-    // showAlert({
-    //   message: InfoMessages.successEdit,
-    //   onConfirm: () => {
-    //     closeModal();
-    //   },
-    // });
+    const rollbackAddedItems = async () => {
+      if (addedList.length === 0) return;
+      const rollbackInputs = addedList.map((row) => ({
+        [KEYS.FROM_NO]: row[KEYS.FROM_NO],
+        [KEYS.TO_NO]: row[KEYS.TO_NO],
+      }));
+
+      try {
+        await axios.delete(ROUTES.SUBSCRIBERS_RBT_ADD(subNo), {
+          data: rollbackInputs,
+        });
+        console.log("롤백 완료");
+      } catch (rollbackErr) {
+        console.error("롤백 실패", rollbackErr?.response?.data || rollbackErr);
+      }
+    };
+
+    const process = async () => {
+      try {
+        // ✅ 1. 추가 작업 순차 실행
+        for (const row of addDidList) {
+          const inputs = {
+            [KEYS.FROM_NO]: row[KEYS.FROM_NO],
+            [KEYS.TO_NO]: row[KEYS.TO_NO],
+            [KEYS.TEL_FROM_NO]: row[KEYS.TEL_FROM_NO],
+            [KEYS.TEL_TO_NO]: row[KEYS.TEL_TO_NO],
+            [KEYS.RBT_ID]: row[KEYS.RBT_ID],
+          };
+
+          await axios.post(ROUTES.SUBSCRIBERS_RBT_ADD(subNo), inputs);
+          addedList.push(row); // 롤백을 위해 성공한 항목 저장
+        }
+
+        // ✅ 2. 삭제 작업
+        if (deleteDidList.length > 0) {
+          const deleteInputs = deleteDidList.map((row) => ({
+            [KEYS.FROM_NO]: row[KEYS.FROM_NO],
+            [KEYS.TO_NO]: row[KEYS.TO_NO],
+          }));
+
+          await axios.delete(ROUTES.SUBSCRIBERS_RBT_ADD(subNo), {
+            data: deleteInputs,
+          });
+        }
+
+        console.log("추가 및 삭제 작업 완료");
+      } catch (error) {
+        console.error("에러 발생, 롤백 시작", error?.response?.data || error);
+        await rollbackAddedItems();
+      } finally {
+        dispatch(endLoading());
+      }
+    };
+
+    process();
   };
 
   // did 회선 설정 - 개인 변경

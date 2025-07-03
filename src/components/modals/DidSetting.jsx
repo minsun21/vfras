@@ -33,6 +33,7 @@ import {
   setDidList,
 } from "../../features/didConfigSlice";
 import { ROUTES } from "../../constants/routes";
+import { getDidKey } from "../../utils/Util";
 
 const DidSetting = ({ userInfo }) => {
   const dispatch = useDispatch();
@@ -43,8 +44,6 @@ const DidSetting = ({ userInfo }) => {
   const [selectRows, setSelectRows] = useState([]);
   const [selectDid, setSelectDid] = useState({});
   const [checkboxSelected, setCheckboxSelected] = useState([]); // 체크박스 선택
-
-  const getDidKey = (item) => `${item.subNo}_${item.fromNo}_${item.toNo}`;
 
   useEffect(() => {
     axios.get(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO])).then((res) => {
@@ -111,14 +110,10 @@ const DidSetting = ({ userInfo }) => {
         }
 
         const isDuplicate = tableData.some(
-          (item) =>
-            item[KEYS.FROM_NO] === didFormData[KEYS.FROM_NO] &&
-            item[KEYS.TO_NO] === didFormData[KEYS.TO_NO] &&
-            item[KEYS.TEL_FROM_NO] === didFormData[KEYS.TEL_FROM_NO] &&
-            item[KEYS.TEL_TO_NO] === didFormData[KEYS.TEL_TO_NO] 
-            // && item[KEYS.RBT_ID] === didFormData[KEYS.RBT_ID]
+          (item) => getDidKey(item) === getDidKey(didFormData)
         );
-        if (isDuplicate) { // 사용자 번호, 교환기 번호 중복시 추가 불가
+        if (isDuplicate) {
+          // 사용자 번호, 교환기 번호 중복시 추가 불가
           showAlert({
             message: ErrorMessages.duplicateSave,
           });
@@ -152,7 +147,9 @@ const DidSetting = ({ userInfo }) => {
       message: InfoMessages.confirmDelete(checkboxSelected.length),
       onConfirm: () => {
         const selectedIds = checkboxSelected.map((row) => getDidKey(row));
-        const updated = tableData.filter((row) => !selectedIds.includes(getDidKey(row)));
+        const updated = tableData.filter(
+          (row) => !selectedIds.includes(getDidKey(row))
+        );
         setTableData(updated);
 
         setCheckboxSelected([]);
@@ -160,7 +157,9 @@ const DidSetting = ({ userInfo }) => {
         setSelectRows([]);
         tableRef.current?.clearSelection?.();
 
-        const deleteItems =tableData.filter((row) => selectedIds.includes(getDidKey(row)));
+        const deleteItems = tableData.filter((row) =>
+          selectedIds.includes(getDidKey(row))
+        );
         dispatch(deleteDidItem(deleteItems));
       },
     });
@@ -484,7 +483,7 @@ const DidSetting = ({ userInfo }) => {
             resultLabel={false}
             pageSelect={false}
             paginationEnabled={false}
-            maxHeight={400}
+            maxHeight={600}
             onRowSelectionChange={setSelectRows}
             rowClickSelect={true}
             onCheckboxSelectionChange={setCheckboxSelected}
@@ -493,16 +492,17 @@ const DidSetting = ({ userInfo }) => {
         <div className="w40p">
           <div className="popSubTit">{LABELS.ADDITIONAL_SERVICE_SETTING}</div>
           <Form className="popSchBox">
-            <label className="schTxtL1">{LABELS.DEFAULT_RING}</label>
+            {/* 기본 링 */}
+            <label className="schTxtL1">{LABELS.DEFAULT_RING}</label>  
             <Input
               label={LABELS.DEFAULT_RING}
               size="sm"
+              value={selectDid?.[KEYS.DEF_RBT_TYPE] || ""}
               disabled
-              value={selectDid ? selectDid[KEYS.RBT_ID] : ""}
             />
             <Input
               size="sm"
-              value={selectDid ? selectDid[KEYS.RBT_ID_VALUE] : ""}
+              value={selectDid?.[KEYS.DESCRIPT] || ""}
               disabled
             />
           </Form>

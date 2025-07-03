@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { KEYS } from "../constants/Keys";
+import { getDidKey } from "../utils/Util";
 
 const initialState = {
   [KEYS.DID_CONFIG]: [],
@@ -31,16 +32,6 @@ const didConfigSlice = createSlice({
     addDidItem: (state, action) => {
       const newItem = action.payload;
 
-      const isDuplicate = state.didList.some(
-        (item) =>
-          item.subNo === newItem.subNo &&
-          item.fromNo === newItem.fromNo &&
-          item.toNo === newItem.toNo
-      );
-
-      // 이미 존재하면 무시
-      if (isDuplicate) return;
-
       // UI용 목록에 추가
       state.didList.push(newItem);
 
@@ -52,12 +43,7 @@ const didConfigSlice = createSlice({
       // didList에서 제거
       state.didList = state.didList.filter(
         (item) =>
-          !itemsToDelete.some(
-            (del) =>
-              del.subNo === item.subNo &&
-              del.fromNo === item.fromNo &&
-              del.toNo === item.toNo
-          )
+          !itemsToDelete.some((del) => getDidKey(del) === getDidKey(item))
       );
 
       // deleteDidList에 추가 (중복 제거 없이 단순 누적)
@@ -66,12 +52,7 @@ const didConfigSlice = createSlice({
       // 삭제 대상이 addDidList에 있었다면 제거
       state.addDidList = state.addDidList.filter(
         (item) =>
-          !itemsToDelete.some(
-            (del) =>
-              del.subNo === item.subNo &&
-              del.fromNo === item.fromNo &&
-              del.toNo === item.toNo
-          )
+          !itemsToDelete.some((del) => getDidKey(del) === getDidKey(item))
       );
     },
     addSubItemToList: (state, action) => {
