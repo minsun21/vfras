@@ -26,9 +26,11 @@ import { DID_ADD_FIELDS } from "../../config/FieldsConfig";
 import DidConfig from "./DidConfig";
 import axios from "../../api/axios";
 import {
+  addBulkItem,
   addDidItem,
   addSubItemToList,
   deleteDidItem,
+  removeBulkItem,
   removeSubItemFromList,
   setDidList,
 } from "../../features/didConfigSlice";
@@ -48,7 +50,6 @@ const DidSetting = ({ userInfo }) => {
   useEffect(() => {
     axios.get(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO])).then((res) => {
       const result = res.data.resultData;
-      console.log("result", result);
       setTableData(result);
       dispatch(setDidList(result));
     });
@@ -185,27 +186,6 @@ const DidSetting = ({ userInfo }) => {
   //   );
   // };
 
-  // const addAction = (config, inputs) => {
-  //   const dataKey = config.dataKey;
-  //   if (dataKey === "circulars") {
-  //     axios
-  //       .post(
-  //         ROUTES.CIRCULAR_ADD(
-  //           selectDid[KEYS.SUB_NO],
-  //           selectDid[KEYS.FROM_NO],
-  //           selectDid[KEYS.TO_NO]
-  //         ),
-  //         [inputs]
-  //       )
-  //       .then((res) => {
-  //         successSaveAction(config, inputs);
-  //       })
-  //       .catch((err) => {
-  //         console.log("err", err);
-  //       });
-  //   }
-  // };
-
   // 부가서비스 저장
   const addDidSubs = (config, inputs) => {
     const key = config.key;
@@ -231,6 +211,23 @@ const DidSetting = ({ userInfo }) => {
       ...selectDid,
       [dataKey]: newData,
     });
+  };
+
+  // 부가서비스 일괄 저장
+  const bulkAdd = (dataKey) => {
+    let bulkInputs = {
+      key: dataKey,
+      items: selectDid[dataKey],
+    };
+    dispatch(addBulkItem(bulkInputs));
+  };
+
+  const bulkDelete = (dataKey) => {
+    let bulkInputs = {
+      key: dataKey,
+      items: selectDid[dataKey],
+    };
+    dispatch(removeBulkItem(bulkInputs));
   };
 
   // 부가서비스 삭제
@@ -438,6 +435,8 @@ const DidSetting = ({ userInfo }) => {
                     selectDid={selectDid}
                     addDidSubs={addDidSubs}
                     deleteDidConfig={deleteDidConfig}
+                    bulkAdd={bulkAdd}
+                    bulkDelete={bulkDelete}
                   />
                 ))}
               </div>

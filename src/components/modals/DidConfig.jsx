@@ -7,7 +7,14 @@ import Table from "../Table";
 import { ErrorMessages, InfoMessages } from "../../constants/Message";
 import { useModal } from "../../contexts/ModalContext";
 
-const DidConfig = ({ config, selectDid, addDidSubs, deleteDidConfig }) => {
+const DidConfig = ({
+  config,
+  selectDid,
+  addDidSubs,
+  deleteDidConfig,
+  bulkAdd,
+  bulkDelete,
+}) => {
   const { showAlert, showDialog } = useModal();
   const tableRef = useRef();
   const parentRef = useRef();
@@ -67,6 +74,17 @@ const DidConfig = ({ config, selectDid, addDidSubs, deleteDidConfig }) => {
     resetSelectRows();
   };
 
+  const bulkAddAction = () => {
+    const dataKey = config.dataKey;
+    bulkAdd(dataKey);
+  };
+
+  const bulkDeleteAction = () => {
+    const dataKey = config.dataKey;
+    bulkDelete(dataKey);
+  };
+
+  // 삭제
   const deleteAction = () => {
     if (selectRows.length === 0) return;
 
@@ -82,6 +100,7 @@ const DidConfig = ({ config, selectDid, addDidSubs, deleteDidConfig }) => {
     });
   };
 
+  // 전체 삭제
   const allDeleteAction = () => {
     showDialog({
       message: InfoMessages.confirmAllDelete,
@@ -92,8 +111,8 @@ const DidConfig = ({ config, selectDid, addDidSubs, deleteDidConfig }) => {
     });
   };
 
+  // 기본 입력값 체크
   const addDidConfigValidation = (config, inputs, currentList) => {
-    // 기본 입력값 체크
     const isEmpty = config.forms.some((form) => {
       if (form.fields) {
         return form.fields.some((sub) => {
@@ -256,13 +275,13 @@ const DidConfig = ({ config, selectDid, addDidSubs, deleteDidConfig }) => {
           <div className="svcBoxCTxt">{LABELS.MAIN_NUMBER}</div>
           <Button
             type={BUTTON_DELETE}
-            // onClick={handleDelete}
+            onClick={bulkAddAction}
             label={LABELS.BULK_APPLY}
           />
           <Button
             type={BUTTON_CANCEL}
             label={LABELS.BULK_DELETE}
-            // onClick={handleDeleteAll}
+            onClick={bulkDeleteAction}
           />
         </div>
         {/* 테이블 영역 */}

@@ -177,17 +177,33 @@ const didConfigSlice = createSlice({
       }
     },
     addBulkItem: (state, action) => {
-      state.bulkAddList.push(action.payload);
-    },
+      const { key, items } = action.payload;
 
-    removeBulkItem: (state, action) => {
-      const index = state.bulkAddList.findIndex(
-        (item) => item.subNo === action.payload.subNo
+      const existingIndex = state.bulkAddList.findIndex(
+        (entry) => entry.key === key
       );
-      if (index !== -1) {
-        state.bulkAddList.splice(index, 1);
+
+      if (existingIndex !== -1) {
+        state.bulkAddList[existingIndex].items.push(...items);
+      } else {
+        // 새로운 key면 새로 추가
+        state.bulkAddList.push({ key, items });
       }
     },
+    removeBulkItem: (state, action) => {
+      const { key, items } = action.payload;
+
+      const existingIndex = state.bulkAddList.findIndex(
+        (entry) => entry.key === key
+      );
+
+      if (existingIndex !== -1) {
+        state.bulkRemoveList[existingIndex].items.push(...items);
+      } else {
+        // 새로운 key면 새로 추가
+        state.bulkRemoveList.push({ key, items });
+      }
+    }
   },
 });
 
@@ -198,5 +214,7 @@ export const {
   deleteDidItem,
   addSubItemToList,
   removeSubItemFromList,
+  addBulkItem,
+  removeBulkItem
 } = didConfigSlice.actions;
 export default didConfigSlice.reducer;
