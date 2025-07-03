@@ -14,7 +14,6 @@ import {
 import { LABELS } from "../constants/Labels";
 import Form from "./Form";
 import Select from "./Select";
-import { KEYS } from "../constants/Keys";
 
 const Table = forwardRef(
   (
@@ -22,7 +21,7 @@ const Table = forwardRef(
       columns,
       data: tableData,
       setTableData,
-      pageSize = 3,
+      pageSize = 15,
       rowSelectionEnabled = true,
       rowClickSelect = false,
       onRowSelectionChange,

@@ -44,6 +44,8 @@ const DidSetting = ({ userInfo }) => {
   const [selectDid, setSelectDid] = useState({});
   const [checkboxSelected, setCheckboxSelected] = useState([]); // 체크박스 선택
 
+  const getDidKey = (item) => `${item.subNo}_${item.fromNo}_${item.toNo}`;
+
   useEffect(() => {
     axios.get(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO])).then((res) => {
       const result = res.data.resultData;
@@ -72,19 +74,6 @@ const DidSetting = ({ userInfo }) => {
     }
     let fromNo = selectRow[KEYS.FROM_NO];
     let toNo = selectRow[KEYS.TO_NO];
-
-    // 중복 검사
-    // const exist = didData.find(
-    //   (item) =>
-    //     item[KEYS.SUB_NO] === selectRow[KEYS.SUB_NO] &&
-    //     item[KEYS.FROM_NO] === selectRow[KEYS.FROM_NO] &&
-    //     item[KEYS.TO_NO] === selectRow[KEYS.TO_NO]
-    // );
-
-    // if (exist) {
-    //   setSelectDid(exist);
-    //   return;
-    // }
 
     // axios로 detail 정보 가져옴
     axios
@@ -121,40 +110,25 @@ const DidSetting = ({ userInfo }) => {
           return;
         }
 
-        console.log(tableData, didFormData);
         const isDuplicate = tableData.some(
           (item) =>
             item[KEYS.FROM_NO] === didFormData[KEYS.FROM_NO] &&
             item[KEYS.TO_NO] === didFormData[KEYS.TO_NO] &&
             item[KEYS.TEL_FROM_NO] === didFormData[KEYS.TEL_FROM_NO] &&
-            item[KEYS.TEL_TO_NO] === didFormData[KEYS.TEL_TO_NO]
-          // &&
-          // item[KEYS.RBT_ID] === didFormData[KEYS.RBT_ID]
+            item[KEYS.TEL_TO_NO] === didFormData[KEYS.TEL_TO_NO] 
+            // && item[KEYS.RBT_ID] === didFormData[KEYS.RBT_ID]
         );
-        console.log("isDuplicate", isDuplicate);
-        if (isDuplicate) {
+        if (isDuplicate) { // 사용자 번호, 교환기 번호 중복시 추가 불가
           showAlert({
             message: ErrorMessages.duplicateSave,
           });
           return;
         }
 
-        let inputs = {
-          [KEYS.FROM_NO]: didFormData[KEYS.FROM_NO],
-          [KEYS.TO_NO]: didFormData[KEYS.TO_NO],
-          [KEYS.TEL_FROM_NO]: didFormData[KEYS.TEL_FROM_NO],
-          // [KEYS.TEL_TO_NO]: didFormData[KEYS.TEL_TO_NO],
-          tellToNo: didFormData[KEYS.TEL_TO_NO],
-        };
-        axios
-          .post(ROUTES.SUBSCRIBERS_RBT_ADD(userInfo[KEYS.SUB_NO]), inputs)
-          .then((err) => {
-            setTableData((prev) => [...prev, didFormData]);
-            dispatch(addDidItem(didFormData));
-            dispatch(resetFormData());
-            closeModal();
-            showAlert({ message: InfoMessages.successAdd });
-          });
+        setTableData((prev) => [...prev, didFormData]);
+        dispatch(addDidItem(didFormData));
+        dispatch(resetFormData());
+        closeModal();
       },
       onClose: () => {
         dispatch(resetFormData());
@@ -177,10 +151,8 @@ const DidSetting = ({ userInfo }) => {
     showDialog({
       message: InfoMessages.confirmDelete(checkboxSelected.length),
       onConfirm: () => {
-        const selectedIds = checkboxSelected.map((row) => row.id);
-        const updated = tableData.filter(
-          (row) => !selectedIds.includes(row.id)
-        );
+        const selectedIds = checkboxSelected.map((row) => getDidKey(row));
+        const updated = tableData.filter((row) => !selectedIds.includes(getDidKey(row)));
         setTableData(updated);
 
         setCheckboxSelected([]);
@@ -188,19 +160,11 @@ const DidSetting = ({ userInfo }) => {
         setSelectRows([]);
         tableRef.current?.clearSelection?.();
 
-        const deleteItems = tableData.filter((row) =>
-          selectedIds.includes(row.id)
-        );
+        const deleteItems =tableData.filter((row) => selectedIds.includes(getDidKey(row)));
         dispatch(deleteDidItem(deleteItems));
-
-        // setTimeout(() => {
-        //   showAlert({ message: InfoMessages.successDelete });
-        // }, 0);
       },
     });
   };
-
-  const getDidKey = (item) => `${item.subNo}_${item.fromNo}_${item.toNo}`;
 
   // 변경 - 사용 / 안함
   const didToggle = (key) => {

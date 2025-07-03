@@ -129,7 +129,6 @@ const SubscriberManageEdit = () => {
     showModal({
       content: <DidSetting userInfo={formData} />,
       header: LABELS.DID_TITLE,
-      isOnlyClose : true,
       onConfirm: saveDidSetting,
     });
   };
@@ -138,43 +137,47 @@ const SubscriberManageEdit = () => {
     showModal({
       content: <DidSettingPersonal userInfo={formData} />,
       header: LABELS.DID_TITLE_PERSONAL,
-      isOnlyClose : true,
       onConfirm: saveDidSettingPersonal,
     });
   };
 
   // did 회선 설정 - 법인 변경
   const saveDidSetting = () => {
-    // const didStore = store.getState()[KEYS.DID_CONFIG];
-    // const subNo = formData[KEYS.SUB_NO];
+    const didStore = store.getState()[KEYS.DID_CONFIG];
+    const subNo = formData[KEYS.SUB_NO];
 
-    // // 1. did 회선 추가
-    // let addDidList = didStore.addDidList;
-    // for (const addDidRow of addDidList) {
-    //   let inputs = {
-    //     [KEYS.FROM_NO]: addDidRow[KEYS.FROM_NO],
-    //     [KEYS.TO_NO]: addDidRow[KEYS.TO_NO],
-    //     [KEYS.TEL_FROM_NO]: addDidRow[KEYS.TEL_FROM_NO],
-    //     [KEYS.TEL_TO_NO]: addDidRow[KEYS.TEL_TO_NO],
-    //   };
-    //   axios.post(ROUTES.SUBSCRIBERS_RBT_ADD(subNo), inputs).catch((err) => {
-    //     console.log("err", err.response.resultData);
-    //   });
-    // }
+    // 1. did 회선 추가
+    let addDidList = didStore.addDidList;
+    for (const addDidRow of addDidList) {
+      let inputs = {
+        [KEYS.FROM_NO]: addDidRow[KEYS.FROM_NO],
+        [KEYS.TO_NO]: addDidRow[KEYS.TO_NO],
+        [KEYS.TEL_FROM_NO]: addDidRow[KEYS.TEL_FROM_NO],
+        [KEYS.TEL_TO_NO]: addDidRow[KEYS.TEL_TO_NO],
+        [KEYS.RBT_ID] : addDidRow[KEYS.RBT_ID],
+      };
+      axios.post(ROUTES.SUBSCRIBERS_RBT_ADD(subNo), inputs).catch((err) => {
+        console.log("err", err.response.resultData);
+      });
+    }
 
-    // // 2. did 회선 삭제
-    // // 2-2. subNo 없는 경우 통신 x
-    // let deleteDidList = didStore.deleteDidList;
-    // for (const deleteDidRow of deleteDidList) {
-    //   let inputs = {
-    //     rangeEndTel: "string",
-    //     subscriberNo: "string",
-    //   };
-    //   axios.delete(ROUTES.SUBSCRIBERS_RBT_ADD(subNo), inputs).catch((err) => {
-    //     console.log("err", err.response.resultData);
-    //   });
-    // }
-
+    // 2. did 회선 삭제
+    // 2-2. subNo 없는 경우 통신 x
+    let deleteDidList = didStore.deleteDidList;
+    let deleteInputs = deleteDidList.map(deleteDidRow => {
+      return {
+        [KEYS.FROM_NO]: deleteDidRow[KEYS.FROM_NO],
+        [KEYS.TO_NO]: deleteDidRow[KEYS.TO_NO],
+      };
+    })
+    console.log('deleteInputs', deleteInputs)
+    if(deleteInputs.length > 0){
+      axios.delete(ROUTES.SUBSCRIBERS_RBT_ADD(subNo), deleteInputs).catch((err) => {
+        console.log("err", err.response.resultData);
+      });
+  
+    }
+   
     // showAlert({
     //   message: InfoMessages.successEdit,
     //   onConfirm: () => {
