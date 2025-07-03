@@ -43,10 +43,6 @@ const Subscriber = () => {
 
   const [selectRows, setselectRows] = useState([]);
 
-  useEffect(() => {
-    // search();
-  }, []);
-
   const navigateManage = (row) => {
     navigate(ROUTES.SUBSCRIBERS_MANAGE, {
       state: {
@@ -134,7 +130,11 @@ const Subscriber = () => {
     });
   };
 
-  const search = (page = 0, size = 20) => {
+  const search = () => {
+    tableRef.current?.triggerFetch(0, 15);
+  };
+
+  const getData = (page = 0, size = 15) => {
     return axios.get(ROUTES.SUBSCRIBERS, {
       params: {
         ...searchInputs,
@@ -243,7 +243,7 @@ const Subscriber = () => {
         onRowSelectionChange={setselectRows}
         topBtns={topBtns}
         manualPagination={true}
-        fetchData={search}
+        fetchData={getData}
       />
     </div>
   );

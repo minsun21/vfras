@@ -22,7 +22,7 @@ const Table = forwardRef(
       columns,
       data: tableData,
       setTableData,
-      pageSize = 15,
+      pageSize = 3,
       rowSelectionEnabled = true,
       rowClickSelect = false,
       onRowSelectionChange,
@@ -207,6 +207,18 @@ const Table = forwardRef(
         clearSelection: () => {
           setClickSelection({});
           setCheckboxSelection({});
+        },
+        triggerFetch: (page = 0, size = 15) => {
+          fetchData(page, size).then((res) => {
+            const resultData = res.data.resultData;
+            setTableData(resultData.subscribers || []);
+            setPageInfo({
+              pageIndex: page,
+              pageSize: size,
+              totalPages: resultData.totalPages,
+              totalElements: resultData.totalElements,
+            });
+          });
         },
       }),
       [tableData, table]
