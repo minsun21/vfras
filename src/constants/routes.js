@@ -9,18 +9,23 @@ export const ROUTES = {
     `/subscriber/${subNo}/rbt/${fromNo}/${toNo}`, // 부가서비스 상세 조회
   CIRCULAR: (subNo, fromNo, toNo) =>
     `/subscriber/${subNo}/rbt/${fromNo}/${toNo}/circular`, // 순환링 부가서비스 저장
-  CIRCULAR_BULK: (subNo) =>
-    `/subscriber/${subNo}/rbt/circular_blk`, // 순환링 부가서비스 일괄 저장
+  CIRCULAR_BULK: (subNo) => `/subscriber/${subNo}/rbt/circular_blk`, // 순환링 부가서비스 일괄 저장
   TIME: (subNo, fromNo, toNo) =>
     `/subscriber/${subNo}/rbt/${fromNo}/${toNo}/time`, // 시간대별 부가서비스 저장
+  TIME_BULK: (subNo) => `/subscriber/${subNo}/rbt/time_blk`, // 순환링 부가서비스 일괄 저장
   WEEK: (subNo, fromNo, toNo) =>
     `/subscriber/${subNo}/rbt/${fromNo}/${toNo}/week`, // 요일별 부가서비스 저장
+  WEEK_BULK: (subNo) => `/subscriber/${subNo}/rbt/week_blk`, // 요일별 부가서비스 일괄 저장
   ORGN: (subNo, fromNo, toNo) =>
     `/subscriber/${subNo}/rbt/${fromNo}/${toNo}/orgn`, // 지역별 부가서비스 저장
+  ORGN_BULK: (subNo) => `/subscriber/${subNo}/rbt/orgn_blk`, // 지역별 부가서비스 일괄 저장
   DURA: (subNo, fromNo, toNo) =>
     `/subscriber/${subNo}/rbt/${fromNo}/${toNo}/dura`, // 기념일별 부가서비스 저장
+  DURA_BULK: (subNo) => `/subscriber/${subNo}/rbt/dura_blk`, // 기념일별 부가서비스 일괄 저장
   GROUP: (subNo, fromNo, toNo) =>
     `/subscriber/${subNo}/rbt/${fromNo}/${toNo}/group`, // 기념일별 부가서비스 저장
+  GROUP_BULK: (subNo) =>
+    `/subscriber/${subNo}/rbt/group_blk`, // 기념일별 부가서비스 일괄 저장
   RESET_SUBSCRIBER_PASSWORD: (subNo) => `/subscribers/${subNo}/password`, // 비밀번호 초기화
   LV: "/lvs", // 국번 관리
   CONTENTS: "/contents", // 음원 조회

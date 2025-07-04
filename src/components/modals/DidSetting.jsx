@@ -357,15 +357,9 @@ const DidSetting = ({ userInfo }) => {
 
   // 부가서비스 일괄 저장
   const bulkAdd = (key, dataKey, inputs) => {
-    // let bulkInputs = {
-    //   key: dataKey,
-    //   items: selectDid[dataKey],
-    // };
-    // dispatch(addBulkItem(bulkInputs));
-
     const uri = getBulkUri(dataKey);
-    // const addItem = getAddItem(dataKey, bulkInputs);
-    axios.post(uri, inputs).then((res) => {
+    const addItem = getAddBulkItem(dataKey, inputs);
+    axios.post(uri, addItem).then((res) => {
       let newData = [...selectDid[dataKey], inputs];
       setSelectDid({
         ...selectDid,
@@ -378,29 +372,46 @@ const DidSetting = ({ userInfo }) => {
         })
       );
     });
-
-    // setTableData((prev) =>
-    //   prev.map((row) => {
-    //     return { ...row, [key]: true };
-    //   })
-    // );
   };
 
   const getBulkUri = (dataKey) => {
     let subNo = selectDid[KEYS.SUB_NO];
     if (dataKey === KEYS.CIRCULARS_DATA_KEY) {
       return ROUTES.CIRCULAR_BULK(subNo);
+    } else if (dataKey === KEYS.TIMES_DATA_KEY) {
+      return ROUTES.TIME_BULK(subNo);
+    } else if (dataKey === KEYS.WEEKS_DATA_KEY) {
+      return ROUTES.WEEK_BULK(subNo);
+    } else if (dataKey === KEYS.ORGNS_DATA_KEY) {
+      return ROUTES.ORGN_BULK(subNo);
+    } else if (dataKey === KEYS.GROUPS_DATA_KEY) {
+      return ROUTES.GROUP_BULK(subNo);
+    }else if (dataKey === KEYS.DURAS_DATA_KEY) {
+      return ROUTES.DURA_BULK(subNo);
     }
-    // else if (dataKey === KEYS.TIMES_DATA_KEY) {
-    //   return ROUTES.TIME(subNo, fromNo, toNo);
-    // }else if (dataKey === KEYS.WEEKS_DATA_KEY) {
-    //   return ROUTES.WEEK(subNo, fromNo, toNo);
-    // }else if (dataKey === KEYS.ORGNS_DATA_KEY) {
-    //   return ROUTES.ORGN(subNo, fromNo, toNo);
-    // }
-    // else if (dataKey === KEYS.DURAS_DATA_KEY) {
-    //   return ROUTES.DURA(subNo, fromNo, toNo);
-    // }
+  };
+
+  const getAddBulkItem = (dataKey, inputs) => {
+    if (dataKey === KEYS.TIMES_DATA_KEY) {
+      return {
+        ...inputs,
+        [KEYS.S_TIME]: inputs[KEYS.S_TIME].replace(":", ""),
+        [KEYS.E_TIME]: inputs[KEYS.E_TIME].replace(":", ""),
+      };
+    } else if (dataKey === KEYS.DURAS_DATA_KEY) {
+      return {
+        ...inputs,
+        [KEYS.S_DATE]: inputs[KEYS.S_DATE].replaceAll("-", ""),
+        [KEYS.E_DATE]: inputs[KEYS.E_DATE].replaceAll("-", ""),
+      };
+    } else if (dataKey === KEYS.GROUPS_DATA_KEY) {
+      return   {
+        ...inputs,
+        [KEYS.GROUP_ID]: selectDid[dataKey].length + 1,
+      };
+    }
+
+    return inputs;
   };
 
   const bulkDelete = (key, dataKey) => {
