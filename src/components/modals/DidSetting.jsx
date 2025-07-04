@@ -34,6 +34,7 @@ import {
   addDidSubItem,
   bulkAddItem,
   deleteDidItems,
+  duplicateBeforeAdd,
   getDidDeleteResult,
   postDidRow,
   validateDidBeforeAdd,
@@ -168,6 +169,12 @@ const DidSetting = ({ userInfo, plusRbtCount }) => {
     const dataKey = config.dataKey;
     const selectedKey = getDidKey(selectDid);
     const newList = [inputs];
+
+    const errorMsg = duplicateBeforeAdd(newList, selectDid[dataKey]);
+    if (errorMsg) {
+      showAlert({ message: errorMsg });
+      return;
+    }
   
     addDidSubItem({
       dataKey,

@@ -180,10 +180,6 @@ const SubscriberManageEdit = () => {
       });
   };
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
   return (
     <>
       <Form className="search-box">

@@ -44,7 +44,8 @@ export const ErrorMessages = {
   time: "시작 시간은 종료 시간보다 빠르거나 같아야 합니다.",
   max: (title, max) => `${title} 항목은 최대 ${max}개까지 등록할 수 있습니다.`,
   dateStart: "시작일을 먼저 지정해주세요.",
-  duplicateSave : "중복 회선은 생성할 수 없습니다."
+  duplicateRbtSave: "중복 회선은 생성할 수 없습니다.",
+  duplicateSave: "중복 부가서비스는 추가할 수 없습니다.",
 };
 
 export const LoginMessages = {
