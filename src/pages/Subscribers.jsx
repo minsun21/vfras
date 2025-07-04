@@ -1,17 +1,13 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Button, { BUTTON_SEARCH, BUTTON_DELETE } from "../components/Button";
 import Input from "../components/Input";
 import Select from "../components/Select";
 import Table from "../components/Table";
 import { ROUTES } from "../constants/routes";
-import {
-  SUBSRIBES_COLUMNS,
-  SUBSRIBES_COLUMNS_USER,
-} from "../config/DataConfig";
+import { SUBSRIBES_COLUMNS } from "../config/DataConfig";
 import { LABELS } from "../constants/Labels";
 import {
-  ErrorMessages,
   InfoMessages,
   SubsriberMessages,
 } from "../constants/Message";
@@ -24,8 +20,13 @@ import {
   SEARCH_SUBSRIBERS_TYPES,
 } from "../config/Options";
 import Form from "../components/Form";
-import { findMappedValue } from "../utils/Util";
 import axios from "../api/axios";
+import {
+  approveSubscribers,
+  deleteSubscribers,
+  validateSubscribersBeforeApprove,
+  validateSubscribersBeforeDelete,
+} from "../service/subsriberService";
 
 const Subscriber = () => {
   const tableRef = useRef();
@@ -43,93 +44,6 @@ const Subscriber = () => {
 
   const [selectRows, setselectRows] = useState([]);
 
-  const navigateManage = (row) => {
-    navigate(ROUTES.SUBSCRIBERS_MANAGE, {
-      state: {
-        [KEYS.SUB_NO]: row[KEYS.SUB_NO],
-        selectRow: {
-          [KEYS.SUB_NO]: row[KEYS.SUB_NO],
-          [KEYS.NAME]: row[KEYS.NAME],
-          [KEYS.SUB_STATUS]: row[KEYS.SUB_STATUS],
-          [KEYS.SUB_TYPE]: findMappedValue(
-            SEARCH_SUBSRIBERS_TYPES,
-            row[KEYS.SUB_TYPE]
-          ),
-          [KEYS.SERVICE_TYPE]: findMappedValue(
-            SEARCH_SERVICE_TYPES,
-            row[KEYS.SERVICE_TYPE]
-          ),
-          [KEYS.FROM_NO]: row[KEYS.FROM_NO],
-          [KEYS.TO_NO]: row[KEYS.TO_NO],
-          [KEYS.TEL_FROM_NO]: row[KEYS.TEL_FROM_NO],
-          [KEYS.TEL_TO_NO]: row[KEYS.TEL_TO_NO],
-        }, // TOBE :: 삭제
-      },
-    });
-  };
-
-  // 가입자 승인
-  const approvedSub = () => {
-    if (selectRows.length === 0) {
-      showAlert({
-        message: ErrorMessages.nonSelect,
-      });
-      return;
-    }
-
-    for (const selectedRow of selectRows) {
-      if (selectedRow[KEYS.SUB_STATUS] !== SEARCH_SUBSRIBERS_STATE[1].key) {
-        showAlert({
-          message: SubsriberMessages.approvedError,
-        });
-        return;
-      }
-    }
-
-    const inputs = selectRows.map((row) => {
-      return row[KEYS.SUB_NO];
-    });
-
-    axios.put(ROUTES.SUBSCRIBERS_APPROVE, inputs).then((res) => {
-      tableRef.current.updateRowsById(inputs, (row) => ({
-        ...row,
-        [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[2].key,
-      }));
-      showAlert({
-        message: InfoMessages.successEdit,
-      });
-    });
-  };
-
-  const clickDelete = () => {
-    if (selectRows.length === 0) {
-      showAlert({
-        message: ErrorMessages.nonSelect,
-      });
-      return;
-    }
-
-    showDialog({
-      message: InfoMessages.confirmDelete(selectRows.length),
-      onConfirm: deleteAccount,
-    });
-  };
-
-  const deleteAccount = () => {
-    const subNos = selectRows.map((row) => {
-      return row[KEYS.SUB_NO];
-    });
-    const inputs = {
-      data: subNos,
-    };
-    axios.delete(ROUTES.SUBSCRIBERS, inputs).then((res) => {
-      search();
-      showAlert({
-        message: InfoMessages.successDelete,
-      });
-    });
-  };
-
   const search = () => {
     tableRef.current?.triggerFetch(0, 15);
   };
@@ -142,6 +56,57 @@ const Subscriber = () => {
         size: size,
       },
     });
+  };
+
+  const navigateManage = (row) => {
+    navigate(ROUTES.SUBSCRIBERS_MANAGE, {
+      state: {
+        [KEYS.SUB_NO]: row[KEYS.SUB_NO],
+      },
+    });
+  };
+
+  // 가입자 승인
+  const approvedSub = async () => {
+    const errorMsg = validateSubscribersBeforeApprove(selectRows);
+    if (errorMsg) {
+      showAlert({ message: errorMsg });
+      return;
+    }
+
+    const subNos = selectRows.map((row) => row[KEYS.SUB_NO]);
+
+    await approveSubscribers(subNos);
+
+    tableRef.current.updateRowsById(subNos, (row) => ({
+      ...row,
+      [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[2].key,
+    }));
+
+    showAlert({ message: InfoMessages.successEdit });
+  };
+
+  // 가입자 삭제
+  const clickDelete = () => {
+    const errorMsg = validateSubscribersBeforeDelete(selectRows);
+    if (errorMsg) {
+      showAlert({ message: errorMsg });
+      return;
+    }
+  
+    showDialog({
+      message: InfoMessages.confirmDelete(selectRows.length),
+      onConfirm: deleteAccount,
+    });
+  };
+  
+  const deleteAccount = async () => {
+    const subNos = selectRows.map((row) => row[KEYS.SUB_NO]);
+  
+    await deleteSubscribers(subNos);
+  
+    search();
+    showAlert({ message: InfoMessages.successDelete });
   };
 
   const topBtns = () => {

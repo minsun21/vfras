@@ -47,6 +47,7 @@ export const postDidRow = async (userInfo) => {
 
 /**
  * 삭제 전 유효성 검사
+ * 전체 삭제는 안됨
  */
 export const validateDidBeforeDelete = ({ checkboxSelected, tableData }) => {
   if (!checkboxSelected.length) return ErrorMessages.nonSelect;
