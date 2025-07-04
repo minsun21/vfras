@@ -24,16 +24,12 @@ import PasswordReset from "../components/modals/PasswordReset";
 import DidSettingPersonal from "../components/modals/DidSettingPersonal";
 import { MODAL_SM } from "../components/modals/ModalRenderer";
 import { SERVICE_TYPES, SUBSRIBERS_TYPES } from "../config/Options";
-import { store } from "../store";
 import { findMappedValue } from "../utils/Util";
 import { fieldsValidate } from "../utils/FormValidation";
-import { useDispatch } from "react-redux";
-import { endLoading, startLoading } from "../features/loadingSlice";
 
 const SubscriberManageEdit = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const dispatch = useDispatch();
 
   const { showDialog, showAlert, showModal, closeModal } = useModal();
   const [searchSubNo, setSearchSubNo] = useState("");
@@ -129,109 +125,32 @@ const SubscriberManageEdit = () => {
     });
   };
 
+  // 회선 및 부가서비스 - 법인
   const clickDidSetting = () => {
     showModal({
-      content: <DidSetting userInfo={formData} />,
+      content: <DidSetting userInfo={formData} plusRbtCount={plusRbtCount} />,
       header: LABELS.DID_TITLE,
-      isOnlyClose : true,
-      onConfirm: saveDidSetting,
+      isOnlyClose: true,
     });
   };
 
+  // 회선 추가할 경우 개수 +1
+  const plusRbtCount = () => {
+    setFormData((prev) => ({
+      ...prev,
+      [KEYS.DID_COUNT]: prev[KEYS.DID_COUNT] + 1,
+    }));
+  };
+
+  // 회선 및 부가서비스 - 개인
   const clickDidSettingPersonal = () => {
     showModal({
       content: <DidSettingPersonal userInfo={formData} />,
       header: LABELS.DID_TITLE_PERSONAL,
-      onConfirm: saveDidSettingPersonal,
     });
   };
 
-  // did 회선 설정 - 법인 변경
-  const saveDidSetting = () => {
-    const didStore = store.getState()[KEYS.DID_CONFIG];
-    const subNo = formData[KEYS.SUB_NO];
-    dispatch(startLoading());
-
-    const addedList = [];
-    const addDidList = didStore.addDidList;
-    const deleteDidList = didStore.deleteDidList;
-    const subChangeList = didStore.subChanges;
-
-    const rollbackAddedItems = async () => {
-      if (addedList.length === 0) return;
-      const rollbackInputs = addedList.map((row) => ({
-        [KEYS.FROM_NO]: row[KEYS.FROM_NO],
-        [KEYS.TO_NO]: row[KEYS.TO_NO],
-      }));
-
-      try {
-        await axios.delete(ROUTES.SUBSCRIBERS_RBT(subNo), {
-          data: rollbackInputs,
-        });
-        console.log("롤백 완료");
-      } catch (rollbackErr) {
-        console.error("롤백 실패", rollbackErr?.response?.data || rollbackErr);
-      }
-    };
-
-    const process = async () => {
-      try {
-        // ✅ 1. 추가 작업 순차 실행
-        for (const row of addDidList) {
-          const inputs = {
-            [KEYS.FROM_NO]: row[KEYS.FROM_NO],
-            [KEYS.TO_NO]: row[KEYS.TO_NO],
-            [KEYS.TEL_FROM_NO]: row[KEYS.TEL_FROM_NO],
-            [KEYS.TEL_TO_NO]: row[KEYS.TEL_TO_NO],
-            [KEYS.RBT_ID]: row[KEYS.RBT_ID],
-          };
-
-          await axios.post(ROUTES.SUBSCRIBERS_RBT(subNo), inputs);
-          addedList.push(row); // 롤백을 위해 성공한 항목 저장
-        }
-
-        // ✅ 2. 삭제 작업
-        if (deleteDidList.length > 0) {
-          const deleteInputs = deleteDidList.map((row) => ({
-            [KEYS.FROM_NO]: row[KEYS.FROM_NO],
-            [KEYS.TO_NO]: row[KEYS.TO_NO],
-          }));
-
-          await axios.delete(ROUTES.SUBSCRIBERS_RBT(subNo), {
-            data: deleteInputs,
-          });
-        }
-
-        // 3. 부가 서비스 추가
-        
-
-        // 4. 부가 서비스 삭제
-
-        console.log("추가 및 삭제 작업 완료");
-      } catch (error) {
-        console.error("에러 발생, 롤백 시작", error?.response?.data || error);
-        await rollbackAddedItems();
-      } finally {
-        dispatch(endLoading());
-      }
-    };
-
-    process();
-  };
-
-  // did 회선 설정 - 개인 변경
-  const saveDidSettingPersonal = () => {
-    const didData = store.getState()[KEYS.DID_CONFIG][KEYS.DID_CONFIG];
-    console.log(didData);
-
-    showAlert({
-      message: InfoMessages.successEdit,
-      onConfirm: () => {
-        closeModal();
-      },
-    });
-  };
-
+  // 비밀번호 초기화
   const clickResetPassword = () => {
     showModal({
       content: <PasswordReset currentPassword={formData[KEYS.PASSWORD]} />,
@@ -260,6 +179,10 @@ const SubscriberManageEdit = () => {
         }, 100);
       });
   };
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
 
   return (
     <>
@@ -368,20 +291,11 @@ const SubscriberManageEdit = () => {
                         />
                       ) : key === KEYS.DID_CONFIG ? (
                         <div className="rowBox">
-                          {formData[KEYS.SUB_TYPE] === // 임시
-                          SUBSRIBERS_TYPES[0].value ? (
-                            <label>
-                              {LABELS.CURRENT}
-                              <span>1</span>
-                              {LABELS.DID_VALUE}
-                            </label>
-                          ) : (
-                            <label>
-                              {LABELS.CURRENT}
-                              <span>{formData[KEYS.DID_COUNT]}</span>
-                              {LABELS.DID_VALUE}
-                            </label>
-                          )}
+                          <label>
+                            {LABELS.CURRENT}
+                            <span>{formData[KEYS.DID_COUNT]}</span>
+                            {LABELS.DID_VALUE}
+                          </label>
                           {formData[KEYS.SUB_TYPE] ===
                           SUBSRIBERS_TYPES[0].value ? (
                             <Button
