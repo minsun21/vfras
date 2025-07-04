@@ -22,6 +22,7 @@ const DidConfig = ({
   const [inputs, setInputs] = useState({});
 
   useEffect(() => {
+    console.log('selectDid', selectDid)
     setInputs({});
   }, [selectDid]);
 

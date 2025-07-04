@@ -57,12 +57,12 @@ export const KEYS = {
   IS_GROUP_JOINED: "isGroupJoined", // 그룹별 가입여부
   IS_DURA_JOINED: "isDuraJoined", // 기간별 가입여부
 
-  CIRCULARS_DATA_KEY: "circulars", // 순환형 가입여부의 데이터 키
-  TIMES_DATA_KEY: "times", // 시간대별 가입여부의 데이터 키
-  WEEKS_DATA_KEY: "weeks", // 요일별 가입여부의 데이터 키
-  ORGNS_DATA_KEY: "orgns", // 지역별 가입여부의 데이터 키
-  GROUPS_DATA_KEY: "groups", // 그룹별 가입여부의 데이터 키
-  DURAS_DATA_KEY: "duras", // 기간별 가입여부의 데이터 키
+  CIRCULARS_DATA_KEY: "circularRbts", // 순환형 가입여부의 데이터 키
+  TIMES_DATA_KEY: "timeRbts", // 시간대별 가입여부의 데이터 키
+  WEEKS_DATA_KEY: "weekRbts", // 요일별 가입여부의 데이터 키
+  ORGNS_DATA_KEY: "orgnRbts", // 지역별 가입여부의 데이터 키
+  GROUPS_DATA_KEY: "groupRbts", // 그룹별 가입여부의 데이터 키
+  DURAS_DATA_KEY: "duraRbts", // 기간별 가입여부의 데이터 키
   START_DATE: "startDate",
   END_DATE: "endDate",
   DAY_TYPE: "dayType", // 요일
@@ -86,6 +86,7 @@ export const KEYS = {
   LOG_TIME: "logTime",
   DEF_RBT_TYPE: "defRbtType",
   DID_COUNT: "didCount",
-  S_DATE : "sdate",
-  E_DATE : "edate"
+  S_DATE: "sdate",
+  E_DATE: "edate",
+  BASE_RBT_DESC: "baseRbtDesc",
 };

@@ -57,7 +57,6 @@ const DidSetting = ({ userInfo }) => {
   useEffect(() => {
     axios.get(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO])).then((res) => {
       const result = res.data.resultData;
-      console.log("result", result);
       setTableData(result);
       dispatch(setDidList(result));
     });
@@ -87,7 +86,6 @@ const DidSetting = ({ userInfo }) => {
     axios
       .get(ROUTES.SUBSRIBER_RBT_DETAIL(subNo, fromNo, toNo))
       .then((res) => {
-        console.log("SUBSRIBER_RBT_DETAIL", res);
         const resultData = res.data.resultData;
         setSelectDid({ ...selectRow, ...resultData });
       })
@@ -201,7 +199,7 @@ const DidSetting = ({ userInfo }) => {
         // closeModal();
         // ===============
         axios
-          .post(ROUTES.SUBSCRIBERS_RBT_ADD(userInfo[KEYS.SUB_NO]), didFormData)
+          .post(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO]), didFormData)
           .then((res) => {
             // rbt_id를 def로 변경해줘야 함
             let newTableRow = {
@@ -249,7 +247,7 @@ const DidSetting = ({ userInfo }) => {
           selectedIds.includes(getDidKey(row))
         );
 
-        axios.delete(ROUTES.SUBSCRIBERS_RBT_ADD(userInfo[KEYS.SUB_NO]), {
+        axios.delete(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO]), {
           data: deleteItems,
         });
 
@@ -549,7 +547,7 @@ const DidSetting = ({ userInfo }) => {
             />
             <Input
               size="sm"
-              value={selectDid?.[KEYS.DESCRIPT] || ""}
+              value={selectDid?.[KEYS.BASE_RBT_DESC] || ""}
               disabled
             />
           </Form>

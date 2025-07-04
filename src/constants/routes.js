@@ -6,8 +6,8 @@ export const ROUTES = {
   SUBSCRIBERS_DETAIL: (subNo) => `/subscribers/${subNo}`, // 가입자 상세
   SUBSCRIBERS_RBT: (subNo) => `/subscriber/${subNo}/rbt`, // 회선 목록 조회
   SUBSRIBER_RBT_DETAIL: (subNo, fromNo, toNo) =>
-    `/subscribers/${subNo}/rbt/${fromNo}/${toNo}`, // 부가서비스 상세 조회
-  SUBSCRIBERS_RBT_ADD: (subNo) => `/subscriber/${subNo}/rbt`, // 회선 생성
+    `/subscriber/${subNo}/rbt/${fromNo}/${toNo}`, // 부가서비스 상세 조회
+  SUBSCRIBERS_RBT: (subNo) => `/subscriber/${subNo}/rbt`, // 회선 생성
   CIRCULAR: (subNo, fromNo, toNo) =>
     `/subscriber/${subNo}/rbt/${fromNo}/${toNo}/circular`, // 순환링 부가서비스 저장
   CIRCULAR_BULK: (subNo) =>

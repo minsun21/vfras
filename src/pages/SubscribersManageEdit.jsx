@@ -165,7 +165,7 @@ const SubscriberManageEdit = () => {
       }));
 
       try {
-        await axios.delete(ROUTES.SUBSCRIBERS_RBT_ADD(subNo), {
+        await axios.delete(ROUTES.SUBSCRIBERS_RBT(subNo), {
           data: rollbackInputs,
         });
         console.log("롤백 완료");
@@ -186,7 +186,7 @@ const SubscriberManageEdit = () => {
             [KEYS.RBT_ID]: row[KEYS.RBT_ID],
           };
 
-          await axios.post(ROUTES.SUBSCRIBERS_RBT_ADD(subNo), inputs);
+          await axios.post(ROUTES.SUBSCRIBERS_RBT(subNo), inputs);
           addedList.push(row); // 롤백을 위해 성공한 항목 저장
         }
 
@@ -197,7 +197,7 @@ const SubscriberManageEdit = () => {
             [KEYS.TO_NO]: row[KEYS.TO_NO],
           }));
 
-          await axios.delete(ROUTES.SUBSCRIBERS_RBT_ADD(subNo), {
+          await axios.delete(ROUTES.SUBSCRIBERS_RBT(subNo), {
             data: deleteInputs,
           });
         }

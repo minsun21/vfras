@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Modal from "react-modal";
 import { useModal } from "../../contexts/ModalContext";
 import Button, { BUTTON_CANCEL } from "../Button";
@@ -9,6 +10,20 @@ export const MODAL_MD = "w600";
 
 const ModalRenderer = () => {
   const { modals, closeModal } = useModal();
+
+  // ✅ 뒤로가기 시 모달 닫기 처리
+  useEffect(() => {
+    const handlePopState = () => {
+      if (modals?.length > 0) {
+        closeModal(); // 마지막 모달 닫기
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [modals, closeModal]);
 
   if (modals?.length === 0) return null;
 
@@ -32,8 +47,8 @@ const ModalRenderer = () => {
                 </div>
                 <div className="msg-body">
                   <p>
-                    {props.message.split("\n").map((line, index) => (
-                      <span key={index}>
+                    {props.message.split("\n").map((line, idx) => (
+                      <span key={idx}>
                         {line}
                         <br />
                       </span>
@@ -83,6 +98,7 @@ const ModalRenderer = () => {
               </div>
             </div>
           )}
+
           {type !== "alert" && type !== "dialog" && (
             <div className="layer-popup open">
               <div className={`md-content ${props.size || MODAL_LG}`}>
