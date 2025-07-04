@@ -83,7 +83,7 @@ const AccountEdit = () => {
                 key,
                 label,
                 type = "text",
-                options = [],
+                Options = [],
                 required,
                 comment,
                 disabled,
@@ -104,7 +104,7 @@ const AccountEdit = () => {
                     {type === "select" ? (
                       <Select
                         value={value}
-                        options={options}
+                        Options={Options}
                         onChange={handleChange}
                       />
                     ) : comment ? (

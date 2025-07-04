@@ -1,8 +1,8 @@
 import React from "react";
 
-const RadioGroup = ({ name = "radio-group", value, options, onChange }) => (
+const RadioGroup = ({ name = "radio-group", value, Options, onChange }) => (
   <div className="radio-box">
-    {options.map((opt) => {
+    {Options.map((opt) => {
       const id = `${name}-${opt.key}`;
       return (
         <span className="items" key={opt.key}>

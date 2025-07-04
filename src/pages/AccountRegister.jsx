@@ -10,7 +10,7 @@ import { AccountMessages, ErrorMessages, InfoMessages } from "../constants/Messa
 import axios from "../api/axios";
 import { fieldsValidate } from "../utils/FormValidation";
 import { KEYS } from "../constants/Keys";
-import { ADMIN_TYPES } from "../config/OPTIONS";
+import { ADMIN_TYPES } from "../config/Options";
 import PhoneNumberInput from "../components/PhoneNumberInput";
 
 const AccountRegister = () => {
@@ -88,7 +88,7 @@ const AccountRegister = () => {
                 key,
                 label,
                 type = "text",
-                options = [],
+                Options = [],
                 required,
                 placeholder,
                 comment,
@@ -110,7 +110,7 @@ const AccountRegister = () => {
                     {type === "select" ? (
                       <Select
                         value={value}
-                        options={options}
+                        Options={Options}
                         onChange={handleChange}
                       />
                     ) : comment ? (

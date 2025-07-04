@@ -324,6 +324,13 @@ const DidSetting = ({ userInfo }) => {
           [KEYS.E_DATE]: newList[0][KEYS.E_DATE].replaceAll("-", ""),
         },
       ];
+    } else if (dataKey === KEYS.GROUPS_DATA_KEY) {
+      return [
+        {
+          ...newList[0],
+          [KEYS.GROUP_ID]: selectDid[dataKey].length + 1,
+        },
+      ];
     }
 
     return newList;
@@ -333,7 +340,6 @@ const DidSetting = ({ userInfo }) => {
     let subNo = selectDid[KEYS.SUB_NO];
     let fromNo = selectDid[KEYS.FROM_NO];
     let toNo = selectDid[KEYS.TO_NO];
-    console.log("dataKey", dataKey);
     if (dataKey === KEYS.CIRCULARS_DATA_KEY) {
       return ROUTES.CIRCULAR(subNo, fromNo, toNo);
     } else if (dataKey === KEYS.TIMES_DATA_KEY) {
@@ -344,6 +350,8 @@ const DidSetting = ({ userInfo }) => {
       return ROUTES.ORGN(subNo, fromNo, toNo);
     } else if (dataKey === KEYS.DURAS_DATA_KEY) {
       return ROUTES.DURA(subNo, fromNo, toNo);
+    } else if (dataKey === KEYS.GROUPS_DATA_KEY) {
+      return ROUTES.GROUP(subNo, fromNo, toNo);
     }
   };
 

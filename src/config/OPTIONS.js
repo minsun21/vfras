@@ -1,4 +1,3 @@
-import { KEYS } from "../constants/Keys";
 import { LABELS } from "../constants/Labels";
 
 export const DAY_TYPE = [
@@ -11,10 +10,24 @@ export const DAY_TYPE = [
   { key: "0", value: "일" },
 ];
 
-export const ORGNS = [
+export const AREA_CODES = [
   { key: "02", value: "서울" },
   { key: "031", value: "경기" },
-  { key: "052", value: "대구" },
+  { key: "032", value: "인천" },
+  { key: "033", value: "강원" },
+  { key: "041", value: "충남" },
+  { key: "042", value: "대전" },
+  { key: "043", value: "충북" },
+  { key: "044", value: "세종" },
+  { key: "051", value: "부산" },
+  { key: "052", value: "울산" },
+  { key: "053", value: "대구" },
+  { key: "054", value: "경북" },
+  { key: "055", value: "경남" },
+  { key: "061", value: "전남" },
+  { key: "062", value: "광주" },
+  { key: "063", value: "전북" },
+  { key: "064", value: "제주" },
 ];
 
 // 사용자 구분

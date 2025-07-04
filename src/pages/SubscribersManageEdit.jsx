@@ -23,7 +23,7 @@ import Form from "../components/Form";
 import PasswordReset from "../components/modals/PasswordReset";
 import DidSettingPersonal from "../components/modals/DidSettingPersonal";
 import { MODAL_SM } from "../components/modals/ModalRenderer";
-import { SERVICE_TYPES, SUBSRIBERS_TYPES } from "../config/OPTIONS";
+import { SERVICE_TYPES, SUBSRIBERS_TYPES } from "../config/Options";
 import { store } from "../store";
 import { findMappedValue } from "../utils/Util";
 import { fieldsValidate } from "../utils/FormValidation";
@@ -302,7 +302,7 @@ const SubscriberManageEdit = () => {
                   key,
                   label,
                   type = "text",
-                  options = [],
+                  Options = [],
                   required,
                   disabled,
                   fields,
@@ -317,7 +317,7 @@ const SubscriberManageEdit = () => {
                   };
 
                   if (key === "userUseState") {
-                    const itemsOpt = field.options.filter(
+                    const itemsOpt = field.Options.filter(
                       (option) => option.items
                     )[0];
                     if (itemsOpt.value !== val) {
@@ -363,7 +363,7 @@ const SubscriberManageEdit = () => {
                       ) : type === "radio" ? (
                         <RadioGroup
                           value={value}
-                          options={options}
+                          Options={Options}
                           onChange={handleChange}
                         />
                       ) : key === KEYS.DID_CONFIG ? (

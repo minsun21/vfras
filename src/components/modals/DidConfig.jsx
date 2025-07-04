@@ -22,7 +22,6 @@ const DidConfig = ({
   const [inputs, setInputs] = useState({});
 
   useEffect(() => {
-    console.log('selectDid', selectDid)
     setInputs({});
   }, [selectDid]);
 
@@ -39,7 +38,7 @@ const DidConfig = ({
         });
       } else if (form.type === "select") {
         // select 초기화
-        initialInputs[form.key] = form.options?.[0]?.key ?? "";
+        initialInputs[form.key] = form.Options?.[0]?.key ?? "";
       } else {
         // 일반 input 초기화
         initialInputs[form.key] = "";
@@ -201,7 +200,7 @@ const DidConfig = ({
             const {
               key,
               type = "text",
-              options = [],
+              Options = [],
               placeholder,
               fields,
             } = item;
@@ -217,7 +216,7 @@ const DidConfig = ({
                 {item.type === "select" ? (
                   <Select
                     value={value}
-                    options={options}
+                    Options={Options}
                     onChange={(e) => handleChange(e.target.value)}
                   />
                 ) : type === "textarea" ? (

@@ -288,9 +288,9 @@ const Table = forwardRef(
     const pageSizeOptions = useMemo(() => {
       const baseSizes = [10, 30, 50, 100];
       const nextRounded = Math.ceil(tableData.length / 10) * 10;
-      const options = baseSizes.filter((n) => n < nextRounded);
-      if (!options.includes(nextRounded)) options.push(nextRounded);
-      return options;
+      const Options = baseSizes.filter((n) => n < nextRounded);
+      if (!Options.includes(nextRounded)) Options.push(nextRounded);
+      return Options;
     }, [tableData]);
 
     return (
@@ -309,7 +309,7 @@ const Table = forwardRef(
               <div className="top-button fRight">
                 <div className="select-box">
                   <Select
-                    options={pageSizeOptions.map((n) => ({ key: n, value: n }))}
+                    Options={pageSizeOptions.map((n) => ({ key: n, value: n }))}
                     nonEmpty={true}
                     value={currentPageSize}
                     onChange={(e) => setCurrentPageSize(Number(e.target.value))}

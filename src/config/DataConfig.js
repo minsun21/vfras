@@ -2,7 +2,7 @@ import React from "react";
 import { LABELS } from "../constants/Labels";
 import { KEYS } from "../constants/Keys";
 import { SUBSRIBERS_STATE } from "./FieldsConfig";
-import { DAY_TYPE, ORGNS, SEARCH_SUBSRIBERS_STATE } from "./OPTIONS";
+import { AREA_CODES, DAY_TYPE, SEARCH_SUBSRIBERS_STATE } from "./Options";
 import { findMappedValue } from "../utils/Util";
 
 // 음원 조회 컬럼
@@ -322,7 +322,7 @@ export const DID_CONFIG_DATAS = [
         key: KEYS.DAY_TYPE,
         type: "select",
         placeholder: LABELS.DAY_TYPE,
-        options: DAY_TYPE,
+        Options: DAY_TYPE,
       },
       {
         key: "time",
@@ -377,7 +377,7 @@ export const DID_CONFIG_DATAS = [
         key: KEYS.DAY_TYPE,
         type: "select",
         placeholder: LABELS.DAY_TYPE,
-        options: DAY_TYPE,
+        Options: DAY_TYPE,
       },
       { key: KEYS.RBT_ID, type: "number", placeholder: LABELS.RBT_ID },
     ],
@@ -406,7 +406,7 @@ export const DID_CONFIG_DATAS = [
         key: KEYS.ORGN,
         type: "select",
         placeholder: LABELS.ORGN,
-        options: ORGNS,
+        Options: AREA_CODES,
       },
       { key: KEYS.RBT_ID, type: "number", placeholder: LABELS.RBT_ID },
     ],
@@ -420,7 +420,7 @@ export const DID_CONFIG_DATAS = [
         header: LABELS.ORGN,
         cell: ({ getValue }) => {
           const value = getValue();
-          return findMappedValue(ORGNS, value);
+          return findMappedValue(AREA_CODES, value);
         },
       },
     ],

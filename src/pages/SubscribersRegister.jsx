@@ -15,7 +15,7 @@ import { useModal } from "../contexts/ModalContext";
 import { fieldsValidate } from "../utils/FormValidation";
 import axios from "../api/axios";
 import { KEYS } from "../constants/Keys";
-import { SERVICE_TYPES } from "../config/OPTIONS";
+import { SERVICE_TYPES } from "../config/Options";
 
 const SubscriberRegister = () => {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const SubscriberRegister = () => {
     let data = {};
     for (const field of SUBSRIBERS_REGISTER_FIELDS) {
       if (field.type === "radio") {
-        data[field.key] = field.options[0].key;
+        data[field.key] = field.Options[0].key;
         continue;
       }
       if (field.fields) {
@@ -132,7 +132,7 @@ const SubscriberRegister = () => {
                 key,
                 label,
                 type = "text",
-                options = [],
+                Options = [],
                 required,
                 placeholder,
                 comment,
@@ -157,10 +157,10 @@ const SubscriberRegister = () => {
                       <RadioGroup
                         name={key}
                         value={value}
-                        options={
+                        Options={
                           key === KEYS.SERVICE_TYPE
                             ? serviceTypeOptions
-                            : options
+                            : Options
                         }
                         onChange={handleChange}
                       />

@@ -22,7 +22,7 @@ import {
   SEARCH_SERVICE_TYPES,
   SEARCH_SUBSRIBERS_STATE,
   SEARCH_SUBSRIBERS_TYPES,
-} from "../config/OPTIONS";
+} from "../config/Options";
 import Form from "../components/Form";
 import { findMappedValue } from "../utils/Util";
 import axios from "../api/axios";
@@ -186,7 +186,7 @@ const Subscriber = () => {
                 <div className="form-field dflex wrap gap10">
                   <Select
                     value={searchInputs[KEYS.SEARCH_TYPE]}
-                    options={SEARCH_TYPES}
+                    Options={SEARCH_TYPES}
                     nonEmpty={true}
                     name={KEYS.SEARCH_TYPE}
                     onChange={onChange}
@@ -207,7 +207,7 @@ const Subscriber = () => {
               <td>
                 <Select
                   value={searchInputs[KEYS.SUB_TYPE]}
-                  options={SEARCH_SUBSRIBERS_TYPES}
+                  Options={SEARCH_SUBSRIBERS_TYPES}
                   nonEmpty={true}
                   name={KEYS.SUB_TYPE}
                   onChange={onChange}
@@ -216,7 +216,7 @@ const Subscriber = () => {
               <td>
                 <Select
                   value={searchInputs[KEYS.SERVICE_TYPE]}
-                  options={SEARCH_SERVICE_TYPES}
+                  Options={SEARCH_SERVICE_TYPES}
                   nonEmpty={true}
                   name={KEYS.SERVICE_TYPE}
                   onChange={onChange}
@@ -225,7 +225,7 @@ const Subscriber = () => {
               <td>
                 <Select
                   value={searchInputs[KEYS.SUB_STATUS]}
-                  options={SEARCH_SUBSRIBERS_STATE}
+                  Options={SEARCH_SUBSRIBERS_STATE}
                   nonEmpty={true}
                   name={KEYS.SUB_STATUS}
                   onChange={onChange}

@@ -6,7 +6,7 @@ import {
   SERVICE_TYPES,
   SUBSRIBERS_TYPES,
   USER_STATES,
-} from "./OPTIONS";
+} from "./Options";
 
 export const SUBSRIBERS_STATE = [
   { key: "0", value: "요청중" },
@@ -136,21 +136,21 @@ export const SUBSRIBERS_REGISTER_FIELDS = [
     key: KEYS.SUB_STATUS,
     label: LABELS.USER_STATE,
     type: "radio",
-    options: USER_STATES,
+    Options: USER_STATES,
     required: true,
   },
   {
     key: KEYS.SUB_TYPE,
     label: LABELS.SUBSCRIBE_TYPE,
     type: "radio",
-    options: SUBSRIBERS_TYPES,
+    Options: SUBSRIBERS_TYPES,
     required: true,
   },
   {
     key: KEYS.SERVICE_TYPE,
     label: LABELS.SERVICE_TYPE,
     type: "radio",
-    options: SERVICE_TYPES,
+    Options: SERVICE_TYPES,
     required: true,
   },
   {
@@ -308,7 +308,7 @@ export const SUBSRIBERS_EDIT_FIELDS = [
     key: KEYS.SUB_STATUS,
     label: LABELS.USER_STATE,
     type: "radio",
-    options: SUBSRIBERS_STATE,
+    Options: SUBSRIBERS_STATE,
   },
   {
     key: KEYS.SUB_TYPE,
@@ -396,7 +396,7 @@ export const ACCOUNTS_REGISTER_FIELDS = [
     key: KEYS.ADMIN_TYPE,
     label: LABELS.CLASSIFICATION,
     type: "select",
-    options: ADMIN_TYPES,
+    Options: ADMIN_TYPES,
     required: true,
   },
   {
@@ -456,7 +456,7 @@ export const ACCOUNTS_EDIT_FIELDS = [
     key: KEYS.ADMIN_TYPE,
     label: LABELS.CLASSIFICATION,
     type: "select",
-    options: ADMIN_TYPES,
+    Options: ADMIN_TYPES,
     required: true,
   },
   {
