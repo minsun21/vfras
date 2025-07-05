@@ -6,6 +6,7 @@ import { DID_ADD_FIELDS } from "../config/FieldsConfig";
 import { deepEqual, getDidKey } from "../utils/Util";
 import { ErrorMessages } from "../constants/Message";
 import { store } from "../store";
+import { LABELS } from "../constants/Labels";
 
 /**
  * DID 추가 전 검증 (에러 메시지 리턴)
@@ -153,14 +154,32 @@ export const getAddItem = (dataKey, newList, selectDid) => {
 /**
  * 부가서비스 등록 전 중복 검사
  */
-export const duplicateBeforeAdd = ({ newList, originList }) => {
-  console.log('newList', newList)
-  console.log(originList)
-  if (deepEqual(newList, originList)) {
+export const duplicateBeforeAdd = (inputs, originList, dataKey) => {
+  if (originList.some((item) => deepEqual(item, inputs))) {
     return ErrorMessages.duplicateSave;
   }
 
+  // 요일별은 요일이 같으면 안됨
+  if (dataKey === KEYS.WEEKS_DATA_KEY) {
+    return duplicateByField(inputs, originList, KEYS.DAY_TYPE, LABELS.DAY_TYPE);
+  }
+
+  // 발신지역 - 지역 같으면 안됨
+  if (dataKey === KEYS.WEEKS_DATA_KEY) {
+    return duplicateByField(inputs, originList, KEYS.ORGN, LABELS.ORGN);
+  }
+
   return null;
+};
+
+const duplicateByField = (inputs, originList, key, label) => {
+  if (isKeyDuplicateInArray(inputs, originList, key)) {
+    return ErrorMessages.duplicateSaveField(label);
+  }
+};
+
+const isKeyDuplicateInArray = (targetObj, arr, key) => {
+  return arr.some((item) => item[key] == targetObj[key]);
 };
 
 /**
@@ -172,9 +191,9 @@ export const addDidSubItem = async ({ dataKey, newList, selectDid }) => {
 
   await axios.post(uri, addItem);
 
+  let result = getAddItem(dataKey,newList, selectDid)
   return {
-    updatedDataKey: dataKey,
-    updatedValue: [...(selectDid[dataKey] || []), ...newList],
+    updatedValue: [...(selectDid[dataKey] || []), ...result],
   };
 };
 

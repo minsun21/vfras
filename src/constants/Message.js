@@ -46,6 +46,7 @@ export const ErrorMessages = {
   dateStart: "시작일을 먼저 지정해주세요.",
   duplicateRbtSave: "중복 회선은 생성할 수 없습니다.",
   duplicateSave: "중복 부가서비스는 추가할 수 없습니다.",
+  duplicateSaveField: (field) => `중복 부가서비스는 추가할 수 없습니다 (${field}).`,
 };
 
 export const LoginMessages = {
@@ -76,7 +77,7 @@ export const SoundSourceMessages = {
 export const SubsriberMessages = {
   searchPlaceHolder: `가입자명, 번호를 입력해주세요.`,
   approvedError: `이미 가입되었거나 삭제된 행은 선택할 수 없습니다.`,
-  resetPasswordConfirm: `패스워드를 초기화 하시겠습니까?`,
+  resetPasswordConfirm: `비밀번호를 초기화 하시겠습니까?`,
   didPlaceHolder: `부가서비스 설정을 원하는 행을 선택하세요.`,
   searchPlaceHolder2: `대표번호를 입력해주세요.`,
   resetPassword: `초기화 되었습니다.`,

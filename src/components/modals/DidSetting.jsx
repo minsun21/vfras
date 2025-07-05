@@ -35,6 +35,7 @@ import {
   bulkAddItem,
   deleteDidItems,
   duplicateBeforeAdd,
+  getAddItem,
   getDidDeleteResult,
   postDidRow,
   validateDidBeforeAdd,
@@ -120,7 +121,7 @@ const DidSetting = ({ userInfo, plusRbtCount }) => {
 
         const newRow = await postDidRow(userInfo);
         setTableData((prev) => [...prev, newRow]);
-        
+
         dispatch(resetFormData());
         plusRbtCount();
         closeModal();
@@ -165,31 +166,33 @@ const DidSetting = ({ userInfo, plusRbtCount }) => {
 
   // 부가서비스 저장
   const addDidSubs = (config, inputs) => {
-    const key = config.key;
     const dataKey = config.dataKey;
-    const selectedKey = getDidKey(selectDid);
-    const newList = [inputs];
 
-    const errorMsg = duplicateBeforeAdd(newList, selectDid[dataKey]);
+    const errorMsg = duplicateBeforeAdd(inputs, selectDid[dataKey], dataKey);
     if (errorMsg) {
       showAlert({ message: errorMsg });
       return;
     }
-  
+
+    const key = config.key;
+    const selectedKey = getDidKey(selectDid);
+
+    const newList = [inputs];
     addDidSubItem({
       dataKey,
       newList,
       selectDid,
-    }).then(({ updatedDataKey, updatedValue }) => {
+    }).then(({ updatedValue }) => {
       setTableData((prev) =>
         prev.map((row) =>
           getDidKey(row) === selectedKey ? { ...row, [key]: true } : row
         )
       );
-  
+
+      // 부가서비스 테이블에 추가
       setSelectDid({
         ...selectDid,
-        [updatedDataKey]: updatedValue,
+        [dataKey]: updatedValue,
       });
     });
   };
@@ -202,12 +205,12 @@ const DidSetting = ({ userInfo, plusRbtCount }) => {
       inputs,
       selectDid,
     });
-  
+
     setSelectDid(updatedSelectDid);
-  
+
     setTableData((prev) => prev.map(updateTableCallback));
   };
-  
+
   const bulkDelete = (key, dataKey) => {
     let bulkInputs = {
       key: dataKey,
