@@ -35,7 +35,6 @@ import {
   bulkAddItem,
   deleteDidItems,
   duplicateBeforeAdd,
-  getAddItem,
   getDidDeleteResult,
   postDidRow,
   validateDidBeforeAdd,
@@ -59,12 +58,16 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
   }, []);
 
   useEffect(() => {
+    initRbtData();
+  }, [userInfo]);
+
+  const initRbtData =() =>{
     axios.get(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO])).then((res) => {
       const result = res.data.resultData;
       setTableData(result);
       dispatch(setDidList(result));
     });
-  }, [userInfo]);
+  }
 
   // 로우 하나 클릭 했을 때.
   useEffect(() => {
@@ -178,21 +181,13 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
       return;
     }
 
-    const key = config.key;
-    const selectedKey = getDidKey(selectDid);
-
     const newList = [inputs];
     addDidSubItem({
       dataKey,
       newList,
       selectDid,
     }).then(({ updatedValue }) => {
-      setTableData((prev) =>
-        prev.map((row) =>
-          getDidKey(row) === selectedKey ? { ...row, [key]: true } : row
-        )
-      );
-
+      initRbtData();
       // 부가서비스 테이블에 추가
       setSelectDid({
         ...selectDid,
