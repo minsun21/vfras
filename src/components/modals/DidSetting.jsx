@@ -42,7 +42,7 @@ import {
   validateDidBeforeDelete,
 } from "../../service/didService";
 
-const DidSetting = ({ userInfo, plusRbtCount }) => {
+const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
   const dispatch = useDispatch();
   const tableRef = useRef();
   const { showModal, showAlert, showDialog, closeModal } = useModal();
@@ -108,6 +108,10 @@ const DidSetting = ({ userInfo, plusRbtCount }) => {
 
   // did 회선 추가
   const addDidRow = () => {
+    if (isPersonal && tableData.length > 0) {
+      showAlert({ message: ErrorMessages.onlyOneRbt });
+      return;
+    }
     showModal({
       header: LABELS.ADD_ITEM,
       content: <AddDidModal />,

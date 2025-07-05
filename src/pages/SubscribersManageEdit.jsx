@@ -145,8 +145,15 @@ const SubscriberManageEdit = () => {
   // 회선 및 부가서비스 - 개인
   const clickDidSettingPersonal = () => {
     showModal({
-      content: <DidSettingPersonal userInfo={formData} />,
+      content: (
+        <DidSetting
+          userInfo={formData}
+          plusRbtCount={plusRbtCount}
+          isPersonal={true}
+        />
+      ),
       header: LABELS.DID_TITLE_PERSONAL,
+      isOnlyClose: true,
     });
   };
 
