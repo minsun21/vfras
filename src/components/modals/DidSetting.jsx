@@ -61,13 +61,13 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
     initRbtData();
   }, [userInfo]);
 
-  const initRbtData =() =>{
+  const initRbtData = () => {
     axios.get(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO])).then((res) => {
       const result = res.data.resultData;
       setTableData(result);
       dispatch(setDidList(result));
     });
-  }
+  };
 
   // 로우 하나 클릭 했을 때.
   useEffect(() => {
@@ -132,6 +132,10 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
         dispatch(resetFormData());
         plusRbtCount();
         closeModal();
+        setTimeout(() => {
+          showAlert({ message: InfoMessages.successAdd });
+          return;
+        }, 50);
       },
       onClose: () => {
         dispatch(resetFormData());
@@ -165,6 +169,10 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
             setSelectDid();
             setSelectRows([]);
             tableRef.current?.clearSelection?.();
+            setTimeout(() => {
+              showAlert({ message: InfoMessages.successDelete });
+              return;
+            }, 50);
           },
         });
       },
