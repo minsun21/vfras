@@ -117,37 +117,30 @@ export const getAddUri = (dataKey, selectDid) => {
 };
 
 /**
- * 부가서비스 등록용 데이터 가공
+ * 부가서비스 추가용 데이터 가공
  */
-export const getAddItem = (dataKey, newList, selectDid) => {
-  const item = newList[0];
+export const getAddItem = (dataKey, item, selectDid) => {
 
   switch (dataKey) {
     case KEYS.TIMES_DATA_KEY:
-      return [
-        {
-          ...item,
-          [KEYS.S_TIME]: item[KEYS.S_TIME].replace(":", ""),
-          [KEYS.E_TIME]: item[KEYS.E_TIME].replace(":", ""),
-        },
-      ];
+      return {
+        ...item,
+        [KEYS.S_TIME]: item[KEYS.S_TIME].replace(":", ""),
+        [KEYS.E_TIME]: item[KEYS.E_TIME].replace(":", ""),
+      };
     case KEYS.DURAS_DATA_KEY:
-      return [
-        {
-          ...item,
-          [KEYS.S_DATE]: item[KEYS.S_DATE].replaceAll("-", ""),
-          [KEYS.E_DATE]: item[KEYS.E_DATE].replaceAll("-", ""),
-        },
-      ];
+      return {
+        ...item,
+        [KEYS.S_DATE]: item[KEYS.S_DATE].replaceAll("-", ""),
+        [KEYS.E_DATE]: item[KEYS.E_DATE].replaceAll("-", ""),
+      };
     case KEYS.GROUPS_DATA_KEY:
-      return [
-        {
-          ...item,
-          [KEYS.GROUP_ID]: selectDid[dataKey]?.length + 1 || 1,
-        },
-      ];
+      return {
+        ...item,
+        [KEYS.GROUP_ID]: selectDid[dataKey]?.length + 1 || 1,
+      };
     default:
-      return newList;
+      return item;
   }
 };
 
@@ -185,16 +178,11 @@ const isKeyDuplicateInArray = (targetObj, arr, key) => {
 /**
  * 부가서비스 등록 API 요청 및 후처리 데이터 반환
  */
-export const addDidSubItem = async ({ dataKey, newList, selectDid }) => {
+export const addDidSubItem = async ({ dataKey, selectDid }) => {
   const uri = getAddUri(dataKey, selectDid);
-  const addItem = getAddItem(dataKey, newList, selectDid);
+  console.log('selectDid[dataKey]', selectDid[dataKey])
 
-  await axios.post(uri, addItem);
-
-  let result = getAddItem(dataKey,newList, selectDid)
-  return {
-    updatedValue: [...(selectDid[dataKey] || []), ...result],
-  };
+  await axios.post(uri, selectDid[dataKey]);
 };
 
 /**
@@ -267,4 +255,15 @@ export const bulkAddItem = async ({ key, dataKey, inputs, selectDid }) => {
     updateTableCallback: (row) =>
       getDidKey(row) === getDidKey(selectDid) ? { ...row, [key]: true } : row,
   };
+};
+
+/**
+ * 일시정지
+ */
+export const stopRbt = async (inputs, selectDid) => {
+  const subNo = selectDid[KEYS.SUB_NO];
+  const fromNo = selectDid[KEYS.FROM_NO];
+  const toNo = selectDid[KEYS.TO_NO];
+
+  await axios.post(ROUTES.STOP(subNo, fromNo, toNo), inputs);
 };

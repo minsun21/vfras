@@ -24,6 +24,8 @@ export const ROUTES = {
   DURA_BULK: (subNo) => `/subscriber/${subNo}/rbt/dura_blk`, // 기념일별 부가서비스 일괄 저장
   GROUP: (subNo, fromNo, toNo) =>
     `/subscriber/${subNo}/rbt/${fromNo}/${toNo}/group`, // 기념일별 부가서비스 저장
+  STOP: (subNo, fromNo, toNo) =>
+    `/subscriber/${subNo}/rbt/${fromNo}/${toNo}/stop`, // 부가서비스 일시정지
   GROUP_BULK: (subNo) =>
     `/subscriber/${subNo}/rbt/group_blk`, // 기념일별 부가서비스 일괄 저장
   RESET_SUBSCRIBER_PASSWORD: (subNo) => `/subscribers/${subNo}/password`, // 비밀번호 초기화

@@ -89,7 +89,7 @@ export const LABELS = {
   DAY_OF_WEEKEND: "요일",
   CALLER_AREA: "발신지역",
   CALLER_NUMBER: "발신자번호",
-  TIME_SLOT : "시간대",
+  TIME_SLOT: "시간대",
   ANNIVERSARY: "기념일",
   IS_OPEN: "가입여부",
   CIRCULAR: "순환형",
@@ -120,6 +120,7 @@ export const LABELS = {
   DEPARTMENT_PERMISSIONS: "부서 권한",
   MODIFY: "수정",
   DID_CONFIG_LENGH: (cnt, max) => `${cnt}개 (최대 ${max})`,
+  PERIOD_INTERRUPT: "기간별 일시정지",
   INTERRUPT: "일시정지",
   START_DATE: "시작일",
   END_DATE: "종료일",
@@ -131,9 +132,9 @@ export const LABELS = {
   GROUP: "그룹",
   CALLING_NUMBER: "발신번호",
   DID_CALLING_PLACEHOLDER: "발신번호(','구분, 최대 5개)",
-  TIME : "시간",
-  RESET : "초기화",
-  START : "시작",
-  INTERRUPT_RESERVATION : "일시정지 예약",
-  CLOSE : "닫기"
+  TIME: "시간",
+  RESET: "초기화",
+  START: "시작",
+  INTERRUPT_RESERVATION: "일시정지 예약",
+  CLOSE: "닫기"
 };

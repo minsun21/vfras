@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button, { BUTTON_SEARCH, BUTTON_DELETE } from "../components/Button";
 import Input from "../components/Input";
@@ -41,8 +41,13 @@ const Subscriber = () => {
     [KEYS.SUB_STATUS]: SEARCH_SUBSRIBERS_STATE[0].key,
   });
   const [data, setData] = useState([]);
-
   const [selectRows, setselectRows] = useState([]);
+
+  const searchInputsRef = useRef(searchInputs);
+
+  useEffect(() => {
+    searchInputsRef.current = searchInputs;
+  }, [searchInputs]);
 
   const search = () => {
     tableRef.current?.triggerFetch(0, 15);
@@ -51,9 +56,9 @@ const Subscriber = () => {
   const getData = (page = 0, size = 15) => {
     return axios.get(ROUTES.SUBSCRIBERS, {
       params: {
-        ...searchInputs,
-        page: page,
-        size: size,
+        ...searchInputsRef.current,
+        page,
+        size,
       },
     });
   };
@@ -93,18 +98,18 @@ const Subscriber = () => {
       showAlert({ message: errorMsg });
       return;
     }
-  
+
     showDialog({
       message: InfoMessages.confirmDelete(selectRows.length),
       onConfirm: deleteAccount,
     });
   };
-  
+
   const deleteAccount = async () => {
     const subNos = selectRows.map((row) => row[KEYS.SUB_NO]);
-  
+
     await deleteSubscribers(subNos);
-  
+
     search();
     showAlert({ message: InfoMessages.successDelete });
   };

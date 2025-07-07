@@ -14,6 +14,7 @@ const DidConfig = ({
   deleteDidConfig,
   bulkAdd,
   bulkDelete,
+  saveDidSub
 }) => {
   const { showAlert, showDialog } = useModal();
   const tableRef = useRef();
@@ -64,7 +65,7 @@ const DidConfig = ({
     }
   };
 
-  // 부가서비스 저장
+  // 부가서비스 추가
   const addDidConfigAction = () => {
     const dataKey = config.dataKey;
     const currentList = selectDid[dataKey] || [];
@@ -73,6 +74,12 @@ const DidConfig = ({
     addDidSubs(config, inputs);
     resetSelectRows();
   };
+
+  // 부가서비스 저장
+  const saveDid = () => {
+    saveDidSub(config);
+    resetSelectRows();
+  }
 
   const bulkAddAction = () => {
     const key = config.key;
@@ -104,7 +111,7 @@ const DidConfig = ({
     showDialog({
       message: InfoMessages.confirmAllDelete,
       onConfirm: () => {
-        deleteDidConfig(config, []);
+        deleteDidConfig(config, [], true);
         resetSelectRows();
       },
     });
@@ -271,6 +278,7 @@ const DidConfig = ({
             label={LABELS.ALL_DELETE}
             onClick={allDeleteAction}
           />
+          <div className="svcBoxCTxt"> <Button type={BUTTON_DELETE} label={LABELS.SAVE} onClick={saveDid} /></div>
           <div className="svcBoxCTxt">{LABELS.MAIN_NUMBER}</div>
           <Button
             type={BUTTON_DELETE}

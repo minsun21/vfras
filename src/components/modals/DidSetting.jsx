@@ -6,7 +6,7 @@ import {
   DID_SETTING_COLUMNS,
   EMPTY_DID_DATA,
 } from "../../config/DataConfig";
-import Button, { BUTTON_DELETE } from "../Button";
+import Button, { BUTTON_CANCEL, BUTTON_DELETE } from "../Button";
 import Input from "../Input";
 import { KEYS } from "../../constants/Keys";
 import Form from "../Form";
@@ -35,8 +35,10 @@ import {
   bulkAddItem,
   deleteDidItems,
   duplicateBeforeAdd,
+  getAddItem,
   getDidDeleteResult,
   postDidRow,
+  stopRbt,
   validateDidBeforeAdd,
   validateDidBeforeDelete,
 } from "../../service/didService";
@@ -64,6 +66,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
   const initRbtData = () => {
     axios.get(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO])).then((res) => {
       const result = res.data.resultData;
+      console.log('result', result)
       setTableData(result);
       dispatch(setDidList(result));
     });
@@ -94,6 +97,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
       .get(ROUTES.SUBSRIBER_RBT_DETAIL(subNo, fromNo, toNo))
       .then((res) => {
         const resultData = res.data.resultData;
+        console.log(resultData)
         setSelectDid({ ...selectRow, ...resultData });
       })
       .catch((err) => {
@@ -179,30 +183,26 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
     });
   };
 
-  // 부가서비스 저장
+  // 부가서비스 추가
   const addDidSubs = (config, inputs) => {
     const dataKey = config.dataKey;
+    const addItem = getAddItem(dataKey, inputs, selectDid);
 
-    const errorMsg = duplicateBeforeAdd(inputs, selectDid[dataKey], dataKey);
-    if (errorMsg) {
-      showAlert({ message: errorMsg });
-      return;
-    }
-
-    const newList = [inputs];
-    addDidSubItem({
-      dataKey,
-      newList,
-      selectDid,
-    }).then(({ updatedValue }) => {
-      initRbtData();
-      // 부가서비스 테이블에 추가
-      setSelectDid({
-        ...selectDid,
-        [dataKey]: updatedValue,
-      });
+    setSelectDid({
+      ...selectDid,
+      [dataKey]: [...(selectDid[dataKey] || []), addItem],
     });
   };
+
+  const saveDidSub = (config) => {
+    const dataKey = config.dataKey;
+    addDidSubItem({
+      dataKey,
+      selectDid,
+    }).then(() => {
+      initRbtData();
+    });
+  }
 
   // 부가서비스 일괄 저장
   const bulkAdd = async (key, dataKey, inputs) => {
@@ -227,25 +227,24 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
   };
 
   // 부가서비스 삭제
-  const deleteDidConfig = (config, deleteList) => {
-    const key = config.key;
-    const dataKey = config.dataKey;
+  const deleteDidConfig = (config, deleteList, isAllDelete) => {
+    const { key, dataKey } = config;
     const selectedKey = getDidKey(selectDid);
 
-    let isAllDelete = deleteList.length === selectDid[dataKey].length; // 전체 삭제 여부
+    // 삭제 후 남길 데이터 계산
+    const filteredList = isAllDelete
+      ? []
+      : selectDid[dataKey].filter((item) => !deleteList.includes(item));
 
-    const newList = selectDid[config.dataKey].filter(
-      (item) => !deleteList.some((s) => s === item)
-    ); // 삭제되지 않은 데이터
-
+    // 업데이트될 selectDid 객체
     const updatedSelectDid = {
       ...selectDid,
-      [key]: isAllDelete ? false : true,
-      [dataKey]: isAllDelete ? [] : newList,
+      [key]: !isAllDelete && filteredList.length > 0,
+      [dataKey]: filteredList,
     };
 
+    // 상태 반영
     setSelectDid(updatedSelectDid);
-
     setTableData((prev) =>
       prev.map((row) =>
         getDidKey(row) === selectedKey
@@ -253,52 +252,42 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
           : row
       )
     );
-    dispatch(
-      removeSubItemFromList({
-        selectDid,
-        subFieldKey: dataKey,
-        removeItem: deleteList,
-      })
-    );
   };
 
   // 일시 정지
-  const handleInterruptChange = (e) => {
-    const selectedKey = getDidKey(selectDid);
-    const name = e.target.name;
+  const [selectStop, setSelectStop] = useState(selectDid?.[KEYS.IS_INTERRUPT] || 0);
+  const [stopDate, setStopDate] = useState({})
 
-    const isInterrupt = name === LABELS.START ? false : true;
+  const handleOptionChange = (e) => {
+    const value = Number(e.target.value);
+    setSelectStop(value);
 
-    setSelectDid({
-      ...selectDid,
-      [KEYS.IS_INTERRUPT]: isInterrupt,
-      [KEYS.INTERRUPT_RESERVATION_FROM]: "",
-      [KEYS.INTERRUPT_RESERVATION_TO]: "",
-    });
-
-    setTableData((prev) =>
-      prev.map((row) =>
-        getDidKey(row) === selectedKey
-          ? { ...row, [KEYS.IS_INTERRUPT]: isInterrupt }
-          : row
-      )
-    );
+    if (value !== 2) {
+      setStopDate({
+        [KEYS.INTERRUPT_RESERVATION_FROM]: "",
+        [KEYS.INTERRUPT_RESERVATION_TO]: ""
+      })
+    }
   };
 
-  const handleInterruptDateChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
+  const onChangeDate = (e) => {
+    setStopDate({
+      ...stopDate,
+      [e.target.name]: e.target.value
+    })
+  }
 
-    if (name === KEYS.INTERRUPT_RESERVATION_TO) {
-      // 종료일을 지정할 때
-      if (!selectDid[KEYS.INTERRUPT_RESERVATION_FROM]) {
+  const saveInterrupt = () => {
+    if (selectStop === 2) {
+      let startDate = stopDate[KEYS.INTERRUPT_RESERVATION_FROM];
+      let endDate = stopDate[KEYS.INTERRUPT_RESERVATION_TO];
+      if (!startDate || !endDate) {
         showAlert({
-          message: ErrorMessages.dateStart,
+          message: ErrorMessages.dateBlank,
         });
         return;
       }
-
-      if (selectDid[KEYS.INTERRUPT_RESERVATION_FROM] > value) {
+      if (startDate && endDate && startDate > endDate) {
         showAlert({
           message: ErrorMessages.date,
         });
@@ -306,13 +295,20 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
       }
     }
 
-    setSelectDid({
-      ...selectDid,
-      [name]: value,
-      // 종료일도 자동으로 넣어줌
-      [KEYS.INTERRUPT_RESERVATION_TO]: value,
+    let inputs = {
+      ...stopDate,
+      [KEYS.IS_INTERRUPT]: selectStop
+    }
+    stopRbt(
+      inputs,
+      selectDid
+    ).then(() => {
+      showAlert({
+        message: InfoMessages.successStop,
+      });
+      initRbtData();
     });
-  };
+  }
 
   return (
     <div>
@@ -379,48 +375,66 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
           {selectDid && (
             <div className="didStopBox">
               <div className="radio-box">
-                <span className="items">
-                  <input
-                    type="radio"
-                    name={LABELS.START}
-                    id="rdDidStart"
-                    onChange={handleInterruptChange}
-                    value="rdDidStart"
-                    checked={selectDid[KEYS.IS_INTERRUPT] === false}
-                  />
-                  <label htmlFor="rdDidStart">{LABELS.START}</label>
-                </span>
-                <span className="items">
-                  <input
-                    type="radio"
-                    name={LABELS.INTERRUPT}
-                    id="rdDidStop"
-                    onChange={handleInterruptChange}
-                    value="rdDidStop"
-                    checked={selectDid[KEYS.IS_INTERRUPT] === true}
-                  />
-                  <label htmlFor="rdDidStop">{LABELS.INTERRUPT}</label>
-                </span>
+                <div style={{ display: 'flex' }}>
+                  <span className="items">
+                    <input
+                      type="radio"
+                      name="dateOption"
+                      value={0}
+                      id="rdDidStart"
+                      checked={selectStop === 0}
+                      onChange={handleOptionChange}
+                    />
+                    <label htmlFor="rdDidStart">{LABELS.START}</label>
+                  </span>
+                  <span className="items">
+                    <input
+                      type="radio"
+                      name="dateOption"
+                      value={1}
+                      id="rdDidStop"
+                      checked={selectStop === 1}
+                      onChange={handleOptionChange}
+                    />
+                    <label htmlFor="rdDidStop">{LABELS.INTERRUPT}</label>
+                  </span>
+                  <span className="items">
+                    <input
+                      type="radio"
+                      name="dateOption"
+                      value={2}
+                      id="rdDidPeriodStop"
+                      checked={selectStop === 2}
+                      onChange={handleOptionChange}
+                    />
+                    <label htmlFor="rdDidPeriodStop">{LABELS.PERIOD_INTERRUPT}</label>
+                  </span>
+                  <div className="hFlex">
+                    <Input
+                      type="date"
+                      size="w130"
+                      name={KEYS.INTERRUPT_RESERVATION_FROM}
+                      value={stopDate[KEYS.INTERRUPT_RESERVATION_FROM]}
+                      onChange={onChangeDate}
+                      disabled={selectStop != 2}
+                    />
+                    <span>{"~"}</span>
+                    <Input
+                      type="date"
+                      size="w130"
+                      name={KEYS.INTERRUPT_RESERVATION_TO}
+                      value={stopDate[KEYS.INTERRUPT_RESERVATION_TO]}
+                      onChange={onChangeDate}
+                      disabled={selectStop != 2}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="hFlex">
-                <Input
-                  type="date"
-                  size="w130"
-                  name={KEYS.INTERRUPT_RESERVATION_FROM}
-                  value={selectDid[KEYS.INTERRUPT_RESERVATION_FROM]}
-                  onChange={handleInterruptDateChange}
-                  disabled={!selectDid[KEYS.IS_INTERRUPT]}
-                />
-                <span>{"~"}</span>
-                <Input
-                  type="date"
-                  size="w130"
-                  name={KEYS.INTERRUPT_RESERVATION_TO}
-                  value={selectDid[KEYS.INTERRUPT_RESERVATION_TO]}
-                  onChange={handleInterruptDateChange}
-                  disabled={!selectDid[KEYS.IS_INTERRUPT]}
-                />
-              </div>
+              <Button
+                type={BUTTON_DELETE}
+                label={LABELS.SAVE}
+                onClick={saveInterrupt}
+              />
             </div>
           )}
           <div className="configBox">
@@ -439,6 +453,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
                     deleteDidConfig={deleteDidConfig}
                     bulkAdd={bulkAdd}
                     bulkDelete={bulkDelete}
+                    saveDidSub={saveDidSub}
                   />
                 ))}
               </div>

@@ -12,6 +12,7 @@ export const InfoMessages = {
   mobile: "숫자만 입력해주세요.",
   successAdd: "추가 되었습니다.",
   confirmAllDelete: "전체 삭제하시겠습니까?",
+  successStop: "일시정지 되었습니다."
 };
 
 export const ProfileMessages = {
@@ -47,7 +48,8 @@ export const ErrorMessages = {
   duplicateRbtSave: "중복 회선은 생성할 수 없습니다.",
   duplicateSave: "중복 부가서비스는 추가할 수 없습니다.",
   duplicateSaveField: (field) => `중복 부가서비스는 추가할 수 없습니다 (${field}).`,
-  onlyOneRbt : "개인 사용자는 1개 회선만 등록 가능합니다."
+  onlyOneRbt: "개인 사용자는 1개 회선만 등록 가능합니다.",
+  dateBlank: "날짜를 모두 입력해주세요"
 };
 
 export const LoginMessages = {

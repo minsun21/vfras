@@ -12,6 +12,7 @@ const Input = ({
   placeholder = "",
   size = "nm",
   name,
+  onKeyDown
 }) => {
 
   const blockNegative = (e) => {
@@ -21,16 +22,16 @@ const Input = ({
   };
 
   return (
-      <input className={`form-input ${size}`}
-        name={name}
-        type={type}
-        value={value}
-        disabled={disabled}
-        onChange={onChange}
-        placeholder={placeholder}
-        min="0"
-        onKeyDown={blockNegative}
-      />
+    <input className={`form-input ${size}`}
+      name={name}
+      type={type}
+      value={value}
+      disabled={disabled}
+      onChange={onChange}
+      placeholder={placeholder}
+      min="0"
+      onKeyDown={blockNegative}
+    />
   );
 };
 
