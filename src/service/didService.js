@@ -257,6 +257,19 @@ export const bulkAddItem = async ({ key, dataKey, inputs, selectDid }) => {
   };
 };
 
+
+/**
+ * 부가서비스 일괄 삭제 API 호출 및 반영값 반환
+ */
+export const bulkRemoveItem = async ({ dataKey, inputs, selectDid }) => {
+  const uri = getBulkUri(dataKey, selectDid);
+  const body = getAddBulkItem(dataKey, inputs, selectDid);
+
+  await axios.delete(uri, {
+    data: body,
+  });
+};
+
 /**
  * 일시정지
  */

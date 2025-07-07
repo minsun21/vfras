@@ -88,9 +88,16 @@ const DidConfig = ({
   };
 
   const bulkDeleteAction = () => {
-    const key = config.key;
-    const dataKey = config.dataKey;
-    bulkDelete(key, dataKey);
+    if (selectRows.length === 0) return;
+
+    if (selectRows.length > 1) {
+      showAlert({
+        message: ErrorMessages.oneSelect
+      })
+      return;
+    }
+    bulkDelete(config.dataKey, selectRows[0]);
+    resetSelectRows();
   };
 
   // 삭제

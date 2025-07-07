@@ -33,6 +33,7 @@ import { getDidKey } from "../../utils/Util";
 import {
   addDidSubItem,
   bulkAddItem,
+  bulkRemoveItem,
   deleteDidItems,
   duplicateBeforeAdd,
   getAddItem,
@@ -66,7 +67,6 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
   const initRbtData = () => {
     axios.get(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO])).then((res) => {
       const result = res.data.resultData;
-      console.log('result', result)
       setTableData(result);
       dispatch(setDidList(result));
     });
@@ -89,15 +89,20 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
       });
       return;
     }
+
+    // axios로 detail 정보 가져옴
+    initRbtSubs(selectRow);
+  }, [selectRows]);
+
+  const initRbtSubs = (selectRow) => {
+    let subNo = selectRow[KEYS.SUB_NO];
     let fromNo = selectRow[KEYS.FROM_NO];
     let toNo = selectRow[KEYS.TO_NO];
 
-    // axios로 detail 정보 가져옴
     axios
       .get(ROUTES.SUBSRIBER_RBT_DETAIL(subNo, fromNo, toNo))
       .then((res) => {
         const resultData = res.data.resultData;
-        console.log(resultData)
         setSelectDid({ ...selectRow, ...resultData });
       })
       .catch((err) => {
@@ -107,11 +112,10 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
             ...selectRow,
             ...EMPTY_DID_DATA,
           };
-          // const result = addUiItems(newRow);
           setSelectDid(newRow);
         }
       });
-  }, [selectRows]);
+  }
 
   // did 회선 추가
   const addDidRow = () => {
@@ -194,6 +198,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
     });
   };
 
+  // 부가서비스 최종 저장
   const saveDidSub = (config) => {
     const dataKey = config.dataKey;
     addDidSubItem({
@@ -201,6 +206,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
       selectDid,
     }).then(() => {
       initRbtData();
+      initRbtSubs(selectDid);
     });
   }
 
@@ -214,16 +220,19 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
     });
 
     setSelectDid(updatedSelectDid);
-
-    setTableData((prev) => prev.map(updateTableCallback));
+    initRbtSubs(selectDid);
   };
 
-  const bulkDelete = (key, dataKey) => {
-    let bulkInputs = {
-      key: dataKey,
-      items: selectDid[dataKey],
-    };
-    dispatch(removeBulkItem(bulkInputs));
+  // 부가서비스 일괄 삭제
+  const bulkDelete = (dataKey, inputs) => {
+    bulkRemoveItem({
+      dataKey,
+      inputs,
+      selectDid,
+    }).then(res => {
+      initRbtData();
+      initRbtSubs(selectDid);
+    })
   };
 
   // 부가서비스 삭제
@@ -307,6 +316,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
         message: InfoMessages.successStop,
       });
       initRbtData();
+      initRbtSubs(selectDid);
     });
   }
 
