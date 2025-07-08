@@ -6,7 +6,7 @@ import { ROUTES } from "../constants/routes";
 import { LABELS } from "../constants/Labels";
 import { KEYS } from "../constants/Keys";
 import { LoginMessages } from "../constants/Message";
-import axios from "../api/axios";
+import axios, { AXIOS_NO_GLOBAL_ERROR } from "../api/axios";
 import { useModal } from "../contexts/ModalContext";
 import { persistor } from "../store";
 import { deleteCookie, setCookie } from "../utils/cookies";
@@ -54,7 +54,7 @@ const Login = () => {
       .put(ROUTES.LOGIN, {
         [KEYS.ADMIN_ID]: formData[KEYS.ADMIN_ID],
         [KEYS.PASSWORD]: formData[KEYS.PASSWORD],
-      })
+      }, AXIOS_NO_GLOBAL_ERROR)
       .then((res) => {
         const { adminId, adminType, permissions, token } = res.data.resultData;
 

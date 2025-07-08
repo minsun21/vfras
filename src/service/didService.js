@@ -1,4 +1,4 @@
-import axios, { AXIOS_NO_GLOBAL_ERROR, suppressGlobal } from "../api/axios";
+import axios, { AXIOS_NO_GLOBAL_ERROR } from "../api/axios";
 import { ROUTES } from "../constants/routes";
 import { KEYS } from "../constants/Keys";
 import { fieldsValidate } from "../utils/FormValidation";

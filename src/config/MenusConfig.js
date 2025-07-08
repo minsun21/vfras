@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import { ROUTES } from "../constants/routes";
 import { LABELS } from "../constants/Labels";
+import { ACCNT_R, PERMISSIONS } from "../constants/Permissions";
 
 export const MenusConfig = [
   {
@@ -59,13 +60,13 @@ export const MenusConfig = [
         title: LABELS.ACCOUNT_MANAGE,
         path: ROUTES.ACCOUNTS,
         component: lazy(() => import("../pages/Accounts")),
-        permission: "ACCNT_R",
+        permission: PERMISSIONS.ACCNT_R,
       },
       {
         title: LABELS.HISTORY,
         path: ROUTES.HISTORY,
         component: lazy(() => import("../pages/AccountLogs")),
-        permission: "ACCNT_R",
+        permission: PERMISSIONS.ACCNT_R,
       },
     ],
   },

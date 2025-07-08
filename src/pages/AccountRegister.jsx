@@ -7,7 +7,7 @@ import Select from "../components/Select";
 import { ROUTES } from "../constants/routes";
 import { useModal } from "../contexts/ModalContext";
 import { AccountMessages, ErrorMessages, InfoMessages } from "../constants/Message";
-import axios from "../api/axios";
+import axios, { AXIOS_NO_GLOBAL_ERROR } from "../api/axios";
 import { fieldsValidate } from "../utils/FormValidation";
 import { KEYS } from "../constants/Keys";
 import { ADMIN_TYPES } from "../config/Options";
@@ -50,7 +50,7 @@ const AccountRegister = () => {
 
   const save = () => {
     axios
-      .post(ROUTES.ACCOUNTS, formData)
+      .post(ROUTES.ACCOUNTS, formData, AXIOS_NO_GLOBAL_ERROR)
       .then((res) => {
         showAlert({
           message: InfoMessages.successAccountSave,
@@ -58,12 +58,18 @@ const AccountRegister = () => {
         });
       })
       .catch((err) => {
-        let message = err.response.data.resultData;
+        let resultData = err.response.data.resultData;
+        if (err.response.data.result === 400 && resultData[0]) {
+          showAlert({ message: resultData[0].message });
+          return;
+        }
+
         // if (message.includes("Admin is Present")) {
         //   showAlert({ message: AccountMessages.adminIdPresent });
-        // } else {
-        //   showAlert({ message: ErrorMessages.server });
+        //   return;
         // }
+
+        showAlert({ message: ErrorMessages.server });
       });
   };
 

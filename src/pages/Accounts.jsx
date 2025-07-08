@@ -15,8 +15,11 @@ import { useModal } from "../contexts/ModalContext";
 import axios from "../api/axios";
 import { KEYS } from "../constants/Keys";
 import Form from "../components/Form";
+import { useSelector } from "react-redux";
+import { PERMISSIONS } from "../constants/Permissions";
 
 const AccountManage = () => {
+  const permissions = useSelector((state) => state.auth.user?.permissions);
   const navigate = useNavigate();
   const tableRef = useRef();
   const { showAlert, showDialog } = useModal();
@@ -28,6 +31,7 @@ const AccountManage = () => {
     search();
   }, []);
 
+  // 검색
   const search = () => {
     axios.get(ROUTES.ACCOUNTS, { params: { keyword } }).then((res) => {
       const result = res.data.resultData.map((data) => {
@@ -42,10 +46,11 @@ const AccountManage = () => {
       }
       setData(result);
       tableRef.current?.clearSelection?.();
-      setselectRows([]); 
+      setselectRows([]);
     });
   };
 
+  // 사용자 수정
   const clickEdit = () => {
     if (selectRows.length === 0) {
       showAlert({
@@ -68,6 +73,7 @@ const AccountManage = () => {
     });
   };
 
+  // 사용자 삭제
   const clickDelete = () => {
     if (selectRows.length === 0) {
       showAlert({
@@ -94,11 +100,12 @@ const AccountManage = () => {
       });
   };
 
+  // 사용자 정보 수정 / 삭제 버튼
   const topBtns = () => {
     return (
       <>
         <Button label={LABELS.USER_EDIT} onClick={clickEdit} />
-        <Button type={BUTTON_DELETE} onClick={clickDelete} />
+        {permissions.includes(PERMISSIONS.ACCNT_D) && <Button type={BUTTON_DELETE} onClick={clickDelete} />}
       </>
     );
   };
@@ -118,10 +125,10 @@ const AccountManage = () => {
                     size={INPUT_SIZE_LG}
                   />
                   <Button type={BUTTON_SEARCH} onClick={search} />
-                  <Button
+                  {permissions.includes(PERMISSIONS.ACCNT_C) && <Button
                     label={LABELS.USER_REGISTER}
                     onClick={() => navigate(ROUTES.ACCOUNT_REGISTER)}
-                  />
+                  />}
                 </div>
               </td>
             </tr>
