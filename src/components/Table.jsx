@@ -147,41 +147,41 @@ const Table = forwardRef(
       columns: [
         ...(rowSelectionEnabled
           ? [
-              {
-                id: "select",
-                header: () => <></>,
-                cell: ({ row }) => (
-                  <input
-                    type="checkbox"
-                    checked={checkboxSelection[row.id] || false}
-                    onChange={() => handleCheckBox(row)}
-                    onClick={(e) => e.stopPropagation()}
-                  />
-                ),
-              },
-            ]
+            {
+              id: "select",
+              header: () => <></>,
+              cell: ({ row }) => (
+                <input
+                  type="checkbox"
+                  checked={checkboxSelection[row.id] || false}
+                  onChange={() => handleCheckBox(row)}
+                  onClick={(e) => e.stopPropagation()}
+                />
+              ),
+            },
+          ]
           : []),
         ...(showIndex
           ? [
-              {
-                accessorKey: "rowIndex",
-                header: LABELS.INDEX,
-                cell: ({ row }) => row.index + 1,
-              },
-            ]
+            {
+              accessorKey: "rowIndex",
+              header: LABELS.INDEX,
+              cell: ({ row }) => row.index + 1,
+            },
+          ]
           : []),
         ...processedColumns,
       ],
       state: isSplit ? { rowSelection: clickSelection } : {},
       onRowSelectionChange: isSplit
         ? (updater) => {
-            const next =
-              typeof updater === "function" ? updater(clickSelection) : updater;
-            const single = Object.keys(next).length
-              ? { [Object.keys(next)[0]]: true }
-              : {};
-            setClickSelection(single);
-          }
+          const next =
+            typeof updater === "function" ? updater(clickSelection) : updater;
+          const single = Object.keys(next).length
+            ? { [Object.keys(next)[0]]: true }
+            : {};
+          setClickSelection(single);
+        }
         : undefined,
       getCoreRowModel: getCoreRowModel(),
       ...(paginationEnabled
@@ -374,8 +374,8 @@ const Table = forwardRef(
                 {columns.flatMap((col, idx) =>
                   col.columns
                     ? col.columns.map((sub, j) => (
-                        <th key={`sub-${idx}-${j}`}>{sub.header}</th>
-                      ))
+                      <th key={`sub-${idx}-${j}`}>{sub.header}</th>
+                    ))
                     : []
                 )}
               </tr>
@@ -394,8 +394,8 @@ const Table = forwardRef(
                         ? "selected"
                         : ""
                       : checkboxSelection[row.id]
-                      ? "selected"
-                      : ""
+                        ? "selected"
+                        : ""
                   }
                   onClick={(e) => {
                     if (row.original._isNew) return;

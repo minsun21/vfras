@@ -34,7 +34,7 @@ const AccountEdit = () => {
 
   const handleSave = () => {
     showDialog({
-      message: InfoMessages.confirmRegister,
+      message: InfoMessages.confirmSave,
       onConfirm: () => {
         closeModal();
         setTimeout(() => {
@@ -53,7 +53,6 @@ const AccountEdit = () => {
   };
 
   const save = () => {
-    console.log("save formdata", formData);
     axios.put(ROUTES.ACCOUNTS_MANAGE(selectedId), formData).then((res) => {
       showAlert({
         message: InfoMessages.successEdit,
@@ -119,9 +118,23 @@ const AccountEdit = () => {
                         <span className="comment">{comment}</span>
                       </div>
                     ) : // ) : key === KEYS.MOBILE ? (
-                    //   <PhoneNumberInput value={value} onChange={handleChange} />
-                    key === KEYS.PASSWORD2 ? (
-                      <div className="rowBox">
+                      //   <PhoneNumberInput value={value} onChange={handleChange} />
+                      key === KEYS.PASSWORD2 ? (
+                        <div className="rowBox">
+                          <Input
+                            value={value}
+                            type={type}
+                            placeholder={formData[key]}
+                            onChange={handleChange}
+                            disabled={disabled}
+                          />
+                          <span className="password-confirm">
+                            {formData[KEYS.PASSWORD1] !==
+                              formData[KEYS.PASSWORD2] &&
+                              ErrorMessages.correctPassword}
+                          </span>
+                        </div>
+                      ) : (
                         <Input
                           value={value}
                           type={type}
@@ -129,21 +142,7 @@ const AccountEdit = () => {
                           onChange={handleChange}
                           disabled={disabled}
                         />
-                        <span className="password-confirm">
-                          {formData[KEYS.PASSWORD1] !==
-                            formData[KEYS.PASSWORD2] &&
-                            ErrorMessages.correctPassword}
-                        </span>
-                      </div>
-                    ) : (
-                      <Input
-                        value={value}
-                        type={type}
-                        placeholder={formData[key]}
-                        onChange={handleChange}
-                        disabled={disabled}
-                      />
-                    )}
+                      )}
                   </td>
                 </tr>
               );
