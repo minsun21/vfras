@@ -31,8 +31,7 @@ const SideBar = () => {
                       <i className={group.icon}></i>
                       <span>{group.title}</span>
                     </Link>
-                    {group.items.map((item) => {
-                      
+                    {visibleItems.map((item) => {
                       const activeKey = group.items
                         .filter(
                           (item) =>
