@@ -12,7 +12,6 @@ const Input = ({
   placeholder = "",
   size = "nm",
   name,
-  onKeyDown
 }) => {
 
   const blockNegative = (e) => {

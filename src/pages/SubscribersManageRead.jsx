@@ -26,7 +26,7 @@ import { SERVICE_TYPES, SUBSRIBERS_TYPES } from "../config/Options";
 import { findMappedValue } from "../utils/Util";
 import { fieldsValidate } from "../utils/FormValidation";
 
-const SubscriberManageEdit = () => {
+const SubscribersManageRead = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
 
@@ -74,48 +74,6 @@ const SubscriberManageEdit = () => {
       });
   };
 
-  const search = () => {
-    if (!searchSubNo) {
-      showAlert({
-        message: SubsriberMessages.searchPlaceHolder2,
-      });
-      return;
-    }
-    getData(searchSubNo);
-  };
-
-  // 가입자 - 수정
-  const handleSave = () => {
-    showDialog({
-      message: InfoMessages.confirmSave,
-      onConfirm: () => {
-        closeModal();
-
-        setTimeout(() => {
-          const errValidate = fieldsValidate(SUBSRIBERS_EDIT_FIELDS, formData);
-          if (errValidate) {
-            showAlert({
-              message: errValidate,
-            });
-            return;
-          }
-
-          subsriberSave();
-        }, 50);
-      },
-    });
-  };
-
-  // 가입자 - 수정
-  const subsriberSave = () => {
-    axios
-      .put(ROUTES.SUBSCRIBERS_DETAIL(formData[KEYS.SUB_NO]), formData)
-      .then((res) => {
-        showAlert({
-          message: InfoMessages.successEdit,
-        });
-      });
-  };
 
   const cancelEdit = () => {
     showDialog({
@@ -188,32 +146,6 @@ const SubscriberManageEdit = () => {
 
   return (
     <>
-      <Form className="search-box">
-        <table className="tbl-input">
-          <colgroup></colgroup>
-          <thead>
-            <tr>
-              <th>
-                <label className="schTxtL1">{LABELS.MAIN_NUMBER}</label>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div className="dflex gap10">
-                  <Input
-                    value={searchSubNo}
-                    type="number"
-                    onChange={(e) => setSearchSubNo(e.target.value)}
-                  />
-                  <Button type={BUTTON_SEARCH} onClick={search} />
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </Form>
       {formData && (
         <Form className="tbl-view">
           <table>
@@ -266,7 +198,7 @@ const SubscriberManageEdit = () => {
                             value={formData[key] || ""}
                             type={field.type}
                             onChange={handleChange}
-                            disabled={disabled}
+                            disabled
                           />
                           <span>{LABELS.LV_NUMBER}</span>
                         </div>
@@ -276,13 +208,8 @@ const SubscriberManageEdit = () => {
                             value={formData[key] || ""}
                             type={field.type}
                             onChange={handleChange}
-                            disabled={disabled}
+                            disabled
                             size="nm"
-                          />
-                          <Button
-                            type={BUTTON_CANCEL}
-                            label={LABELS.PASSWORD_RESET}
-                            onClick={clickResetPassword}
                           />
                         </div>
                       ) : type === "radio" ? (
@@ -326,7 +253,7 @@ const SubscriberManageEdit = () => {
                                     [subField.key]: e.target.value,
                                   }))
                                 }
-                                disabled={disabled}
+                                disabled
                                 size={subField.size}
                               />
                               {idx === 0 && (
@@ -340,7 +267,7 @@ const SubscriberManageEdit = () => {
                           size={size}
                           value={value}
                           type={type}
-                          disabled={disabled}
+                          disabled
                           onChange={handleChange}
                         />
                       )}
@@ -352,18 +279,13 @@ const SubscriberManageEdit = () => {
           </table>
         </Form>
       )}
-      {formData && (
-        <div className="btn-wrap">
-          <div>
-            <Button type={BUTTON_CANCEL} onClick={cancelEdit} />
-          </div>
-          <div>
-            <Button type={BUTTON_SAVE} onClick={handleSave} />
-          </div>
+      <div className="btn-wrap">
+        <div>
+          <Button type={BUTTON_CANCEL} onClick={cancelEdit} />
         </div>
-      )}
+      </div>
     </>
   );
 };
 
-export default SubscriberManageEdit;
+export default SubscribersManageRead;

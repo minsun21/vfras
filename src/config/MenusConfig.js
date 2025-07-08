@@ -1,7 +1,7 @@
 import { lazy } from "react";
 import { ROUTES } from "../constants/routes";
 import { LABELS } from "../constants/Labels";
-import { ACCNT_R, PERMISSIONS } from "../constants/Permissions";
+import { PERMISSIONS } from "../constants/Permissions";
 
 export const MenusConfig = [
   {
@@ -17,7 +17,7 @@ export const MenusConfig = [
       {
         title: LABELS.SUBSCRIBER_MANAGE,
         path: ROUTES.SUBSCRIBERS_MANAGE,
-        component: lazy(() => import("../pages/SubscribersManageEdit")),
+        component: lazy(() => import("../pages/SubscribersManage")),
         permission: PERMISSIONS.SUBS_U,
       },
       {
@@ -36,7 +36,7 @@ export const MenusConfig = [
         title: LABELS.COUNTRY_NUMBER_MANAGE,
         path: ROUTES.LV,
         component: lazy(() => import("../pages/LvManage")),
-        permission: "LVNUM_R",
+        permission: PERMISSIONS.LVNUM_R,
       },
     ],
   },
@@ -48,7 +48,8 @@ export const MenusConfig = [
         title: LABELS.SOUNDS_VIEW,
         path: ROUTES.CONTENTS,
         component: lazy(() => import("../pages/SoundSource")),
-        permission: "CONTS_R",
+        permission: PERMISSIONS.CONTS_R,
+
       },
     ],
   },
@@ -84,20 +85,20 @@ export const NonMenuConfig = [
     path: ROUTES.ACCOUNT_REGISTER,
     parent: LABELS.ACCOUNT,
     component: lazy(() => import("../pages/AccountRegister")),
-    permission: "SUBS_C",
+    permission: PERMISSIONS.ACCNT_C,
   },
   {
     title: LABELS.USER_EDIT,
     path: ROUTES.ACCOUNT_EDIT,
     parent: LABELS.ACCOUNT,
     component: lazy(() => import("../pages/AccountEdit")),
-    permission: ["admin"],
+    permission: PERMISSIONS.ACCNT_U,
   },
   {
     title: LABELS.SUBSCRIBER_MANAGE,
     path: ROUTES.SUBSCRIBERS_MANAGE,
     parent: LABELS.SUBSCRIBER,
-    component: lazy(() => import("../pages/SubscribersManageEdit")),
-    permission: ["admin"],
+    component: lazy(() => import("../pages/SubscribersManage")),
+    permission: PERMISSIONS.SUBS_U,
   },
 ];

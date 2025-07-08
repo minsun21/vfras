@@ -7,7 +7,7 @@ import {
   EMPTY_DID_DATA,
 } from "../../config/DataConfig";
 import Button, { BUTTON_DELETE } from "../Button";
-import Input from "../Input";
+import Input, { INPUT_SIZE_SM } from "../Input";
 import { KEYS } from "../../constants/Keys";
 import Form from "../Form";
 import AddDidModal from "./AddDidModal";
@@ -19,7 +19,7 @@ import {
   SubsriberMessages,
 } from "../../constants/Message";
 import { MODAL_MD } from "./ModalRenderer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { resetFormData } from "../../features/didAddSlice";
 import DidConfig from "./DidConfig";
 import axios from "../../api/axios";
@@ -41,8 +41,11 @@ import {
   validateDidBeforeDelete,
 } from "../../service/didService";
 import { formatDateWithDash, removeDashFromDate } from "../../utils/Util";
+import { PERMISSIONS } from "../../constants/Permissions";
 
 const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
+  const permissions = useSelector((state) => state.auth.user?.permissions);
+
   const dispatch = useDispatch();
   const tableRef = useRef();
   const { showModal, showAlert, showDialog, closeModal } = useModal();
@@ -161,7 +164,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
           setTimeout(() => {
             showAlert({ message: InfoMessages.successAdd });
             return;
-          }, 50);
+          }, 10);
         }).catch(err => {
           let message = err.response.data.resultData;
           rbtError(message)
@@ -202,7 +205,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
             setTimeout(() => {
               showAlert({ message: InfoMessages.successDelete });
               return;
-            }, 50);
+            }, 10);
           },
         });
       },
@@ -349,6 +352,8 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
     });
   }
 
+  console.log(selectDid)
+
   return (
     <div>
       <div className="didLayout">
@@ -362,19 +367,21 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
               value={userInfo[KEYS.SUB_NO]}
               disabled
             />
-            <div className="mlAuto">
-              <Button
-                label={LABELS.ADD_ITEM}
-                className="sbtn black"
-                onClick={addDidRow}
-              />
-            </div>
+            {permissions.includes(PERMISSIONS.SUBS_U) &&
+              <div className="mlAuto">
+                <Button
+                  label={LABELS.ADD_ITEM}
+                  className="sbtn black"
+                  onClick={addDidRow}
+                />
+              </div>}
           </Form>
           <Form className="form">
             <div className="tbl-list-top mt20">
               <div className="top-button">
                 <span>
-                  <Button type={BUTTON_DELETE} onClick={deleteDidRows} />
+                  {permissions.includes(PERMISSIONS.SUBS_U) &&
+                    <Button type={BUTTON_DELETE} onClick={deleteDidRows} />}
                 </span>
               </div>
             </div>
@@ -411,7 +418,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
             />
           </Form>
           {/* 시작, 일시정지 */}
-          {selectDid && (
+          {selectDid ? permissions.includes(PERMISSIONS.SUBS_U) ? (
             <div className="didStopBox">
               <div className="radio-box">
                 <div style={{ display: 'flex' }}>
@@ -475,7 +482,24 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
                 onClick={saveInterrupt}
               />
             </div>
-          )}
+          ) : <div className="didStopBox">
+            <div className="radio-box">
+              <div style={{ display: 'flex' }}>
+                <Input
+                  value={
+                    selectDid[KEYS.IS_INTERRUPT] === 0
+                      ? LABELS.START
+                      : (() => {
+                        const from = selectDid[KEYS.INTERRUPT_RESERVATION_FROM];
+                        const to = selectDid[KEYS.INTERRUPT_RESERVATION_TO];
+                        return `${LABELS.INTERRUPT} > ${from ? `${from}~` : ""}${to || ""}`;
+                      })()
+                  }
+                  disabled
+                />
+              </div>
+            </div>
+          </div> : null}
           <div className="configBox">
             {selectRows.length === 0 ? (
               <div className="configAlertTxt">

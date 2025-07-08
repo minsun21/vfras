@@ -6,7 +6,9 @@ import Select from "../Select";
 import Table from "../Table";
 import { ErrorMessages, InfoMessages } from "../../constants/Message";
 import { useModal } from "../../contexts/ModalContext";
-import { deepEqual, isObjectInList } from "../../utils/Util";
+import { isObjectInList } from "../../utils/Util";
+import { PERMISSIONS } from "../../constants/Permissions";
+import { useSelector } from "react-redux";
 
 const DidConfig = ({
   config,
@@ -17,6 +19,8 @@ const DidConfig = ({
   bulkDelete,
   saveDidSub
 }) => {
+  const permissions = useSelector((state) => state.auth.user?.permissions);
+
   const { showAlert, showDialog } = useModal();
   const tableRef = useRef();
   const parentRef = useRef();
@@ -280,31 +284,34 @@ const DidConfig = ({
         </div>
 
         {/* 버튼 영역 */}
-        <div className="svcBoxC">
-          <Button
-            type={BUTTON_CANCEL}
-            label={LABELS.ADD}
-            onClick={addDidConfigAction}
-          />
-          <Button type={BUTTON_DELETE} onClick={deleteAction} />
-          <Button
-            type={BUTTON_CANCEL}
-            label={LABELS.ALL_DELETE}
-            onClick={allDeleteAction}
-          />
-          <div className="svcBoxCTxt"> <Button type={BUTTON_DELETE} label={LABELS.SAVE} onClick={saveDid} /></div>
-          <div className="svcBoxCTxt">{LABELS.MAIN_NUMBER}</div>
-          <Button
-            type={BUTTON_DELETE}
-            onClick={bulkAddAction}
-            label={LABELS.BULK_APPLY}
-          />
-          <Button
-            type={BUTTON_CANCEL}
-            label={LABELS.BULK_DELETE}
-            onClick={bulkDeleteAction}
-          />
-        </div>
+        {permissions.includes(PERMISSIONS.ACCNT_U) ?
+          <div className="svcBoxC">
+            <Button
+              type={BUTTON_CANCEL}
+              label={LABELS.ADD}
+              onClick={addDidConfigAction}
+            />
+            <Button type={BUTTON_DELETE} onClick={deleteAction} />
+            <Button
+              type={BUTTON_CANCEL}
+              label={LABELS.ALL_DELETE}
+              onClick={allDeleteAction}
+            />
+            <div className="svcBoxCTxt"> <Button type={BUTTON_DELETE} label={LABELS.SAVE} onClick={saveDid} /></div>
+            <div className="svcBoxCTxt">{LABELS.MAIN_NUMBER}</div>
+            <Button
+              type={BUTTON_DELETE}
+              onClick={bulkAddAction}
+              label={LABELS.BULK_APPLY}
+            />
+            <Button
+              type={BUTTON_CANCEL}
+              label={LABELS.BULK_DELETE}
+              onClick={bulkDeleteAction}
+            />
+          </div>
+          : <div className="svcBoxC" />}
+
         {/* 테이블 영역 */}
         <div className="svcBoxR">
           {config.columns && (
