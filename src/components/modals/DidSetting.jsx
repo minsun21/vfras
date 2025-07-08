@@ -6,7 +6,7 @@ import {
   DID_SETTING_COLUMNS,
   EMPTY_DID_DATA,
 } from "../../config/DataConfig";
-import Button, { BUTTON_CANCEL, BUTTON_DELETE } from "../Button";
+import Button, { BUTTON_DELETE } from "../Button";
 import Input from "../Input";
 import { KEYS } from "../../constants/Keys";
 import Form from "../Form";
@@ -24,19 +24,15 @@ import { resetFormData } from "../../features/didAddSlice";
 import DidConfig from "./DidConfig";
 import axios from "../../api/axios";
 import {
-  removeBulkItem,
-  removeSubItemFromList,
   resetDidConfig,
   setDidList,
 } from "../../features/didConfigSlice";
 import { ROUTES } from "../../constants/routes";
-import { getDidKey } from "../../utils/Util";
 import {
   addDidSubItem,
   bulkAddItem,
   bulkRemoveItem,
   deleteDidItems,
-  duplicateBeforeAdd,
   getAddItem,
   getDidDeleteResult,
   postDidRow,
@@ -44,6 +40,7 @@ import {
   validateDidBeforeAdd,
   validateDidBeforeDelete,
 } from "../../service/didService";
+import { formatDateWithDash, removeDashFromDate } from "../../utils/Util";
 
 const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
   const dispatch = useDispatch();
@@ -55,7 +52,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
   const [selectDid, setSelectDid] = useState({}); // 선택한 회선의 부가서비스 정보
   const [checkboxSelected, setCheckboxSelected] = useState([]); // 체크박스 선택
 
-  const [selectStop, setSelectStop] = useState(selectDid?.[KEYS.IS_INTERRUPT] || 0);
+  const [selectStop, setSelectStop] = useState(0);
   const [stopDate, setStopDate] = useState({})
 
   useEffect(() => {
@@ -108,6 +105,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
       .then((res) => {
         const resultData = res.data.resultData;
         setSelectDid({ ...selectRow, ...resultData });
+        initStopData(resultData);
       })
       .catch((err) => {
         // 아직 부가서비스 없는 회선인 경우
@@ -118,7 +116,24 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
           };
           setSelectDid(newRow);
         }
+        initStopData();
       });
+  }
+
+  // 일시정지 초기화
+  const initStopData = (resultData) => {
+    if (!resultData) {
+      setSelectStop(0);
+      setStopDate({});
+      return;
+    }
+    let flag = resultData[KEYS.IS_INTERRUPT];
+    let startDate = resultData[KEYS.INTERRUPT_RESERVATION_FROM];
+    setSelectStop(startDate && flag === 1 ? 2 : flag);// 일시정지 초기화
+    setStopDate({
+      [KEYS.INTERRUPT_RESERVATION_FROM]: formatDateWithDash(resultData[KEYS.INTERRUPT_RESERVATION_FROM]),
+      [KEYS.INTERRUPT_RESERVATION_TO]: formatDateWithDash(resultData[KEYS.INTERRUPT_RESERVATION_TO])
+    })
   }
 
   // did 회선 추가
@@ -205,6 +220,25 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
     });
   };
 
+  // 부가서비스 삭제
+  const deleteDidConfig = (config, deleteList, isAllDelete) => {
+    const { dataKey } = config;
+
+    // 삭제 후 남길 데이터 계산
+    const filteredList = isAllDelete
+      ? []
+      : selectDid[dataKey].filter((item) => !deleteList.includes(item));
+
+    // 업데이트될 selectDid 객체
+    const updatedSelectDid = {
+      ...selectDid,
+      [dataKey]: filteredList,
+    };
+
+    // 상태 반영
+    setSelectDid(updatedSelectDid);
+  };
+
   // 부가서비스 최종 저장
   const saveDidSub = (config) => {
     const dataKey = config.dataKey;
@@ -259,33 +293,6 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
     })
   };
 
-  // 부가서비스 삭제
-  const deleteDidConfig = (config, deleteList, isAllDelete) => {
-    const { key, dataKey } = config;
-    const selectedKey = getDidKey(selectDid);
-
-    // 삭제 후 남길 데이터 계산
-    const filteredList = isAllDelete
-      ? []
-      : selectDid[dataKey].filter((item) => !deleteList.includes(item));
-
-    // 업데이트될 selectDid 객체
-    const updatedSelectDid = {
-      ...selectDid,
-      [key]: !isAllDelete && filteredList.length > 0,
-      [dataKey]: filteredList,
-    };
-
-    // 상태 반영
-    setSelectDid(updatedSelectDid);
-    setTableData((prev) =>
-      prev.map((row) =>
-        getDidKey(row) === selectedKey
-          ? { ...row, [key]: updatedSelectDid[key] }
-          : row
-      )
-    );
-  };
 
   // 일시 정지
   const handleOptionChange = (e) => {
@@ -326,8 +333,9 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
     }
 
     let inputs = {
-      ...stopDate,
-      [KEYS.IS_INTERRUPT]: selectStop
+      [KEYS.INTERRUPT_RESERVATION_FROM]: removeDashFromDate(stopDate[KEYS.INTERRUPT_RESERVATION_FROM]),
+      [KEYS.INTERRUPT_RESERVATION_TO]: removeDashFromDate(stopDate[KEYS.INTERRUPT_RESERVATION_TO]),
+      [KEYS.IS_INTERRUPT]: selectStop === 2 ? 1 : selectStop
     }
     stopRbt(
       inputs,

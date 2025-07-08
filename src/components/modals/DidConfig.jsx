@@ -6,6 +6,7 @@ import Select from "../Select";
 import Table from "../Table";
 import { ErrorMessages, InfoMessages } from "../../constants/Message";
 import { useModal } from "../../contexts/ModalContext";
+import { deepEqual, isObjectInList } from "../../utils/Util";
 
 const DidConfig = ({
   config,
@@ -143,7 +144,13 @@ const DidConfig = ({
     });
 
     if (isEmpty) {
-      showAlert({ message: "모든 항목을 입력해주세요." });
+      showAlert({ message: ErrorMessages.allInsert });
+      return;
+    }
+
+    // 중복 검사
+    if (isObjectInList(inputs, currentList)) {
+      showAlert({ message: ErrorMessages.duplicateSave });
       return;
     }
 

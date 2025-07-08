@@ -9,8 +9,7 @@ export const findMappedKey = (mapList, value) => {
 };
 
 export const getDidKey = (item) =>
-  `${item[KEYS.SUB_NO]}_${item[KEYS.FROM_NO]}_${item[KEYS.TO_NO]}_${
-    item[KEYS.TEL_FROM_NO]
+  `${item[KEYS.SUB_NO]}_${item[KEYS.FROM_NO]}_${item[KEYS.TO_NO]}_${item[KEYS.TEL_FROM_NO]
   }_${item[KEYS.TEL_TO_NO]}}`;
 
 export const deepEqual = (a, b) => {
@@ -35,4 +34,23 @@ export const deepEqual = (a, b) => {
   }
 
   return true;
+};
+
+export const isObjectInList = (target, list) => {
+  return list.some(item =>
+    Object.keys(target).length === Object.keys(item).length &&
+    Object.keys(target).every(key => target[key] === item[key])
+  );
+};
+
+// "20250701" → "2025-07-01"
+export const formatDateWithDash = (dateStr) => {
+  if (!/^\d{8}$/.test(dateStr)) return dateStr; // 8자리 숫자 아니면 그대로 반환
+  return `${dateStr.slice(0, 4)}-${dateStr.slice(4, 6)}-${dateStr.slice(6, 8)}`;
+};
+
+// "2025-07-01" → "20250701"
+export const removeDashFromDate = (dateStr) => {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
+  return dateStr.replace(/-/g, "");
 };

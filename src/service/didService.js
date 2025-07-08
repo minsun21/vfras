@@ -3,7 +3,7 @@ import { ROUTES } from "../constants/routes";
 import { KEYS } from "../constants/Keys";
 import { fieldsValidate } from "../utils/FormValidation";
 import { DID_ADD_FIELDS } from "../config/FieldsConfig";
-import { deepEqual, getDidKey } from "../utils/Util";
+import { deepEqual, getDidKey, removeDashFromDate } from "../utils/Util";
 import { ErrorMessages } from "../constants/Message";
 import { store } from "../store";
 import { LABELS } from "../constants/Labels";
@@ -125,8 +125,8 @@ export const getAddItem = (dataKey, item, selectDid) => {
     case KEYS.DURAS_DATA_KEY:
       return {
         ...item,
-        [KEYS.S_DATE]: item[KEYS.S_DATE].replaceAll("-", ""),
-        [KEYS.E_DATE]: item[KEYS.E_DATE].replaceAll("-", ""),
+        [KEYS.S_DATE]: removeDashFromDate(item[KEYS.S_DATE]),
+        [KEYS.E_DATE]: removeDashFromDate(item[KEYS.E_DATE]),
       };
     case KEYS.GROUPS_DATA_KEY:
       return {
@@ -216,8 +216,8 @@ export const getAddBulkItem = (dataKey, inputs, selectDid) => {
     case KEYS.DURAS_DATA_KEY:
       return {
         ...inputs,
-        [KEYS.S_DATE]: inputs[KEYS.S_DATE].replaceAll("-", ""),
-        [KEYS.E_DATE]: inputs[KEYS.E_DATE].replaceAll("-", ""),
+        [KEYS.S_DATE]: removeDashFromDate(inputs[KEYS.S_DATE]),
+        [KEYS.E_DATE]: removeDashFromDate(inputs[KEYS.E_DATE]),
       };
     case KEYS.GROUPS_DATA_KEY:
       return {
