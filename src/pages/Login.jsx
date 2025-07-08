@@ -39,6 +39,8 @@ const Login = () => {
   const from = location.state?.from?.pathname || ROUTES.SUBSCRIBERS;
 
   const handleLogin = () => {
+    deleteCookie();
+
     if (!formData[KEYS.ADMIN_ID]) {
       showAlert({ message: LoginMessages.errorId });
       return;
@@ -78,7 +80,6 @@ const Login = () => {
         navigate(from, { replace: true });
       })
       .catch((err) => {
-        console.log(err.response)
         if (err.response.data.result === 401) {
           showAlert({ message: err.response.data.resultData });
         }

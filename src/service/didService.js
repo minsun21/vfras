@@ -1,4 +1,4 @@
-import axios from "../api/axios";
+import axios, { AXIOS_NO_GLOBAL_ERROR, suppressGlobal } from "../api/axios";
 import { ROUTES } from "../constants/routes";
 import { KEYS } from "../constants/Keys";
 import { fieldsValidate } from "../utils/FormValidation";
@@ -37,13 +37,7 @@ export const validateDidBeforeAdd = ({ tableData }) => {
 export const postDidRow = async (userInfo) => {
   const didFormData = store.getState().didAdd;
 
-  await axios.post(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO]), didFormData);
-
-  // 서버에서 rbt_id를 그대로 쓰되, def_rbt_type에 복사해줘야 하는 로직
-  return {
-    ...didFormData,
-    [KEYS.DEF_RBT_TYPE]: didFormData[KEYS.RBT_ID],
-  };
+  return axios.post(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO]), didFormData, AXIOS_NO_GLOBAL_ERROR);
 };
 
 /**
@@ -180,9 +174,8 @@ const isKeyDuplicateInArray = (targetObj, arr, key) => {
  */
 export const addDidSubItem = async ({ dataKey, selectDid }) => {
   const uri = getAddUri(dataKey, selectDid);
-  console.log('selectDid[dataKey]', selectDid[dataKey])
 
-  await axios.post(uri, selectDid[dataKey]);
+  await axios.post(uri, selectDid[dataKey], AXIOS_NO_GLOBAL_ERROR);
 };
 
 /**

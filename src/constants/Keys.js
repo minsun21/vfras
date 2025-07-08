@@ -73,7 +73,7 @@ export const KEYS = {
   END_TIME: "endTime",
   ORGN: "areaCode",
   GROUPS: "groups",
-  CALLING_NUMBER: "callingNUmber",
+  CALLING_NUMBER: "cidGroups",
   GROUP_ID: "groupId",
   DESCRIPT: "descript",
   DID_CONFIG: "didConfig",

@@ -71,7 +71,7 @@ const AppRouter = () => {
           }
         />
         <Route path={ROUTES.UNAUTHORIZED} element={<Unauthorized />} />
-        <Route path={ROUTES.ALL} element={<NotFound />} />
+        <Route path={ROUTES.ALL} element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

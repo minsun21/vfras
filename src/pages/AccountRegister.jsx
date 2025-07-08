@@ -124,8 +124,8 @@ const AccountRegister = () => {
                         />
                         <span className="comment">{comment}</span>
                       </div>
-                    // ) : key === KEYS.MOBILE ? (
-                    //   <PhoneNumberInput value={value} onChange={handleChange} />
+                      // ) : key === KEYS.MOBILE ? (
+                      //   <PhoneNumberInput value={value} onChange={handleChange} />
                     ) : key === KEYS.PASSWORD2 ? (
                       <div>
                         <Input

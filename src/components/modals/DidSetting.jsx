@@ -13,6 +13,7 @@ import Form from "../Form";
 import AddDidModal from "./AddDidModal";
 import { useModal } from "../../contexts/ModalContext";
 import {
+  ErrorKey,
   ErrorMessages,
   InfoMessages,
   SubsriberMessages,
@@ -53,6 +54,9 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
   const [selectRows, setSelectRows] = useState([]); // 선택 회선
   const [selectDid, setSelectDid] = useState({}); // 선택한 회선의 부가서비스 정보
   const [checkboxSelected, setCheckboxSelected] = useState([]); // 체크박스 선택
+
+  const [selectStop, setSelectStop] = useState(selectDid?.[KEYS.IS_INTERRUPT] || 0);
+  const [stopDate, setStopDate] = useState({})
 
   useEffect(() => {
     return () => {
@@ -127,23 +131,26 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
       header: LABELS.ADD_ITEM,
       content: <AddDidModal />,
       size: MODAL_MD,
-      onConfirm: async () => {
+      onConfirm: () => {
         const errorMsg = validateDidBeforeAdd({ tableData });
         if (errorMsg) {
           showAlert({ message: errorMsg });
           return;
         }
 
-        const newRow = await postDidRow(userInfo);
-        setTableData((prev) => [...prev, newRow]);
-
-        dispatch(resetFormData());
-        plusRbtCount();
-        closeModal();
-        setTimeout(() => {
-          showAlert({ message: InfoMessages.successAdd });
-          return;
-        }, 50);
+        postDidRow(userInfo).then(res => {
+          initRbtData();
+          dispatch(resetFormData());
+          plusRbtCount();
+          closeModal();
+          setTimeout(() => {
+            showAlert({ message: InfoMessages.successAdd });
+            return;
+          }, 50);
+        }).catch(err => {
+          let message = err.response.data.resultData;
+          rbtError(message)
+        });
       },
       onClose: () => {
         dispatch(resetFormData());
@@ -205,9 +212,26 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
       dataKey,
       selectDid,
     }).then(() => {
+      showAlert({
+        message: InfoMessages.successEdit
+      })
       initRbtData();
       initRbtSubs(selectDid);
+    }).catch(err => {
+      let message = err.response.data.resultData;
+      rbtError(message);
     });
+  }
+
+  const rbtError = (message) => {
+    if (message.includes(ErrorKey.notFindRbtInfo)) {
+      showAlert({
+        message: message.replace(ErrorKey.notFindRbtInfo, ErrorMessages.notFindRbt)
+      })
+      return;
+    }
+    showAlert({ message: ErrorMessages.server });
+
   }
 
   // 부가서비스 일괄 저장
@@ -264,9 +288,6 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
   };
 
   // 일시 정지
-  const [selectStop, setSelectStop] = useState(selectDid?.[KEYS.IS_INTERRUPT] || 0);
-  const [stopDate, setStopDate] = useState({})
-
   const handleOptionChange = (e) => {
     const value = Number(e.target.value);
     setSelectStop(value);
