@@ -27,8 +27,11 @@ import {
   validateSubscribersBeforeApprove,
   validateSubscribersBeforeDelete,
 } from "../service/subsriberService";
+import { useSelector } from "react-redux";
+import { PERMISSIONS } from "../constants/Permissions";
 
 const Subscriber = () => {
+  const permissions = useSelector((state) => state.auth.user?.permissions);
   const tableRef = useRef();
   const navigate = useNavigate();
   const { showAlert, showDialog } = useModal();
@@ -117,8 +120,8 @@ const Subscriber = () => {
   const topBtns = () => {
     return (
       <>
-        <Button label={LABELS.APPROVE} onClick={approvedSub} />
-        <Button type={BUTTON_DELETE} onClick={clickDelete} />
+        {permissions.includes(PERMISSIONS.SUBS_U) && <Button label={LABELS.APPROVE} onClick={approvedSub} />}
+        {permissions.includes(PERMISSIONS.SUBS_D) && <Button type={BUTTON_DELETE} onClick={clickDelete} />}
       </>
     );
   };

@@ -76,8 +76,8 @@ export const NonMenuConfig = [
   {
     title: LABELS.MY_INFO,
     path: ROUTES.PROFILE,
-    component: lazy(() => import("../pages/ProfileEdit")),
-    permission: "MY_R",
+    component: lazy(() => import("../pages/Profile")),
+    permission: PERMISSIONS.MY_R,
   },
   {
     title: LABELS.USER_REGISTER,
