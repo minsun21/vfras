@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Button, { BUTTON_CANCEL } from "../components/Button";
 import { LABELS } from "../constants/Labels";
-import { LvMessages } from "../constants/Message";
+import { ErrorMessages, LvMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 import { ROUTES } from "../constants/routes";
 import axios from "../api/axios";
+import { PERMISSIONS } from "../constants/Permissions";
+import { useSelector } from "react-redux";
 
 const LvManage = () => {
+  const permissions = useSelector((state) => state.auth.user?.permissions);
   const { showDialog, showAlert } = useModal();
   const [changeValue, setChangeValue] = useState("");
   const [currentValue, setCurrentValue] = useState("");
@@ -44,6 +47,10 @@ const LvManage = () => {
   };
 
   const validation = () => {
+    if (!changeValue) {
+      return;
+    }
+
     const lines = changeValue
       .split("\n")
       .map((line) => line.replace(/[^0-9]/g, "").trim())
@@ -99,13 +106,13 @@ const LvManage = () => {
               {LABELS.COUNT_RESULT(changeLineCount)}
             </span>
           </div>
-          <Button
-            type={BUTTON_CANCEL}
-            label={LABELS.ALL_CHANGE}
-            onClick={clickAllChange}
-          />
+          {permissions.includes(PERMISSIONS.LVNUM_U) &&
+            <Button
+              type={BUTTON_CANCEL}
+              label={LABELS.ALL_CHANGE} // 전체 변경
+              onClick={clickAllChange}
+            />}
         </div>
-
         <textarea
           value={changeValue}
           onChange={handleChange}
@@ -123,7 +130,6 @@ const LvManage = () => {
               {LABELS.COUNT_RESULT(currentLineCount)}
             </span>
           </div>
-          {/* <Button type={BUTTON_CANCEL} label={LABELS.VIEW} /> */}
         </div>
         <textarea
           value={currentValue}

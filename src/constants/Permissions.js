@@ -7,6 +7,7 @@ export const PERMISSIONS = {
     SUBS_U: "SUBS_U",
     SUBS_C: "SUBS_C",
     SUBS_D: "SUBS_D",
+    LVNUM_U: "LVNUM_U"
 }
 
 
