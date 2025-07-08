@@ -15,7 +15,7 @@ const passwordSlice = createSlice({
       const { key, value } = action.payload;
       state[key] = value;
     },
-    resetPasswordFields: () => ({ ...initialState }),
+    resetPasswordFields: () => ({ initialState }),
   },
 });
 

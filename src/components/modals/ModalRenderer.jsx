@@ -124,7 +124,7 @@ const ModalRenderer = () => {
                           closeModal();
                         }}
                       />
-                      <Button onClick={() => props.onConfirm?.() || closeModal()} />
+                      <Button onClick={() => props.onConfirm?.()} />
                     </div>
                   ) : (
                     <div className="btn-wrap center">

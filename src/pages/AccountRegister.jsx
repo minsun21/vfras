@@ -58,16 +58,12 @@ const AccountRegister = () => {
         });
       })
       .catch((err) => {
-        let resultData = err.response.data.resultData;
-        if (err.response.data.result === 400 && resultData[0]) {
-          showAlert({ message: resultData[0].message });
+        const { response } = err;
+
+        if (response?.data?.result === 400 && response.data.resultData?.[0]?.message) {
+          showAlert({ message: response.data.resultData[0].message });
           return;
         }
-
-        // if (message.includes("Admin is Present")) {
-        //   showAlert({ message: AccountMessages.adminIdPresent });
-        //   return;
-        // }
 
         showAlert({ message: ErrorMessages.server });
       });

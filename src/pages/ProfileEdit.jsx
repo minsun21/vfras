@@ -126,7 +126,7 @@ const ProfileEdit = () => {
     }
 
     axios
-      .put(ROUTES.PASSWORD_CHANGE(adminId), formData)
+      .put(ROUTES.PASSWORD_CHANGE(adminId), passwordData)
       .then((res) => {
         showAlert({
           message: ProfileMessages.successPasswordChange,
@@ -138,10 +138,17 @@ const ProfileEdit = () => {
         });
       })
       .catch((err) => {
-        // const message = err.response.data.resultData;
-        // if(message==="rawPassword cannot be null"){
-        // }
-      });
+        const { response } = err;
+
+        if (response?.data?.result === 400 && response.data.resultData?.[0]?.message) {
+          showAlert({ message: response.data.resultData[0].message });
+          return;
+        }
+
+        showAlert({ message: ErrorMessages.server });
+      }).finally(() => {
+        dispatch(resetPasswordFields())
+      })
   };
 
   return (

@@ -15,7 +15,7 @@ import { MODAL_MD } from "../components/modals/ModalRenderer";
 
 const AccountLogs = () => {
   const tableRef = useRef();
-  const { showAlert, showModal } = useModal();
+  const { showAlert, showModal, closeModal } = useModal();
   const [keyword, setKeyword] = useState("");
   const [data, setData] = useState([]);
 
@@ -26,6 +26,7 @@ const AccountLogs = () => {
   const clickIdColumn = (row) => {
     showModal({
       header: `${row[KEYS.ADMIN_ID]} ${LABELS.ACCOUNT_DETAIL_LOGS}`,
+      onConfirm: () => closeModal(),
       content: <AccountDetailLog selectRow={row} />,
       size: MODAL_MD,
     });
