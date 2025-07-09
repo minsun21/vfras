@@ -10,6 +10,7 @@ import RadioGroup from "../components/RadioGroup";
 import { SUBSRIBERS_EDIT_FIELDS } from "../config/FieldsConfig";
 import { ROUTES } from "../constants/routes";
 import {
+  ErrorKey,
   ErrorMessages,
   InfoMessages,
   SubsriberMessages,
@@ -18,7 +19,7 @@ import { LABELS } from "../constants/Labels";
 import { useModal } from "../contexts/ModalContext";
 import DidSetting from "../components/modals/DidSetting";
 import { KEYS } from "../constants/Keys";
-import axios from "../api/axios";
+import axios, { AXIOS_NO_GLOBAL_ERROR } from "../api/axios";
 import Form from "../components/Form";
 import PasswordReset from "../components/modals/PasswordReset";
 import { MODAL_SM } from "../components/modals/ModalRenderer";
@@ -47,7 +48,7 @@ const SubscriberManageEdit = () => {
   // 가입자 정보 조회
   const getData = (subNo) => {
     axios
-      .get(ROUTES.SUBSCRIBERS_DETAIL(subNo))
+      .get(ROUTES.SUBSCRIBERS_DETAIL(subNo), AXIOS_NO_GLOBAL_ERROR)
       .then((res) => {
         const result = res.data.resultData;
         result[KEYS.PASSWORD] = "****";
@@ -62,14 +63,13 @@ const SubscriberManageEdit = () => {
         setFormData(result);
       })
       .catch((err) => {
-        if (err) {
-          let message = err.response.data.resultData;
-          if (message.includes("Subscriber No Not Found")) {
-            showAlert({ message: SubsriberMessages.noSearchSubsriber });
-            return;
-          } else {
-            showAlert({ message: ErrorMessages.server });
-          }
+        console.log('err.response.data', err.response.data)
+        let message = err.response.data.resultData.message;
+        if (message.includes(ErrorKey.notFindSubsriberNo)) {
+          showAlert({ message: SubsriberMessages.noSearchSubsriber });
+          return;
+        } else {
+          showAlert({ message: ErrorMessages.server });
         }
       });
   };

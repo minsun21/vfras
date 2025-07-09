@@ -7,13 +7,14 @@ import RadioGroup from "../components/RadioGroup";
 import Form from "../components/Form";
 import { ROUTES } from "../constants/routes";
 import {
+  ErrorKey,
   ErrorMessages,
   InfoMessages,
   SubsriberMessages,
 } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 import { fieldsValidate } from "../utils/FormValidation";
-import axios from "../api/axios";
+import axios, { AXIOS_NO_GLOBAL_ERROR } from "../api/axios";
 import { KEYS } from "../constants/Keys";
 import { SERVICE_TYPES } from "../config/Options";
 
@@ -65,7 +66,7 @@ const SubscriberRegister = () => {
     formData[KEYS.PASSWORD] = formData[KEYS.SUB_NO].slice(-4);
 
     axios
-      .post(ROUTES.SUBSCRIBERS, formData)
+      .post(ROUTES.SUBSCRIBERS, formData, AXIOS_NO_GLOBAL_ERROR)
       .then((res) => {
         showAlert({
           message: InfoMessages.successAccountSave,
@@ -73,9 +74,14 @@ const SubscriberRegister = () => {
         });
       })
       .catch((err) => {
-        let message = err.response.data.resultData;
-        if (message.includes("Subscriber is Present")) {
+        let message = err.response.data.resultData.message;
+        if (message.includes(ErrorKey.presentSubsriber)) {
           showAlert({ message: SubsriberMessages.subsriberPresent });
+        } else if (message.includes(ErrorKey.notFindRbtInfo)) {
+          showAlert({
+            message: message.replace(ErrorKey.notFindRbtInfo, ErrorMessages.notFindRbt)
+          })
+          return;
         } else {
           showAlert({ message: ErrorMessages.server });
         }
