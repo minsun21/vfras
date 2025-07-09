@@ -130,7 +130,7 @@ export const SUBSRIBERS_REGISTER_FIELDS = [
     label: LABELS.MAIN_NUMBER,
     type: "number",
     required: true,
-    length: 10,
+    // length: 10,
   },
   {
     key: KEYS.SUB_STATUS,
@@ -187,8 +187,14 @@ export const SUBSRIBERS_REGISTER_FIELDS = [
     label: LABELS.PBX_NUMBER_COL,
     required: true,
     fields: [
-      { key: KEYS.FROM_NO, type: "number", length: 11 },
-      { key: KEYS.TO_NO, type: "number", length: 11 },
+      {
+        key: KEYS.FROM_NO, type: "number"
+        // , length: 11 
+      },
+      {
+        key: KEYS.TO_NO, type: "number"
+        // , length: 11
+      },
     ],
   },
   {
@@ -196,16 +202,22 @@ export const SUBSRIBERS_REGISTER_FIELDS = [
     label: LABELS.USER_NUMBER,
     required: true,
     fields: [
-      { key: KEYS.TEL_FROM_NO, type: "number", length: 11 },
-      { key: KEYS.TEL_TO_NO, type: "number", length: 11 },
+      {
+        key: KEYS.TEL_FROM_NO, type: "number"
+        // , length: 11 
+      },
+      {
+        key: KEYS.TEL_TO_NO, type: "number"
+        // , length: 11 
+      },
     ],
   },
   {
-    key: KEYS.RBT_ID,
+    key: KEYS.DEF_RBT_TYPE,
     label: LABELS.DEFAULT_CALLRING,
     type: "number",
     required: true,
-    length: 7,
+    // length: 7,
   },
 ];
 

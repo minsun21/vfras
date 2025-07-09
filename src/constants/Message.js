@@ -100,5 +100,7 @@ export const LvMessages = {
 };
 
 export const ErrorKey = {
-  notFindRbtInfo: "Not Found IpRbtInfo"
+  notFindRbtInfo: "Not Found IpRbtInfo",
+  presentSubsriber: "Subscriber is Present",
+  notFindSubsriberNo: "Subscriber No Not Found"
 }

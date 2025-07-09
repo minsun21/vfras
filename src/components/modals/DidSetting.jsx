@@ -352,8 +352,6 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
     });
   }
 
-  console.log(selectDid)
-
   return (
     <div>
       <div className="didLayout">
