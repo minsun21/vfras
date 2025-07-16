@@ -3,6 +3,7 @@ import { store } from "../store";
 import { logout } from "../features/authSlice";
 import { ErrorMessages } from "../constants/Message";
 import { deleteCookie, getCookie, setCookie } from "../utils/cookies";
+import { useDispatch } from "react-redux";
 
 let alertHandler = null;
 let setLoading = null;
@@ -49,24 +50,26 @@ instance.interceptors.response.use(
     const message = error.response?.data?.resultData || ErrorMessages.server;
     const originalRequest = error.config;
 
+    if (status === 401) {
+      const errMsg = error.response?.data?.message;
+      if (errMsg === "Authentication is required.") {
+        alertHandler({ message: ErrorMessages.expired });
+        store.dispatch(logout());
+      } else {
+        alertHandler({ message });
+      }
+      return;
+    }
     // ✅ 공통 에러 처리 (suppress 옵션 없을 경우만)
     if (!originalRequest?.suppressGlobalError && alertHandler) {
-      switch (status) {
-        case 401:
-          alertHandler({ message: ErrorMessages.expired });
-          break;
-        case 403:
-          alertHandler({ message: ErrorMessages.noPermission });
-          break;
-        case 500:
-          alertHandler({ message }); // 500 포함한 공통 처리
-          break;
-        default:
-          alertHandler({ message }); // 기타 모든 에러
+      if (status === 403) {
+        alertHandler({ message: ErrorMessages.noPermission });
+      } else if (status === 500) {
+        alertHandler({ message });
+      } else {
+        alertHandler({ message });
       }
     }
-
-    return Promise.reject(error);
   }
 );
 

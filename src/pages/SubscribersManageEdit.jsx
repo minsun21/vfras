@@ -63,7 +63,6 @@ const SubscriberManageEdit = () => {
         setFormData(result);
       })
       .catch((err) => {
-        console.log('err.response.data', err.response.data)
         let message = err.response.data.resultData.message;
         if (message.includes(ErrorKey.notFindSubsriberNo)) {
           showAlert({ message: SubsriberMessages.noSearchSubsriber });

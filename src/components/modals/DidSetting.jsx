@@ -166,7 +166,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
             return;
           }, 10);
         }).catch(err => {
-          let message = err.response.data.resultData;
+          let message = err.response.data.resultData.message;
           rbtError(message)
         });
       },
@@ -184,32 +184,54 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
       return;
     }
 
-    showDialog({
-      message: InfoMessages.confirmDelete(checkboxSelected.length),
-      onConfirm: () => {
-        const { updatedTable, deleteItems } = getDidDeleteResult({
-          checkboxSelected,
-          tableData,
-        });
+    const { updatedTable, deleteItems } = getDidDeleteResult({
+      checkboxSelected,
+      tableData,
+    });
 
-        deleteDidItems({
-          userInfo,
-          deleteItems,
-          updatedTable,
-          onSuccess: (newTable) => {
-            setTableData(newTable);
-            setCheckboxSelected([]);
-            setSelectDid();
-            setSelectRows([]);
-            tableRef.current?.clearSelection?.();
-            setTimeout(() => {
-              showAlert({ message: InfoMessages.successDelete });
-              return;
-            }, 10);
-          },
-        });
+    deleteDidItems({
+      userInfo,
+      deleteItems,
+      updatedTable,
+      onSuccess: (newTable) => {
+        setTableData(newTable);
+        setCheckboxSelected([]);
+        setSelectDid();
+        setSelectRows([]);
+        tableRef.current?.clearSelection?.();
+        setTimeout(() => {
+          showAlert({ message: InfoMessages.successDelete });
+          return;
+        }, 10);
       },
     });
+
+    // showDialog({
+    //   message: InfoMessages.confirmDelete(checkboxSelected.length),
+    //   onConfirm: () => {
+    //     const { updatedTable, deleteItems } = getDidDeleteResult({
+    //       checkboxSelected,
+    //       tableData,
+    //     });
+
+    //     deleteDidItems({
+    //       userInfo,
+    //       deleteItems,
+    //       updatedTable,
+    //       onSuccess: (newTable) => {
+    //         setTableData(newTable);
+    //         setCheckboxSelected([]);
+    //         setSelectDid();
+    //         setSelectRows([]);
+    //         tableRef.current?.clearSelection?.();
+    //         setTimeout(() => {
+    //           showAlert({ message: InfoMessages.successDelete });
+    //           return;
+    //         }, 10);
+    //       },
+    //     });
+    //   },
+    // });
   };
 
   // 부가서비스 추가
@@ -255,7 +277,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
       initRbtData();
       initRbtSubs(selectDid);
     }).catch(err => {
-      let message = err.response.data.resultData;
+      let message = err.response.data.resultData.message;
       rbtError(message);
     });
   }
