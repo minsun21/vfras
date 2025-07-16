@@ -113,6 +113,7 @@ const SubscriberManageEdit = () => {
         showAlert({
           message: InfoMessages.successEdit,
         });
+        navigate(ROUTES.SUBSCRIBERS);
       });
   };
 
