@@ -130,7 +130,6 @@ export const SUBSRIBERS_REGISTER_FIELDS = [
     label: LABELS.MAIN_NUMBER,
     type: "number",
     required: true,
-    // length: 10,
   },
   {
     key: KEYS.SUB_STATUS,
@@ -189,11 +188,9 @@ export const SUBSRIBERS_REGISTER_FIELDS = [
     fields: [
       {
         key: KEYS.FROM_NO, type: "number"
-        // , length: 11 
       },
       {
         key: KEYS.TO_NO, type: "number"
-        // , length: 11
       },
     ],
   },
@@ -204,11 +201,9 @@ export const SUBSRIBERS_REGISTER_FIELDS = [
     fields: [
       {
         key: KEYS.TEL_FROM_NO, type: "number"
-        // , length: 11 
       },
       {
         key: KEYS.TEL_TO_NO, type: "number"
-        // , length: 11 
       },
     ],
   },
@@ -217,7 +212,6 @@ export const SUBSRIBERS_REGISTER_FIELDS = [
     label: LABELS.DEFAULT_CALLRING,
     type: "number",
     required: true,
-    // length: 7,
   },
 ];
 
@@ -538,8 +532,8 @@ export const DID_ADD_FIELDS = [
     label: LABELS.PBX_NUMBER_COL,
     required: true,
     fields: [
-      { key: KEYS.FROM_NO, type: "number", length: 10 },
-      { key: KEYS.TO_NO, type: "number", length: 10 },
+      { key: KEYS.FROM_NO, type: "number" },
+      { key: KEYS.TO_NO, type: "number" },
     ],
   },
   {
@@ -547,8 +541,8 @@ export const DID_ADD_FIELDS = [
     label: LABELS.USER_NUMBER,
     required: true,
     fields: [
-      { key: KEYS.TEL_FROM_NO, type: "number", length: 10 },
-      { key: KEYS.TEL_TO_NO, type: "number", length: 10 },
+      { key: KEYS.TEL_FROM_NO, type: "number" },
+      { key: KEYS.TEL_TO_NO, type: "number" },
     ],
   },
   {
@@ -556,6 +550,5 @@ export const DID_ADD_FIELDS = [
     label: LABELS.DEFAULT_CALLRING,
     type: "number",
     required: true,
-    length: 6,
   },
 ];

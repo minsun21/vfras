@@ -81,7 +81,7 @@ const Login = () => {
       })
       .catch((err) => {
         if (err.response.data.result === 401) {
-          showAlert({ message: err.response.data.resultData });
+          showAlert({ message: err.response.data.resultData.message });
         }
       });
   };
