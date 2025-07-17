@@ -14,7 +14,6 @@ const authSlice = createSlice({
       state.user = action.payload;
     },
     logout: (state) => {
-      console.log('d엥')
       state.isAuthenticated = false;
       state.user = null;
     },
