@@ -357,7 +357,7 @@ const Table = forwardRef(
                     />
                   </th>
                 )}
-                {showIndex && <th rowSpan={2}>{LABELS.INDEX}</th>}
+                {showIndex && <th rowSpan={2} style={{ width: "100px", minWidth: "100px", maxWidth: "100px" }}>{LABELS.INDEX}</th>}
                 {columns.map((col, idx) =>
                   col.columns ? (
                     <th key={idx} colSpan={col.columns.length}>
