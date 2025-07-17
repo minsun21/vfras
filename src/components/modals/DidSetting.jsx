@@ -294,15 +294,23 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
 
   // 부가서비스 일괄 저장
   const bulkAdd = async (key, dataKey, inputs) => {
-    const { updatedSelectDid } = await bulkAddItem({
+    bulkAddItem({
       key,
       dataKey,
       inputs,
       selectDid,
-    });
+    }).then(res => {
+      const updatedSelectDid = {
+        ...selectDid,
+        [dataKey]: [...(selectDid[dataKey] || []), inputs],
+      };
 
-    setSelectDid(updatedSelectDid);
-    initRbtSubs(selectDid);
+      showAlert({
+        message: InfoMessages.successBulkAdd
+      })
+      setSelectDid(updatedSelectDid);
+      initRbtSubs(selectDid);
+    })
   };
 
   // 부가서비스 일괄 삭제
@@ -312,11 +320,13 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
       inputs,
       selectDid,
     }).then(res => {
+      showAlert({
+        message: InfoMessages.successBulkDelete
+      })
       initRbtData();
       initRbtSubs(selectDid);
     })
   };
-
 
   // 일시 정지
   const handleOptionChange = (e) => {

@@ -251,16 +251,7 @@ export const bulkAddItem = async ({ key, dataKey, inputs, selectDid }) => {
   const uri = getBulkUri(dataKey, selectDid);
   const body = getAddBulkItem(dataKey, inputs, selectDid);
 
-  await axios.post(uri, body);
-
-  const updatedSelectDid = {
-    ...selectDid,
-    [dataKey]: [...(selectDid[dataKey] || []), inputs],
-  };
-
-  return {
-    updatedSelectDid,
-  };
+  return await axios.post(uri, body);
 };
 
 
@@ -271,7 +262,7 @@ export const bulkRemoveItem = async ({ dataKey, inputs, selectDid }) => {
   const uri = getBulkUri(dataKey, selectDid);
   const body = getAddBulkItem(dataKey, inputs, selectDid);
 
-  await axios.delete(uri, {
+  return await axios.delete(uri, {
     data: body,
   });
 };
