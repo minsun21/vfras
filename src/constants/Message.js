@@ -12,7 +12,9 @@ export const InfoMessages = {
   mobile: "숫자만 입력해주세요.",
   successAdd: "추가 되었습니다.",
   confirmAllDelete: "전체 삭제하시겠습니까?",
-  successStop: "일시정지 되었습니다."
+  successStop: "일시정지 되었습니다.",
+  successClear: "일시정지 해제 되었습니다."
+
 };
 
 export const ProfileMessages = {

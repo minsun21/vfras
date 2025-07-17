@@ -294,7 +294,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
 
   // 부가서비스 일괄 저장
   const bulkAdd = async (key, dataKey, inputs) => {
-    const { updatedSelectDid, updateTableCallback } = await bulkAddItem({
+    const { updatedSelectDid } = await bulkAddItem({
       key,
       dataKey,
       inputs,
@@ -366,7 +366,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
       selectDid
     ).then(() => {
       showAlert({
-        message: InfoMessages.successStop,
+        message: selectStop === 0 ? InfoMessages.successClear : InfoMessages.successStop,
       });
       initRbtData();
       initRbtSubs(selectDid);

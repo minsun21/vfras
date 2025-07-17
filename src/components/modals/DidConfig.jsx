@@ -94,6 +94,12 @@ const DidConfig = ({
   const bulkAddAction = () => {
     const key = config.key;
     const dataKey = config.dataKey;
+
+    if (checkEmpty(config, inputs)) {
+      showAlert({ message: ErrorMessages.allInsert });
+      return;
+    }
+
     bulkAdd(key, dataKey, inputs);
   };
 
@@ -137,8 +143,9 @@ const DidConfig = ({
   };
 
   // 기본 입력값 체크
-  const addDidConfigValidation = (config, inputs, currentList) => {
-    const isEmpty = config.forms.some((form) => {
+
+  const checkEmpty = (config, inputs) => {
+    return config.forms.some((form) => {
       if (form.fields) {
         return form.fields.some((sub) => {
           const val = inputs[sub.key];
@@ -154,11 +161,14 @@ const DidConfig = ({
       }
     });
 
-    if (isEmpty) {
+  };
+
+  const addDidConfigValidation = (config, inputs, currentList) => {
+
+    if (checkEmpty(config, inputs)) {
       showAlert({ message: ErrorMessages.allInsert });
       return;
     }
-
     // 중복 검사
     if (isObjectInList(inputs, currentList)) {
       showAlert({ message: ErrorMessages.duplicateSave });

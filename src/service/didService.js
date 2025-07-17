@@ -260,8 +260,6 @@ export const bulkAddItem = async ({ key, dataKey, inputs, selectDid }) => {
 
   return {
     updatedSelectDid,
-    updateTableCallback: (row) =>
-      getDidKey(row) === getDidKey(selectDid) ? { ...row, [key]: true } : row,
   };
 };
 
