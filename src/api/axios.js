@@ -4,6 +4,7 @@ import { logout } from "../features/authSlice";
 import { ErrorMessages } from "../constants/Message";
 import { deleteCookie, getCookie, setCookie } from "../utils/cookies";
 import { useDispatch } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 let alertHandler = null;
 let setLoading = null;
@@ -53,8 +54,10 @@ instance.interceptors.response.use(
     if (status === 401) {
       const errMsg = error.response?.data?.message;
       if (errMsg === "Authentication is required.") {
-        alertHandler({ message: ErrorMessages.expired });
+        sessionStorage.setItem("expiredMessage", ErrorMessages.expired);
         store.dispatch(logout());
+        window.location.href = "/login";
+        return;
       } else {
         alertHandler({ message });
       }

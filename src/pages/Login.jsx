@@ -27,6 +27,16 @@ const Login = () => {
   const [checkSaveId, setCheckSaveId] = useState(true);
 
   useEffect(() => {
+    const expiredMessage = sessionStorage.getItem("expiredMessage");
+    if (expiredMessage) {
+      setTimeout(() => {
+        showAlert({ message: expiredMessage });
+        sessionStorage.removeItem("expiredMessage");
+      }, 100);
+    }
+  }, [location.key]);
+
+  useEffect(() => {
     const savedId = localStorage.getItem(KEYS.SAVED_ID);
     if (savedId) {
       setFormData((prev) => ({

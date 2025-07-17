@@ -48,7 +48,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
 
   const dispatch = useDispatch();
   const tableRef = useRef();
-  const { showModal, showAlert, showDialog, closeModal } = useModal();
+  const { showModal, showAlert, closeModal } = useModal();
 
   const [tableData, setTableData] = useState([]); // 회선 목록
   const [selectRows, setSelectRows] = useState([]); // 선택 회선
