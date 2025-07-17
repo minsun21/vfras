@@ -70,6 +70,8 @@ instance.interceptors.response.use(
         alertHandler({ message });
       }
     }
+
+    return Promise.reject(error);
   }
 );
 

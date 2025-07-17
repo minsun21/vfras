@@ -28,11 +28,16 @@ const DidConfig = ({
   const [inputs, setInputs] = useState({});
 
   useEffect(() => {
-    setInputs({});
+    initForms();
+
   }, [selectDid]);
 
   useEffect(() => {
-    // 부가서비스 Form 초기화
+    initForms();
+  }, [config.forms]);
+
+  // 부가서비스 Form 초기화
+  const initForms = () => {
     const initialInputs = {};
 
     config.forms.forEach((form) => {
@@ -52,7 +57,7 @@ const DidConfig = ({
     });
 
     setInputs(initialInputs);
-  }, [config.forms]);
+  }
 
   const openAccordion = (e) => {
     const clickedEl = parentRef.current;
@@ -109,13 +114,15 @@ const DidConfig = ({
   const deleteAction = () => {
     if (selectRows.length === 0) return;
 
-    showDialog({
-      message: InfoMessages.confirmDelete(selectRows.length),
-      onConfirm: () => {
-        deleteDidConfig(config, selectRows);
-        resetSelectRows();
-      },
-    });
+    deleteDidConfig(config, selectRows);
+    resetSelectRows();
+    // showDialog({
+    //   message: InfoMessages.confirmDelete(selectRows.length),
+    //   onConfirm: () => {
+    //     deleteDidConfig(config, selectRows);
+    //     resetSelectRows();
+    //   },
+    // });
   };
 
   // 전체 삭제

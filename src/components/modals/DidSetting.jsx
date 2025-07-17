@@ -290,7 +290,6 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
       return;
     }
     showAlert({ message: ErrorMessages.server });
-
   }
 
   // 부가서비스 일괄 저장

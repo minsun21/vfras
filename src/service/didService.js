@@ -114,7 +114,6 @@ export const getAddUri = (dataKey, selectDid) => {
  * 부가서비스 추가용 데이터 가공
  */
 export const getAddItem = (dataKey, item, selectDid) => {
-
   switch (dataKey) {
     case KEYS.TIMES_DATA_KEY:
       return {
@@ -128,6 +127,14 @@ export const getAddItem = (dataKey, item, selectDid) => {
         [KEYS.S_DATE]: removeDashFromDate(item[KEYS.S_DATE]),
         [KEYS.E_DATE]: removeDashFromDate(item[KEYS.E_DATE]),
       };
+    case KEYS.GROUPS_DATA_KEY:
+      return {
+        ...item,
+        [KEYS.GROUP_ID]: selectDid[KEYS.GROUPS_DATA_KEY].length + 1,
+        [KEYS.CALLING_NUMBER]: item[KEYS.CALLING_NUMBER].split(",")
+          .map(num => num.trim())
+          .filter(num => num !== "")
+      }
     case KEYS.GROUPS_DATA_KEY:
       return {
         ...item,
@@ -175,7 +182,7 @@ const isKeyDuplicateInArray = (targetObj, arr, key) => {
 export const addDidSubItem = async ({ dataKey, selectDid }) => {
   const uri = getAddUri(dataKey, selectDid);
 
-  await axios.post(uri, selectDid[dataKey], AXIOS_NO_GLOBAL_ERROR);
+  return await axios.post(uri, selectDid[dataKey], AXIOS_NO_GLOBAL_ERROR)
 };
 
 /**
@@ -219,6 +226,14 @@ export const getAddBulkItem = (dataKey, inputs, selectDid) => {
         [KEYS.S_DATE]: removeDashFromDate(inputs[KEYS.S_DATE]),
         [KEYS.E_DATE]: removeDashFromDate(inputs[KEYS.E_DATE]),
       };
+    case KEYS.GROUPS_DATA_KEY:
+      return {
+        ...inputs,
+        [KEYS.GROUP_ID]: selectDid[KEYS.GROUPS_DATA_KEY].length + 1,
+        [KEYS.CALLING_NUMBER]: inputs[KEYS.CALLING_NUMBER].split(",")
+          .map(num => num.trim())
+          .filter(num => num !== "")
+      }
     case KEYS.GROUPS_DATA_KEY:
       return {
         ...inputs,
