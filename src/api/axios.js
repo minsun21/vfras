@@ -52,15 +52,16 @@ instance.interceptors.response.use(
     const originalRequest = error.config;
 
     if (status === 401) {
-      const errMsg = error.response?.data?.message;
-      if (errMsg === "Authentication is required.") {
+      const errMsg = error.response?.data?.resultData;
+      if (errMsg === "로그인 정보가 존재하지 않습니다.") {
         sessionStorage.setItem("expiredMessage", ErrorMessages.expired);
         store.dispatch(logout());
         window.location.href = "/login";
         return;
       } else {
-        alertHandler({ message });
+        alertHandler({ message: message.message });
       }
+
       return;
     }
     // ✅ 공통 에러 처리 (suppress 옵션 없을 경우만)

@@ -64,7 +64,7 @@ const Login = () => {
       .put(ROUTES.LOGIN, {
         [KEYS.ADMIN_ID]: formData[KEYS.ADMIN_ID],
         [KEYS.PASSWORD]: formData[KEYS.PASSWORD],
-      }, AXIOS_NO_GLOBAL_ERROR)
+      })
       .then((res) => {
         const { adminId, adminType, permissions, token } = res.data.resultData;
 
@@ -88,12 +88,8 @@ const Login = () => {
         }
 
         navigate(from, { replace: true });
+      }).catch(err => {
       })
-      .catch((err) => {
-        if (err.response.data.result === 401) {
-          showAlert({ message: err.response.data.resultData.message });
-        }
-      });
   };
 
   const onChange = (e) => {
