@@ -26,7 +26,7 @@ const PasswordChange = () => {
           onChange={(e) => handleChange(key, e.target.value)}
         />
       ))}
-      <span>{LABELS.PASSWORD_CHECK2}</span>
+      <span>{LABELS.PASSWORD_CHECK}</span>
     </div>
   );
 };

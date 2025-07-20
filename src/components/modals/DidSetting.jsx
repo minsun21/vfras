@@ -6,7 +6,7 @@ import {
   DID_SETTING_COLUMNS,
   EMPTY_DID_DATA,
 } from "../../config/DataConfig";
-import Button, { BUTTON_DELETE } from "../Button";
+import Button, { BUTTON_DELETE, BUTTON_SAVE } from "../Button";
 import Input, { INPUT_SIZE_SM } from "../Input";
 import { KEYS } from "../../constants/Keys";
 import Form from "../Form";
@@ -450,7 +450,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
           {selectDid ? permissions.includes(PERMISSIONS.SUBS_U) ? (
             <div className="didStopBox">
               <div className="radio-box">
-                <div style={{ display: 'flex' }}>
+                <div className="dflex gap10">
                   <span className="items">
                     <input
                       type="radio"
@@ -487,7 +487,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
                   <div className="hFlex">
                     <Input
                       type="date"
-                      size="w130"
+                      size="w120"
                       name={KEYS.INTERRUPT_RESERVATION_FROM}
                       value={stopDate[KEYS.INTERRUPT_RESERVATION_FROM]}
                       onChange={onChangeDate}
@@ -496,7 +496,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
                     <span>{"~"}</span>
                     <Input
                       type="date"
-                      size="w130"
+                      size="w120"
                       name={KEYS.INTERRUPT_RESERVATION_TO}
                       value={stopDate[KEYS.INTERRUPT_RESERVATION_TO]}
                       onChange={onChangeDate}

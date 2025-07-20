@@ -173,7 +173,7 @@ const Login = () => {
                 {LABELS.LOGIN}
               </button>
             </div>
-            <div>{errorMessage}</div>
+            <div className="loginBotBox loginMsg"><p>{errorMessage}</p></div>
           </div>
         </div>
       </section>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Button, { BUTTON_CANCEL } from "../components/Button";
+import Button, { BUTTON_SAVE } from "../components/Button";
 import { LABELS } from "../constants/Labels";
 import { ErrorMessages, LvMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
@@ -108,7 +108,7 @@ const LvManage = () => {
           </div>
           {permissions.includes(PERMISSIONS.LVNUM_U) &&
             <Button
-              type={BUTTON_CANCEL}
+              type={BUTTON_SAVE}
               label={LABELS.ALL_CHANGE} // 전체 변경
               onClick={clickAllChange}
             />}
