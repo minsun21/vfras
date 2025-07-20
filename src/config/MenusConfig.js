@@ -91,7 +91,7 @@ export const NonMenuConfig = [
     title: LABELS.USER_EDIT,
     path: ROUTES.ACCOUNT_EDIT,
     parent: LABELS.ACCOUNT,
-    component: lazy(() => import("../pages/AccountEdit")),
+    component: lazy(() => import("../pages/AccountDetail")),
     permission: PERMISSIONS.ACCNT_U,
   },
   {
