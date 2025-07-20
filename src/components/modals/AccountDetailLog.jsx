@@ -7,7 +7,7 @@ import { ROUTES } from "../../constants/routes";
 import { KEYS } from "../../constants/Keys";
 
 const AccountDetailLog = ({ selectRow }) => {
-  
+
   const [data, setData] = useState([]);
   const [lastAccessTime, setLastAccessTime] = useState("");
 
@@ -15,6 +15,7 @@ const AccountDetailLog = ({ selectRow }) => {
     axios.get(ROUTES.HISTORY_DETAIL(selectRow[KEYS.ADMIN_ID])).then((res) => {
       const result = res.data.resultData;
       setData(result);
+      console.log('res', res)
       setLastAccessTime(result[0][KEYS.LOG_TIME]);
     });
   }, []);
@@ -29,6 +30,8 @@ const AccountDetailLog = ({ selectRow }) => {
           rowSelectionEnabled={false}
           resultLabel={false}
           pageSelect={false}
+          paginationEnabled={false}
+          maxHeight={450}
         />
       </div>
     </div>
