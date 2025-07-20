@@ -44,7 +44,7 @@ const Table = forwardRef(
     const [currentPageSize, setCurrentPageSize] = useState(pageSize);
     const [pageInfo, setPageInfo] = useState({
       pageIndex: 0,
-      pageSize: 10,
+      pageSize: 9999,
       totalPages: 0,
       totalElements: 0,
     });
