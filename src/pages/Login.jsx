@@ -46,11 +46,11 @@ const Login = () => {
     deleteCookie();
 
     if (!formData[KEYS.ADMIN_ID]) {
-      showAlert({ message: LoginMessages.errorId });
+      setErrorMessage(LoginMessages.errorId);
       return;
     }
     if (!formData[KEYS.PASSWORD]) {
-      showAlert({ message: LoginMessages.errorPassword });
+      setErrorMessage(LoginMessages.errorPassword);
       return;
     }
 
@@ -84,22 +84,13 @@ const Login = () => {
         navigate(from, { replace: true });
       })
       .catch((err) => {
-        console.log('err.response?.', err.response.data.resultData)
         let message = err.response.data.resultData?.message || "";
         if (message.includes(ErrorKey.notFountUser)) {
           setErrorMessage(LoginMessages.errorIdConfirm);
+        } else {
+          setErrorMessage(message);
         }
       });
-
-    // .catch((err) => {
-    //   console.log('이잉', err.response)
-    //   let message = err.response?.resultData?.message || ErrorMessages.server;
-    //   if (message.includes(ErrorKey.notFountUser)) {
-    //     showAlert({ message: LoginMessages.errorIdConfirm })
-    //   } else {
-    //     showAlert({ message: message })
-    //   }
-    // })
   };
 
   const onChange = (e) => {
