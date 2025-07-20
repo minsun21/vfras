@@ -27,8 +27,8 @@ export const ProfileMessages = {
 export const ErrorMessages = {
   expired: "세션이 만료되었습니다.\n다시 로그인해주세요.",
   required: (label) => `${label}을(를) 입력해주세요.`,
-  invalidEmail: `이메일 형식이 올바르지 않습니다.`,
-  invalidPhone: `전화번호 형식이 올바르지 않습니다.`,
+  invalidEmail: `이메일 형식이 올바르지 않습니다. (example@email.com)`,
+  invalidPhone: `전화번호 형식이 올바르지 않습니다. (010xxxxxxxx)`,
   lengthMismatch: (label, min, max) =>
     `${label}은(는) ${min} ~ ${max}자리여야 합니다.`,
   lengthMismatch2: (label, length) =>

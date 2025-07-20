@@ -10,7 +10,7 @@ export const isValidPhone = (phone) => {
   //   const cleaned = phone.replace(/[^0-9]/g, "");
   // const regex = /^01[016789]-?\d{3,4}-?\d{4}$/;
   // return regex.test(phone);
-  return phone.length >= 11;
+  return /^010\d{7,8}$/.test(phone);
 };
 
 export const isValidPassword = (password) => {
@@ -96,6 +96,83 @@ export const fieldsValidate = (fields, formData) => {
     if (key === KEYS.PASSWORD1 && value) {
       if (!isValidPassword(value)) {
         return ErrorMessages.invalidPassword;
+      }
+      if (value !== formData[KEYS.PASSWORD2]) {
+        return ErrorMessages.correctPassword;
+      }
+    }
+  }
+
+  return;
+};
+
+
+export const fieldsValidate2 = (fields, formData) => {
+  for (const field of fields) {
+    const {
+      key,
+      label,
+      required,
+      type,
+      min,
+      max,
+      length,
+      disabled,
+      fields: nestedFields,
+    } = field;
+
+    if (disabled) continue;
+
+    const value = formData[key];
+
+    // ✅ 1. 기본 필수값 검사
+    if (required && !value && !nestedFields) {
+      return { key: key, message: ErrorMessages.required(label) };
+    }
+
+    // ✅ 2. 중첩 필드가 있는 경우
+    // if (required && nestedFields?.length) {
+    //   for (const subField of nestedFields) {
+    //     const subValue = formData[subField.key];
+
+    //     // 2-1. 필수값
+    //     if (subValue === undefined || subValue === "") {
+    //       return ErrorMessages.required(`${label}`);
+    //     }
+
+    //     // 2-2. 길이 검사 (number 포함)
+    //     if (subField.length) {
+    //       const actualLength = String(subValue).length;
+    //       if (actualLength !== subField.length) {
+    //         return ErrorMessages.lengthMismatch2(`${label}`, subField.length);
+    //       }
+    //     }
+    //   }
+    // }
+
+    // ✅ 3. 타입별 validation
+    if (key === KEYS.MOBILE && !isValidPhone(value)) {
+      return { key: key, message: ErrorMessages.invalidPhone };
+    }
+
+    if (type === "email" && !isValidEmail(value)) {
+      return { key: key, message: ErrorMessages.invalidEmail };
+    }
+
+    // ✅ 4. 길이 검사 (string)
+    // if (typeof value === "string") {
+    //   if (min && max && (value.length < min || value.length > max)) {
+    //     return ErrorMessages.lengthMismatch(label, min, max);
+    //   }
+
+    //   if (length && value.length !== length) {
+    //     return ErrorMessages.lengthMismatch2(label, length);
+    //   }
+    // }
+    // ✅ 5. 비밀번호 확인
+    if (key === KEYS.PASSWORD1 && value) {
+      if (!isValidPassword(value)) {
+        return { key: key, message: ErrorMessages.invalidPassword };
       }
       if (value !== formData[KEYS.PASSWORD2]) {
         return ErrorMessages.correctPassword;

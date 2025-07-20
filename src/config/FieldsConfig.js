@@ -420,7 +420,7 @@ export const ACCOUNTS_REGISTER_FIELDS = [
   {
     key: KEYS.MOBILE,
     label: LABELS.PHONE,
-    type: "text",
+    type: "number",
     required: true,
   },
   {
@@ -439,7 +439,7 @@ export const ACCOUNTS_REGISTER_FIELDS = [
     label: LABELS.PASSWORD,
     type: "password",
     required: true,
-    comment: LABELS.PASSWORD_CHECK,
+    placeholder: LABELS.PASSWORD_CHECK,
   },
   {
     key: KEYS.PASSWORD2,
