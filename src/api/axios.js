@@ -66,6 +66,7 @@ instance.interceptors.response.use(
     }
     // ✅ 공통 에러 처리 (suppress 옵션 없을 경우만)
     if (!originalRequest?.suppressGlobalError && alertHandler) {
+      console.log('설마 지금 이거?')
       if (status === 403) {
         alertHandler({ message: ErrorMessages.noPermission });
       } else if (status === 500) {

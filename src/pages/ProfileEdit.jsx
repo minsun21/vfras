@@ -18,7 +18,7 @@ import {
 import { LABELS } from "../constants/Labels";
 import { useModal } from "../contexts/ModalContext";
 import PasswordChange from "../components/modals/PasswordChange";
-import axios from "../api/axios";
+import axios, { AXIOS_NO_GLOBAL_ERROR } from "../api/axios";
 import { KEYS } from "../constants/Keys";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/authSlice";
@@ -126,7 +126,7 @@ const ProfileEdit = () => {
     }
 
     axios
-      .put(ROUTES.PASSWORD_CHANGE(adminId), passwordData)
+      .put(ROUTES.PASSWORD_CHANGE(adminId), passwordData, AXIOS_NO_GLOBAL_ERROR)
       .then((res) => {
         showAlert({
           message: ProfileMessages.successPasswordChange,
@@ -136,16 +136,13 @@ const ProfileEdit = () => {
             dispatch(logout());
           },
         });
-      })
-      .catch((err) => {
+      }).catch((err) => {
         const { response } = err;
-
         if (response?.data?.result === 400 && response.data.resultData?.[0]?.message) {
           showAlert({ message: response.data.resultData[0].message });
-          return;
+        } else {
+          showAlert({ message: ErrorMessages.server });
         }
-
-        showAlert({ message: ErrorMessages.server });
       }).finally(() => {
         dispatch(resetPasswordFields())
       })

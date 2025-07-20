@@ -34,7 +34,7 @@ export const ErrorMessages = {
   lengthMismatch2: (label, length) =>
     `${label}은(는) ${length}자리여야 합니다.`,
   invalidPassword: `비밀번호는 8~20자의 영문, 숫자, 특수문자를 모두 포함해야 합니다.`,
-  confirmPassword: `비밀번호 확인이 맞지 않습니다.`,
+  confirmPassword: `변경 비밀번호가 일치하지 않습니다.`,
   confirmCurrentPassword: `현재 비밀번호가 맞지 않습니다.`,
   nonSelect: `항목을 먼저 선택해주세요.`,
   oneSelect: `하나의 항목을 선택해주세요.`,
