@@ -141,7 +141,7 @@ const ProfileEdit = () => {
         if (response?.data?.result === 400 && response.data.resultData?.[0]?.message) {
           showAlert({ message: response.data.resultData[0].message });
         } else {
-          showAlert({ message: ErrorMessages.server });
+          showAlert({ message: response.data.resultData.message || ErrorMessages.server });
         }
       }).finally(() => {
         dispatch(resetPasswordFields())
