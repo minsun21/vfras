@@ -5,17 +5,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { ROUTES } from "../constants/routes";
 import { LABELS } from "../constants/Labels";
 import { KEYS } from "../constants/Keys";
-import { LoginMessages } from "../constants/Message";
+import { ErrorKey, ErrorMessages, LoginMessages } from "../constants/Message";
 import axios, { AXIOS_NO_GLOBAL_ERROR } from "../api/axios";
 import { useModal } from "../contexts/ModalContext";
-import { persistor } from "../store";
 import { deleteCookie, setCookie } from "../utils/cookies";
-
-// persistor.purge().then(() => {
-//   window.location.reload(); // ✅ 저장소 비운 후 새로고침
-//   deleteCookie();
-//    window.location.href = '/login';
-// });
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -25,6 +18,7 @@ const Login = () => {
 
   const [formData, setFormData] = useState({});
   const [checkSaveId, setCheckSaveId] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const expiredMessage = sessionStorage.getItem("expiredMessage");
@@ -64,7 +58,7 @@ const Login = () => {
       .put(ROUTES.LOGIN, {
         [KEYS.ADMIN_ID]: formData[KEYS.ADMIN_ID],
         [KEYS.PASSWORD]: formData[KEYS.PASSWORD],
-      })
+      }, AXIOS_NO_GLOBAL_ERROR)
       .then((res) => {
         const { adminId, adminType, permissions, token } = res.data.resultData;
 
@@ -88,8 +82,24 @@ const Login = () => {
         }
 
         navigate(from, { replace: true });
-      }).catch(err => {
       })
+      .catch((err) => {
+        console.log('err.response?.', err.response.data.resultData)
+        let message = err.response.data.resultData?.message || "";
+        if (message.includes(ErrorKey.notFountUser)) {
+          setErrorMessage(LoginMessages.errorIdConfirm);
+        }
+      });
+
+    // .catch((err) => {
+    //   console.log('이잉', err.response)
+    //   let message = err.response?.resultData?.message || ErrorMessages.server;
+    //   if (message.includes(ErrorKey.notFountUser)) {
+    //     showAlert({ message: LoginMessages.errorIdConfirm })
+    //   } else {
+    //     showAlert({ message: message })
+    //   }
+    // })
   };
 
   const onChange = (e) => {
@@ -163,6 +173,7 @@ const Login = () => {
                 {LABELS.LOGIN}
               </button>
             </div>
+            <div>{errorMessage}</div>
           </div>
         </div>
       </section>

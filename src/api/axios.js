@@ -2,9 +2,7 @@ import axios from "axios";
 import { store } from "../store";
 import { logout } from "../features/authSlice";
 import { ErrorMessages } from "../constants/Message";
-import { deleteCookie, getCookie, setCookie } from "../utils/cookies";
-import { useDispatch } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { getCookie } from "../utils/cookies";
 
 let alertHandler = null;
 let setLoading = null;
@@ -58,15 +56,10 @@ instance.interceptors.response.use(
         store.dispatch(logout());
         window.location.href = "/login";
         return;
-      } else {
-        alertHandler({ message: message.message });
       }
-
-      return;
     }
     // ✅ 공통 에러 처리 (suppress 옵션 없을 경우만)
     if (!originalRequest?.suppressGlobalError && alertHandler) {
-      console.log('설마 지금 이거?')
       if (status === 403) {
         alertHandler({ message: ErrorMessages.noPermission });
       } else if (status === 500) {
