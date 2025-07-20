@@ -17,7 +17,7 @@ const AccountRead = () => {
     // userid로 정보 검색
     if (!selectedId) return;
     initData();
-  }, [selectedId]);
+  }, []);
 
   const initData = () => {
     axios.get(ROUTES.ACCOUNTS_MANAGE(selectedId), formData).then((res) => {
