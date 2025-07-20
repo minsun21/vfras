@@ -40,7 +40,7 @@ import {
   validateDidBeforeAdd,
   validateDidBeforeDelete,
 } from "../../service/didService";
-import { formatDateWithDash, removeDashFromDate } from "../../utils/Util";
+import { formatDateWithDash, getDidKey, removeDashFromDate } from "../../utils/Util";
 import { PERMISSIONS } from "../../constants/Permissions";
 
 const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
@@ -72,7 +72,11 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
     axios.get(ROUTES.SUBSCRIBERS_RBT(userInfo[KEYS.SUB_NO])).then((res) => {
       const result = res.data.resultData;
       setTableData(result);
-      dispatch(setDidList(result));
+      if (selectRows[0]) {
+        let currentKey = getDidKey(selectRows[0]);
+        const newCurrentKey = result.filter(item => currentKey === getDidKey(item));
+        setSelectRows(newCurrentKey);
+      }
     });
   };
 

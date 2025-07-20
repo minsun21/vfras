@@ -228,7 +228,6 @@ const DidConfig = ({
           <input
             type="checkbox"
             checked={selectDid[config.key]}
-            // onChange={() => didToggle(config.key)}
             disabled
           />
           <span className="slider"></span>
