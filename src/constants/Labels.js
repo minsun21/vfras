@@ -120,7 +120,7 @@ export const LABELS = {
   DEPARTMENT_PERMISSIONS: "부서 권한",
   MODIFY: "수정",
   DID_CONFIG_LENGH: (cnt, max) => `${cnt}개 (최대 ${max})`,
-  PERIOD_INTERRUPT: "기간별 일시정지",
+  PERIOD_INTERRUPT: "정지기간",
   INTERRUPT: "일시정지",
   START_DATE: "시작일",
   END_DATE: "종료일",

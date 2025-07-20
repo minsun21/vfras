@@ -167,6 +167,9 @@ const Login = () => {
                 {LABELS.LOGIN}
               </button>
             </div>
+            <div className="loginBotBox loginMsg">
+                <p>비밀번호가 일치하지 않습니다</p>
+            </div>
           </div>
         </div>
       </section>

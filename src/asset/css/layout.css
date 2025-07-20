@@ -103,7 +103,7 @@
 .loginBox .loginBotBox.center.loginBottom { margin: 15px 0px; } 
 .loginBox .loginBotBox.center span a { color: #757575; font-size: 14px; font-weight: 400; } 
 .loginBox .loginBotBox.center span a:hover { text-decoration: underline; color: var(--scolor)}
-.loginBox .loginMsg { text-align: center; font-size: 12px; color: #e54259; line-height: 1.3; width: 440px; /*background: #f7f7f7;*/ border-radius: 9px; padding: 5px; margin-bottom: 0; position: absolute; margin-top: -52px; display: block; } 
+.loginBox .loginMsg { text-align: center; font-size: 14px; color: #e54259; line-height: 1.3; width: 440px; border-radius: 9px; padding: 5px; margin-bottom: 0; position: absolute; margin-top: 10px; display: block; } 
 
 /* 페이지 타이틀 */
 h2.page-title { margin: 2rem 1rem 1rem 0rem; font-size: 2.2rem; color: #000; font-weight: 700; /*border-bottom: 1px solid #DDD; padding-bottom: 1rem; */}

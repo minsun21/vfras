@@ -140,9 +140,6 @@ const Subscriber = () => {
           <thead>
             <tr>
               <th>
-                <label className="schTxtL1">{LABELS.DIVISION_SEARCH}</label>
-              </th>
-              <th>
                 <label className="schTxtL1">{LABELS.SUBSCRIBER_TYPE}</label>
               </th>
               <th>
@@ -151,32 +148,13 @@ const Subscriber = () => {
               <th>
                 <label className="schTxtL1">{LABELS.SUBSCRIBER_STATE}</label>
               </th>
+              <th>
+                <label className="schTxtL1">{LABELS.DIVISION_SEARCH}</label>
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>
-                <div className="form-field dflex wrap gap10">
-                  <Select
-                    value={searchInputs[KEYS.SEARCH_TYPE]}
-                    Options={SEARCH_TYPES}
-                    nonEmpty={true}
-                    name={KEYS.SEARCH_TYPE}
-                    onChange={onChange}
-                  />
-                  <Input
-                    type="text"
-                    className="form-input"
-                    name={KEYS.KEYWORD}
-                    value={searchInputs[KEYS.KEYWORD] || ""}
-                    placeholder={SubsriberMessages.searchPlaceHolder}
-                    onChange={onChange}
-                  />
-                  <span>
-                    <Button type={BUTTON_SEARCH} onClick={search} />
-                  </span>
-                </div>
-              </td>
               <td>
                 <Select
                   value={searchInputs[KEYS.SUB_TYPE]}
@@ -203,6 +181,28 @@ const Subscriber = () => {
                   name={KEYS.SUB_STATUS}
                   onChange={onChange}
                 />
+              </td>
+              <td className="dflex acenter">
+                <div className="form-field dflex wrap gap10">
+                  <Select
+                    value={searchInputs[KEYS.SEARCH_TYPE]}
+                    Options={SEARCH_TYPES}
+                    nonEmpty={true}
+                    name={KEYS.SEARCH_TYPE}
+                    onChange={onChange}
+                  />
+                  <Input
+                    type="text"
+                    className="form-input"
+                    name={KEYS.KEYWORD}
+                    value={searchInputs[KEYS.KEYWORD] || ""}
+                    placeholder={SubsriberMessages.searchPlaceHolder}
+                    onChange={onChange}
+                  />
+                  <span>
+                    <Button type={BUTTON_SEARCH} onClick={search} />
+                  </span>
+                </div>
               </td>
             </tr>
           </tbody>
