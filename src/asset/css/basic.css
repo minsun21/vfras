@@ -88,7 +88,7 @@ i.hot { display:inline-block; width:1.4rem; height:1.8rem; background:url("../im
 .vFlex { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
 
 /* password 확인 */
-.password-confirm { color: #cb001d; }
+.password-confirm { color: #cb001d; margin-left: 10px; }
 
 
 

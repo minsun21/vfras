@@ -14,7 +14,7 @@ export const LABELS = {
   PASSWORD_PLACEHOLDER: "******",
   CHANGE_PASSWORD_CONFIRM: "변경 비밀번호 재확인",
   PASSWORD_CONFIRM: "비밀번호 확인",
-  PASSWORD_CHECK: "(8~20 영문/숫자/특수문자 혼합)",
+  PASSWORD_CHECK: "8~20자의 영문,숫자,특수문자 혼합",
   PASSWORD_CHECK2: "* 8~20자의 영문 대,소문자,숫자,특수문자",
   HOME_TITLE: "vFRAS 가입자 관리",
   SEARCH: "검색",
