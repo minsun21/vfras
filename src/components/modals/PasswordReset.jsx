@@ -6,7 +6,7 @@ const PasswordReset = ({ currentPassword }) => {
 
   return (
     <div className="vFlex">
-      <span className="mt40 mb20">{SubsriberMessages.resetPasswordConfirm}</span>
+      <span className="mt40 mb20">{SubsriberMessages.resetPasswordConfirm}<br/>{SubsriberMessages.resetPasswordConfirm2}</span>
       <div className="tac">
       <Input size="fl" value={currentPassword} disabled />
       </div>

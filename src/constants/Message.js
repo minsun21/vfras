@@ -86,6 +86,7 @@ export const SubsriberMessages = {
   searchPlaceHolder: `가입자명, 번호를 입력해주세요.`,
   approvedError: `이미 가입되었거나 삭제된 행은 선택할 수 없습니다.`,
   resetPasswordConfirm: `비밀번호를 초기화 하시겠습니까?`,
+  resetPasswordConfirm2: `(대표번호 뒷자리 4개)`,
   didPlaceHolder: `부가서비스 설정을 원하는 행을 선택하세요.`,
   searchPlaceHolder2: `대표번호를 입력해주세요.`,
   resetPassword: `초기화 되었습니다.`,

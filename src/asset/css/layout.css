@@ -1,7 +1,7 @@
 @charset "utf-8"; /* @media (max-width: 1620px) { html { min-width: 1620px; overflow-x: auto; } 
  }*/
 .container { } 
-.layout { display: flex; height: 100vh;}
+.layout { display: flex; height: 100vh; min-width: 1400px;}
 .sidebar { position: fixed; top: 0; left: 0; height: 100%; width: 25rem; background-color: rgb(255 255 255); color: white; padding: 0; transition: all 0.3s ease; z-index: 0; border-right: 1px solid #EEE; box-shadow: 5px 0px 5px #DDD; } 
 
 /* sidebar close */.sidebar.close { width: 6.8rem; padding: 3rem 0; } 
