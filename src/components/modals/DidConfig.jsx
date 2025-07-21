@@ -196,7 +196,7 @@ const DidConfig = ({
     }
 
     // 최대 갯수 초과 검사
-    if (config.max && currentList.length >= config.max) {
+    if (config.max && (currentList.length + 1) > config.max) {
       showAlert({
         message: ErrorMessages.max(config.title, config.max),
       });
@@ -251,7 +251,6 @@ const DidConfig = ({
             const handleChange = (val) => {
               setInputs((prev) => ({ ...prev, [key]: val }));
             };
-
             return (
               <div key={key}>
                 {item.type === "select" ? (
@@ -261,11 +260,14 @@ const DidConfig = ({
                     onChange={(e) => handleChange(e.target.value)}
                   />
                 ) : type === "textarea" ? (
-                  <textarea
-                    value={inputs[key] || ""}
-                    placeholder={placeholder}
-                    onChange={(e) => handleChange(e.target.value)}
-                  />
+                  <div>
+                    <span>{"( ','구분, 최대 5개까지)"}</span>
+                    < textarea
+                      value={inputs[key] || ""}
+                      placeholder={placeholder}
+                      onChange={(e) => handleChange(e.target.value)}
+                    />
+                  </div>
                 ) : fields ? (
                   <div className="vFlex">
                     {fields.map((subField, idx) => (
