@@ -261,7 +261,7 @@ const DidConfig = ({
                   />
                 ) : type === "textarea" ? (
                   <div>
-                    <span>{"( ','구분, 최대 5개까지)"}</span>
+                    <span className="ft14">{"( ','구분, 최대 5개까지)"}</span>
                     < textarea
                       value={inputs[key] || ""}
                       placeholder={placeholder}
