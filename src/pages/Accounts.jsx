@@ -28,6 +28,7 @@ const AccountManage = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    console.log('')
     search();
   }, []);
 
@@ -47,29 +48,6 @@ const AccountManage = () => {
       setData(result);
       tableRef.current?.clearSelection?.();
       setselectRows([]);
-    });
-  };
-
-  // 사용자 수정
-  const clickEdit = () => {
-    if (selectRows.length === 0) {
-      showAlert({
-        message: ErrorMessages.nonSelect,
-      });
-      return;
-    }
-    if (selectRows.length > 1) {
-      showAlert({
-        message: ErrorMessages.oneSelect,
-      });
-      return;
-    }
-
-    navigate(ROUTES.ACCOUNT_EDIT, {
-      state: {
-        selectedId: selectRows[0].id,
-        selectedInfo: selectRows[0], // TOBE :: 삭제
-      },
     });
   };
 
