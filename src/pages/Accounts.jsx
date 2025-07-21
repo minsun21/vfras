@@ -141,8 +141,6 @@ const AccountManage = () => {
         data={data}
         onRowSelectionChange={setselectRows}
         topBtns={topBtns}
-        rowSelectionEnabled={false}
-        rowClickSelect={true}
       />
     </>
   );
