@@ -39,8 +39,12 @@ export const deepEqual = (a, b) => {
 export const isObjectInList = (target, list) => {
   return list.some(item =>
     Object.keys(target).length === Object.keys(item).length &&
-    Object.keys(target).every(key => target[key] === item[key])
+    Object.keys(target).every(key => target[key] == item[key])
   );
+};
+
+export const isKeyValueInList = (key, value, list) => {
+  return list.some(item => item[key] == value);
 };
 
 // "20250701" → "2025-07-01"

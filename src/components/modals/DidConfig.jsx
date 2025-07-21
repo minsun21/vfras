@@ -6,9 +6,10 @@ import Select from "../Select";
 import Table from "../Table";
 import { ErrorMessages, InfoMessages } from "../../constants/Message";
 import { useModal } from "../../contexts/ModalContext";
-import { isObjectInList } from "../../utils/Util";
+import { isKeyValueInList, isObjectInList } from "../../utils/Util";
 import { PERMISSIONS } from "../../constants/Permissions";
 import { useSelector } from "react-redux";
+import { KEYS } from "../../constants/Keys";
 
 const DidConfig = ({
   config,
@@ -173,6 +174,14 @@ const DidConfig = ({
     if (isObjectInList(inputs, currentList)) {
       showAlert({ message: ErrorMessages.duplicateSave });
       return;
+    }
+
+    // 요일 중복 검사
+    if (config.key === KEYS.IS_WEEK_JOINED) {
+      if (isKeyValueInList(config.key, inputs[config.key], currentList)) {
+        showAlert({ message: ErrorMessages.duplicateSave });
+        return;
+      }
     }
 
     // 날짜 유효성 검사
