@@ -47,7 +47,8 @@ export const KEYS = {
   DEPARTMENT_PERMISSIONS: "departmentPermissions", // 부서 권한
   MODIFY: "modifyPermissions",
   RBT_ID_VALUE: "rbtIdValue", // 통화 연결음 제목
-  IS_INTERRUPT: "stopFlag", // 일시정지(임시)
+  IS_INTERRUPT: "stopFlag", // 일시정지
+  IS_STOPED: "isStopped",
   INTERRUPT_RESERVATION_FROM: "stopStart", // 일시정지 예약 날짜 시작 
   INTERRUPT_RESERVATION_TO: "stopEnd", // 일시정지 예약 날짜 종료 
 

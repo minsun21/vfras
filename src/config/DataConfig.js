@@ -117,11 +117,10 @@ export const SUBSRIBES_COLUMNS = (navigateManage) => {
       header: LABELS.STATE,
       cell: ({ row }) => (
         <div
-          className={`${
-            row.original[KEYS.SUB_STATUS] !== SEARCH_SUBSRIBERS_STATE[1].key
+          className={`${row.original[KEYS.SUB_STATUS] !== SEARCH_SUBSRIBERS_STATE[1].key
               ? "stateNormal"
               : "stateArert"
-          }`}
+            }`}
         >
           {findMappedValue(
             SEARCH_SUBSRIBERS_STATE,
@@ -176,11 +175,10 @@ export const SUBSRIBES_COLUMNS_USER = [
     header: LABELS.STATE,
     cell: ({ row }) => (
       <div
-        className={`${
-          row.original[KEYS.SUB_STATUS] !== SEARCH_SUBSRIBERS_STATE[1].key
+        className={`${row.original[KEYS.SUB_STATUS] !== SEARCH_SUBSRIBERS_STATE[1].key
             ? "stateNormal"
             : "stateArert"
-        }`}
+          }`}
       >
         {findMappedValue(
           SEARCH_SUBSRIBERS_STATE,
@@ -246,7 +244,7 @@ export const DID_SETTING_COLUMNS = [
     header: LABELS.IS_ADDITIONAL_SERVICE,
     columns: [
       {
-        accessorKey: KEYS.IS_INTERRUPT,
+        accessorKey: KEYS.IS_STOPED,
         header: LABELS.INTERRUPT,
         cell: ({ row, getValue }) => (
           <span className={!!getValue() ? "cellDidOn" : "cellDidOff"} />
