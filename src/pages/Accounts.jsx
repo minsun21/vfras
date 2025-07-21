@@ -104,10 +104,17 @@ const AccountManage = () => {
   const topBtns = () => {
     return (
       <>
-        <Button label={LABELS.USER_EDIT} onClick={clickEdit} />
         {permissions.includes(PERMISSIONS.ACCNT_D) && <Button type={BUTTON_DELETE} onClick={clickDelete} />}
       </>
     );
+  };
+
+  const clickIdColumn = (row) => {
+    navigate(ROUTES.ACCOUNT_EDIT, {
+      state: {
+        selectedInfo: row,
+      },
+    });
   };
 
   return (
@@ -137,7 +144,7 @@ const AccountManage = () => {
       </Form>
       <Table
         ref={tableRef}
-        columns={ACCOUNTS_COLUMNS}
+        columns={ACCOUNTS_COLUMNS(clickIdColumn)}
         data={data}
         onRowSelectionChange={setselectRows}
         topBtns={topBtns}

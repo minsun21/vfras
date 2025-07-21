@@ -47,32 +47,36 @@ export const ACCOUNTS_LOGS_COLUMNS = (func) => {
   ];
 };
 
-export const ACCOUNTS_COLUMNS = [
-  {
-    accessorKey: KEYS.ADMIN_ID,
-    header: LABELS.ID,
-  },
-  {
-    accessorKey: KEYS.NAME,
-    header: LABELS.NAME,
-  },
-  {
-    accessorKey: KEYS.DEPARTMENT,
-    header: LABELS.DEPARTMENT,
-  },
-  {
-    accessorKey: KEYS.ADMIN_TYPE,
-    header: LABELS.CLASSIFICATION,
-  },
-  {
-    accessorKey: KEYS.CREATED_AT,
-    header: LABELS.CREATED_AT,
-  },
-  {
-    accessorKey: KEYS.LAST_ACCESS_TIME,
-    header: LABELS.LAST_ACCESS_TIME,
-  },
-];
+export const ACCOUNTS_COLUMNS = (func) => {
+  return [
+    {
+      accessorKey: KEYS.ADMIN_ID,
+      header: LABELS.ID,
+      clickable: ({ row }) => func(row.original),
+    },
+    {
+      accessorKey: KEYS.NAME,
+      header: LABELS.NAME,
+
+    },
+    {
+      accessorKey: KEYS.DEPARTMENT,
+      header: LABELS.DEPARTMENT,
+    },
+    {
+      accessorKey: KEYS.ADMIN_TYPE,
+      header: LABELS.CLASSIFICATION,
+    },
+    {
+      accessorKey: KEYS.CREATED_AT,
+      header: LABELS.CREATED_AT,
+    },
+    {
+      accessorKey: KEYS.LAST_ACCESS_TIME,
+      header: LABELS.LAST_ACCESS_TIME,
+    },
+  ];
+}
 
 const ManageButtonCell = React.memo(({ row, onNavigate }) => (
   <button className="sbtn miniK" onClick={() => onNavigate(row.original)}>
