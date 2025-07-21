@@ -111,10 +111,12 @@ const Subscriber = () => {
   const deleteAccount = async () => {
     const subNos = selectRows.map((row) => row[KEYS.SUB_NO]);
 
-    await deleteSubscribers(subNos);
-
-    search();
-    showAlert({ message: InfoMessages.successDelete });
+    deleteSubscribers(subNos).then(res => {
+      search();
+      setselectRows([]);
+      tableRef.current?.clearSelection?.();
+      showAlert({ message: InfoMessages.successDelete });
+    })
   };
 
   const topBtns = () => {
