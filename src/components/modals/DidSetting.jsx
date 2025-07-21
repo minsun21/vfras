@@ -313,6 +313,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
         message: InfoMessages.successBulkAdd
       })
       setSelectDid(updatedSelectDid);
+      initRbtData();
       initRbtSubs(selectDid);
     })
   };
