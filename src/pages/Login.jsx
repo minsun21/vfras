@@ -85,6 +85,10 @@ const Login = () => {
       })
       .catch((err) => {
         let message = err.response.data.resultData?.message || "";
+        if (message.includes(ErrorKey.lockUser)) {
+          showAlert({ message: LoginMessages.errorStopUser })
+          return;
+        }
         if (message.includes(ErrorKey.notFountUser)) {
           setErrorMessage(LoginMessages.errorIdConfirm);
         } else {

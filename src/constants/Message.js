@@ -107,5 +107,6 @@ export const ErrorKey = {
   notFindRbtInfo: "Not Found IpRbtInfo",
   presentSubsriber: "Subscriber is Present",
   notFindSubsriberNo: "Subscriber No Not Found",
-  notFountUser: "User Not Found"
+  notFountUser: "User Not Found",
+  lockUser: "계정이 잠겼습니다"
 }
