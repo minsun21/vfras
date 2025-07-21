@@ -60,7 +60,7 @@ export const SERVICE_TYPES = [
 export const SEARCH_TYPES = [
   { key: "", value: LABELS.ALL },
   { key: "NAME", value: LABELS.SUBSCRIBER_NAME },
-  { key: "SUBSRIBER_NO", value: LABELS.MAIN_NUMBER },
+  { key: "SUBSCRIBER_NO", value: LABELS.MAIN_NUMBER },
   { key: "RANGE_TEL", value: LABELS.PBX_NUMBER },
   { key: "TEL_NO", value: LABELS.USER_NUMBER_F },
 ];
