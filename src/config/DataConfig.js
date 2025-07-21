@@ -2,7 +2,7 @@ import React from "react";
 import { LABELS } from "../constants/Labels";
 import { KEYS } from "../constants/Keys";
 import { SUBSRIBERS_STATE } from "./FieldsConfig";
-import { AREA_CODES, DAY_TYPE, SEARCH_SUBSRIBERS_STATE } from "./Options";
+import { AREA_CODES, DAY_TYPE, SEARCH_SUBSRIBERS_STATE } from "./OptionConfig";
 import { findMappedValue } from "../utils/Util";
 
 // 음원 조회 컬럼
@@ -118,8 +118,8 @@ export const SUBSRIBES_COLUMNS = (navigateManage) => {
       cell: ({ row }) => (
         <div
           className={`${row.original[KEYS.SUB_STATUS] !== SEARCH_SUBSRIBERS_STATE[1].key
-              ? "stateNormal"
-              : "stateArert"
+            ? "stateNormal"
+            : "stateArert"
             }`}
         >
           {findMappedValue(
@@ -176,8 +176,8 @@ export const SUBSRIBES_COLUMNS_USER = [
     cell: ({ row }) => (
       <div
         className={`${row.original[KEYS.SUB_STATUS] !== SEARCH_SUBSRIBERS_STATE[1].key
-            ? "stateNormal"
-            : "stateArert"
+          ? "stateNormal"
+          : "stateArert"
           }`}
       >
         {findMappedValue(

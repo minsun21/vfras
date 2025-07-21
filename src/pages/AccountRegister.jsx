@@ -10,7 +10,7 @@ import { ErrorMessages, InfoMessages } from "../constants/Message";
 import axios, { AXIOS_NO_GLOBAL_ERROR } from "../api/axios";
 import { fieldsValidate, fieldsValidate2, isValidEmail, isValidPassword, isValidPhone } from "../utils/FormValidation";
 import { KEYS } from "../constants/Keys";
-import { ADMIN_TYPES } from "../config/Options";
+import { ADMIN_TYPES } from "../config/OptionConfig";
 
 const AccountRegister = () => {
   const navigate = useNavigate();

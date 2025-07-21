@@ -18,7 +18,7 @@ import {
   SEARCH_SERVICE_TYPES,
   SEARCH_SUBSRIBERS_STATE,
   SEARCH_SUBSRIBERS_TYPES,
-} from "../config/Options";
+} from "../config/OptionConfig";
 import Form from "../components/Form";
 import axios from "../api/axios";
 import {

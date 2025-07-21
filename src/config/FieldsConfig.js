@@ -6,7 +6,7 @@ import {
   SERVICE_TYPES,
   SUBSRIBERS_TYPES,
   USER_STATES,
-} from "./Options";
+} from "./OptionConfig";
 
 export const SUBSRIBERS_STATE = [
   { key: "0", value: "요청중" },

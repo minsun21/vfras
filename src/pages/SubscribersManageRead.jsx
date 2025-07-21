@@ -22,7 +22,7 @@ import axios from "../api/axios";
 import Form from "../components/Form";
 import PasswordReset from "../components/modals/PasswordReset";
 import { MODAL_SM } from "../components/modals/ModalRenderer";
-import { SERVICE_TYPES, SUBSRIBERS_TYPES } from "../config/Options";
+import { SERVICE_TYPES, SUBSRIBERS_TYPES } from "../config/OptionConfig";
 import { findMappedValue } from "../utils/Util";
 import { fieldsValidate } from "../utils/FormValidation";
 

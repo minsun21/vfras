@@ -1,7 +1,7 @@
 import axios from "../api/axios";
 import { ROUTES } from "../constants/routes";
 import { KEYS } from "../constants/Keys";
-import { SEARCH_SUBSRIBERS_STATE } from "../config/Options";
+import { SEARCH_SUBSRIBERS_STATE } from "../config/OptionConfig";
 import { ErrorMessages } from "../constants/Message";
 
 /**
@@ -35,17 +35,17 @@ export const approveSubscribers = async (subNos) => {
  * 삭제 전 유효성 검사
  */
 export const validateSubscribersBeforeDelete = (selectRows) => {
-    if (selectRows.length === 0) {
-      return ErrorMessages.nonSelect;
-    }
-    return null;
-  };
-  
-  /**
-   * 가입자 삭제 요청
-   */
-  export const deleteSubscribers = async (subNos) => {
-    return axios.delete(ROUTES.SUBSCRIBERS, {
-      data: subNos,
-    });
-  };
+  if (selectRows.length === 0) {
+    return ErrorMessages.nonSelect;
+  }
+  return null;
+};
+
+/**
+ * 가입자 삭제 요청
+ */
+export const deleteSubscribers = async (subNos) => {
+  return axios.delete(ROUTES.SUBSCRIBERS, {
+    data: subNos,
+  });
+};

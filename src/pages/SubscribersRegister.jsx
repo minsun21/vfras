@@ -16,7 +16,7 @@ import { useModal } from "../contexts/ModalContext";
 import { fieldsValidate } from "../utils/FormValidation";
 import axios, { AXIOS_NO_GLOBAL_ERROR } from "../api/axios";
 import { KEYS } from "../constants/Keys";
-import { SERVICE_TYPES } from "../config/Options";
+import { SERVICE_TYPES } from "../config/OptionConfig";
 
 const SubscriberRegister = () => {
   const navigate = useNavigate();
