@@ -89,11 +89,11 @@
 .fav-btn.active { background: url("../img/fav-on.png") no-repeat center; background-size: 1.4rem auto; } 
 
 /* login */.loginPage { background-color: #F6F7F8; display: flex; justify-content: center; align-items: center; height: 100vh; } 
-.loginCenter { width: 560px; height: 490px; margin: auto; align-items: center; } 
+.loginCenter { width: 560px; height: 470px; margin: auto; align-items: center; } 
 .logoTit { text-align: center; margin-bottom: 10px; line-height: 30px; } 
 .logoTit .logoTxt { font-size: 26px; font-weight: 700; color: #000; line-height: 32px; margin: 0px 15px 0px 10px; height: 40px; display: flex; justify-content: center; } 
 .logoTit .logoTxt::before { content: ''; background: url("../img/logo1.png") no-repeat center; width: 106px; height: 32px; margin: 0px 10px 0px 0px; } 
-.loginBox { background-color: #FFF; width: 560px; height: 430px; border-radius: 20px; padding: 60px 60px 40px 60px; box-shadow: 0px 2px 5px 5px #DDD; } 
+.loginBox { background-color: #FFF; width: 560px; height: 380px; border-radius: 20px; padding: 60px 60px 40px 60px; box-shadow: 0px 2px 5px 5px #DDD; } 
 .loginBox .loginTit { font-size: 22px; font-weight: 700; letter-spacing: -2%; margin-bottom: 15px; } 
 .loginBox .form-field .form-input { height: 52px; line-height: 52px; font-weight: 500; font-size: 16px; color: #000; margin-bottom: 10px; } 
 .loginBox div.check-box { margin: 15px 0px 20px 5px; z-index: 0;} 

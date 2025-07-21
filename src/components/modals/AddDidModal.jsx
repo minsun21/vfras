@@ -10,7 +10,7 @@ const AddDidModal = () => {
   const formData = useSelector((state) => state.didAdd);
 
   return (
-    <div>
+    <div className="tbl-list btNo">
       <table>
         <colgroup>
           <col className="w250"></col>
