@@ -6,7 +6,7 @@ import Select from "../Select";
 import Table from "../Table";
 import { ErrorMessages, InfoMessages } from "../../constants/Message";
 import { useModal } from "../../contexts/ModalContext";
-import { isKeyValueInList, isObjectInList } from "../../utils/Util";
+import { formatDateWithDash, isKeyValueInList, isObjectInList, removeDashFromDate, removeDotFromTime } from "../../utils/Util";
 import { PERMISSIONS } from "../../constants/Permissions";
 import { useSelector } from "react-redux";
 import { KEYS } from "../../constants/Keys";
@@ -176,13 +176,58 @@ const DidConfig = ({
       return;
     }
 
-    // 요일 중복 검사
+    // 요일 중복 검사 > 요일은 하나만
     if (config.key === KEYS.IS_WEEK_JOINED) {
-      if (isKeyValueInList(config.key, inputs[config.key], currentList)) {
-        showAlert({ message: ErrorMessages.duplicateSave });
+      if (isKeyValueInList(KEYS.DAY_TYPE, inputs[KEYS.DAY_TYPE], currentList)) {
+        showAlert({ message: ErrorMessages.duplicateSaveDay });
         return;
       }
     }
+
+    // 발신 지역 중복 검사 > 지역번호는 하나만
+    if (config.key === KEYS.IS_ORGN_JOINED) {
+      if (isKeyValueInList(KEYS.ORGN, inputs[KEYS.ORGN], currentList)) {
+        showAlert({ message: ErrorMessages.duplicateSaveOrgn });
+        return;
+      }
+    }
+
+    // 기념일별 > 시작일이 같으면 안됨 (-제거)
+    if (config.key === KEYS.IS_DURA_JOINED) {
+      let newCurrentList = currentList.map(c => {
+        return {
+          ...c,
+          [KEYS.S_DATE]: formatDateWithDash(c[KEYS.S_DATE]),
+        }
+      });
+      if (isKeyValueInList(KEYS.S_DATE, inputs[KEYS.S_DATE], newCurrentList)) {
+        showAlert({ message: ErrorMessages.duplicateSaveDate });
+        return;
+      }
+    }
+
+    // 발신자 번호별 > cidGroups 중 하나라도 같으면 안됨
+    if (config.key === KEYS.IS_GROUP_JOINED) {
+      const currentCids = currentList.flatMap(item => item[KEYS.CALLING_NUMBER]);
+      const inputCids = inputs[KEYS.CALLING_NUMBER].split(',').map(s => s.trim());
+
+      const duplicates = currentCids.filter(value => inputCids.includes(value));
+      if (duplicates.length > 0) {
+        showAlert({ message: ErrorMessages.duplicateSaveGroup });
+        return;
+      }
+    }
+
+
+    // 시간대 중복 검사 > 요일이 같으면 시작 시간대가 달라야함
+    if (config.key === KEYS.IS_TIME_JOINED) {
+      const isDuplicate = currentList.some(item => item[KEYS.DAY_TYPE] == inputs[KEYS.DAY_TYPE] && item[KEYS.S_TIME] == removeDotFromTime(inputs[KEYS.S_TIME]));
+      if (isDuplicate) {
+        showAlert({ message: ErrorMessages.duplicateSaveTime });
+        return;
+      }
+    }
+
 
     // 날짜 유효성 검사
     const startDate = inputs.startDate;

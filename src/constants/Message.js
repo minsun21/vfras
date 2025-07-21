@@ -54,7 +54,12 @@ export const ErrorMessages = {
   onlyOneRbt: "개인 사용자는 1개 회선만 등록 가능합니다.",
   dateBlank: "날짜를 모두 입력해주세요",
   notFindRbt: "음원 코드가 존재하지 않습니다 ",
-  allInsert: "모든 항목을 입력해주세요."
+  allInsert: "모든 항목을 입력해주세요.",
+  duplicateSaveDay: "중복 부가서비스는 추가할 수 없습니다 (요일).",
+  duplicateSaveOrgn: "중복 부가서비스는 추가할 수 없습니다 (지역번호).",
+  duplicateSaveGroup: "중복 부가서비스는 추가할 수 없습니다 (발신번호).",
+  duplicateSaveDate: "중복 부가서비스는 추가할 수 없습니다 (시작일).",
+  duplicateSaveTime: "중복 부가서비스는 추가할 수 없습니다 (요일, 시작시간).",
 };
 
 export const LoginMessages = {
