@@ -126,6 +126,7 @@
 .lvAccordion .lvItem .svcBoxC .svcBoxCTxt { font-size: 14px; font-weight: 700; color: #000; border-top: 1px dashed #bbb; margin: 20px 0px 5px 0px; width: 80%; text-align: center; padding-top: 15px; } 
 .lvAccordion .lvItem .svcBoxR { width: calc(100% - 230px); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 7px; margin-bottom: auto; } 
 .lvAccordion .lvItem .svcBoxR .tbl-list { height: 330px; margin-top: 0px;}
+.lvAccordion .lvItem .svcBoxR .tbl-list table thead th:nth-child(-n+2) { width: 50px;}
 /* cal */
 .lvDateBox { display: flex; gap: 10px; align-items: center; } 
 .lvCalDate { height: 4rem; line-height: 4rem; padding: 0 1.5rem; border-radius: 0.8rem; border: solid 1px #ddd; background: #fff; transition: all 0.35s; position: relative; width: 11rem; outline: 0; font-size: 1.3rem; color: #333; } 
