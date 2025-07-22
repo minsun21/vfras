@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ACCOUNTS_EDIT_FIELDS } from "../config/FieldsConfig";
-import Button, { BUTTON_CANCEL, BUTTON_SAVE } from "../components/Button";
+import Button, { BUTTON_CANCEL, BUTTON_SAVE, BUTTON_DELETE } from "../components/Button";
 import Input from "../components/Input";
 import Select from "../components/Select";
 import { ROUTES } from "../constants/routes";
@@ -10,12 +10,15 @@ import { ErrorMessages, InfoMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 import axios from "../api/axios";
 import { KEYS } from "../constants/Keys";
+import { useSelector } from "react-redux";
 import RadioGroup from "../components/RadioGroup";
+import { PERMISSIONS } from "../constants/Permissions";
 
 const AccountEdit = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const selectedId = state?.selectedInfo?.[KEYS.ADMIN_ID] || null;
+  const permissions = useSelector((state) => state.auth.user?.permissions);
 
   const { showDialog, showAlert, closeModal } = useModal();
   const [formData, setFormData] = useState({});
@@ -67,6 +70,25 @@ const AccountEdit = () => {
       message: InfoMessages.confirmCancel,
       onConfirm: () => navigate(ROUTES.ACCOUNTS),
     });
+  };
+
+   // 사용자 삭제
+   const clickDelete = () => {
+    showDialog({
+      message: InfoMessages.confirmDeleteOne,
+      onConfirm: deleteAccount,
+    });
+  };
+
+  const deleteAccount = () => {
+    axios
+      .delete(ROUTES.ACCOUNTS_MANAGE(formData[KEYS.ADMIN_ID]))
+      .then((res) => {
+        showAlert({
+          message: InfoMessages.successDelete,
+          onConfirm: () => navigate(ROUTES.ACCOUNTS),
+        });
+      });
   };
 
   return (
@@ -161,6 +183,7 @@ const AccountEdit = () => {
       <div className="btn-wrap">
         <div>
           <Button type={BUTTON_CANCEL} onClick={cancelEdit} />
+        {permissions.includes(PERMISSIONS.ACCNT_D) && <Button type={BUTTON_DELETE} onClick={clickDelete} />}
         </div>
         <div>
           <Button type={BUTTON_SAVE} onClick={handleSave} />

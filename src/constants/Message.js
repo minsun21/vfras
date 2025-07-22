@@ -15,7 +15,8 @@ export const InfoMessages = {
   successStop: "일시정지 되었습니다.",
   successClear: "일시정지 해제 되었습니다.",
   successBulkAdd: "일괄 적용되었습니다.",
-  successBulkDelete: "일괄 삭제되었습니다."
+  successBulkDelete: "일괄 삭제되었습니다.",
+  confirmDeleteOne : "삭제하시겠습니까?"
 };
 
 export const ProfileMessages = {

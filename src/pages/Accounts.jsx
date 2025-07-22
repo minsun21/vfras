@@ -22,7 +22,7 @@ const AccountManage = () => {
   const permissions = useSelector((state) => state.auth.user?.permissions);
   const navigate = useNavigate();
   const tableRef = useRef();
-  const { showAlert, showDialog } = useModal();
+  const { showAlert } = useModal();
   const [selectRows, setselectRows] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [data, setData] = useState([]);
@@ -48,42 +48,6 @@ const AccountManage = () => {
       tableRef.current?.clearSelection?.();
       setselectRows([]);
     });
-  };
-
-  // 사용자 삭제
-  const clickDelete = () => {
-    if (selectRows.length === 0) {
-      showAlert({
-        message: ErrorMessages.nonSelect,
-      });
-      return;
-    }
-
-    showDialog({
-      message: InfoMessages.confirmDelete(selectRows.length),
-      onConfirm: deleteAccount,
-    });
-  };
-
-  const deleteAccount = () => {
-    axios
-      .delete(ROUTES.ACCOUNTS_MANAGE(selectRows[0][KEYS.ADMIN_ID]))
-      .then((res) => {
-        search();
-        setselectRows([]); // 선택 초기화
-        showAlert({
-          message: InfoMessages.successDelete,
-        });
-      });
-  };
-
-  // 사용자 정보 수정 / 삭제 버튼
-  const topBtns = () => {
-    return (
-      <>
-        {permissions.includes(PERMISSIONS.ACCNT_D) && <Button type={BUTTON_DELETE} onClick={clickDelete} />}
-      </>
-    );
   };
 
   const clickIdColumn = (row) => {
@@ -124,7 +88,6 @@ const AccountManage = () => {
         columns={ACCOUNTS_COLUMNS(clickIdColumn)}
         data={data}
         onRowSelectionChange={setselectRows}
-        topBtns={topBtns}
       />
     </>
   );
