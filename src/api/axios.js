@@ -51,13 +51,10 @@ instance.interceptors.response.use(
 
     if (status === 401) {
       const errMsg = error.response?.data?.resultData;
-      console.log(errMsg)
       if (errMsg === "로그인 정보가 존재하지 않습니다.") {
-        console.log('엥')
         sessionStorage.setItem("expiredMessage", ErrorMessages.expired);
-        // store.dispatch(logout());
-        // window.location.href = "/login";
-        return;
+        store.dispatch(logout());
+        return Promise.reject(error);
       }
     }
     // ✅ 공통 에러 처리 (suppress 옵션 없을 경우만)

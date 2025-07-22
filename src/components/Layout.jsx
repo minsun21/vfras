@@ -44,7 +44,6 @@ const Layout = () => {
       message: InfoMessages.confirmLogout,
       onConfirm: () => {
         axios.put(ROUTES.LOGOUT).then((res)=>{
-          window.location.href = '/login';
           deleteCookie();
           dispatch(logout());
         })
