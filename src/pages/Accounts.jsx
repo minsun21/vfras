@@ -87,7 +87,7 @@ const AccountManage = () => {
         ref={tableRef}
         columns={ACCOUNTS_COLUMNS(clickIdColumn)}
         data={data}
-        onRowSelectionChange={setselectRows}
+        rowSelectionEnabled={false}
       />
     </>
   );
