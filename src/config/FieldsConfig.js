@@ -6,6 +6,7 @@ import {
   SERVICE_TYPES,
   SUBSRIBERS_TYPES,
   USER_STATES,
+  STATUS
 } from "./OptionConfig";
 
 export const SUBSRIBERS_STATE = [
@@ -457,6 +458,12 @@ export const ACCOUNTS_EDIT_FIELDS = [
     type: "text",
     required: true,
     disabled: true,
+  },
+  {
+    key: KEYS.SUB_STATUS,
+    label: LABELS.USER_STATE,
+    type: "radio",
+    Options: STATUS,
   },
   {
     key: KEYS.ADMIN_TYPE,

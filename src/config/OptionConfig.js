@@ -43,6 +43,12 @@ export const USER_STATES = [
     { key: "1", value: "요청중" },
 ];
 
+// 사용자 잠금 상태
+export const STATUS = [
+    { key: "N", value: "활성" },
+    { key: "L", value: "잠금" },
+];
+
 // 가입자 유형
 export const SUBSRIBERS_TYPES = [
     { key: "0", value: "개인" },

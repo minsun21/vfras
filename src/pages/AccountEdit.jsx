@@ -10,11 +10,12 @@ import { ErrorMessages, InfoMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 import axios from "../api/axios";
 import { KEYS } from "../constants/Keys";
+import RadioGroup from "../components/RadioGroup";
 
 const AccountEdit = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const selectedId = state?.selectedInfo[KEYS.ADMIN_ID] || {}; // 삭제
+  const selectedId = state?.selectedInfo?.[KEYS.ADMIN_ID] || null;
 
   const { showDialog, showAlert, closeModal } = useModal();
   const [formData, setFormData] = useState({});
@@ -106,6 +107,13 @@ const AccountEdit = () => {
                         Options={Options}
                         onChange={handleChange}
                       />
+                    ) : type === "radio" ? (
+                      <RadioGroup
+                        name={key}
+                        value={value}
+                        Options={Options}
+                        onChange={handleChange}
+                      />
                     ) : comment ? (
                       <div className="rowBox">
                         <Input
@@ -118,23 +126,9 @@ const AccountEdit = () => {
                         <span className="comment">{comment}</span>
                       </div>
                     ) : // ) : key === KEYS.MOBILE ? (
-                      //   <PhoneNumberInput value={value} onChange={handleChange} />
-                      key === KEYS.PASSWORD2 ? (
-                        <div className="rowBox">
-                          <Input
-                            value={value}
-                            type={type}
-                            placeholder={formData[key]}
-                            onChange={handleChange}
-                            disabled={disabled}
-                          />
-                          <span className="password-confirm">
-                            {formData[KEYS.PASSWORD1] !==
-                              formData[KEYS.PASSWORD2] &&
-                              ErrorMessages.correctPassword}
-                          </span>
-                        </div>
-                      ) : (
+                    //   <PhoneNumberInput value={value} onChange={handleChange} />
+                    key === KEYS.PASSWORD2 ? (
+                      <div className="rowBox">
                         <Input
                           value={value}
                           type={type}
@@ -142,7 +136,21 @@ const AccountEdit = () => {
                           onChange={handleChange}
                           disabled={disabled}
                         />
-                      )}
+                        <span className="password-confirm">
+                          {formData[KEYS.PASSWORD1] !==
+                            formData[KEYS.PASSWORD2] &&
+                            ErrorMessages.correctPassword}
+                        </span>
+                      </div>
+                    ) : (
+                      <Input
+                        value={value}
+                        type={type}
+                        placeholder={formData[key]}
+                        onChange={handleChange}
+                        disabled={disabled}
+                      />
+                    )}
                   </td>
                 </tr>
               );

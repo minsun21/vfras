@@ -28,7 +28,6 @@ const AccountManage = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    console.log('')
     search();
   }, []);
 
