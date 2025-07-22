@@ -16,7 +16,7 @@ export const InfoMessages = {
   successClear: "일시정지 해제 되었습니다.",
   successBulkAdd: "일괄 적용되었습니다.",
   successBulkDelete: "일괄 삭제되었습니다.",
-  confirmDeleteOne : "삭제하시겠습니까?"
+  confirmDeleteOne: "삭제하시겠습니까?"
 };
 
 export const ProfileMessages = {
@@ -61,6 +61,7 @@ export const ErrorMessages = {
   duplicateSaveGroup: "중복 부가서비스는 추가할 수 없습니다.\n(발신번호)",
   duplicateSaveDate: "중복 부가서비스는 추가할 수 없습니다.\n(시작일)",
   duplicateSaveTime: "중복 부가서비스는 추가할 수 없습니다.\n(요일, 시작시간)",
+  dulicateSaveGroupInput: "발신번호에 중복이 있습니다."
 };
 
 export const LoginMessages = {

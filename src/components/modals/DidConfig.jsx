@@ -211,7 +211,7 @@ const DidConfig = ({
       }
     }
 
-    // 발신자 번호별 > cidGroups 중 하나라도 같으면 안됨
+    // 발신자 번호별 
     if (config.key === KEYS.IS_GROUP_JOINED) {
       // ,가 4개 이상 들어가면 안됨
       let cnt = inputs[KEYS.CALLING_NUMBER].split(",").length - 1;
@@ -220,6 +220,15 @@ const DidConfig = ({
         return;
       }
 
+      // 입력값중 중복 체크
+      const items = inputs[KEYS.CALLING_NUMBER].split(",");
+      const duplicatesInput = items.filter((item, index, arr) => arr.indexOf(item) !== index && arr.lastIndexOf(item) === index);
+      if (duplicatesInput.length > 0) {
+        showAlert({ message: ErrorMessages.dulicateSaveGroupInput });
+        return;
+      }
+
+      // > cidGroups 중 하나라도 같으면 안됨
       const currentCids = currentList.flatMap(
         (item) => item[KEYS.CALLING_NUMBER]
       );
