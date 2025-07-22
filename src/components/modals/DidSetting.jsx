@@ -401,7 +401,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
               value={userInfo[KEYS.SUB_NO]}
               disabled
             />
-            {permissions.includes(PERMISSIONS.SUBS_U) &&
+            {!isPersonal && permissions.includes(PERMISSIONS.SUBS_U) &&
               <div className="mlAuto">
                 <Button
                   label={LABELS.ADD_ITEM}
@@ -414,7 +414,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
             <div className="tbl-list-top mt20">
               <div className="top-button">
                 <span>
-                  {permissions.includes(PERMISSIONS.SUBS_U) &&
+                  {!isPersonal && permissions.includes(PERMISSIONS.SUBS_U) &&
                     <Button type={BUTTON_DELETE} onClick={deleteDidRows} />}
                 </span>
               </div>
