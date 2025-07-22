@@ -315,6 +315,10 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
       setSelectDid(updatedSelectDid);
       initRbtData();
       initRbtSubs(selectDid);
+    }).catch((err) => {
+      showAlert({
+        message: err.response.data.resultData.message || ErrorMessages.server
+      })
     })
   };
 

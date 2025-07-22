@@ -6,7 +6,12 @@ import Select from "../Select";
 import Table from "../Table";
 import { ErrorMessages, InfoMessages } from "../../constants/Message";
 import { useModal } from "../../contexts/ModalContext";
-import { formatDateWithDash, isKeyValueInList, isObjectInList, removeDashFromDate, removeDotFromTime } from "../../utils/Util";
+import {
+  formatDateWithDash,
+  isKeyValueInList,
+  isObjectInList,
+  removeDotFromTime,
+} from "../../utils/Util";
 import { PERMISSIONS } from "../../constants/Permissions";
 import { useSelector } from "react-redux";
 import { KEYS } from "../../constants/Keys";
@@ -18,7 +23,7 @@ const DidConfig = ({
   deleteDidConfig,
   bulkAdd,
   bulkDelete,
-  saveDidSub
+  saveDidSub,
 }) => {
   const permissions = useSelector((state) => state.auth.user?.permissions);
 
@@ -30,7 +35,6 @@ const DidConfig = ({
 
   useEffect(() => {
     initForms();
-
   }, [selectDid]);
 
   useEffect(() => {
@@ -58,7 +62,7 @@ const DidConfig = ({
     });
 
     setInputs(initialInputs);
-  }
+  };
 
   const openAccordion = (e) => {
     const clickedEl = parentRef.current;
@@ -90,7 +94,7 @@ const DidConfig = ({
   const saveDid = () => {
     saveDidSub(config);
     resetSelectRows();
-  }
+  };
 
   const bulkAddAction = () => {
     const key = config.key;
@@ -109,8 +113,8 @@ const DidConfig = ({
 
     if (selectRows.length > 1) {
       showAlert({
-        message: ErrorMessages.oneSelect
-      })
+        message: ErrorMessages.oneSelect,
+      });
       return;
     }
     bulkDelete(config.dataKey, selectRows[0]);
@@ -144,7 +148,6 @@ const DidConfig = ({
   };
 
   // 기본 입력값 체크
-
   const checkEmpty = (config, inputs) => {
     return config.forms.some((form) => {
       if (form.fields) {
@@ -161,11 +164,9 @@ const DidConfig = ({
         );
       }
     });
-
   };
 
   const addDidConfigValidation = (config, inputs, currentList) => {
-
     if (checkEmpty(config, inputs)) {
       showAlert({ message: ErrorMessages.allInsert });
       return;
@@ -194,11 +195,11 @@ const DidConfig = ({
 
     // 기념일별 > 시작일이 같으면 안됨 (-제거)
     if (config.key === KEYS.IS_DURA_JOINED) {
-      let newCurrentList = currentList.map(c => {
+      let newCurrentList = currentList.map((c) => {
         return {
           ...c,
           [KEYS.S_DATE]: formatDateWithDash(c[KEYS.S_DATE]),
-        }
+        };
       });
       if (isKeyValueInList(KEYS.S_DATE, inputs[KEYS.S_DATE], newCurrentList)) {
         showAlert({ message: ErrorMessages.duplicateSaveDate });
@@ -208,26 +209,41 @@ const DidConfig = ({
 
     // 발신자 번호별 > cidGroups 중 하나라도 같으면 안됨
     if (config.key === KEYS.IS_GROUP_JOINED) {
-      const currentCids = currentList.flatMap(item => item[KEYS.CALLING_NUMBER]);
-      const inputCids = inputs[KEYS.CALLING_NUMBER].split(',').map(s => s.trim());
+      // ,가 4개 이상 들어가면 안됨
+      let cnt = inputs[KEYS.CALLING_NUMBER].split(",").length - 1;
+      if (cnt > 4) {
+        showAlert({ message: ErrorMessages.max(LABELS.CALLING_NUMBER, 5) });
+        return;
+      }
 
-      const duplicates = currentCids.filter(value => inputCids.includes(value));
+      const currentCids = currentList.flatMap(
+        (item) => item[KEYS.CALLING_NUMBER]
+      );
+      const inputCids = inputs[KEYS.CALLING_NUMBER]
+        .split(",")
+        .map((s) => s.trim());
+
+      const duplicates = currentCids.filter((value) =>
+        inputCids.includes(value)
+      );
       if (duplicates.length > 0) {
         showAlert({ message: ErrorMessages.duplicateSaveGroup });
         return;
       }
     }
 
-
     // 시간대 중복 검사 > 요일이 같으면 시작 시간대가 달라야함
     if (config.key === KEYS.IS_TIME_JOINED) {
-      const isDuplicate = currentList.some(item => item[KEYS.DAY_TYPE] == inputs[KEYS.DAY_TYPE] && item[KEYS.S_TIME] == removeDotFromTime(inputs[KEYS.S_TIME]));
+      const isDuplicate = currentList.some(
+        (item) =>
+          item[KEYS.DAY_TYPE] == inputs[KEYS.DAY_TYPE] &&
+          item[KEYS.S_TIME] == removeDotFromTime(inputs[KEYS.S_TIME])
+      );
       if (isDuplicate) {
         showAlert({ message: ErrorMessages.duplicateSaveTime });
         return;
       }
     }
-
 
     // 날짜 유효성 검사
     const startDate = inputs.startDate;
@@ -250,7 +266,7 @@ const DidConfig = ({
     }
 
     // 최대 갯수 초과 검사
-    if (config.max && (currentList.length + 1) > config.max) {
+    if (config.max && currentList.length + 1 > config.max) {
       showAlert({
         message: ErrorMessages.max(config.title, config.max),
       });
@@ -279,11 +295,7 @@ const DidConfig = ({
           </div>
         </div>
         <label className="lvSwitch">
-          <input
-            type="checkbox"
-            checked={selectDid[config.key]}
-            disabled
-          />
+          <input type="checkbox" checked={selectDid[config.key]} disabled />
           <span className="slider"></span>
         </label>
       </div>
@@ -315,8 +327,8 @@ const DidConfig = ({
                   />
                 ) : type === "textarea" ? (
                   <div>
-                    <span className="ft14">{"( ','구분, 최대 5개까지)"}</span>
-                    < textarea
+                    <span className="ft14">{LABELS.GROUP_PLACEHOLDER}</span>
+                    <textarea
                       value={inputs[key] || ""}
                       placeholder={placeholder}
                       onChange={(e) => handleChange(e.target.value)}
@@ -356,7 +368,7 @@ const DidConfig = ({
         </div>
 
         {/* 버튼 영역 */}
-        {permissions.includes(PERMISSIONS.ACCNT_U) ?
+        {permissions.includes(PERMISSIONS.ACCNT_U) ? (
           <div className="svcBoxC">
             <Button
               type={BUTTON_CANCEL}
@@ -369,7 +381,14 @@ const DidConfig = ({
               label={LABELS.ALL_DELETE}
               onClick={allDeleteAction}
             />
-            <div className="svcBoxCTxt"> <Button type={BUTTON_DELETE} label={LABELS.SAVE} onClick={saveDid} /></div>
+            <div className="svcBoxCTxt">
+              {" "}
+              <Button
+                type={BUTTON_DELETE}
+                label={LABELS.SAVE}
+                onClick={saveDid}
+              />
+            </div>
             <div className="svcBoxCTxt">{LABELS.MAIN_NUMBER}</div>
             <Button
               type={BUTTON_DELETE}
@@ -382,7 +401,9 @@ const DidConfig = ({
               onClick={bulkDeleteAction}
             />
           </div>
-          : <div className="svcBoxC" />}
+        ) : (
+          <div className="svcBoxC" />
+        )}
 
         {/* 테이블 영역 */}
         <div className="svcBoxR">

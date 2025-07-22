@@ -234,11 +234,6 @@ export const getAddBulkItem = (dataKey, inputs, selectDid) => {
           .map(num => num.trim())
           .filter(num => num !== "")
       }
-    case KEYS.GROUPS_DATA_KEY:
-      return {
-        ...inputs,
-        [KEYS.GROUP_ID]: selectDid[dataKey]?.length + 1 || 1,
-      };
     default:
       return inputs;
   }
@@ -251,7 +246,7 @@ export const bulkAddItem = async ({ key, dataKey, inputs, selectDid }) => {
   const uri = getBulkUri(dataKey, selectDid);
   const body = getAddBulkItem(dataKey, inputs, selectDid);
 
-  return await axios.post(uri, body);
+  return await axios.post(uri, body, AXIOS_NO_GLOBAL_ERROR);
 };
 
 

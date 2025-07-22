@@ -136,5 +136,6 @@ export const LABELS = {
   RESET: "초기화",
   START: "시작",
   INTERRUPT_RESERVATION: "일시정지 예약",
-  CLOSE: "닫기"
+  CLOSE: "닫기",
+  GROUP_PLACEHOLDER : "( ','구분, 최대 5개까지)"
 };
