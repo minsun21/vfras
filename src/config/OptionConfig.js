@@ -1,13 +1,13 @@
 import { LABELS } from "../constants/Labels";
 
 export const DAY_TYPE = [
-    { key: "1", value: "월" },
-    { key: "2", value: "화" },
-    { key: "3", value: "수" },
-    { key: "4", value: "목" },
-    { key: "5", value: "금" },
-    { key: "6", value: "토" },
-    { key: "0", value: "일" },
+    { key: "1", value: "일" },
+    { key: "2", value: "월" },
+    { key: "3", value: "화" },
+    { key: "4", value: "수" },
+    { key: "5", value: "목" },
+    { key: "6", value: "금" },
+    { key: "7", value: "토" },
 ];
 
 export const AREA_CODES = [
