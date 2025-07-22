@@ -109,8 +109,12 @@ const DidConfig = ({
   };
 
   const bulkDeleteAction = () => {
-    if (selectRows.length === 0) return;
-
+    if (selectRows.length === 0) {
+      showAlert({
+        message: ErrorMessages.nonSelect,
+      });
+      return;
+    }
     if (selectRows.length > 1) {
       showAlert({
         message: ErrorMessages.oneSelect,

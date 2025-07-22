@@ -240,6 +240,34 @@ export const getAddBulkItem = (dataKey, inputs, selectDid) => {
 };
 
 /**
+ * 일괄 삭제용 데이터 가공
+ */
+export const getremoveBulkItem = (dataKey, inputs, selectDid) => {
+  switch (dataKey) {
+    case KEYS.TIMES_DATA_KEY:
+      return {
+        ...inputs,
+        [KEYS.S_TIME]: inputs[KEYS.S_TIME].replace(":", ""),
+        [KEYS.E_TIME]: inputs[KEYS.E_TIME].replace(":", ""),
+      };
+    case KEYS.DURAS_DATA_KEY:
+      return {
+        ...inputs,
+        [KEYS.S_DATE]: removeDashFromDate(inputs[KEYS.S_DATE]),
+        [KEYS.E_DATE]: removeDashFromDate(inputs[KEYS.E_DATE]),
+      };
+    case KEYS.GROUPS_DATA_KEY:
+      return {
+        ...inputs,
+        [KEYS.GROUP_ID]: selectDid[KEYS.GROUPS_DATA_KEY].length + 1,
+      }
+    default:
+      return inputs;
+  }
+};
+
+
+/**
  * 부가서비스 일괄 등록 API 호출 및 반영값 반환
  */
 export const bulkAddItem = async ({ key, dataKey, inputs, selectDid }) => {
@@ -255,7 +283,7 @@ export const bulkAddItem = async ({ key, dataKey, inputs, selectDid }) => {
  */
 export const bulkRemoveItem = async ({ dataKey, inputs, selectDid }) => {
   const uri = getBulkUri(dataKey, selectDid);
-  const body = getAddBulkItem(dataKey, inputs, selectDid);
+  const body = getremoveBulkItem(dataKey, inputs, selectDid);
 
   return await axios.delete(uri, {
     data: body,
