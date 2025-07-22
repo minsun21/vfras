@@ -135,11 +135,6 @@ export const getAddItem = (dataKey, item, selectDid) => {
           .map(num => num.trim())
           .filter(num => num !== "")
       }
-    case KEYS.GROUPS_DATA_KEY:
-      return {
-        ...item,
-        [KEYS.GROUP_ID]: selectDid[dataKey]?.length + 1 || 1,
-      };
     default:
       return item;
   }
