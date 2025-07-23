@@ -398,7 +398,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
   return (
     <div>
       <div className="didLayout">
-        <div className="w60p">
+        <div className="didL">
           <div className="popSubTit">{LABELS.DID}</div>
           <Form className="popSchBox">
             <label className="schTxtL1">{LABELS.MAIN_NUMBER}</label>
@@ -441,7 +441,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
             onCheckboxSelectionChange={setCheckboxSelected}
           />
         </div>
-        <div className="w40p">
+        <div className="didR">
           <div className="popSubTit">{LABELS.ADDITIONAL_SERVICE_SETTING}</div>
           <Form className="popSchBox">
             {/* 기본 링 */}
@@ -462,8 +462,8 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
           {selectDid && (
             <div className="didStopBox">
               <div className="radio-box">
-                <div className="dflex gap7">
-                  <label className="schTxtL1">{LABELS.INTERRUPT}</label>
+                <div className="dflex gap10">
+                  <label className="schTxtL1 ft15 mr10">{LABELS.INTERRUPT}</label>
 
                   <span className="items">
                     <input
@@ -501,7 +501,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
                   <div className="hFlex gap2">
                     <Input
                       type="date"
-                      size="w110"
+                      size="w130"
                       name={KEYS.INTERRUPT_RESERVATION_FROM}
                       value={stopDate[KEYS.INTERRUPT_RESERVATION_FROM]}
                       onChange={onChangeDate}
@@ -510,7 +510,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
                     <span>{"~"}</span>
                     <Input
                       type="date"
-                      size="w110"
+                      size="w130"
                       name={KEYS.INTERRUPT_RESERVATION_TO}
                       value={stopDate[KEYS.INTERRUPT_RESERVATION_TO]}
                       onChange={onChangeDate}

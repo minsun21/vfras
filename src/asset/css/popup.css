@@ -82,9 +82,11 @@
 .didPop .pop-body { height: 770px; } 
 .w400 .pop-body { height: 250px; } 
 .w600 .pop-body { height: 500px; } 
+.didL { width: 55%;}
+.didR { width: 45%;}
 .didPop .pop-body .tbl-list tr th { font-size: 14px; height: 35px; padding: 5px; } 
-.didPop .pop-body .tbl-list tr:first-child th:last-child { width: 65px; } 
-.didPop .pop-body .tbl-list tr:nth-child(2) th { font-size: 13px; font-weight: 400; width: 55px; } 
+.didPop .pop-body .didL .tbl-list tr:first-child th:last-child { width: 65px; } 
+.didPop .pop-body .didL .tbl-list tr:nth-child(2) th { font-size: 13px; font-weight: 400; width: 55px; } 
 .didPop .pop-body .tbl-list tr td { font-size: 13px; font-weight: 400; height: 45px; padding: 4px; } 
 .didPop .pop-body .configBox .tbl-list th { font-size: 14px; height: 35px; padding: 5px; } 
 .didPop .pop-body .configBox .tbl-list td { font-size: 14px; height: 30px; padding: 5px; } 
@@ -132,6 +134,7 @@
 .lvAccordion .lvItem .svcBoxC .svcBoxCTxt { font-size: 14px; font-weight: 700; color: #000; border-top: 1px dashed #bbb; margin: 5px 0px 5px 0px; width: 80%; text-align: center; padding-top: 15px; } 
 .lvAccordion .lvItem .svcBoxR { width: calc(100% - 230px); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 7px; margin-bottom: auto; } 
 .lvAccordion .lvItem .svcBoxR .tbl-list { height: 330px; margin-top: 0px;}
+.lvAccordion .lvItem .lvContent2 .svcBoxR .tbl-list { height: 360px;}
 .lvAccordion .lvItem .svcBoxR .tbl-list table thead th:nth-child(-n+2) { width: 50px;}
 /* cal */
 .lvDateBox { display: flex; gap: 10px; align-items: center; } 
