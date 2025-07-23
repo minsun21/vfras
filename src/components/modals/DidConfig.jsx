@@ -314,7 +314,7 @@ const DidConfig = ({
         </label>
       </div>
       {/* 본문: 오픈 시에만 표시 */}
-      <div className="lvContent">
+      <div className={isPersonal ? "lvContent2" : "lvContent"}>
         {/* 왼쪽 */}
         <div className="svcBoxL">
           {config.forms.map((item) => {
