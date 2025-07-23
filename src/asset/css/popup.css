@@ -118,6 +118,8 @@
 .lvAccordion .title-row:hover { background-color: #ddd; } 
 .lvAccordion .lvItem .lvContent { height: 0px; overflow: hidden; padding: 0; background: #fff; display: flex; flex-direction: row; transition: 0.2s; } 
 .lvAccordion .lvItem.active .lvContent { height: 350px; padding:0px; display: flex; flex-direction: row; transition: 0.4s; border-top: 1px solid #BBB; } 
+.lvAccordion .lvItem .lvContent2 { height: 0px; overflow: hidden; padding: 0; background: #fff; display: flex; flex-direction: row; transition: 0.2s; } 
+.lvAccordion .lvItem.active .lvContent2 { height: 390px; padding:0px; display: flex; flex-direction: row; transition: 0.4s; border-top: 1px solid #BBB; } 
 .lvAccordion .lvItem:last-child.active { border-bottom: none } 
 
 /* in box */
@@ -126,7 +128,8 @@
 .lvAccordion .lvItem .svcBoxL .select-box select { width: 130px; }
 .lvAccordion .lvItem .svcBoxC { width: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; border: 1px solid #DDD; border-width: 0px 1px; background: #f8f8f8; } 
 .lvAccordion .lvItem .svcBoxC .sbtn { min-width: 60px; height: 30px; line-height: 30px; padding: 0 5px; border-radius: 5px; font-size: 12px; font-weight: 400; } 
-.lvAccordion .lvItem .svcBoxC .svcBoxCTxt { font-size: 14px; font-weight: 700; color: #000; border-top: 1px dashed #bbb; margin: 20px 0px 5px 0px; width: 80%; text-align: center; padding-top: 15px; } 
+
+.lvAccordion .lvItem .svcBoxC .svcBoxCTxt { font-size: 14px; font-weight: 700; color: #000; border-top: 1px dashed #bbb; margin: 5px 0px 5px 0px; width: 80%; text-align: center; padding-top: 15px; } 
 .lvAccordion .lvItem .svcBoxR { width: calc(100% - 230px); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 7px; margin-bottom: auto; } 
 .lvAccordion .lvItem .svcBoxR .tbl-list { height: 330px; margin-top: 0px;}
 .lvAccordion .lvItem .svcBoxR .tbl-list table thead th:nth-child(-n+2) { width: 50px;}
