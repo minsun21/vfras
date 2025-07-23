@@ -39,8 +39,8 @@ export const ADMIN_TYPES = [
 
 // 사용자 상태
 export const USER_STATES = [
-    { key: "0", value: "가입" },
-    { key: "1", value: "요청중" },
+    { key: "0", value: "요청중" },
+    { key: "1", value: "가입" },
 ];
 
 // 사용자 잠금 상태
