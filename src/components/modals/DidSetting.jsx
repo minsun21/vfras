@@ -3,6 +3,7 @@ import { LABELS } from "../../constants/Labels";
 import Table from "../Table";
 import {
   DID_CONFIG_DATAS,
+  DID_PERSONAL_SETTING_COLUMNS,
   DID_SETTING_COLUMNS,
   EMPTY_DID_DATA,
 } from "../../config/DataConfig";
@@ -428,7 +429,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
           </Form>
           <Table
             ref={tableRef}
-            columns={DID_SETTING_COLUMNS}
+            columns={userInfo[KEYS.SERVICE_TYPE] === SERVICE_TYPES[0].value ? DID_PERSONAL_SETTING_COLUMNS : DID_SETTING_COLUMNS}
             data={tableData}
             pageSize={10}
             resultLabel={false}
@@ -532,7 +533,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
               </div>
             ) : selectRows.length === 1 && selectDid ? (
               <div className="lvAccordion">
-                {DID_CONFIG_DATAS.map((config, idx) => (
+                {DID_CONFIG_DATAS.filter(d => d.permission.includes(userInfo[KEYS.SERVICE_TYPE])).map((config, idx) => (
                   <DidConfig
                     key={idx}
                     config={config}
