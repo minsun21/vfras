@@ -2,7 +2,7 @@ import React from "react";
 import { LABELS } from "../constants/Labels";
 import { KEYS } from "../constants/Keys";
 import { SUBSRIBERS_STATE } from "./FieldsConfig";
-import { AREA_CODES, DAY_TYPE, SEARCH_SUBSRIBERS_STATE } from "./OptionConfig";
+import { AREA_CODES, DAY_TYPE, SEARCH_SUBSRIBERS_STATE, SERVICE_TYPES } from "./OptionConfig";
 import { findMappedValue } from "../utils/Util";
 
 // 음원 조회 컬럼
@@ -219,6 +219,80 @@ export const access_detail_data = [
   },
 ];
 
+export const DID_PERSONAL_SETTING_COLUMNS = [
+  {
+    accessorKey: KEYS.USER_NUMBER,
+    header: LABELS.USER_NUMBER_MULTI,
+    cell: ({ row }) => (
+      <span>
+        {row.original[KEYS.TEL_FROM_NO]} ~ <br />
+        {row.original[KEYS.TEL_TO_NO]}
+      </span>
+    ),
+  },
+  {
+    accessorKey: KEYS.PBX_NUMBER,
+    header: LABELS.PBX_NUMBER_COL_MULTI,
+    cell: ({ row }) => (
+      <span>
+        {row.original[KEYS.FROM_NO]} ~ <br />
+        {row.original[KEYS.TO_NO]}
+      </span>
+    ),
+  },
+  {
+    accessorKey: KEYS.DEF_RBT_TYPE,
+    header: LABELS.SOUND_CODE_COL_MULTI,
+  },
+  {
+    header: LABELS.IS_ADDITIONAL_SERVICE,
+    columns: [
+      {
+        accessorKey: KEYS.IS_CIRCULR_JOINED,
+        header: LABELS.CIRCULATION_RING,
+        cell: ({ row, getValue }) => (
+          <span className={!!getValue() ? "cellDidOn" : "cellDidOff"} />
+        ),
+      },
+      {
+        accessorKey: KEYS.IS_WEEK_JOINED,
+        header: LABELS.DAY_OF_WEEKEND,
+        cell: ({ row, getValue }) => (
+          <span className={!!getValue() ? "cellDidOn" : "cellDidOff"} />
+        ),
+      },
+      {
+        accessorKey: KEYS.IS_ORGN_JOINED,
+        header: LABELS.CALLER_AREA,
+        cell: ({ row, getValue }) => (
+          <span className={!!getValue() ? "cellDidOn" : "cellDidOff"} />
+        ),
+      },
+      {
+        accessorKey: KEYS.IS_GROUP_JOINED,
+        header: LABELS.CALLER_NUMBER,
+        cell: ({ row, getValue }) => (
+          <span className={!!getValue() ? "cellDidOn" : "cellDidOff"} />
+        ),
+      },
+      {
+        accessorKey: KEYS.IS_DURA_JOINED,
+        header: LABELS.ANNIVERSARY,
+        cell: ({ row, getValue }) => (
+          <span className={!!getValue() ? "cellDidOn" : "cellDidOff"} />
+        ),
+      },
+    ],
+  },
+  {
+    accessorKey: KEYS.IS_STOPED,
+    header: LABELS.INTERRUPT,
+    cell: ({ row, getValue }) => (
+      <span className={!!getValue() ? "cellDidOn" : "cellDidOff"} />
+    ),
+  },
+];
+
 export const DID_SETTING_COLUMNS = [
   {
     accessorKey: KEYS.USER_NUMBER,
@@ -313,6 +387,7 @@ export const DID_CONFIG_DATAS = [
         header: LABELS.SOUNDS_CODE,
       },
     ],
+    permission: [SERVICE_TYPES[0].value, SERVICE_TYPES[2].value]
   },
   {
     key: KEYS.IS_TIME_JOINED,
@@ -368,6 +443,7 @@ export const DID_CONFIG_DATAS = [
         },
       },
     ],
+    permission: [SERVICE_TYPES[2].value]
   },
   {
     key: KEYS.IS_WEEK_JOINED,
@@ -397,6 +473,7 @@ export const DID_CONFIG_DATAS = [
         },
       },
     ],
+    permission: [SERVICE_TYPES[0].value, SERVICE_TYPES[2].value]
   },
   {
     key: KEYS.IS_ORGN_JOINED,
@@ -426,6 +503,7 @@ export const DID_CONFIG_DATAS = [
         },
       },
     ],
+    permission: [SERVICE_TYPES[0].value, SERVICE_TYPES[2].value]
   },
   {
     key: KEYS.IS_GROUP_JOINED,
@@ -454,6 +532,7 @@ export const DID_CONFIG_DATAS = [
         header: LABELS.CALLING_NUMBER,
       },
     ],
+    permission: [SERVICE_TYPES[0].value, SERVICE_TYPES[2].value]
   },
   {
     key: KEYS.IS_DURA_JOINED,
@@ -495,51 +574,7 @@ export const DID_CONFIG_DATAS = [
         },
       },
     ],
-  },
-];
-
-export const DID_PERSONAL_SETTING_COLUMNS = [
-  {
-    accessorKey: KEYS.USER_NUMBER,
-    header: LABELS.USER_NUMBER,
-    cell: ({ row }) => (
-      <span>
-        {row.original[KEYS.TEL_FROM_NO]} ~ {row.original[KEYS.TEL_TO_NO]}
-      </span>
-    ),
-  },
-  {
-    accessorKey: KEYS.PBX_NUMBER,
-    header: LABELS.PBX_NUMBER_COL,
-    cell: ({ row }) => (
-      <span>
-        {row.original[KEYS.FROM_NO]} ~ {row.original[KEYS.TO_NO]}
-      </span>
-    ),
-  },
-  {
-    accessorKey: KEYS.DEF_RBT_TYPE,
-    header: LABELS.SOUND_CODE_COL_MULTI,
-  },
-  {
-    header: LABELS.IS_ADDITIONAL_SERVICE,
-    columns: [
-      {
-        accessorKey: KEYS.GERNERAL_PERMISSIONS,
-        header: LABELS.GERNERAL_PERMISSIONS,
-        type: "checkbox",
-      },
-      {
-        accessorKey: KEYS.DEPARTMENT_PERMISSIONS,
-        header: LABELS.DEPARTMENT_PERMISSIONS,
-        type: "checkbox",
-      },
-      {
-        accessorKey: KEYS.MODIFY,
-        header: LABELS.MODIFY,
-        type: "checkbox",
-      },
-    ],
+    permission: [SERVICE_TYPES[0].value, SERVICE_TYPES[2].value]
   },
 ];
 

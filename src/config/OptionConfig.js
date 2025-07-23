@@ -1,6 +1,7 @@
 import { LABELS } from "../constants/Labels";
 
 export const DAY_TYPE = [
+    { key: "0", value: "선택안함" },
     { key: "1", value: "일" },
     { key: "2", value: "월" },
     { key: "3", value: "화" },
