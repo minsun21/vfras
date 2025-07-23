@@ -97,6 +97,7 @@ caption, legend, .hidden, .visually-hidden, hr { position: absolute !important; 
 .w50 { width:5rem !important; } 
 .w60 { width:6rem !important; } 
 .w100 { width:10rem !important; } 
+.w110 { width:11rem !important; } 
 .w120 { width:12rem !important; } 
 .w130 { width:13rem !important; } 
 .w140 { width:14rem !important; } 
@@ -181,7 +182,10 @@ caption, legend, .hidden, .visually-hidden, hr { position: absolute !important; 
 .dflex.acenter {align-items:center; } 
 .dflex.jcenter {justify-content:center !important; } 
 .dflex.wrap {flex-wrap:wrap; } 
+.gap2  { gap:0.2rem !important; } 
+.gap3  { gap:0.3rem !important; } 
 .gap5, .gap05  { gap:0.5rem !important; } 
+.gap7  { gap:0.7rem !important; } 
 .gap10 {gap:1rem !important; } 
 .gap15 {gap:1.5rem !important; } 
 .gap20 {gap:2rem !important; } 

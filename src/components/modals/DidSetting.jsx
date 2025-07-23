@@ -461,8 +461,8 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
           {selectDid && (
             <div className="didStopBox">
               <div className="radio-box">
-                <div className="dflex gap10">
-                  <label>{LABELS.INTERRUPT}</label>
+                <div className="dflex gap7">
+                  <label className="schTxtL1">{LABELS.INTERRUPT}</label>
 
                   <span className="items">
                     <input
@@ -497,10 +497,10 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
                     />
                     <label htmlFor="rdDidPeriodStop">{LABELS.PERIOD_INTERRUPT}</label>
                   </span>
-                  <div className="hFlex">
+                  <div className="hFlex gap2">
                     <Input
                       type="date"
-                      size="w120"
+                      size="w110"
                       name={KEYS.INTERRUPT_RESERVATION_FROM}
                       value={stopDate[KEYS.INTERRUPT_RESERVATION_FROM]}
                       onChange={onChangeDate}
@@ -509,7 +509,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
                     <span>{"~"}</span>
                     <Input
                       type="date"
-                      size="w120"
+                      size="w110"
                       name={KEYS.INTERRUPT_RESERVATION_TO}
                       value={stopDate[KEYS.INTERRUPT_RESERVATION_TO]}
                       onChange={onChangeDate}
