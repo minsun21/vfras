@@ -183,9 +183,11 @@ const AccountEdit = () => {
       <div className="btn-wrap">
         <div>
           <Button type={BUTTON_CANCEL} onClick={cancelEdit} />
-        {permissions.includes(PERMISSIONS.ACCNT_D) && <Button type={BUTTON_DELETE} onClick={clickDelete} />}
         </div>
         <div>
+          <span className="mr10">
+           {permissions.includes(PERMISSIONS.ACCNT_D) && <Button type={BUTTON_DELETE} onClick={clickDelete}/>}
+          </span>
           <Button type={BUTTON_SAVE} onClick={handleSave} />
         </div>
       </div>
