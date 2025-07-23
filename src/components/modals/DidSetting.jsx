@@ -458,10 +458,12 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
             />
           </Form>
           {/* 시작, 일시정지 */}
-          {selectDid ? permissions.includes(PERMISSIONS.SUBS_U) ? (
+          {selectDid && (
             <div className="didStopBox">
               <div className="radio-box">
                 <div className="dflex gap10">
+                  <label>{LABELS.INTERRUPT}</label>
+
                   <span className="items">
                     <input
                       type="radio"
@@ -471,7 +473,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
                       checked={selectStop === 0}
                       onChange={handleOptionChange}
                     />
-                    <label htmlFor="rdDidStart">{LABELS.START}</label>
+                    <label htmlFor="rdDidStart">{LABELS.NOT_USED}</label>
                   </span>
                   <span className="items">
                     <input
@@ -522,24 +524,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
                 onClick={saveInterrupt}
               />
             </div>
-          ) : <div className="didStopBox">
-            <div className="radio-box">
-              <div style={{ display: 'flex' }}>
-                <Input
-                  value={
-                    selectDid[KEYS.IS_INTERRUPT] === 0
-                      ? LABELS.START
-                      : (() => {
-                        const from = selectDid[KEYS.INTERRUPT_RESERVATION_FROM];
-                        const to = selectDid[KEYS.INTERRUPT_RESERVATION_TO];
-                        return `${LABELS.INTERRUPT} > ${from ? `${from}~` : ""}${to || ""}`;
-                      })()
-                  }
-                  disabled
-                />
-              </div>
-            </div>
-          </div> : null}
+          )}
           <div className="configBox">
             {selectRows.length === 0 ? (
               <div className="configAlertTxt">

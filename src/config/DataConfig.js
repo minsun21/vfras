@@ -248,13 +248,6 @@ export const DID_SETTING_COLUMNS = [
     header: LABELS.IS_ADDITIONAL_SERVICE,
     columns: [
       {
-        accessorKey: KEYS.IS_STOPED,
-        header: LABELS.INTERRUPT,
-        cell: ({ row, getValue }) => (
-          <span className={!!getValue() ? "cellDidOn" : "cellDidOff"} />
-        ),
-      },
-      {
         accessorKey: KEYS.IS_CIRCULR_JOINED,
         header: LABELS.CIRCULATION_RING,
         cell: ({ row, getValue }) => (
@@ -297,6 +290,13 @@ export const DID_SETTING_COLUMNS = [
         ),
       },
     ],
+  },
+  {
+    accessorKey: KEYS.IS_STOPED,
+    header: LABELS.INTERRUPT,
+    cell: ({ row, getValue }) => (
+      <span className={!!getValue() ? "cellDidOn" : "cellDidOff"} />
+    ),
   },
 ];
 
