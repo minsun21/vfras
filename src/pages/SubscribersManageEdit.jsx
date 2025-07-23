@@ -51,6 +51,7 @@ const SubscriberManageEdit = () => {
       .get(ROUTES.SUBSCRIBERS_DETAIL(subNo), AXIOS_NO_GLOBAL_ERROR)
       .then((res) => {
         const result = res.data.resultData;
+        console.log('result', result)
         result[KEYS.PASSWORD] = "****";
         result[KEYS.SERVICE_TYPE] = findMappedValue(
           SERVICE_TYPES,
@@ -298,7 +299,7 @@ const SubscriberManageEdit = () => {
                             <span>{formData[KEYS.DID_COUNT]}</span>
                             {LABELS.DID_VALUE}
                           </label>
-                          {formData[KEYS.SUB_TYPE] ===
+                          {formData[KEYS.SERVICE_TYPE] !== SERVICE_TYPES[1].value ? formData[KEYS.SUB_TYPE] ===
                             SUBSRIBERS_TYPES[0].value ? (
                             <Button
                               type={BUTTON_CANCEL}
@@ -311,7 +312,7 @@ const SubscriberManageEdit = () => {
                               label={LABELS.SETTING}
                               onClick={clickDidSetting}
                             />
-                          )}
+                          ) : null}
                         </div>
                       ) : fields ? (
                         <div className="dflex">
