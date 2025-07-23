@@ -42,6 +42,7 @@ import {
 } from "../../service/didService";
 import { formatDateWithDash, getDidKey, removeDashFromDate } from "../../utils/Util";
 import { PERMISSIONS } from "../../constants/Permissions";
+import { SERVICE_TYPES } from "../../config/OptionConfig";
 
 const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
   const permissions = useSelector((state) => state.auth.user?.permissions);
@@ -59,6 +60,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
   const [stopDate, setStopDate] = useState({})
 
   useEffect(() => {
+    console.log(userInfo)
     return () => {
       dispatch(resetDidConfig());
     };
@@ -555,6 +557,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
                     bulkAdd={bulkAdd}
                     bulkDelete={bulkDelete}
                     saveDidSub={saveDidSub}
+                    isPersonal={userInfo[KEYS.SERVICE_TYPE] === SERVICE_TYPES[0].value}
                   />
                 ))}
               </div>

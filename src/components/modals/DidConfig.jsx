@@ -24,6 +24,7 @@ const DidConfig = ({
   bulkAdd,
   bulkDelete,
   saveDidSub,
+  isPersonal
 }) => {
   const permissions = useSelector((state) => state.auth.user?.permissions);
 
@@ -402,17 +403,20 @@ const DidConfig = ({
                 onClick={saveDid}
               />
             </div>
-            <div className="svcBoxCTxt">{LABELS.MAIN_NUMBER}</div>
-            <Button
-              type={BUTTON_DELETE}
-              onClick={bulkAddAction}
-              label={LABELS.BULK_APPLY}
-            />
-            <Button
-              type={BUTTON_CANCEL}
-              label={LABELS.BULK_DELETE}
-              onClick={bulkDeleteAction}
-            />
+            {!isPersonal &&
+              <>
+                <div className="svcBoxCTxt">{LABELS.MAIN_NUMBER}</div>
+                <Button
+                  type={BUTTON_DELETE}
+                  onClick={bulkAddAction}
+                  label={LABELS.BULK_APPLY}
+                />
+                <Button
+                  type={BUTTON_CANCEL}
+                  label={LABELS.BULK_DELETE}
+                  onClick={bulkDeleteAction}
+                />
+              </>}
           </div>
         ) : (
           <div className="svcBoxC" />

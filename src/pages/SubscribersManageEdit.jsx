@@ -51,7 +51,6 @@ const SubscriberManageEdit = () => {
       .get(ROUTES.SUBSCRIBERS_DETAIL(subNo), AXIOS_NO_GLOBAL_ERROR)
       .then((res) => {
         const result = res.data.resultData;
-        console.log('result', result)
         result[KEYS.PASSWORD] = "****";
         result[KEYS.SERVICE_TYPE] = findMappedValue(
           SERVICE_TYPES,
