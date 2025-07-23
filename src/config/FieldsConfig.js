@@ -12,7 +12,6 @@ import {
 export const SUBSRIBERS_STATE = [
   { key: "0", value: "요청중" },
   { key: "1", value: "가입" },
-  { key: "2", value: "삭제" },
 ];
 
 export const option_userUseState = [
