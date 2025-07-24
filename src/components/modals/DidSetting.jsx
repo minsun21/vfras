@@ -61,7 +61,6 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
   const [stopDate, setStopDate] = useState({})
 
   useEffect(() => {
-    console.log(userInfo)
     return () => {
       dispatch(resetDidConfig());
     };
@@ -212,33 +211,6 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
         }, 10);
       },
     });
-
-    // showDialog({
-    //   message: InfoMessages.confirmDelete(checkboxSelected.length),
-    //   onConfirm: () => {
-    //     const { updatedTable, deleteItems } = getDidDeleteResult({
-    //       checkboxSelected,
-    //       tableData,
-    //     });
-
-    //     deleteDidItems({
-    //       userInfo,
-    //       deleteItems,
-    //       updatedTable,
-    //       onSuccess: (newTable) => {
-    //         setTableData(newTable);
-    //         setCheckboxSelected([]);
-    //         setSelectDid();
-    //         setSelectRows([]);
-    //         tableRef.current?.clearSelection?.();
-    //         setTimeout(() => {
-    //           showAlert({ message: InfoMessages.successDelete });
-    //           return;
-    //         }, 10);
-    //       },
-    //     });
-    //   },
-    // });
   };
 
   // 부가서비스 추가
@@ -319,11 +291,36 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
       initRbtData();
       initRbtSubs(selectDid);
     }).catch((err) => {
-      showAlert({
-        message: err.response.data.resultData.message || ErrorMessages.server
-      })
+      let message = err.response.data.resultData.message;
+      let errMsg = getErrorMessage(message);
+      if (errMsg) {
+        showAlert({
+          message: errMsg
+        })
+      } else {
+        showAlert({
+          message: message || ErrorMessages.server
+        })
+      }
+
     })
   };
+
+  const getErrorMessage = (message) => {
+    if (message.includes(ErrorKey.duplicateCircular)) {
+      return ErrorMessages.duplicateRbt;
+    } else if (message.includes(ErrorKey.duplicateWeekday)) {
+      return ErrorMessages.duplicateSaveDay
+    } else if (message.includes(ErrorKey.duplicateOrigin)) {
+      return ErrorMessages.duplicateSaveOrgn
+    } else if (message.includes(ErrorKey.duplicateCid)) {
+      return ErrorMessages.duplicateSaveGroup;
+    } else if (message.includes(ErrorKey.duplicateDuration)) {
+      return ErrorMessages.duplicateSaveDate;
+    } else if (message.includes(ErrorKey.duplicateTime)) {
+      return ErrorMessages.duplicateSaveTime;
+    }
+  }
 
   // 부가서비스 일괄 삭제
   const bulkDelete = (dataKey, inputs) => {

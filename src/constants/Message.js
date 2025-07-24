@@ -56,6 +56,7 @@ export const ErrorMessages = {
   dateBlank: "날짜를 모두 입력해주세요",
   notFindRbt: "음원 코드가 존재하지 않습니다 ",
   allInsert: "모든 항목을 입력해주세요.",
+  duplicateRbt: "중복 부가서비스는 추가할 수 없습니다.\n(음원코드)",
   duplicateSaveDay: "중복 부가서비스는 추가할 수 없습니다.\n(요일)",
   duplicateSaveOrgn: "중복 부가서비스는 추가할 수 없습니다.\n(지역번호)",
   duplicateSaveGroup: "중복 부가서비스는 추가할 수 없습니다.\n(발신번호)",
@@ -117,5 +118,11 @@ export const ErrorKey = {
   notFindSubsriberNo: "Subscriber No Not Found",
   notFountUser: "User Not Found",
   lockUser: "계정이 잠겼습니다",
-  duplicateNumber: "A duplicate number range exists."
+  duplicateNumber: "A duplicate number range exists.",
+  duplicateCircular: "Duplicate circular Rbt exists for",
+  duplicateOrigin: "Duplicate origin Rbt exists for",
+  duplicateWeekday: "Duplicate weekday setting exists for",
+  duplicateCid: "Duplicate Cid found",
+  duplicateDuration: "Duplicate duration Rbt exists for",
+  duplicateTime: "Duplicate timeband Rbt exists for"
 }
