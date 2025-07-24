@@ -8,7 +8,7 @@ import { ROUTES } from "../constants/routes";
 import { fieldsValidate } from "../utils/FormValidation";
 import { ErrorMessages, InfoMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
-import axios from "../api/axios";
+import axios, { AXIOS_NO_GLOBAL_ERROR } from "../api/axios";
 import { KEYS } from "../constants/Keys";
 import { useSelector } from "react-redux";
 import RadioGroup from "../components/RadioGroup";
@@ -57,12 +57,14 @@ const AccountEdit = () => {
   };
 
   const save = () => {
-    axios.put(ROUTES.ACCOUNTS_MANAGE(selectedId), formData).then((res) => {
+    axios.put(ROUTES.ACCOUNTS_MANAGE(selectedId), formData, AXIOS_NO_GLOBAL_ERROR).then((res) => {
       showAlert({
         message: InfoMessages.successEdit,
         onConfirm: () => navigate(ROUTES.ACCOUNTS),
       });
-    });
+    }).catch(res => {
+      showAlert({ message: ErrorMessages.server })
+    })
   };
 
   const cancelEdit = () => {
@@ -72,8 +74,8 @@ const AccountEdit = () => {
     });
   };
 
-   // 사용자 삭제
-   const clickDelete = () => {
+  // 사용자 삭제
+  const clickDelete = () => {
     showDialog({
       message: InfoMessages.confirmDeleteOne,
       onConfirm: deleteAccount,
@@ -148,9 +150,23 @@ const AccountEdit = () => {
                         <span className="comment">{comment}</span>
                       </div>
                     ) : // ) : key === KEYS.MOBILE ? (
-                    //   <PhoneNumberInput value={value} onChange={handleChange} />
-                    key === KEYS.PASSWORD2 ? (
-                      <div className="rowBox">
+                      //   <PhoneNumberInput value={value} onChange={handleChange} />
+                      key === KEYS.PASSWORD2 ? (
+                        <div className="rowBox">
+                          <Input
+                            value={value}
+                            type={type}
+                            placeholder={formData[key]}
+                            onChange={handleChange}
+                            disabled={disabled}
+                          />
+                          <span className="password-confirm">
+                            {formData[KEYS.PASSWORD1] !==
+                              formData[KEYS.PASSWORD2] &&
+                              ErrorMessages.correctPassword}
+                          </span>
+                        </div>
+                      ) : (
                         <Input
                           value={value}
                           type={type}
@@ -158,21 +174,7 @@ const AccountEdit = () => {
                           onChange={handleChange}
                           disabled={disabled}
                         />
-                        <span className="password-confirm">
-                          {formData[KEYS.PASSWORD1] !==
-                            formData[KEYS.PASSWORD2] &&
-                            ErrorMessages.correctPassword}
-                        </span>
-                      </div>
-                    ) : (
-                      <Input
-                        value={value}
-                        type={type}
-                        placeholder={formData[key]}
-                        onChange={handleChange}
-                        disabled={disabled}
-                      />
-                    )}
+                      )}
                   </td>
                 </tr>
               );
@@ -186,7 +188,7 @@ const AccountEdit = () => {
         </div>
         <div>
           <span className="mr10">
-           {permissions.includes(PERMISSIONS.ACCNT_D) && <Button type={BUTTON_DELETE} onClick={clickDelete}/>}
+            {permissions.includes(PERMISSIONS.ACCNT_D) && <Button type={BUTTON_DELETE} onClick={clickDelete} />}
           </span>
           <Button type={BUTTON_SAVE} onClick={handleSave} />
         </div>
