@@ -4,7 +4,7 @@ import { LABELS } from "../constants/Labels";
 import { ErrorMessages, LvMessages } from "../constants/Message";
 import { useModal } from "../contexts/ModalContext";
 import { ROUTES } from "../constants/routes";
-import axios from "../api/axios";
+import axios, { AXIOS_NO_GLOBAL_ERROR } from "../api/axios";
 import { PERMISSIONS } from "../constants/Permissions";
 import { useSelector } from "react-redux";
 
@@ -80,7 +80,7 @@ const LvManage = () => {
       .filter((line) => line !== ""); // 빈 줄 제거
 
     axios
-      .put(ROUTES.LV, cleanedLines)
+      .put(ROUTES.LV, cleanedLines, AXIOS_NO_GLOBAL_ERROR)
       .then((res) => {
         setTimeout(() => {
           showAlert({
@@ -90,9 +90,8 @@ const LvManage = () => {
         }, 100);
       })
       .catch((err) => {
-        if (err.response.data.result === 500) {
-          showAlert({ message: err.response.data.resultData });
-        }
+        let message = err.response.data.resultData.message;
+        showAlert({ message: message });
       });
   };
 

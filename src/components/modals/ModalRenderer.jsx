@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import { useModal } from "../../contexts/ModalContext";
 import Button, { BUTTON_CANCEL } from "../Button";
 import { LABELS } from "../../constants/Labels";
+import { ErrorMessages } from "../../constants/Message";
 
 export const MODAL_SM = "w400";
 export const MODAL_LG = "didPop";
@@ -47,12 +48,12 @@ const ModalRenderer = () => {
                 </div>
                 <div className="msg-body">
                   <p>
-                    {props.message.split("\n").map((line, idx) => (
+                    {typeof props.message === 'string' ? props.message.split("\n").map((line, idx) => (
                       <span key={idx}>
                         {line}
                         <br />
                       </span>
-                    ))}
+                    )) : <span>{ErrorMessages.server}</span>}
                   </p>
                 </div>
                 <div className="msg-footer">
