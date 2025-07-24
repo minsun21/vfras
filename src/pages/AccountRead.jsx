@@ -6,6 +6,7 @@ import Select from "../components/Select";
 import { ROUTES } from "../constants/routes";
 import axios from "../api/axios";
 import { KEYS } from "../constants/Keys";
+import RadioGroup from "../components/RadioGroup";
 
 const AccountRead = () => {
   const { state } = useLocation();
@@ -59,6 +60,12 @@ const AccountRead = () => {
                         type={type}
                         placeholder={formData[key]}
                         disabled
+                      />
+                    ) : type === "radio" ? (
+                      <RadioGroup
+                        name={key}
+                        value={value}
+                        Options={Options}
                       />
                     ) : comment ? (
                       <div className="rowBox">
