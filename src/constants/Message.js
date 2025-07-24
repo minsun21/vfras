@@ -61,7 +61,8 @@ export const ErrorMessages = {
   duplicateSaveGroup: "중복 부가서비스는 추가할 수 없습니다.\n(발신번호)",
   duplicateSaveDate: "중복 부가서비스는 추가할 수 없습니다.\n(시작일)",
   duplicateSaveTime: "중복 부가서비스는 추가할 수 없습니다.\n(요일, 시작시간)",
-  dulicateSaveGroupInput: "발신번호에 중복이 있습니다."
+  dulicateSaveGroupInput: "발신번호에 중복이 있습니다.",
+  duplicate: "중복값이 있습니다.\n"
 };
 
 export const LoginMessages = {
@@ -115,5 +116,6 @@ export const ErrorKey = {
   presentSubsriber: "Subscriber is Present",
   notFindSubsriberNo: "Subscriber No Not Found",
   notFountUser: "User Not Found",
-  lockUser: "계정이 잠겼습니다"
+  lockUser: "계정이 잠겼습니다",
+  duplicateNumber: "A duplicate number range exists."
 }

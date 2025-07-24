@@ -82,6 +82,11 @@ const SubscriberRegister = () => {
             message: message.replace(ErrorKey.notFindRbtInfo, ErrorMessages.notFindRbt)
           })
           return;
+        } else if (message.includes(ErrorKey.duplicateNumber)) {
+          showAlert({
+            message: message.replace(ErrorKey.duplicateNumber, ErrorMessages.duplicate)
+          })
+          return;
         } else {
           showAlert({ message: ErrorMessages.server });
         }
