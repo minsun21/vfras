@@ -200,7 +200,6 @@ const SubscribersManageRead = () => {
                             onChange={handleChange}
                             disabled
                           />
-                          <span>{LABELS.LV_NUMBER}</span>
                         </div>
                       ) : key === "password" ? (
                         <div className="rowBox">

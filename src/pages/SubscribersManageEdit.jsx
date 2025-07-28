@@ -268,7 +268,6 @@ const SubscriberManageEdit = () => {
                             onChange={handleChange}
                             disabled={disabled}
                           />
-                          <span>{LABELS.LV_NUMBER}</span>
                         </div>
                       ) : key === "password" ? (
                         <div className="rowBox">
