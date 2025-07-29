@@ -378,7 +378,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
     let inputs = {
       [KEYS.INTERRUPT_RESERVATION_FROM]: removeDashFromDate(stopDate[KEYS.INTERRUPT_RESERVATION_FROM]),
       [KEYS.INTERRUPT_RESERVATION_TO]: removeDashFromDate(stopDate[KEYS.INTERRUPT_RESERVATION_TO]),
-      [KEYS.IS_INTERRUPT]: selectStop === 2 ? 1 : selectStop
+      [KEYS.IS_INTERRUPT]: selectStop
     }
     stopRbt(
       inputs,
