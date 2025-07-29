@@ -268,6 +268,7 @@ const SubscriberManageEdit = () => {
                             onChange={handleChange}
                             disabled={disabled}
                           />
+                          
                         </div>
                       ) : key === "password" ? (
                         <div className="rowBox">
