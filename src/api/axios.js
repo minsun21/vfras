@@ -1,15 +1,15 @@
-import axios from "axios";
-import { store } from "../store";
-import { logout } from "../features/authSlice";
-import { ErrorMessages } from "../constants/Message";
-import { getCookie } from "../utils/cookies";
+import axios from 'axios';
+import { store } from '../store';
+import { logout } from '../features/authSlice';
+import { ErrorMessages } from '../constants/Message';
+import { getCookie } from '../utils/cookies';
 
 let alertHandler = null;
 let setLoading = null;
 
 export const AXIOS_NO_GLOBAL_ERROR = {
   suppressGlobalError: true, // 전역 에러 알림 방지
-}
+};
 
 export const setAlertHandler = (handler) => {
   alertHandler = handler;
@@ -20,19 +20,19 @@ export const setLoadingHandler = (handler) => {
 };
 
 const instance = axios.create({
-  baseURL: "/web", // 개발용
-  // baseURL: window.__ENV__?.API_BASE_URL,
+  // baseURL: "/web", // 개발용
+  baseURL: window.__ENV__?.API_BASE_URL,
   timeout: 10000,
   withCredentials: true,
 });
 
 // 요청 인터셉터
 instance.interceptors.request.use((config) => {
-  config.headers["Content-Type"] = "application/json";
+  config.headers['Content-Type'] = 'application/json';
 
   const token = getCookie();
   if (token) {
-    config.headers["x-authentication"] = token;
+    config.headers['x-authentication'] = token;
   }
 
   return config;
@@ -53,8 +53,8 @@ instance.interceptors.response.use(
 
     if (status === 401) {
       const errMsg = error.response?.data?.resultData;
-      if (errMsg === "로그인 정보가 존재하지 않습니다.") {
-        sessionStorage.setItem("expiredMessage", ErrorMessages.expired);
+      if (errMsg === '로그인 정보가 존재하지 않습니다.') {
+        sessionStorage.setItem('expiredMessage', ErrorMessages.expired);
         store.dispatch(logout());
         return Promise.reject(error);
       }
