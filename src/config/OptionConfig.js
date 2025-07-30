@@ -10,6 +10,11 @@ export const DAY_TYPE = [
     { key: "7", value: "토" },
 ];
 
+export const DAY_TYPE_FULL = [
+    { key: "0", value: "선택안함" },
+    ...DAY_TYPE
+];
+
 export const AREA_CODES = [
     { key: "02", value: "서울(02)" },
     { key: "031", value: "경기(031)" },

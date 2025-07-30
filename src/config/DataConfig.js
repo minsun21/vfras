@@ -2,7 +2,7 @@ import React from "react";
 import { LABELS } from "../constants/Labels";
 import { KEYS } from "../constants/Keys";
 import { SUBSRIBERS_STATE } from "./FieldsConfig";
-import { AREA_CODES, DAY_TYPE, SEARCH_SUBSRIBERS_STATE, SERVICE_TYPES } from "./OptionConfig";
+import { AREA_CODES, DAY_TYPE, DAY_TYPE_FULL, SEARCH_SUBSRIBERS_STATE, SERVICE_TYPES } from "./OptionConfig";
 import { findMappedValue } from "../utils/Util";
 
 // 음원 조회 컬럼
@@ -399,7 +399,7 @@ export const DID_CONFIG_DATAS = [
         key: KEYS.DAY_TYPE,
         type: "select",
         placeholder: LABELS.DAY_TYPE,
-        Options: DAY_TYPE,
+        Options: DAY_TYPE_FULL,
       },
       {
         key: "time",
