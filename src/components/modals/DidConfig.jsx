@@ -260,8 +260,8 @@ const DidConfig = ({
     }
 
     // 날짜 유효성 검사
-    const startDate = inputs.startDate;
-    const endDate = inputs.endDate;
+    const startDate = inputs[KEYS.S_DATE];
+    const endDate = inputs[KEYS.E_DATE];
     if (startDate && endDate && startDate > endDate) {
       showAlert({
         message: ErrorMessages.date,
@@ -270,8 +270,8 @@ const DidConfig = ({
     }
 
     // 시간 유효성 검사
-    const startTime = inputs.startTime;
-    const endTime = inputs.endTime;
+    const startTime = inputs[KEYS.S_TIME];
+    const endTime = inputs[KEYS.E_TIME];
     if (startTime && endTime && startTime > endTime) {
       showAlert({
         message: ErrorMessages.time,
