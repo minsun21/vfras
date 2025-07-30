@@ -8,7 +8,7 @@ import {
   EMPTY_DID_DATA,
 } from "../../config/DataConfig";
 import Button, { BUTTON_DELETE, BUTTON_SAVE } from "../Button";
-import Input, { INPUT_SIZE_SM } from "../Input";
+import Input, { INPUT_SIZE_FL, INPUT_SIZE_LG, INPUT_SIZE_SM } from "../Input";
 import { KEYS } from "../../constants/Keys";
 import Form from "../Form";
 import AddDidModal from "./AddDidModal";
@@ -445,12 +445,12 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
             <label className="schTxtL1">{LABELS.DEFAULT_RING}</label>
             <Input
               label={LABELS.DEFAULT_RING}
-              size="sm"
+              size={INPUT_SIZE_SM}
               value={selectDid?.[KEYS.DEF_RBT_TYPE] || ""}
               disabled
             />
             <Input
-              size="sm"
+              size={INPUT_SIZE_LG}
               value={selectDid?.[KEYS.BASE_RBT_DESC] || ""}
               disabled
             />
