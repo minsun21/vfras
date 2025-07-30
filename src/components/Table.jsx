@@ -44,7 +44,7 @@ const Table = forwardRef(
     const [currentPageSize, setCurrentPageSize] = useState(pageSize);
     const [pageInfo, setPageInfo] = useState({
       pageIndex: 0,
-      pageSize: 9999,
+      pageSize: 20, // 최초 20개만
       totalPages: 0,
       totalElements: 0,
     });
@@ -61,6 +61,7 @@ const Table = forwardRef(
             totalPages: resultData.totalPages,
             totalElements: resultData.totalElements,
           }));
+          setCurrentPageSize(pageInfo.pageSize); // 최초 동기화
         });
       }
     }, [pageInfo.pageIndex, pageInfo.pageSize]);
@@ -71,27 +72,21 @@ const Table = forwardRef(
         [row.id]: !checkboxSelection[row.id],
       };
       setCheckboxSelection(newSelection);
-      if (!isSplit && typeof onRowSelectionChange === "function") {
-        const rows = table
-          .getCoreRowModel()
-          .rows.filter((r) => newSelection[r.id])
-          .map((r) => r.original);
-        onRowSelectionChange(rows);
-      } else if (isSplit && typeof onCheckboxSelectionChange === "function") {
-        const rows = table
-          .getCoreRowModel()
-          .rows.filter((r) => newSelection[r.id])
-          .map((r) => r.original);
-        onCheckboxSelectionChange(rows);
+      const selectedRows = table
+        .getCoreRowModel()
+        .rows.filter((r) => newSelection[r.id])
+        .map((r) => r.original);
+      if (isSplit && typeof onCheckboxSelectionChange === "function") {
+        onCheckboxSelectionChange(selectedRows);
+      } else if (!isSplit && typeof onRowSelectionChange === "function") {
+        onRowSelectionChange(selectedRows);
       }
     };
 
     const processedColumns = useMemo(() => {
       const enhanceColumns = (cols) =>
         cols.map((col) => {
-          if (col.columns) {
-            return { ...col, columns: enhanceColumns(col.columns) };
-          }
+          if (col.columns) return { ...col, columns: enhanceColumns(col.columns) };
 
           if (col.type?.startsWith("check")) {
             const columnId = col.accessorKey;
@@ -104,9 +99,7 @@ const Table = forwardRef(
                   checked={!!row.original[columnId]}
                   onChange={() => {
                     const updated = tableData.map((r) =>
-                      r === row.original
-                        ? { ...r, [columnId]: !r[columnId] }
-                        : r
+                      r === row.original ? { ...r, [columnId]: !r[columnId] } : r
                     );
                     setTableData(updated);
                   }}
@@ -138,7 +131,6 @@ const Table = forwardRef(
 
           return col;
         });
-
       return enhanceColumns(columns);
     }, [columns, tableData]);
 
@@ -172,6 +164,8 @@ const Table = forwardRef(
           : []),
         ...processedColumns,
       ],
+      pageCount: Math.ceil(pageInfo.totalElements / pageInfo.pageSize),
+      manualPagination: manualPagination,
       state: isSplit ? { rowSelection: clickSelection } : {},
       onRowSelectionChange: isSplit
         ? (updater) => {
@@ -184,9 +178,7 @@ const Table = forwardRef(
         }
         : undefined,
       getCoreRowModel: getCoreRowModel(),
-      ...(paginationEnabled
-        ? { getPaginationRowModel: getPaginationRowModel() }
-        : {}),
+      getPaginationRowModel: getPaginationRowModel(),
       enableRowSelection: isSplit,
     });
 
@@ -197,10 +189,9 @@ const Table = forwardRef(
         getSelectedRowIds: () =>
           table.getSelectedRowModel().rows.map((r) => r.original.id),
         updateRowsById: (ids, updater) => {
-          const updated = tableData.map((row) => {
-            return ids.includes(row.id || row.subNo) ? updater(row) : row;
-          });
-
+          const updated = tableData.map((row) =>
+            ids.includes(row.id || row.subNo) ? updater(row) : row
+          );
           setTableData(updated);
         },
         clearSelection: () => {
@@ -223,57 +214,85 @@ const Table = forwardRef(
       [tableData, table]
     );
 
-    useEffect(() => {
-      const selectedIds = Object.keys(clickSelection).filter(
-        (id) => clickSelection[id]
-      );
-      const selectedRows = table
-        .getCoreRowModel()
-        .rows.filter((r) => selectedIds.includes(r.id))
-        .map((r) => r.original);
+    const renderPageNumbers = () => {
+      const pageIndex = pageInfo.pageIndex;
+      const pageCount = Math.ceil(pageInfo.totalElements / pageInfo.pageSize);
+      const maxVisible = 10;
+      const range = Math.floor(maxVisible / 2);
 
-      if (isSplit && typeof onRowSelectionChange === "function") {
-        onRowSelectionChange(selectedRows);
+      let start = Math.max(1, pageIndex + 1 - range);
+      let end = Math.min(pageCount, start + maxVisible - 1);
+
+      if (end - start < maxVisible - 1) {
+        start = Math.max(1, end - maxVisible + 1);
       }
-    }, [clickSelection]);
 
-    const handleAllCheckbox = () => {
-      const allSelected = table
-        .getCoreRowModel()
-        .rows.every((r) => checkboxSelection[r.id]);
-      const newSelection = {};
-      table.getCoreRowModel().rows.forEach((row) => {
-        newSelection[row.id] = !allSelected;
-      });
-      setCheckboxSelection(newSelection);
+      const buttons = [];
 
-      const selectedRows = table
-        .getCoreRowModel()
-        .rows.filter((r) => newSelection[r.id])
-        .map((r) => r.original);
-
-      if (isSplit && typeof onCheckboxSelectionChange === "function") {
-        onCheckboxSelectionChange(selectedRows);
-      } else if (!isSplit && typeof onRowSelectionChange === "function") {
-        onRowSelectionChange(selectedRows);
+      // 처음 페이지
+      if (start > 1) {
+        buttons.push(
+          <li key="first">
+            <button onClick={() => setPageInfo({ ...pageInfo, pageIndex: 0 })}>
+              1
+            </button>
+          </li>
+        );
+        if (start > 2) {
+          buttons.push(
+            <li key="dots-start">
+              <button
+                className="dots"
+                onClick={() =>
+                  setPageInfo({
+                    ...pageInfo,
+                    pageIndex: Math.max(0, start - maxVisible),
+                  })
+                }
+              >
+                …
+              </button>
+            </li>
+          );
+        }
       }
+
+      // 중간 페이지들
+      for (let i = start; i <= end && i < pageCount; i++) {
+        buttons.push(
+          <li key={i}>
+            <button
+              className={i - 1 === pageIndex ? "active" : ""}
+              onClick={() => setPageInfo({ ...pageInfo, pageIndex: i - 1 })}
+            >
+              {i}
+            </button>
+          </li>
+        );
+      }
+
+      // 마지막 쪽 … 버튼만 (숫자 없이)
+      if (end < pageCount - 1) {
+        buttons.push(
+          <li key="dots-end">
+            <button
+              className="dots"
+              onClick={() =>
+                setPageInfo({ ...pageInfo, pageIndex: pageCount - 1 })
+              }
+            >
+              …
+            </button>
+          </li>
+        );
+      }
+
+      return buttons;
     };
 
-    useEffect(() => {
-      if (paginationEnabled) {
-        table.setPageSize(currentPageSize);
-      }
-    }, [currentPageSize, table, paginationEnabled]);
-
-    const pageCount = table.getPageCount();
-    const pageIndex = table.getState().pagination.pageIndex;
-    const pageNumbers = Array.from({ length: pageCount }, (_, i) => i);
 
     const renderCell = (cell) => {
-      const rendered = flexRender(
-        cell.column.columnDef.cell,
-        cell.getContext()
-      );
+      const rendered = flexRender(cell.column.columnDef.cell, cell.getContext());
       if (typeof rendered === "string") {
         return rendered.split("\n").map((line, i) => <div key={i}>{line}</div>);
       }
@@ -286,12 +305,19 @@ const Table = forwardRef(
     };
 
     const pageSizeOptions = useMemo(() => {
+      const MAX_PAGE_SIZE = 100;
       const baseSizes = [10, 30, 50, 100];
-      const nextRounded = Math.ceil(tableData.length / 10) * 10;
-      const Options = baseSizes.filter((n) => n < nextRounded);
+
+      const nextRounded = Math.min(
+        Math.ceil(pageInfo.totalElements / 10) * 10,
+        MAX_PAGE_SIZE
+      );
+
+      const Options = baseSizes.filter((n) => n <= nextRounded);
       if (!Options.includes(nextRounded)) Options.push(nextRounded);
-      return Options;
-    }, [tableData]);
+
+      return [...new Set(Options)].sort((a, b) => a - b);
+    }, [pageInfo.totalElements]);
 
     return (
       <>
@@ -300,7 +326,7 @@ const Table = forwardRef(
             <div className="top-button">
               {resultLabel && (
                 <span className="total mr0">
-                  {LABELS.SEARCH_RESULT(tableData.length)}
+                  {LABELS.SEARCH_RESULT(pageInfo.totalElements)}
                 </span>
               )}
               {topBtns && <span>{topBtns()}</span>}
@@ -312,13 +338,18 @@ const Table = forwardRef(
                     Options={pageSizeOptions.map((n) => ({ key: n, value: n }))}
                     nonEmpty={true}
                     value={currentPageSize}
-                    onChange={(e) => setCurrentPageSize(Number(e.target.value))}
+                    onChange={(e) => {
+                      const newSize = Number(e.target.value);
+                      setCurrentPageSize(newSize);
+                      setPageInfo({ ...pageInfo, pageIndex: 0, pageSize: newSize });
+                    }}
                   />
                 </div>
               </div>
             )}
           </div>
         </Form>
+
         <div
           className="tbl-list"
           ref={scrollRef}
@@ -331,33 +362,8 @@ const Table = forwardRef(
           <table>
             <thead>
               <tr>
-                {rowSelectionEnabled && (
-                  <th rowSpan={2}>
-                    <input
-                      type="checkbox"
-                      onChange={handleAllCheckbox}
-                      checked={
-                        table.getCoreRowModel().rows.length > 0 &&
-                        table
-                          .getCoreRowModel()
-                          .rows.every((r) => checkboxSelection[r.id])
-                      }
-                      ref={(input) => {
-                        if (input) {
-                          const all = table.getCoreRowModel().rows;
-                          const someSelected = all.some(
-                            (r) => checkboxSelection[r.id]
-                          );
-                          const allSelected = all.every(
-                            (r) => checkboxSelection[r.id]
-                          );
-                          input.indeterminate = someSelected && !allSelected;
-                        }
-                      }}
-                    />
-                  </th>
-                )}
-                {showIndex && <th rowSpan={2} >{LABELS.INDEX}</th>}
+                {rowSelectionEnabled && <th rowSpan={2}></th>}
+                {showIndex && <th rowSpan={2}>{LABELS.INDEX}</th>}
                 {columns.map((col, idx) =>
                   col.columns ? (
                     <th key={idx} colSpan={col.columns.length}>
@@ -381,10 +387,7 @@ const Table = forwardRef(
               </tr>
             </thead>
             <tbody>
-              {(paginationEnabled
-                ? table.getRowModel().rows
-                : table.getPrePaginationRowModel().rows
-              ).map((row) => (
+              {table.getRowModel().rows.map((row) => (
                 <tr
                   key={row.id}
                   ref={row.original?._isNew ? newRowRef : null}
@@ -400,7 +403,6 @@ const Table = forwardRef(
                   onClick={(e) => {
                     if (row.original._isNew) return;
                     if (e.target.tagName === "INPUT") return;
-
                     if (isSplit) {
                       setClickSelection((prev) => {
                         const isAlreadySelected = prev[row.id];
@@ -425,41 +427,60 @@ const Table = forwardRef(
             </tbody>
           </table>
         </div>
+
         {paginationEnabled && (
           <div className="paging">
             <ul>
               <li className="first">
                 <button
-                  onClick={() => table.setPageIndex(0)}
-                  disabled={!table.getCanPreviousPage()}
+                  onClick={() => setPageInfo({ ...pageInfo, pageIndex: 0 })}
+                  disabled={pageInfo.pageIndex === 0}
                 ></button>
               </li>
               <li className="prev">
                 <button
-                  onClick={() => table.previousPage()}
-                  disabled={!table.getCanPreviousPage()}
+                  onClick={() =>
+                    setPageInfo({
+                      ...pageInfo,
+                      pageIndex: Math.max(0, pageInfo.pageIndex - 1),
+                    })
+                  }
+                  disabled={pageInfo.pageIndex === 0}
                 ></button>
               </li>
-              {pageNumbers.map((num) => (
-                <li key={num}>
-                  <button
-                    className={`${num === pageIndex ? "active" : ""}`}
-                    onClick={() => table.setPageIndex(num)}
-                  >
-                    {num + 1}
-                  </button>
-                </li>
-              ))}
+
+              {renderPageNumbers()}
+
               <li className="next">
                 <button
-                  onClick={() => table.nextPage()}
-                  disabled={!table.getCanNextPage()}
+                  onClick={() =>
+                    setPageInfo({
+                      ...pageInfo,
+                      pageIndex: Math.min(
+                        Math.ceil(pageInfo.totalElements / pageInfo.pageSize) - 1,
+                        pageInfo.pageIndex + 1
+                      ),
+                    })
+                  }
+                  disabled={
+                    pageInfo.pageIndex >=
+                    Math.ceil(pageInfo.totalElements / pageInfo.pageSize) - 1
+                  }
                 ></button>
               </li>
               <li className="end">
                 <button
-                  onClick={() => table.setPageIndex(pageCount - 1)}
-                  disabled={!table.getCanNextPage()}
+                  onClick={() =>
+                    setPageInfo({
+                      ...pageInfo,
+                      pageIndex:
+                        Math.ceil(pageInfo.totalElements / pageInfo.pageSize) - 1,
+                    })
+                  }
+                  disabled={
+                    pageInfo.pageIndex >=
+                    Math.ceil(pageInfo.totalElements / pageInfo.pageSize) - 1
+                  }
                 ></button>
               </li>
             </ul>

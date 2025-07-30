@@ -121,15 +121,12 @@ export const SUBSRIBES_COLUMNS = (navigateManage) => {
       header: LABELS.STATE,
       cell: ({ row }) => (
         <div
-          className={`${row.original[KEYS.SUB_STATUS] !== SEARCH_SUBSRIBERS_STATE[1].key
-            ? "stateNormal"
-            : "stateArert"
+          className={`${row.original[KEYS.SUB_STATUS] !== SEARCH_SUBSRIBERS_STATE[2].key
+            ? "stateArert"
+            : "stateNormal"
             }`}
         >
-          {findMappedValue(
-            SEARCH_SUBSRIBERS_STATE,
-            row.original[KEYS.SUB_STATUS]
-          )}
+          {row.original[KEYS.SUB_STATUS] == SEARCH_SUBSRIBERS_STATE[2].key ? LABELS.SUBSCRIBE : LABELS.REQUESTING}
         </div>
       ),
     },

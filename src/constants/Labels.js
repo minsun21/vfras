@@ -138,5 +138,6 @@ export const LABELS = {
   INTERRUPT_RESERVATION: "일시정지 예약",
   CLOSE: "닫기",
   GROUP_PLACEHOLDER: "( ','구분, 최대 5개까지)",
-  NOT_USED: "사용안함"
+  NOT_USED: "사용안함",
+  REQUESTING: "요청중"
 };
