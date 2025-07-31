@@ -14,6 +14,9 @@ import {
 import { LABELS } from "../constants/Labels";
 import Form from "./Form";
 import Select from "./Select";
+import { useDispatch, useSelector } from "react-redux";
+import { startLoading, stopLoading } from "../features/loadingSlice";
+import TableLoader from "./TableLoader";
 
 const Table = forwardRef(
   (
@@ -39,6 +42,8 @@ const Table = forwardRef(
     },
     ref
   ) => {
+    const dispatch = useDispatch();
+    const isLoading = useSelector((state) => state.loading);
     const [clickSelection, setClickSelection] = useState({});
     const [checkboxSelection, setCheckboxSelection] = useState({});
     const [currentPageSize, setCurrentPageSize] = useState(pageSize);
@@ -53,6 +58,7 @@ const Table = forwardRef(
 
     useEffect(() => {
       if (manualPagination && typeof fetchData === "function") {
+        dispatch(startLoading());
         fetchData(pageInfo.pageIndex, pageInfo.pageSize).then((res) => {
           const resultData = res.data.resultData;
           setTableData(resultData.subscribers || []);
@@ -61,6 +67,8 @@ const Table = forwardRef(
             totalPages: resultData.totalPages,
             totalElements: resultData.totalElements,
           }));
+        }).finally(() => {
+          dispatch(stopLoading());
         });
       }
     }, [pageInfo.pageIndex, pageInfo.pageSize]);
@@ -208,6 +216,7 @@ const Table = forwardRef(
           setCheckboxSelection({});
         },
         triggerFetch: (page = 0, size = 15) => {
+          dispatch(startLoading());
           fetchData(page, size).then((res) => {
             const resultData = res.data.resultData;
             setTableData(resultData.subscribers || []);
@@ -217,6 +226,8 @@ const Table = forwardRef(
               totalPages: resultData.totalPages,
               totalElements: resultData.totalElements,
             });
+          }).finally(() => {
+            dispatch(stopLoading());
           });
         },
       }),
@@ -271,73 +282,35 @@ const Table = forwardRef(
 
 
     const renderPageNumbers = () => {
-      const pageIndex = pageInfo.pageIndex;
-      const pageCount = Math.ceil(pageInfo.totalElements / pageInfo.pageSize);
+      const currentIndex = pageInfo.pageIndex;
+      const totalPages = pageInfo.totalPages;
       const maxVisible = 10;
-      const range = Math.floor(maxVisible / 2);
+      const half = Math.floor(maxVisible / 2);
 
-      let start = Math.max(1, pageIndex + 1 - range);
-      let end = Math.min(pageCount, start + maxVisible - 1);
+      let start = currentIndex - half;
+      let end = currentIndex + half;
 
-      if (end - start < maxVisible - 1) {
-        start = Math.max(1, end - maxVisible + 1);
+      // 범위 보정
+      if (start < 0) {
+        end += -start;
+        start = 0;
       }
+      if (end > totalPages) {
+        start -= end - totalPages;
+        end = totalPages;
+      }
+      if (start < 0) start = 0;
 
       const buttons = [];
-
-      // 처음 페이지
-      if (start > 1) {
-        buttons.push(
-          <li key="first">
-            <button onClick={() => setPageInfo({ ...pageInfo, pageIndex: 0 })}>
-              1
-            </button>
-          </li>
-        );
-        if (start > 2) {
-          buttons.push(
-            <li key="dots-start">
-              <button
-                className="dots"
-                onClick={() =>
-                  setPageInfo({
-                    ...pageInfo,
-                    pageIndex: Math.max(0, start - maxVisible),
-                  })
-                }
-              >
-                …
-              </button>
-            </li>
-          );
-        }
-      }
-
-      // 중간 페이지들
-      for (let i = start; i <= end && i < pageCount; i++) {
+      for (let i = start; i < end; i++) {
         buttons.push(
           <li key={i}>
             <button
-              className={i - 1 === pageIndex ? "active" : ""}
-              onClick={() => setPageInfo({ ...pageInfo, pageIndex: i - 1 })}
+              className={i === currentIndex ? "active" : ""}
+              onClick={() => setPageInfo({ ...pageInfo, pageIndex: i })}
+              disabled={isLoading}
             >
-              {i}
-            </button>
-          </li>
-        );
-      }
-
-      // 마지막 쪽 … 버튼만 (숫자 없이)
-      if (end < pageCount - 1) {
-        buttons.push(
-          <li key="dots-end">
-            <button
-              className="dots"
-              onClick={() =>
-                setPageInfo({ ...pageInfo, pageIndex: pageCount - 1 })
-              }
-            >
-              …
+              {i + 1}
             </button>
           </li>
         );
@@ -345,6 +318,7 @@ const Table = forwardRef(
 
       return buttons;
     };
+
 
     const renderCell = (cell) => {
       const rendered = flexRender(
@@ -401,11 +375,11 @@ const Table = forwardRef(
           ref={scrollRef}
           style={
             maxHeight
-              ? { maxHeight: `${maxHeight}px`, overflowY: "auto" }
-              : { overflowY: "visible" }
-          }
+              ? { maxHeight: `${maxHeight}px`, overflowY: "auto", position: "relative" }
+              : { overflowY: "visible", position: "relative" }}
         >
-          <table>
+          {isLoading && <TableLoader />}
+          <table style={{ pointerEvents: isLoading ? "none" : "auto", opacity: isLoading ? 0.5 : 1 }}>
             <thead>
               <tr>
                 {rowSelectionEnabled && (
@@ -501,47 +475,81 @@ const Table = forwardRef(
               ))}
             </tbody>
           </table>
-        </div>
+        </div >
         {paginationEnabled && (
-          <div className="paging">
-            <ul>
+          <div className="paging"
+            style={{
+              pointerEvents: isLoading ? "none" : "auto",
+              opacity: isLoading ? 0.5 : 1,
+            }}
+          >
+            <ul key={manualPagination ? pageInfo.pageIndex : pageIndex}>
               <li className="first">
                 <button
-                  onClick={() => table.setPageIndex(0)}
-                  disabled={!table.getCanPreviousPage()}
+                  onClick={() => {
+                    if (manualPagination) {
+                      setPageInfo({ ...pageInfo, pageIndex: 0 });
+                    } else {
+                      table.setPageIndex(0);
+                    }
+                  }}
+                  disabled={manualPagination ? pageInfo.pageIndex === 0 : !table.getCanPreviousPage()}
                 ></button>
               </li>
               <li className="prev">
                 <button
-                  onClick={() => table.previousPage()}
-                  disabled={!table.getCanPreviousPage()}
+                  onClick={() => {
+                    if (manualPagination) {
+                      setPageInfo({ ...pageInfo, pageIndex: pageInfo.pageIndex - 1 });
+                    } else {
+                      table.previousPage();
+                    }
+                  }}
+                  disabled={manualPagination ? pageInfo.pageIndex === 0 : !table.getCanPreviousPage()}
                 ></button>
               </li>
-              {manualPagination ? renderPageNumbers() : pageNumbers.map((num) => (
-                <li key={num}>
-                  <button
-                    className={`${num === pageIndex ? "active" : ""}`}
-                    onClick={() => table.setPageIndex(num)}
-                  >
-                    {num + 1}
-                  </button>
-                </li>
-              ))}
+
+              {manualPagination
+                ? renderPageNumbers(pageInfo.pageIndex)
+                : pageNumbers.map((num) => (
+                  <li key={num}>
+                    <button
+                      className={`${num === pageIndex ? "active" : ""}`}
+                      onClick={() => table.setPageIndex(num)}
+                    >
+                      {num + 1}
+                    </button>
+                  </li>
+                ))}
+
               <li className="next">
                 <button
-                  onClick={() => table.nextPage()}
-                  disabled={!table.getCanNextPage()}
+                  onClick={() => {
+                    if (manualPagination) {
+                      setPageInfo({ ...pageInfo, pageIndex: pageInfo.pageIndex + 1 });
+                    } else {
+                      table.nextPage();
+                    }
+                  }}
+                  disabled={manualPagination ? pageInfo.pageIndex >= pageInfo.totalPages - 1 : !table.getCanNextPage()}
                 ></button>
               </li>
               <li className="end">
                 <button
-                  onClick={() => table.setPageIndex(pageCount - 1)}
-                  disabled={!table.getCanNextPage()}
+                  onClick={() => {
+                    if (manualPagination) {
+                      setPageInfo({ ...pageInfo, pageIndex: pageInfo.totalPages - 1 });
+                    } else {
+                      table.setPageIndex(pageCount - 1);
+                    }
+                  }}
+                  disabled={manualPagination ? pageInfo.pageIndex >= pageInfo.totalPages - 1 : !table.getCanNextPage()}
                 ></button>
               </li>
             </ul>
           </div>
-        )}
+        )
+        }
       </>
     );
   }

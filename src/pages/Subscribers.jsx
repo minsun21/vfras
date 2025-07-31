@@ -31,6 +31,7 @@ import { useSelector } from "react-redux";
 import { PERMISSIONS } from "../constants/Permissions";
 
 const Subscriber = () => {
+  const isLoading = useSelector((state) => state.loading);
   const permissions = useSelector((state) => state.auth.user?.permissions);
   const tableRef = useRef();
   const navigate = useNavigate();
@@ -122,8 +123,8 @@ const Subscriber = () => {
   const topBtns = () => {
     return (
       <>
-        {permissions.includes(PERMISSIONS.SUBS_U) && <Button label={LABELS.APPROVE} onClick={approvedSub} />}
-        {permissions.includes(PERMISSIONS.SUBS_D) && <Button type={BUTTON_DELETE} onClick={clickDelete} />}
+        {permissions.includes(PERMISSIONS.SUBS_U) && <Button label={LABELS.APPROVE} onClick={approvedSub} disabled={isLoading} />}
+        {permissions.includes(PERMISSIONS.SUBS_D) && <Button type={BUTTON_DELETE} onClick={clickDelete} disabled={isLoading} />}
       </>
     );
   };
@@ -200,9 +201,10 @@ const Subscriber = () => {
                     value={searchInputs[KEYS.KEYWORD] || ""}
                     placeholder={SubsriberMessages.searchPlaceHolder}
                     onChange={onChange}
+                    disabled={isLoading}
                   />
                   <span>
-                    <Button type={BUTTON_SEARCH} onClick={search} />
+                    <Button type={BUTTON_SEARCH} onClick={search} disabled={isLoading} />
                   </span>
                 </div>
               </td>

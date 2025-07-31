@@ -5,9 +5,9 @@ const loadingSlice = createSlice({
   initialState: false,
   reducers: {
     startLoading: () => true,
-    endLoading: () => false,
+    stopLoading: () => false,
   },
 });
 
-export const { startLoading, endLoading } = loadingSlice.actions;
+export const { startLoading, stopLoading } = loadingSlice.actions;
 export default loadingSlice.reducer;
