@@ -115,6 +115,11 @@ export const SUBSRIBES_COLUMNS = (navigateManage) => {
     {
       accessorKey: KEYS.APPLY_DATE,
       header: LABELS.APPLY_DATE,
+      cell: ({ row }) => (
+        <span>
+          {row.original[KEYS.APPLY_DATE].split(" ")[0]}
+        </span>
+      ),
     },
     {
       accessorKey: KEYS.SUB_STATUS,
