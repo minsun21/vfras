@@ -116,3 +116,13 @@ h4.page-title { margin: 0; font-size: 1.6rem; color: #000; font-weight: 600;  }
 .menu-title {  font-weight: bold;  color: #222;  margin-bottom: 6px;  font-size: 14px;}
 .menu-item {  background-color: #d0d0d0;  border: none;  padding: 6px 10px;  margin: 2px 0;  width: 100%;  text-align: left;  cursor: pointer;  font-size: 13px;  border-radius: 4px;}
 .menu-item:hover {  background-color: #bbb;}
+
+/* Loading **/
+.tblLoaderBox { position: absolute; width: calc(100% - 250px); height: 500px;}
+.spinner { width: 48px;  height: 48px;  margin: 200px auto;  border: 5px solid rgba(0,0,0,0.1);  border-top-color: #db3447;  border-radius: 50%;  animation: spin 1s linear infinite;}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}

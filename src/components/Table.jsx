@@ -370,6 +370,7 @@ const Table = forwardRef(
             )}
           </div>
         </Form>
+         {isLoading && <TableLoader />}
         <div
           className="tbl-list"
           ref={scrollRef}
@@ -378,7 +379,6 @@ const Table = forwardRef(
               ? { maxHeight: `${maxHeight}px`, overflowY: "auto", position: "relative" }
               : { overflowY: "visible", position: "relative" }}
         >
-          {isLoading && <TableLoader />}
           <table style={{ pointerEvents: isLoading ? "none" : "auto", opacity: isLoading ? 0.5 : 1 }}>
             <thead>
               <tr>
