@@ -20,8 +20,8 @@ export const setLoadingHandler = (handler) => {
 };
 
 const instance = axios.create({
-  baseURL: "/web",
-  // baseURL: window.__ENV__?.API_BASE_URL,
+  // baseURL: "/web",
+  baseURL: window.__ENV__?.API_BASE_URL,
   timeout: 10000,
   withCredentials: true,
 });
