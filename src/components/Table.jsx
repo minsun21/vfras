@@ -377,7 +377,7 @@ const Table = forwardRef(
             <div className="top-button">
               {resultLabel && (
                 <span className="total mr0">
-                  {LABELS.SEARCH_RESULT(tableData.length)}
+                  {LABELS.SEARCH_RESULT(manualPagination ? pageInfo.totalElements : tableData.length)}
                 </span>
               )}
               {topBtns && <span>{topBtns()}</span>}
