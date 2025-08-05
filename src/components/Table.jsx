@@ -54,17 +54,19 @@ const Table = forwardRef(
       totalPages: 0,
       totalElements: 0,
     });
+
     const triggerFetchRef = useRef(false);
     const isSplit = rowClickSelect === true;
 
     useEffect(() => {
       if (manualPagination) {
-        triggerFetchRef.current = true;
-        setPageInfo((prev) => ({
-          ...prev,
-          pageSize: currentPageSize,
-          pageIndex: 0,
-        }));
+        if (!triggerFetchRef.current) {
+          setPageInfo((prev) => ({
+            ...prev,
+            pageSize: currentPageSize,
+            pageIndex: 0,
+          }));
+        }
       } else {
         table.setPageSize(currentPageSize);
       }
@@ -85,6 +87,9 @@ const Table = forwardRef(
           })
           .finally(() => {
             dispatch(stopLoading());
+            if (triggerFetchRef.current) {
+              setCurrentPageSize(10);
+            }
             triggerFetchRef.current = false;
           });
       }
@@ -114,7 +119,6 @@ const Table = forwardRef(
         setCheckboxSelection({});
       },
     }), [tableData]);
-
 
     const handleCheckBox = (row) => {
       const newSelection = {
