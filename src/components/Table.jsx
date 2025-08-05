@@ -4,6 +4,7 @@ import React, {
   useMemo,
   forwardRef,
   useImperativeHandle,
+  useRef,
 } from "react";
 import {
   useReactTable,
@@ -53,12 +54,12 @@ const Table = forwardRef(
       totalPages: 0,
       totalElements: 0,
     });
-
+    const triggerFetchRef = useRef(false);
     const isSplit = rowClickSelect === true;
 
     useEffect(() => {
       if (manualPagination) {
-        // 페이지 사이즈 변경 → 페이지 인덱스를 0으로 초기화하면서 fetch 트리거
+        triggerFetchRef.current = true;
         setPageInfo((prev) => ({
           ...prev,
           pageSize: currentPageSize,
@@ -72,19 +73,48 @@ const Table = forwardRef(
     useEffect(() => {
       if (manualPagination && typeof fetchData === "function") {
         dispatch(startLoading());
-        fetchData(pageInfo.pageIndex, pageInfo.pageSize).then((res) => {
-          const resultData = res.data.resultData;
-          setTableData(resultData.subscribers || []);
-          setPageInfo((prev) => ({
-            ...prev,
-            totalPages: resultData.totalPages,
-            totalElements: resultData.totalElements,
-          }));
-        }).finally(() => {
-          dispatch(stopLoading());
-        });
+        fetchData(pageInfo.pageIndex, pageInfo.pageSize)
+          .then((res) => {
+            const resultData = res.data.resultData;
+            setTableData(resultData.subscribers || []);
+            setPageInfo((prev) => ({
+              ...prev,
+              totalPages: resultData.totalPages,
+              totalElements: resultData.totalElements,
+            }));
+          })
+          .finally(() => {
+            dispatch(stopLoading());
+            triggerFetchRef.current = false;
+          });
       }
     }, [pageInfo.pageIndex, pageInfo.pageSize]);
+
+    useImperativeHandle(ref, () => ({
+      triggerFetch: (page = 0, size = 15) => {
+        triggerFetchRef.current = true;
+        setPageInfo({
+          pageIndex: page,
+          pageSize: size,
+          totalPages: 0,
+          totalElements: 0,
+        });
+      },
+      getUpdatedData: () => tableData,
+      getSelectedRowIds: () =>
+        table.getSelectedRowModel().rows.map((r) => r.original.id),
+      updateRowsById: (ids, updater) => {
+        const updated = tableData.map((row) =>
+          ids.includes(row.id || row.subNo) ? updater(row) : row
+        );
+        setTableData(updated);
+      },
+      clearSelection: () => {
+        setClickSelection({});
+        setCheckboxSelection({});
+      },
+    }), [tableData]);
+
 
     const handleCheckBox = (row) => {
       const newSelection = {
@@ -211,41 +241,6 @@ const Table = forwardRef(
       enableRowSelection: isSplit,
     });
 
-    useImperativeHandle(
-      ref,
-      () => ({
-        getUpdatedData: () => tableData,
-        getSelectedRowIds: () =>
-          table.getSelectedRowModel().rows.map((r) => r.original.id),
-        updateRowsById: (ids, updater) => {
-          const updated = tableData.map((row) => {
-            return ids.includes(row.id || row.subNo) ? updater(row) : row;
-          });
-
-          setTableData(updated);
-        },
-        clearSelection: () => {
-          setClickSelection({});
-          setCheckboxSelection({});
-        },
-        triggerFetch: (page = 0, size = 10) => {
-          dispatch(startLoading());
-          fetchData(page, size).then((res) => {
-            const resultData = res.data.resultData;
-            setTableData(resultData.subscribers || []);
-            setPageInfo({
-              pageIndex: page,
-              pageSize: size,
-              totalPages: resultData.totalPages,
-              totalElements: resultData.totalElements,
-            });
-          }).finally(() => {
-            dispatch(stopLoading());
-          });
-        },
-      }),
-      [tableData, table]
-    );
 
     useEffect(() => {
       const selectedIds = Object.keys(clickSelection).filter(
