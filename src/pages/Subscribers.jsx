@@ -54,10 +54,10 @@ const Subscriber = () => {
   }, [searchInputs]);
 
   const search = () => {
-    tableRef.current?.triggerFetch(0, 15);
+    tableRef.current?.triggerFetch(0, 10);
   };
 
-  const getData = (page = 0, size = 15) => {
+  const getData = (page = 0, size = 10) => {
     return axios.get(ROUTES.SUBSCRIBERS, {
       params: {
         ...searchInputsRef.current,
