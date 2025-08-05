@@ -228,7 +228,7 @@ const Table = forwardRef(
           setClickSelection({});
           setCheckboxSelection({});
         },
-        triggerFetch: (page = 0, size = 15) => {
+        triggerFetch: (page = 0, size = 10) => {
           dispatch(startLoading());
           fetchData(page, size).then((res) => {
             const resultData = res.data.resultData;
