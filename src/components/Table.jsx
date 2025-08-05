@@ -348,7 +348,6 @@ const Table = forwardRef(
       return value.split("\n").map((line, i) => <div key={i}>{line}</div>);
     };
 
-
     const pageSizeOptions = useMemo(() => {
       const baseSizes = [10, 30, 50, 100];
       const totalCount = manualPagination ? pageInfo.totalElements : tableData.length;
