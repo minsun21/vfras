@@ -57,6 +57,19 @@ const Table = forwardRef(
     const isSplit = rowClickSelect === true;
 
     useEffect(() => {
+      if (manualPagination) {
+        // 페이지 사이즈 변경 → 페이지 인덱스를 0으로 초기화하면서 fetch 트리거
+        setPageInfo((prev) => ({
+          ...prev,
+          pageSize: currentPageSize,
+          pageIndex: 0,
+        }));
+      } else {
+        table.setPageSize(currentPageSize);
+      }
+    }, [currentPageSize, manualPagination]);
+
+    useEffect(() => {
       if (manualPagination && typeof fetchData === "function") {
         dispatch(startLoading());
         fetchData(pageInfo.pageIndex, pageInfo.pageSize).then((res) => {
@@ -336,13 +349,23 @@ const Table = forwardRef(
       return value.split("\n").map((line, i) => <div key={i}>{line}</div>);
     };
 
+
     const pageSizeOptions = useMemo(() => {
       const baseSizes = [10, 30, 50, 100];
-      const nextRounded = Math.ceil(tableData.length / 10) * 10;
-      const Options = baseSizes.filter((n) => n < nextRounded);
-      if (!Options.includes(nextRounded)) Options.push(nextRounded);
-      return Options;
-    }, [tableData]);
+      const totalCount = manualPagination ? pageInfo.totalElements : tableData.length;
+
+      if (!totalCount) return baseSizes;
+
+      const nextRounded = Math.ceil(totalCount / 10) * 10;
+
+      const options = baseSizes.filter((n) => n <= nextRounded && n <= 100);
+
+      if (nextRounded <= 100 && !options.includes(nextRounded)) {
+        options.push(nextRounded);
+      }
+
+      return [...new Set(options)].sort((a, b) => a - b);
+    }, [manualPagination, pageInfo.totalElements, tableData.length]);
 
     return (
       <>
@@ -370,7 +393,7 @@ const Table = forwardRef(
             )}
           </div>
         </Form>
-         {isLoading && <TableLoader />}
+        {isLoading && <TableLoader />}
         <div
           className="tbl-list"
           ref={scrollRef}

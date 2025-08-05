@@ -2,6 +2,7 @@
   "name": "fras-web",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://121.161.164.178:9080",
   "dependencies": {
     "@reduxjs/toolkit": "^2.7.0",
     "@tanstack/react-table": "^8.21.3",
