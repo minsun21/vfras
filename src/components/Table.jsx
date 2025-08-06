@@ -55,18 +55,16 @@ const Table = forwardRef(
       totalElements: 0,
     });
 
-    const triggerFetchRef = useRef(false);
     const isSplit = rowClickSelect === true;
+    const [triggerKey, setTriggerKey] = useState(0);
 
     useEffect(() => {
       if (manualPagination) {
-        if (!triggerFetchRef.current) {
-          setPageInfo((prev) => ({
-            ...prev,
-            pageSize: currentPageSize,
-            pageIndex: 0,
-          }));
-        }
+        setPageInfo((prev) => ({
+          ...prev,
+          pageSize: currentPageSize,
+          pageIndex: 0,
+        }));
       } else {
         table.setPageSize(currentPageSize);
       }
@@ -87,24 +85,21 @@ const Table = forwardRef(
           })
           .finally(() => {
             dispatch(stopLoading());
-            if (triggerFetchRef.current) {
-              setCurrentPageSize(10);
-            }
-            triggerFetchRef.current = false;
           });
       }
-    }, [pageInfo.pageIndex, pageInfo.pageSize]);
+    }, [pageInfo.pageIndex, pageInfo.pageSize, triggerKey]);
 
     useImperativeHandle(ref, () => ({
-      triggerFetch: (page = 0, size = 15) => {
-        triggerFetchRef.current = true;
+      triggerFetch: (page = 0, size = currentPageSize) => {
         setPageInfo({
           pageIndex: page,
           pageSize: size,
           totalPages: 0,
           totalElements: 0,
         });
+        setTriggerKey((prev) => prev + 1); // 강제 트리거
       },
+      getCurrentPageSize: () => currentPageSize,
       getUpdatedData: () => tableData,
       getSelectedRowIds: () =>
         table.getSelectedRowModel().rows.map((r) => r.original.id),

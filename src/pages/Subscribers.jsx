@@ -54,7 +54,8 @@ const Subscriber = () => {
   }, [searchInputs]);
 
   const search = () => {
-    tableRef.current?.triggerFetch(0, 10);
+    const size = tableRef.current?.getCurrentPageSize?.() ?? 10;
+    tableRef.current?.triggerFetch(0, size);
   };
 
   const getData = (page = 0, size = 10) => {
