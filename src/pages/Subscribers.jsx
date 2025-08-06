@@ -203,6 +203,12 @@ const Subscriber = () => {
                     placeholder={SubsriberMessages.searchPlaceHolder}
                     onChange={onChange}
                     disabled={isLoading}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        search();
+                      }
+                    }}
                   />
                   <span>
                     <Button type={BUTTON_SEARCH} onClick={search} disabled={isLoading} />

@@ -12,9 +12,14 @@ const Input = ({
   placeholder = "",
   size = "nm",
   name,
+  onKeyDown
 }) => {
 
   const blockNegative = (e) => {
+    if (onKeyDown) {
+      onKeyDown(e);
+      return;
+    }
     if (type === "number" && (e.key === '-' || e.key === 'e')) {
       e.preventDefault();
     }

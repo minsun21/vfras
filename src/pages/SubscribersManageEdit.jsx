@@ -206,6 +206,12 @@ const SubscriberManageEdit = () => {
                     value={searchSubNo}
                     type="number"
                     onChange={(e) => setSearchSubNo(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        search();
+                      }
+                    }}
                   />
                   <Button type={BUTTON_SEARCH} onClick={search} />
                 </div>
@@ -268,7 +274,7 @@ const SubscriberManageEdit = () => {
                             onChange={handleChange}
                             disabled={disabled}
                           />
-                          
+
                         </div>
                       ) : key === "password" ? (
                         <div className="rowBox">
