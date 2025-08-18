@@ -214,6 +214,22 @@ const DidConfig = ({
 
     // 발신자 번호별 
     if (config.key === KEYS.IS_GROUP_JOINED) {
+
+      // 맨 앞 문자가 ,인지
+      const isValidNoLeadingComma = !/^,/.test(inputs[KEYS.CALLING_NUMBER].trim());
+
+      if (!isValidNoLeadingComma) {
+        showAlert({ message: ErrorMessages.invalidComma });
+        return;
+      }
+
+      // 숫자와 , 만 포함되어야 함
+      const isNumComma = /^[\d,]+$/.test(inputs[KEYS.CALLING_NUMBER].trim());
+      if (!isNumComma) {
+        showAlert({ message: ErrorMessages.invalidNumComma });
+        return;
+      }
+
       // ,가 4개 이상 들어가면 안됨
       let cnt = inputs[KEYS.CALLING_NUMBER].split(",").length - 1;
       if (cnt > 4) {
@@ -331,6 +347,12 @@ const DidConfig = ({
             const handleChange = (val) => {
               setInputs((prev) => ({ ...prev, [key]: val }));
             };
+
+            const handleTextAreaChange = (val) => {
+              const value = val.replace(/[^\d,]/g, "");
+              setInputs((prev) => ({ ...prev, [key]: value }));
+            }
+
             return (
               <div key={key}>
                 {item.type === "select" ? (

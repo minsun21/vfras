@@ -63,7 +63,9 @@ export const ErrorMessages = {
   duplicateSaveDate: "중복 부가서비스는 추가할 수 없습니다.\n(시작일)",
   duplicateSaveTime: "중복 부가서비스는 추가할 수 없습니다.\n(요일, 시작시간)",
   dulicateSaveGroupInput: "발신번호에 중복이 있습니다.",
-  duplicate: "중복값이 있습니다.\n"
+  duplicate: "중복값이 있습니다.\n",
+  invalidNumComma: "숫자와 콤마(,) 외의 문자나 공백을 입력할 수 없습니다.",
+  invalidComma: "맨 앞에는 콤마(,)를 넣을 수 없습니다."
 };
 
 export const LoginMessages = {
