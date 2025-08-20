@@ -65,7 +65,8 @@ export const ErrorMessages = {
   dulicateSaveGroupInput: "발신번호에 중복이 있습니다.",
   duplicate: "중복값이 있습니다.\n",
   invalidNumComma: "숫자와 콤마(,) 외의 문자나 공백을 입력할 수 없습니다.",
-  invalidComma: "맨 앞에는 콤마(,)를 넣을 수 없습니다."
+  invalidComma: "맨 앞에는 콤마(,)를 넣을 수 없습니다.",
+  maximumService: (number, maxCount) => `이 번호에는(${number}) 최대 ${maxCount}개의 부가 서비스만 등록 가능합니다.`
 };
 
 export const LoginMessages = {
@@ -126,5 +127,7 @@ export const ErrorKey = {
   duplicateWeekday: "Duplicate weekday setting exists for",
   duplicateCid: "Duplicate Cid found",
   duplicateDuration: "Duplicate duration Rbt exists for",
-  duplicateTime: "Duplicate timeband Rbt exists for"
+  duplicateTime: "Duplicate timeband Rbt exists for",
+  canHaveMaximum: "can have a maximum",
+  thisNumber: "This number("
 }

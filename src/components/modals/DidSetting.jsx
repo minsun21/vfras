@@ -307,7 +307,9 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
   };
 
   const getErrorMessage = (message) => {
-    if (message.includes(ErrorKey.duplicateCircular)) {
+    if (message.includes(ErrorKey.notFindRbtInfo)) {
+      return message.replace(ErrorKey.notFindRbtInfo, ErrorMessages.notFindRbt);
+    } else if (message.includes(ErrorKey.duplicateCircular)) {
       return ErrorMessages.duplicateRbt;
     } else if (message.includes(ErrorKey.duplicateWeekday)) {
       return ErrorMessages.duplicateSaveDay
@@ -319,8 +321,23 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
       return ErrorMessages.duplicateSaveDate;
     } else if (message.includes(ErrorKey.duplicateTime)) {
       return ErrorMessages.duplicateSaveTime;
+    } else if (message.includes(ErrorKey.thisNumber) && message.includes(ErrorKey.canHaveMaximum)) {
+      return convertSentence(message);
     }
   }
+
+  const convertSentence = (input) => {
+    const numberMatch = input.match(/\(([^)]+)\)/);
+    const maxMatch = input.match(/maximum of (\d+)/i);
+
+    if (!numberMatch || !maxMatch) return input;
+
+    const number = numberMatch[1];
+    const maxCount = maxMatch[1];
+
+    return ErrorMessages.maximumService(number, maxCount);
+  }
+
 
   // 부가서비스 일괄 삭제
   const bulkDelete = (dataKey, inputs) => {
