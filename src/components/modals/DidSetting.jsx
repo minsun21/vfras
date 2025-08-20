@@ -453,6 +453,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
             onRowSelectionChange={setSelectRows}
             rowClickSelect={true}
             onCheckboxSelectionChange={setCheckboxSelected}
+            deleteLabel={true}
           />
         </div>
         <div className="didR">

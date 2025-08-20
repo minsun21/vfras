@@ -4,7 +4,6 @@ import React, {
   useMemo,
   forwardRef,
   useImperativeHandle,
-  useRef,
 } from "react";
 import {
   useReactTable,
@@ -40,6 +39,7 @@ const Table = forwardRef(
       maxHeight,
       scrollRef,
       newRowRef,
+      deleteLabel = false
     },
     ref
   ) => {
@@ -400,9 +400,33 @@ const Table = forwardRef(
               <tr>
                 {rowSelectionEnabled && (
                   <th rowSpan={2}>
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                      <label>{LABELS.DELETE}</label>
-                      <input
+                    {deleteLabel
+                      ? <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <label>{LABELS.DELETE}</label>
+                        <input
+                          type="checkbox"
+                          onChange={handleAllCheckbox}
+                          checked={
+                            table.getCoreRowModel().rows.length > 0 &&
+                            table
+                              .getCoreRowModel()
+                              .rows.every((r) => checkboxSelection[r.id])
+                          }
+                          ref={(input) => {
+                            if (input) {
+                              const all = table.getCoreRowModel().rows;
+                              const someSelected = all.some(
+                                (r) => checkboxSelection[r.id]
+                              );
+                              const allSelected = all.every(
+                                (r) => checkboxSelection[r.id]
+                              );
+                              input.indeterminate = someSelected && !allSelected;
+                            }
+                          }}
+                        />
+                      </div>
+                      : <input
                         type="checkbox"
                         onChange={handleAllCheckbox}
                         checked={
@@ -424,7 +448,7 @@ const Table = forwardRef(
                           }
                         }}
                       />
-                    </div>
+                    }
                   </th>
                 )}
                 {showIndex && <th rowSpan={2} >{LABELS.INDEX}</th>}

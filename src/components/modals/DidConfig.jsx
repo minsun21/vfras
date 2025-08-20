@@ -324,10 +324,10 @@ const DidConfig = ({
               )}
           </div>
         </div>
-        <label className="lvSwitch">
+        {/* <label className="lvSwitch">
           <input type="checkbox" checked={selectDid[config.key]} disabled />
           <span className="slider"></span>
-        </label>
+        </label> */}
       </div>
       {/* 본문: 오픈 시에만 표시 */}
       <div className={isPersonal ? "lvContent2" : "lvContent"}>
