@@ -400,28 +400,31 @@ const Table = forwardRef(
               <tr>
                 {rowSelectionEnabled && (
                   <th rowSpan={2}>
-                    <input
-                      type="checkbox"
-                      onChange={handleAllCheckbox}
-                      checked={
-                        table.getCoreRowModel().rows.length > 0 &&
-                        table
-                          .getCoreRowModel()
-                          .rows.every((r) => checkboxSelection[r.id])
-                      }
-                      ref={(input) => {
-                        if (input) {
-                          const all = table.getCoreRowModel().rows;
-                          const someSelected = all.some(
-                            (r) => checkboxSelection[r.id]
-                          );
-                          const allSelected = all.every(
-                            (r) => checkboxSelection[r.id]
-                          );
-                          input.indeterminate = someSelected && !allSelected;
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                      <label>{LABELS.DELETE}</label>
+                      <input
+                        type="checkbox"
+                        onChange={handleAllCheckbox}
+                        checked={
+                          table.getCoreRowModel().rows.length > 0 &&
+                          table
+                            .getCoreRowModel()
+                            .rows.every((r) => checkboxSelection[r.id])
                         }
-                      }}
-                    />
+                        ref={(input) => {
+                          if (input) {
+                            const all = table.getCoreRowModel().rows;
+                            const someSelected = all.some(
+                              (r) => checkboxSelection[r.id]
+                            );
+                            const allSelected = all.every(
+                              (r) => checkboxSelection[r.id]
+                            );
+                            input.indeterminate = someSelected && !allSelected;
+                          }
+                        }}
+                      />
+                    </div>
                   </th>
                 )}
                 {showIndex && <th rowSpan={2} >{LABELS.INDEX}</th>}

@@ -419,7 +419,7 @@ const DidSetting = ({ userInfo, plusRbtCount, isPersonal }) => {
               <div className="top-button">
                 <span>
                   {!isPersonal && permissions.includes(PERMISSIONS.SUBS_U) &&
-                    <Button type={BUTTON_DELETE} onClick={deleteDidRows} />}
+                    <Button type={BUTTON_DELETE} label={LABELS.SELECT_DID_ALL_DELETE} onClick={deleteDidRows} />}
                 </span>
               </div>
             </div>

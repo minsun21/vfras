@@ -139,5 +139,6 @@ export const LABELS = {
   CLOSE: "닫기",
   GROUP_PLACEHOLDER: "( ','구분, 최대 5개까지)",
   NOT_USED: "사용안함",
-  REQUESTING: "요청중"
+  REQUESTING: "요청중",
+  SELECT_DID_ALL_DELETE: "선택 DID 일괄삭제"
 };
